@@ -1,28 +1,42 @@
 #include "CurrsorPlayerState.h"
 
+#include "CurrsorCharacter.h"
+#include "CurrsorPlayerController.h"
+
 ACurrsorPlayerState::ACurrsorPlayerState()
 {
-    PrimaryActorTick.bCanEverTick = false;
+    PrimaryActorTick.bCanEverTick = true;
 }
 
 void ACurrsorPlayerState::BeginPlay()
 {
     Super::BeginPlay();
-    Owner = GetOwner();
+    
+    CurrsorController = Cast<ACurrsorPlayerController>(GetOwner());
+    if (!CurrsorController.IsValid()) return;
+    CurrsorCharacter = Cast<ACurrsorCharacter>(GetPawn());
+}
+
+void ACurrsorPlayerState::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+
+    UpdateState();
 }
 
 void ACurrsorPlayerState::UpdateState()
 {
-    if (!Owner) return;
-
     EPlayerState NewState = CurrentState;
+
+    if (!CurrsorCharacter.IsValid()) return;
+    CurrsorVelocity = CurrsorCharacter->GetVelocity();
 
     // 优先级：Dash > Attack > Jump/Fall > 移动 > Idle
     if (IsDashing()) {
         NewState = EPlayerState::Dash;
     } 
     else if (IsAttacking()) {
-        NewState = (Owner->GetVelocity().Size() > 0) ? EPlayerState::RunAttack : EPlayerState::Attack;
+        NewState = (CurrsorVelocity.Size() > 0) ? EPlayerState::RunAttack : EPlayerState::Attack;
     }
     else if (IsJumping()) {
         NewState = EPlayerState::Jump;
@@ -30,10 +44,10 @@ void ACurrsorPlayerState::UpdateState()
     else if (IsFalling()) {
         NewState = EPlayerState::Fall;
     }
-    else if (Owner->GetVelocity().Size() > RunThreshold) {
+    else if (CurrsorVelocity.Size() > RunThreshold) {
         NewState = EPlayerState::Run;
     }
-    else if (Owner->GetVelocity().Size() > WalkThreshold) {
+    else if (CurrsorVelocity.Size() > WalkThreshold) {
         NewState = EPlayerState::Walk;
     }
     else {

@@ -4,6 +4,9 @@
 #include "GameFramework/PlayerState.h"
 #include "CurrsorPlayerState.generated.h"
 
+class ACurrsorCharacter;
+class ACurrsorPlayerController;
+
 UENUM(BlueprintType)
 enum class EPlayerState : uint8
 {
@@ -27,6 +30,8 @@ public:
 
 protected:
     virtual void BeginPlay() override;
+
+    virtual void Tick(float DeltaTime) override;
 
 public:
     // 状态更新
@@ -90,6 +95,16 @@ protected:
     // void OnExitIdle();
 
 private:
+
+    UPROPERTY(VisibleAnywhere, Category = "Player State")
+    TWeakObjectPtr<ACurrsorPlayerController> CurrsorController;
+
+    UPROPERTY(VisibleAnywhere, Category = "Player State")
+    TWeakObjectPtr<ACurrsorCharacter> CurrsorCharacter;
+
+    UPROPERTY(VisibleAnywhere, Category = "Player State")
+    FVector CurrsorVelocity = FVector::ZeroVector;
+    
     UPROPERTY(VisibleAnywhere, Category = "Player State")
     EPlayerState CurrentState = EPlayerState::Idle;
     
@@ -97,7 +112,7 @@ private:
     float WalkThreshold = 10.0f;
 
     UPROPERTY(EditDefaultsOnly, Category = "Player State|Thresholds")
-    float RunThreshold = 200.0f;
+    float RunThreshold = 600.0f;
 
     // 状态标志
     UPROPERTY(VisibleInstanceOnly, Category = "Player State")

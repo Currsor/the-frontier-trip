@@ -34,7 +34,7 @@ private:
 	TObjectPtr<UCurrsorCameraComponent> CameraComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	ACurrsorPlayerState* CurrsorPlayerState = Cast<ACurrsorPlayerState>(GetPlayerState());
+	TObjectPtr<ACurrsorPlayerState> CurrsorPlayerState = Cast<ACurrsorPlayerState>(GetPlayerState());
 	
 	// 上一帧的弹簧臂长度
 	UPROPERTY(VisibleInstanceOnly)
