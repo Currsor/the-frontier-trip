@@ -5,8 +5,6 @@
 
 #include "Component/CurrsorCameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "CurrsorPlayerState.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
 {

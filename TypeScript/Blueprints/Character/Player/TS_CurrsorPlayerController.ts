@@ -19,7 +19,6 @@ class TS_CurrsorPlayerController extends jsClass {
             this.moveSpeed = 600;
         }
         this.SetMovementSpeedFromTS(this.moveSpeed);
-        console.log("Initialized with speed:", this.moveSpeed);
     }
 
     public UpdateMovementSpeed(newSpeed: number): void {

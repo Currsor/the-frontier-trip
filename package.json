@@ -8,5 +8,15 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "Currsor`s project.",
+  "repository": {
+    "type": "git",
+    "url": "https://git.code.tencent.com/Currsor/Currsor.git"
+  },
+  "type": "commonjs",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.15"
+  }
 }

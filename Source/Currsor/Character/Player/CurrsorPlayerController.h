@@ -67,10 +67,10 @@ protected:
 	// UFUNCTION()
 	// void JumpCompleted();
 
-	// UFUNCTION()
-	// void DashStarted();
-	// UFUNCTION()
-	// void DashCompleted();
+	UFUNCTION()
+	void DashStarted();
+	UFUNCTION()
+	void DashCompleted();
 
 	// UFUNCTION()
 	// void AttackTriggered();

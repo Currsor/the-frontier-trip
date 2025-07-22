@@ -21,10 +21,6 @@ class TS_Cube extends jsClass {
      *     // 在这里添加初始化逻辑
      * }
      */
-
-    ReceiveBeginPlay(): void {
-        console.log("BP_Cube has begun play");
-    }
     ReceiveTick(deltaSeconds: number): void {
         this.K2_AddActorLocalRotation(new UE.Rotator(0, deltaSeconds * 5, deltaSeconds * 10), false, $ref<UE.HitResult>(), false);
     }

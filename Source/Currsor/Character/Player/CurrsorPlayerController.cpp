@@ -17,8 +17,8 @@ void ACurrsorPlayerController::SetupInputComponent()
         EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::Move);
         // EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::JumpStarted);
         // EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::JumpCompleted);
-        // EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::DashStarted);
-        // EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::DashCompleted);
+        EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::DashStarted);
+        EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::DashCompleted);
         // EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::AttackTriggered);
     }
 }
@@ -55,8 +55,8 @@ void ACurrsorPlayerController::Move(const FInputActionValue& Value)
 // TODO: 这里可以添加其他输入处理函数
 // void ACurrsorPlayerController::JumpStarted() { MovementComponent->JumpStarted(); }
 // void ACurrsorPlayerController::JumpCompleted() { MovementComponent->JumpCompleted(); }
-// void ACurrsorPlayerController::DashStarted() { MovementComponent->DashStarted(); }
-// void ACurrsorPlayerController::DashCompleted() { MovementComponent->DashCompleted(); }
+void ACurrsorPlayerController::DashStarted() { MovementComponent->DashStarted(); }
+void ACurrsorPlayerController::DashCompleted() { MovementComponent->DashCompleted(); }
 // void ACurrsorPlayerController::AttackTriggered() { AttackComponent->AttackTriggered(); }
 // void ACurrsorPlayerController::AttackEnd_Implementation() { AttackComponent->AttackEnd(); }
 

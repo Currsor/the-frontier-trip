@@ -22,11 +22,17 @@ public:
 
 	virtual void Shutdown() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+	// 调试模式
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | PuerTS")
 	bool bDebugMode = false;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug")
+	// 等待调试器
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | PuerTS", meta = (EditCondition = "bDebugMode",EditConditionHides = "bDebugMode"))
 	bool bWaitForDebugger = false;
+
+	// 是否是调试模式
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | Editor")  
+	bool bIsDebug;  
 
 private:
 	TSharedPtr<puerts::FJsEnv> GameScript;
