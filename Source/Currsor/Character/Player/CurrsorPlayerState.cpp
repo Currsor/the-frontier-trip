@@ -2,6 +2,7 @@
 
 #include "CurrsorCharacter.h"
 #include "CurrsorPlayerController.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ACurrsorPlayerState::ACurrsorPlayerState()
 {
@@ -24,6 +25,12 @@ void ACurrsorPlayerState::Tick(float DeltaTime)
     UpdateState();
 }
 
+bool ACurrsorPlayerState::CanStartAttack() const
+{
+    // 判断是否不在冲刺或攻击状态
+    return !IsDashing() && !IsAttacking();
+}
+
 void ACurrsorPlayerState::UpdateState()
 {
     EPlayerState NewState = CurrentState;
@@ -36,7 +43,7 @@ void ACurrsorPlayerState::UpdateState()
         NewState = EPlayerState::Dash;
     } 
     else if (IsAttacking()) {
-        NewState = (CurrsorVelocity.Size() > 0) ? EPlayerState::RunAttack : EPlayerState::Attack;
+        NewState = (CurrsorVelocity.Size() > RunAttackThreshold) ? EPlayerState::RunAttack : EPlayerState::Attack;
     }
     else if (IsJumping()) {
         NewState = EPlayerState::Jump;
@@ -47,7 +54,7 @@ void ACurrsorPlayerState::UpdateState()
     else if (CurrsorVelocity.Size() > RunThreshold) {
         NewState = EPlayerState::Run;
     }
-    else if (CurrsorVelocity.Size() > WalkThreshold) {
+    else if (CurrsorVelocity.Size() > WalkThreshold || IsWalking()) {
         NewState = EPlayerState::Walk;
     }
     else {
@@ -58,6 +65,12 @@ void ACurrsorPlayerState::UpdateState()
     if (NewState != CurrentState) {
         ChangeState(NewState);
     }
+}
+
+bool ACurrsorPlayerState::ShouldMove()
+{
+    if (GetCurrentState() == EPlayerState::Attack || GetCurrentState() == EPlayerState::Dash) return false;
+    return true;
 }
 
 void ACurrsorPlayerState::ChangeState(EPlayerState NewState)
@@ -79,6 +92,7 @@ void ACurrsorPlayerState::ChangeState(EPlayerState NewState)
     case EPlayerState::Run:
         break;
     case EPlayerState::Walk:
+        OnExitWalk();
         break;
     case EPlayerState::Idle:
         break;
@@ -106,6 +120,7 @@ void ACurrsorPlayerState::ChangeState(EPlayerState NewState)
     case EPlayerState::Run:
         break;
     case EPlayerState::Walk:
+        OnEnterWalk(PreviousState);
         break;
     case EPlayerState::Idle:
         break;
@@ -114,27 +129,34 @@ void ACurrsorPlayerState::ChangeState(EPlayerState NewState)
 
 bool ACurrsorPlayerState::IsDashing() const
 {
-    // 实现你的冲刺检测逻辑
     return bIsDashing;
 }
 
 bool ACurrsorPlayerState::IsAttacking() const
 {
-    // 实现你的攻击检测逻辑
     return bIsAttacking;
 }
 
 bool ACurrsorPlayerState::IsJumping() const
 {
-    // 实现你的跳跃检测逻辑
     return bIsJumping;
 }
 
 bool ACurrsorPlayerState::IsFalling() const
 {
-    // 实现你的下落检测逻辑
     if (!Owner) return false;
     return Owner->GetVelocity().Z < 0;
+}
+
+bool ACurrsorPlayerState::IsGrounding() const
+{
+    if (!Owner) return false;
+    return Cast<ACharacter>(Owner) -> GetCharacterMovement() -> IsMovingOnGround();
+}
+
+bool ACurrsorPlayerState::IsWalking() const
+{
+    return bIsWalk;
 }
 
 // 状态进入/退出函数实现
@@ -162,6 +184,18 @@ void ACurrsorPlayerState::OnExitAttack()
     UE_LOG(LogTemp, Log, TEXT("Exiting Attack state"));
 }
 
+void ACurrsorPlayerState::OnEnterWalk(EPlayerState PreviousState)
+{
+    // 行走开始逻辑
+    UE_LOG(LogTemp, Log, TEXT("Entering Walk state from %d"), PreviousState);
+}
+
+void ACurrsorPlayerState::OnExitWalk()
+{
+    // 行走结束逻辑
+    UE_LOG(LogTemp, Log, TEXT("Exiting Walk state"));
+}
+
 // 其他状态进入/退出函数类似实现...
 // 这里省略了RunAttack, Jump, Fall, Run, Walk, Idle的状态函数实现
 // 实际项目中应该全部实现
@@ -181,5 +215,11 @@ void ACurrsorPlayerState::SetAttacking(bool bAttacking)
 void ACurrsorPlayerState::SetJumping(bool bJumping)
 {
     bIsJumping = bJumping;
+    UpdateState();
+}
+
+void ACurrsorPlayerState::SetWalking(bool bWalking)
+{
+    bIsWalk = bWalking;
     UpdateState();
 }

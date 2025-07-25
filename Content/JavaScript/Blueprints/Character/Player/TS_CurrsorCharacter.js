@@ -5,12 +5,18 @@ const puerts_1 = require("puerts");
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorCharacter.BP_CurrsorCharacter_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_CurrsorCharacter extends jsClass {
-    ReceiveBeginPlay() {
+    State = UE.EPlayerState.Idle;
+    ReceiveTick() {
         this.Debug();
     }
     // Debug
     Debug() {
-        this.ArrowComponent_EditorOnly.SetHiddenInGame(!this.GetWorld().OwningGameInstance.bIsDebug, true);
+        if (this.GetWorld().OwningGameInstance.bIsDebug) {
+            this.ArrowComponent_EditorOnly.SetHiddenInGame(false, true);
+            this.ArrowComponent_EditorOnly.SetIsScreenSizeScaled(true);
+            this.State = this.PlayerState.GetCurrentState();
+            UE.KismetSystemLibrary.PrintString(this, "PlayerState: " + UE.EPlayerState[this.State], true, false, UE.LinearColor.White, 0.0);
+        }
     }
 }
 puerts_1.blueprint.mixin(jsClass, TS_CurrsorCharacter);

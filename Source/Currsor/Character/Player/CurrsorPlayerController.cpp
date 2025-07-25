@@ -7,7 +7,7 @@
 #include "CurrsorPlayerState.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "Component/CurrsorMovementComponent.h"
+#include "Component/CurrsorActionComponent.h"
 
 void ACurrsorPlayerController::SetupInputComponent()
 {
@@ -15,11 +15,17 @@ void ACurrsorPlayerController::SetupInputComponent()
     if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
     {
         EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::Move);
+        EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Started, this, &ACurrsorPlayerController::MoveStarted);
+        EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::MoveCompleted);
         // EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::JumpStarted);
         // EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::JumpCompleted);
-        EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::DashStarted);
-        EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::DashCompleted);
-        // EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::AttackTriggered);
+        // EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::DashStarted);
+        // EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::DashCompleted);
+        EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &ACurrsorPlayerController::AttackTriggered);
+        EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &ACurrsorPlayerController::AttackStarted);
+        EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Canceled, this, &ACurrsorPlayerController::AttackCanceled);
+        EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &ACurrsorPlayerController::AttackCompleted);
+
     }
 }
 
@@ -36,38 +42,70 @@ void ACurrsorPlayerController::BeginPlay()
     CurrsorPlayerState = Cast<ACurrsorPlayerState>(CurrsorPlayerState);
 
     // 依赖项通过 Initialize 注入
-    MovementComponent = NewObject<UCurrsorMovementComponent>(this);
-    MovementComponent->Initialize(CurrsorPlayer, CurrsorPlayerState, this);
+    PlayerActionComponent = NewObject<UCurrsorActionComponent>(this);
+    PlayerActionComponent->Initialize(CurrsorPlayer, CurrsorPlayerState, this);
+
+    PlayerStateComponent = GetPlayerState<ACurrsorPlayerState>();
 }
 
 void ACurrsorPlayerController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
     // TODO: 这里可以添加其他逻辑，比如更新状态或处理输入
-    MovementComponent->UpdateRotationBasedOnInput(DeltaTime);
-    // MovementComponent->UpdateDash(DeltaTime);
+    PlayerActionComponent->UpdateRotationBasedOnInput(DeltaTime);
+    // PlayerActionComponent->UpdateDash(DeltaTime);
 }
 
 void ACurrsorPlayerController::Move(const FInputActionValue& Value)
 {
-    if (MovementComponent) MovementComponent->Move(Value);
+    if (PlayerActionComponent) PlayerActionComponent->Move(Value);
+}
+
+void ACurrsorPlayerController::MoveStarted()
+{
+    if (!CurrsorPlayerState->ShouldMove()) return;
+    if(PlayerStateComponent) PlayerStateComponent->SetWalking(true);
+}
+
+void ACurrsorPlayerController::MoveCompleted()
+{
+    if(PlayerStateComponent) PlayerStateComponent->SetWalking(false);
+}
+
+void ACurrsorPlayerController::AttackTriggered()
+{
+    UE_LOG(LogTemp, Log, TEXT("AttackContinous"));
+}
+
+void ACurrsorPlayerController::AttackStarted()
+{
+    UE_LOG(LogTemp, Log, TEXT("Attack"));
+    CurrsorPlayerState -> SetAttackKey(false);
+    if (PlayerActionComponent) PlayerActionComponent->TryStartAttack();
+}
+
+void ACurrsorPlayerController::AttackCanceled()
+{
+    UE_LOG(LogTemp, Log, TEXT("Attack_End"));
+    CurrsorPlayerState -> SetAttackKey(true);
+}
+
+void ACurrsorPlayerController::AttackCompleted()
+{
+    UE_LOG(LogTemp, Log, TEXT("AttackContinous_End"));
+    CurrsorPlayerState -> SetAttackKey(true);
+}
+
+void ACurrsorPlayerController::AttackEnd_Implementation()
+{
+    ICombatInterface::AttackEnd_Implementation();
+
+    if (PlayerStateComponent->GetAttackKey()) PlayerActionComponent->AttackCompleted();
 }
 // TODO: 这里可以添加其他输入处理函数
-// void ACurrsorPlayerController::JumpStarted() { MovementComponent->JumpStarted(); }
-// void ACurrsorPlayerController::JumpCompleted() { MovementComponent->JumpCompleted(); }
-void ACurrsorPlayerController::DashStarted() { MovementComponent->DashStarted(); }
-void ACurrsorPlayerController::DashCompleted() { MovementComponent->DashCompleted(); }
+// void ACurrsorPlayerController::JumpStarted() { PlayerActionComponent->JumpStarted(); }
+// void ACurrsorPlayerController::JumpCompleted() { PlayerActionComponent->JumpCompleted(); }
+// void ACurrsorPlayerController::DashStarted() { PlayerActionComponent->DashStarted(); }
+// void ACurrsorPlayerController::DashCompleted() { PlayerActionComponent->DashCompleted(); }
 // void ACurrsorPlayerController::AttackTriggered() { AttackComponent->AttackTriggered(); }
 // void ACurrsorPlayerController::AttackEnd_Implementation() { AttackComponent->AttackEnd(); }
-
-// 设置和获取移动速度
-void ACurrsorPlayerController::SetMovementSpeedFromTS(float NewSpeed)
-{
-    if (MovementComponent) MovementComponent->SetMovementSpeed(NewSpeed);
-    UE_LOG(LogTemp, Warning, TEXT("SetMovementSpeedFromTS: %f"), NewSpeed);
-}
-
-float ACurrsorPlayerController::GetMovementSpeedFromTS() const
-{
-    return MovementComponent ? MovementComponent->GetMovementSpeed() : 0.f;
-}

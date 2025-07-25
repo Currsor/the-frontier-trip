@@ -1,31 +1,46 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "CurrsorMovementComponent.h"
+#include "CurrsorActionComponent.h"
 
 #include "InputActionValue.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
 #include "Currsor/Character/Player/CurrsorPlayerController.h"
 #include "Currsor/Character/Player/CurrsorPlayerState.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 // Sets default values for this component's properties
-UCurrsorMovementComponent::UCurrsorMovementComponent()
+UCurrsorActionComponent::UCurrsorActionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UCurrsorMovementComponent::Initialize(ACurrsorCharacter* InPlayer, ACurrsorPlayerState* InState,ACurrsorPlayerController* InController)
+void UCurrsorActionComponent::Initialize(ACurrsorCharacter* InPlayer, ACurrsorPlayerState* InState,ACurrsorPlayerController* InController)
 {
 	CurrsorPlayer = InPlayer;
 	CurrsorPlayerState = InState;
 	CurrsorPlayerController = InController;
 }
 
-void UCurrsorMovementComponent::Move(const FInputActionValue& Value)
+bool UCurrsorActionComponent::TryStartAttack()
 {
-	// TODO: 这里可以添加更多的输入处理逻辑
-	// if (!CurrsorPlayerState->CanMove()) return;
+	if (CurrsorPlayerState && CurrsorPlayerState->CanStartAttack())
+	{
+		CurrsorPlayerState->SetAttacking(true);
+		return true;
+	}
+	return false;
+}
+
+void UCurrsorActionComponent::AttackCompleted()
+{
+	if (CurrsorPlayerState) CurrsorPlayerState->SetAttacking(false);
+}
+
+void UCurrsorActionComponent::Move(const FInputActionValue& Value)
+{
+	if (!CurrsorPlayerState->ShouldMove()) return;
 	
 	if (CurrsorPlayer && CurrsorPlayerController)
 	{
@@ -52,7 +67,7 @@ void UCurrsorMovementComponent::Move(const FInputActionValue& Value)
 	}
 }
 
-void UCurrsorMovementComponent::UpdateRotationBasedOnInput(float DeltaTime)
+void UCurrsorActionComponent::UpdateRotationBasedOnInput(float DeltaTime)
 {
 	if (this&& FMath::Abs(CurrentMovementVector) > KINDA_SMALL_NUMBER)
 	{
@@ -65,7 +80,7 @@ void UCurrsorMovementComponent::UpdateRotationBasedOnInput(float DeltaTime)
 	}
 }
 
-void UCurrsorMovementComponent::SetMovementSpeed(float NewSpeed)
+void UCurrsorActionComponent::SetMovementSpeed(float NewSpeed)
 {
 	MovementSpeed = FMath::Clamp(NewSpeed, 0.0f, 1200.0f);
 	if (CurrsorPlayer)
@@ -74,11 +89,11 @@ void UCurrsorMovementComponent::SetMovementSpeed(float NewSpeed)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("CurrsorPlayer is null in UCurrsorMovementComponent::SetMovementSpeed"));
+		UE_LOG(LogTemp, Warning, TEXT("CurrsorPlayer is null in UCurrsorActionComponent::SetMovementSpeed"));
 	}
 }
 
-float UCurrsorMovementComponent::GetMovementSpeed() const
+float UCurrsorActionComponent::GetMovementSpeed() const
 {
 	return MovementSpeed;
 }

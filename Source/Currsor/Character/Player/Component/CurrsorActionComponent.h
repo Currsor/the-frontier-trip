@@ -5,7 +5,8 @@
 #include "CoreMinimal.h"
 #include "InputActionValue.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "CurrsorMovementComponent.generated.h"
+#include "../CurrsorPlayerState.h"
+#include "CurrsorActionComponent.generated.h"
 
 
 class ACurrsorPlayerController;
@@ -13,20 +14,29 @@ class ACurrsorPlayerState;
 class ACurrsorCharacter;
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
-class CURRSOR_API UCurrsorMovementComponent : public UActorComponent
+class CURRSOR_API UCurrsorActionComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
-	UCurrsorMovementComponent();
+	UCurrsorActionComponent();
 
 	void Initialize(ACurrsorCharacter* InPlayer, ACurrsorPlayerState* InState, ACurrsorPlayerController* InController);
 
 	UFUNCTION()
 	void Move(const FInputActionValue& Value);
+
+	UFUNCTION()
 	void UpdateRotationBasedOnInput(float DeltaTime);
 
 	UFUNCTION()
+	bool TryStartAttack();
+
+	UFUNCTION()
+	void AttackCompleted();
+
+	// UFUNCTION()
+	// void DashStarted();
 	void SetMovementSpeed(float NewSpeed);
 	
 	UFUNCTION()

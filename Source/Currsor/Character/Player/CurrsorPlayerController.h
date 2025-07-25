@@ -3,10 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Currsor/Interface/CombatInterface.h"
 #include "GameFramework/PlayerController.h"
 #include "CurrsorPlayerController.generated.h"
 
-class UCurrsorMovementComponent;
+class UCurrsorActionComponent;
 class ACurrsorCharacter;
 struct FInputActionValue;
 class ACurrsorPlayerState;
@@ -18,13 +19,17 @@ class UInputAction;
  * 玩家控制器类
  */
 UCLASS()
-class CURRSOR_API ACurrsorPlayerController : public APlayerController
+class CURRSOR_API ACurrsorPlayerController : public APlayerController, public ICombatInterface
 {
 	GENERATED_BODY()
 public:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 	virtual void Tick(float DeltaTime) override;
+
+	//~ Begin ICombatStateInterface
+	virtual void AttackEnd_Implementation() override;
+	//~ End ICombatStateInterface
 	
 protected:
 	// 输入映射上下文
@@ -43,7 +48,10 @@ protected:
 
 	// 组件
 	UPROPERTY(BlueprintReadOnly, Category = "Components")
-	TObjectPtr<UCurrsorMovementComponent> MovementComponent;
+	TObjectPtr<UCurrsorActionComponent> PlayerActionComponent;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Components")
+	TObjectPtr<ACurrsorPlayerState> PlayerStateComponent;
 
 	// 输入动作
 	UPROPERTY(EditDefaultsOnly, Category = "Enhanced Input")
@@ -57,28 +65,40 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Enhanced Input")
 	TObjectPtr<UInputAction> AttackAction = nullptr;
-
+	
+private:
 	// 输入处理函数
 	UFUNCTION()
 	void Move(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void MoveStarted();
+
+	UFUNCTION()
+	void MoveCompleted();
+
+	UFUNCTION()
+	void AttackTriggered();
+
+	UFUNCTION()
+	void AttackStarted();
+
+	UFUNCTION()
+	void AttackCanceled();
+
+	UFUNCTION()
+	void AttackCompleted();
 
 	// UFUNCTION()
 	// void JumpStarted();
 	// UFUNCTION()
 	// void JumpCompleted();
 
-	UFUNCTION()
-	void DashStarted();
-	UFUNCTION()
-	void DashCompleted();
+	// UFUNCTION()
+	// void DashStarted();
+	// UFUNCTION()
+	// void DashCompleted();
 
 	// UFUNCTION()
 	// void AttackTriggered();
-
-	// 设置和获取移动速度
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	void SetMovementSpeedFromTS(float NewSpeed);
-
-	UFUNCTION(BlueprintCallable, Category = "Movement")
-	float GetMovementSpeedFromTS() const;
 };

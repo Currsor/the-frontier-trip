@@ -50,6 +50,12 @@ public:
     
     UFUNCTION(BlueprintPure, Category = "Player State")
     bool IsFalling() const;
+    
+    UFUNCTION(BlueprintPure, Category = "Player State")
+    bool IsGrounding() const;
+
+    UFUNCTION(BlueprintPure, Category = "Player State")
+    bool IsWalking() const;
 
     // 状态设置
     UFUNCTION(BlueprintCallable, Category = "Player State")
@@ -61,9 +67,24 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Player State")
     void SetJumping(bool bJumping);
 
+    UFUNCTION(BlueprintCallable, Category = "Player State")
+    void SetWalking(bool bWalking);
+
+    UFUNCTION(BlueprintCallable, Category = "Key")
+    void SetAttackKey(bool bAttackKey) { bIsAttackKeyReleased = bAttackKey; }
+
     // 获取当前状态
     UFUNCTION(BlueprintPure, Category = "Player State")
     EPlayerState GetCurrentState() const { return CurrentState; }
+
+    UFUNCTION(BlueprintPure, Category = "Key")
+    bool GetAttackKey() const { return bIsAttackKeyReleased; }
+
+    UFUNCTION(BlueprintCallable, Category = "Player State")
+    bool ShouldMove();
+
+    UFUNCTION(BlueprintCallable, Category = "Player State")
+    bool CanStartAttack() const;
 
 protected:
     // 状态变更核心逻辑
@@ -88,8 +109,8 @@ protected:
     // void OnEnterRun(EPlayerState PreviousState);
     // void OnExitRun();
     // 
-    // void OnEnterWalk(EPlayerState PreviousState);
-    // void OnExitWalk();
+    void OnEnterWalk(EPlayerState PreviousState);
+    void OnExitWalk();
     // 
     // void OnEnterIdle(EPlayerState PreviousState);
     // void OnExitIdle();
@@ -112,7 +133,10 @@ private:
     float WalkThreshold = 10.0f;
 
     UPROPERTY(EditDefaultsOnly, Category = "Player State|Thresholds")
-    float RunThreshold = 600.0f;
+    float RunThreshold = 700.0f;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Player State|Thresholds")
+    float RunAttackThreshold = 10.0f;
 
     // 状态标志
     UPROPERTY(VisibleInstanceOnly, Category = "Player State")
@@ -123,4 +147,11 @@ private:
 
     UPROPERTY(VisibleInstanceOnly, Category = "Player State")
     bool bIsJumping = false;
+
+    UPROPERTY(VisibleInstanceOnly, Category = "Player State")
+    bool bIsWalk = false;
+
+    // 按键标志
+    UPROPERTY(VisibleInstanceOnly, Category = "Player State")
+    bool bIsAttackKeyReleased = false;
 };
