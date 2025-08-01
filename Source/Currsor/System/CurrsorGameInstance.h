@@ -22,7 +22,7 @@ public:
 
 	virtual void Shutdown() override;
 
-	// 调试模式
+	// PureTS调试模式
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | PuerTS")
 	bool bDebugMode = false;
 
@@ -32,7 +32,11 @@ public:
 
 	// 是否是调试模式
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | Editor")  
-	bool bIsDebug;  
+	bool bDebug = false;
+
+	// 是否是攻击调试模式
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | Editor", meta = (EditCondition = "bDebug",EditConditionHides = "bDebug"))
+	bool bAttackDebug = false;
 
 private:
 	TSharedPtr<puerts::FJsEnv> GameScript;

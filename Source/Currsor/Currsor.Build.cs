@@ -15,7 +15,8 @@ public class Currsor : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"JsEnv",
-			"Puerts"
+			"Puerts",
+			"UMG"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });

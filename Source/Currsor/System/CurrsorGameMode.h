@@ -13,4 +13,6 @@ UCLASS()
 class CURRSOR_API ACurrsorGameMode : public AGameMode
 {
 	GENERATED_BODY()
+public:
+	virtual void StartPlay() override;
 };

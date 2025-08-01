@@ -1,35 +1,42 @@
 const fs = require('fs');
 const path = require('path');
 
-const dir = path.join(__dirname, 'TypeScript', 'Blueprints');
-const entryFile = path.join(__dirname, 'TypeScript', 'CurrsorGame.ts');
-
-// 递归获取所有 .ts 文件（不带 .ts 后缀）
-function getAllTsFiles(dirPath, relativePath = '') {
-    let results = [];
-    const list = fs.readdirSync(dirPath);
-    list.forEach(file => {
-        const filePath = path.join(dirPath, file);
-        const relPath = path.join(relativePath, file);
-        const stat = fs.statSync(filePath);
-        if (stat.isDirectory()) {
-            results = results.concat(getAllTsFiles(filePath, relPath));
-        } else if (file.endsWith('.ts')) {
-            results.push(relPath.replace(/\\/g, '/').replace(/\.ts$/, ''));
-        }
+function generateImports(rootDir, targetFile) {
+  const imports = new Set(); // 使用Set去重
+  
+  // 遍历TypeScript文件夹
+  function traverseDir(dir) {
+    const files = fs.readdirSync(dir);
+    files.forEach(file => {
+      const fullPath = path.join(dir, file);
+      const stat = fs.statSync(fullPath);
+      
+      if (stat.isDirectory()) {
+        traverseDir(fullPath);
+      } else if (file.endsWith('.ts') && !fullPath.endsWith('CurrsorGame.ts')) {
+        // 生成相对路径，并排除CurrsorGame.ts
+        const relativePath = path.relative(rootDir, fullPath).replace(/\\/g, '/');
+        imports.add(`import "./${relativePath.replace('.ts', '')}";`);
+      }
     });
-    return results;
+  }
+  
+  traverseDir(rootDir);
+  
+  // 读取目标文件内容并过滤已存在的导入语句
+  const content = fs.readFileSync(targetFile, 'utf8');
+  const existingImports = new Set();
+  content.split('\n').forEach(line => {
+    if (line.startsWith('import "./')) {
+      existingImports.add(line);
+    }
+  });
+  
+  // 合并新导入和已存在的导入，确保无重复
+  const finalImports = Array.from(new Set([...imports, ...existingImports]));
+  const newContent = finalImports.join('\n') + '\n' + content.replace(/^import ".*"\;\n/gm, '');
+  fs.writeFileSync(targetFile, newContent, 'utf8');
 }
 
-const files = getAllTsFiles(dir);
-const importLines = files.map(f => `import "./Blueprints/${f}";`).join('\n');
-
-// 保留原有非 import 内容
-let original = '';
-if (fs.existsSync(entryFile)) {
-    original = fs.readFileSync(entryFile, 'utf-8')
-        .replace(/import\s+["'][^"']+["'];\s*\n?/g, '');
-}
-
-fs.writeFileSync(entryFile, `${importLines}\n\n${original.trim()}\n`);
-console.log('已自动写入 CurrsorGame.ts');
+// 调用函数生成导入路径并更新CurrsorGame.ts
+generateImports('TypeScript', 'TypeScript/CurrsorGame.ts');

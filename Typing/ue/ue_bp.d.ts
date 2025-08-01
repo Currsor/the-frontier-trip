@@ -10515,7 +10515,6 @@ declare module "ue" {
             Cube: UE.StaticMeshComponent;
             DefaultSceneRoot: UE.SceneComponent;
             ExecuteUbergraph_BP_Cube(EntryPoint: number) : void;
-            ReceiveBeginPlay() : void;
             /*
              *Event called every frame, if ticking is enabled
              */
@@ -10530,13 +10529,14 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 0C96473641665D7BC2D39DA7805FFD16
+// __TYPE_DECL_START: 8BAAF7BA421152D10FC1DE9B74C9D33A
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
-            Dir: UE.ArrowComponent;
             ExecuteUbergraph_BP_CurrsorCharacter(EntryPoint: number) : void;
+            InpActEvt_One_K2Node_InputKeyEvent_1(Key: UE.Key) : void;
+            InpActEvt_Two_K2Node_InputKeyEvent_0(Key: UE.Key) : void;
             /*
              *Event when play begins for this actor.
              */
@@ -10545,11 +10545,6 @@ declare module "ue" {
              *Event called every frame, if ticking is enabled
              */
             ReceiveTick(DeltaSeconds: number) : void;
-            /*
-             *Construction script, the place to spawn components and do other setup.
-             *@note Name used in CreateBlueprint function
-             */
-            UserConstructionScript() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorCharacter_C;
             static Load(InName: string): BP_CurrsorCharacter_C;
@@ -10574,11 +10569,10 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 27390DDE46D514E1013996BD3E0CA6CB
+// __TYPE_DECL_START: 6FDCC6AB493B16C0001063B7934F7879
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerController {
         class BP_CurrsorPlayerController_C extends UE.CurrsorPlayerController {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            ReceiveBeginPlay() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorPlayerController_C;
             static Load(InName: string): BP_CurrsorPlayerController_C;
@@ -10640,10 +10634,14 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 08667DF841C14B9C7F582FAE41C753EC
+// __TYPE_DECL_START: 672349FE4EA88290FC061FBC0E9F5453
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            ExecuteUbergraph_BP_CurrsorGameInstance(EntryPoint: number) : void;
+            InpActEvt_One_K2Node_InputKeyEvent_0(Key: UE.Key) : void;
+            InpActEvt_SpaceBar_K2Node_InputKeyEvent_1(Key: UE.Key) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorGameInstance_C;
             static Load(InName: string): BP_CurrsorGameInstance_C;
@@ -10672,18 +10670,26 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: E689A23D4F3E5A98707373ACC94FEDA0
+// __TYPE_DECL_START: EEDFA039405100D0794AE395FB78E575
     namespace Game.Blueprints.Character.Player.BPA_PlayerAnim {
         class BPA_PlayerAnim_C extends UE.PaperZDAnimInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
-            PaperZDAnimGraphNode_Sink_2: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_Sink_5: UE.PaperZDAnimNode_Sink;
             PaperZDAnimGraphNode_OverrideSlot: UE.PaperZDAnimNode_OverrideSlot;
+            PaperZDAnimGraphNode_PlaySequence_4: UE.PaperZDAnimNode_PlaySequence;
+            PaperZDAnimGraphNode_Sink_4: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_PlaySequence_3: UE.PaperZDAnimNode_PlaySequence;
+            PaperZDAnimGraphNode_Sink_3: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_PlaySequence_2: UE.PaperZDAnimNode_PlaySequence;
+            PaperZDAnimGraphNode_Sink_2: UE.PaperZDAnimNode_Sink;
             PaperZDAnimGraphNode_PlaySequence_1: UE.PaperZDAnimNode_PlaySequence;
             PaperZDAnimGraphNode_Sink_1: UE.PaperZDAnimNode_Sink;
             PaperZDAnimGraphNode_PlaySequence: UE.PaperZDAnimNode_PlaySequence;
             PaperZDAnimGraphNode_Sink: UE.PaperZDAnimNode_Sink;
             PaperZDAnimGraphNode_StateMachine: UE.PaperZDAnimNode_StateMachine;
+            PaperZDAnimGraphNode_CacheAnimation: UE.PaperZDAnimNode_CacheAnimation;
+            PaperZDAnimGraphNode_UseCachedAnimation: UE.PaperZDAnimNode_UseCachedAnimation;
             ["As BP Currsor Character"]: UE.Game.Blueprints.Character.Player.BP_CurrsorCharacter.BP_CurrsorCharacter_C;
             ["As BP Currsor Player State"]: UE.Game.Blueprints.Character.Player.BP_CurrsorPlayerState.BP_CurrsorPlayerState_C;
             State: UE.EPlayerState;
@@ -10698,11 +10704,52 @@ declare module "ue" {
             OnTick(DeltaTime: number) : void;
             ZDRule_Transition(bCanEnterTransition: $Ref<boolean>) : void;
             ZDRule_Transition_1(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_11(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_12(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_2(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_3(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_4(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_6(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_7(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_9(bCanEnterTransition: $Ref<boolean>) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BPA_PlayerAnim_C;
             static Load(InName: string): BPA_PlayerAnim_C;
         
             __tid_BPA_PlayerAnim_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 2F3CB13949C4BD6A80CF55B115413568
+    namespace Game.UMG.Debug.W_Debug {
+        class W_Debug_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            IsDebug: UE.CheckBox;
+            State: UE.TextBlock;
+            BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
+            /*
+             *Called after the underlying slate widget is constructed.  Depending on how the slate object is used
+             *this event may be called multiple times due to adding and removing from the hierarchy.
+             *If you need a true called-once-when-created event, use OnInitialized.
+             */
+            Construct() : void;
+            ExecuteUbergraph_W_Debug(EntryPoint: number) : void;
+            Get_IsDebug_CheckedState() : UE.ECheckBoxState;
+            /*
+             *Ticks this widget.  Override in derived classes, but always call the parent implementation.
+             *
+             *@param  MyGeometry The space allotted for this widget
+             *@param  InDeltaTime  Real time passed since last tick
+             */
+            Tick(MyGeometry: UE.Geometry, InDeltaTime: number) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): W_Debug_C;
+            static Load(InName: string): W_Debug_C;
+        
+            __tid_W_Debug_C_0__: boolean;
         }
         
     }

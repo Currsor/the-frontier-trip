@@ -7,6 +7,7 @@
 #include "PaperZDCharacter.h"
 #include "CurrsorCharacter.generated.h"
 
+class UBoxComponent;
 class ACurrsorPlayerState;
 class UCurrsorCameraComponent;
 class USpringArmComponent;
@@ -32,6 +33,10 @@ private:
 	// 相机组件
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCurrsorCameraComponent> CameraComponent;
+
+	// 攻击碰撞盒
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UBoxComponent> AttackHitbox;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<ACurrsorPlayerState> CurrsorPlayerState = Cast<ACurrsorPlayerState>(GetPlayerState());

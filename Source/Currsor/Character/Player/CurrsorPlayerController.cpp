@@ -7,7 +7,9 @@
 #include "CurrsorPlayerState.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Blueprint/UserWidget.h"
 #include "Component/CurrsorActionComponent.h"
+#include "Currsor/System/CurrsorGameInstance.h"
 
 void ACurrsorPlayerController::SetupInputComponent()
 {
@@ -46,6 +48,17 @@ void ACurrsorPlayerController::BeginPlay()
     PlayerActionComponent->Initialize(CurrsorPlayer, CurrsorPlayerState, this);
 
     PlayerStateComponent = GetPlayerState<ACurrsorPlayerState>();
+
+    // Debug
+    if (DebugUIClass && Cast<UCurrsorGameInstance>(GetGameInstance())->bDebug)
+    {
+        DebugUIInstance = CreateWidget<UUserWidget>(this, DebugUIClass);
+        if (DebugUIInstance)
+        {
+            DebugUIInstance->AddToViewport(); // 添加到视窗
+            DebugUIInstance->SetVisibility(ESlateVisibility::Visible); // 初始可见
+        }
+    }
 }
 
 void ACurrsorPlayerController::Tick(float DeltaTime)
@@ -80,28 +93,45 @@ void ACurrsorPlayerController::AttackTriggered()
 void ACurrsorPlayerController::AttackStarted()
 {
     UE_LOG(LogTemp, Log, TEXT("Attack"));
-    CurrsorPlayerState -> SetAttackKey(false);
+    CurrsorPlayerState -> SetAttackKey(true);
     if (PlayerActionComponent) PlayerActionComponent->TryStartAttack();
 }
 
 void ACurrsorPlayerController::AttackCanceled()
 {
     UE_LOG(LogTemp, Log, TEXT("Attack_End"));
-    CurrsorPlayerState -> SetAttackKey(true);
+    CurrsorPlayerState -> SetAttackKey(false);
 }
 
 void ACurrsorPlayerController::AttackCompleted()
 {
     UE_LOG(LogTemp, Log, TEXT("AttackContinous_End"));
-    CurrsorPlayerState -> SetAttackKey(true);
+    CurrsorPlayerState -> SetAttackKey(false);
+    
 }
 
 void ACurrsorPlayerController::AttackEnd_Implementation()
 {
     ICombatInterface::AttackEnd_Implementation();
 
-    if (PlayerStateComponent->GetAttackKey()) PlayerActionComponent->AttackCompleted();
+    if (!PlayerStateComponent->GetAttackKey()) PlayerActionComponent->AttackCompleted();
 }
+
+void ACurrsorPlayerController::ToggleDebugUI()
+{
+    if (DebugUIInstance)
+    {
+        if (DebugUIInstance->GetVisibility() == ESlateVisibility::Visible)
+        {
+            DebugUIInstance->SetVisibility(ESlateVisibility::Hidden);
+        }
+        else
+        {
+            DebugUIInstance->SetVisibility(ESlateVisibility::Visible);
+        }
+    }
+}
+
 // TODO: 这里可以添加其他输入处理函数
 // void ACurrsorPlayerController::JumpStarted() { PlayerActionComponent->JumpStarted(); }
 // void ACurrsorPlayerController::JumpCompleted() { PlayerActionComponent->JumpCompleted(); }

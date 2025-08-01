@@ -43,7 +43,8 @@ void ACurrsorPlayerState::UpdateState()
         NewState = EPlayerState::Dash;
     } 
     else if (IsAttacking()) {
-        NewState = (CurrsorVelocity.Size() > RunAttackThreshold) ? EPlayerState::RunAttack : EPlayerState::Attack;
+        // NewState = (CurrsorVelocity.Size() > RunAttackThreshold) ? EPlayerState::RunAttack : EPlayerState::Attack;
+        NewState = EPlayerState::Attack;
     }
     else if (IsJumping()) {
         NewState = EPlayerState::Jump;
