@@ -31,16 +31,8 @@ public:
 	virtual void AttackEnd_Implementation() override;
 	//~ End ICombatStateInterface
 
-	// Debug
-	UPROPERTY(EditDefaultsOnly, Category = "Debug")
-	TSubclassOf<UUserWidget> DebugUIClass; // Debug UI的蓝图类
-
 	UPROPERTY()
 	UUserWidget* DebugUIInstance; // Debug UI的实例
-
-	// 显示/隐藏Debug UI
-	UFUNCTION()
-	void ToggleDebugUI();
 	
 protected:
 	// 输入映射上下文

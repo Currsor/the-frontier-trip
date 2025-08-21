@@ -10529,14 +10529,12 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 8BAAF7BA421152D10FC1DE9B74C9D33A
+// __TYPE_DECL_START: B5316AC84B60953B7DA719B0C6EF134B
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
             ExecuteUbergraph_BP_CurrsorCharacter(EntryPoint: number) : void;
-            InpActEvt_One_K2Node_InputKeyEvent_1(Key: UE.Key) : void;
-            InpActEvt_Two_K2Node_InputKeyEvent_0(Key: UE.Key) : void;
             /*
              *Event when play begins for this actor.
              */
@@ -10573,6 +10571,7 @@ declare module "ue" {
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerController {
         class BP_CurrsorPlayerController_C extends UE.CurrsorPlayerController {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            ReceiveBeginPlay() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorPlayerController_C;
             static Load(InName: string): BP_CurrsorPlayerController_C;
@@ -10634,14 +10633,10 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 672349FE4EA88290FC061FBC0E9F5453
+// __TYPE_DECL_START: 4F2A1BDC4EE85A5607A287A3B3E35F27
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            UberGraphFrame: UE.PointerToUberGraphFrame;
-            ExecuteUbergraph_BP_CurrsorGameInstance(EntryPoint: number) : void;
-            InpActEvt_One_K2Node_InputKeyEvent_0(Key: UE.Key) : void;
-            InpActEvt_SpaceBar_K2Node_InputKeyEvent_1(Key: UE.Key) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorGameInstance_C;
             static Load(InName: string): BP_CurrsorGameInstance_C;
@@ -10722,7 +10717,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 2F3CB13949C4BD6A80CF55B115413568
+// __TYPE_DECL_START: CDCA6C9C45A4EAE2238A2191F26ED985
     namespace Game.UMG.Debug.W_Debug {
         class W_Debug_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10738,6 +10733,8 @@ declare module "ue" {
             Construct() : void;
             ExecuteUbergraph_W_Debug(EntryPoint: number) : void;
             Get_IsDebug_CheckedState() : UE.ECheckBoxState;
+            Get_State_Text() : string;
+            OnInitialized() : void;
             /*
              *Ticks this widget.  Override in derived classes, but always call the parent implementation.
              *

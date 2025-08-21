@@ -48,17 +48,6 @@ void ACurrsorPlayerController::BeginPlay()
     PlayerActionComponent->Initialize(CurrsorPlayer, CurrsorPlayerState, this);
 
     PlayerStateComponent = GetPlayerState<ACurrsorPlayerState>();
-
-    // Debug
-    if (DebugUIClass && Cast<UCurrsorGameInstance>(GetGameInstance())->bDebug)
-    {
-        DebugUIInstance = CreateWidget<UUserWidget>(this, DebugUIClass);
-        if (DebugUIInstance)
-        {
-            DebugUIInstance->AddToViewport(); // 添加到视窗
-            DebugUIInstance->SetVisibility(ESlateVisibility::Visible); // 初始可见
-        }
-    }
 }
 
 void ACurrsorPlayerController::Tick(float DeltaTime)
@@ -115,21 +104,6 @@ void ACurrsorPlayerController::AttackEnd_Implementation()
     ICombatInterface::AttackEnd_Implementation();
 
     if (!PlayerStateComponent->GetAttackKey()) PlayerActionComponent->AttackCompleted();
-}
-
-void ACurrsorPlayerController::ToggleDebugUI()
-{
-    if (DebugUIInstance)
-    {
-        if (DebugUIInstance->GetVisibility() == ESlateVisibility::Visible)
-        {
-            DebugUIInstance->SetVisibility(ESlateVisibility::Hidden);
-        }
-        else
-        {
-            DebugUIInstance->SetVisibility(ESlateVisibility::Visible);
-        }
-    }
 }
 
 // TODO: 这里可以添加其他输入处理函数
