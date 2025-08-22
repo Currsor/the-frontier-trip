@@ -10529,7 +10529,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: B5316AC84B60953B7DA719B0C6EF134B
+// __TYPE_DECL_START: F1499A714A0958F7285AEB8E30E7CEFA
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10571,7 +10571,6 @@ declare module "ue" {
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerController {
         class BP_CurrsorPlayerController_C extends UE.CurrsorPlayerController {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            ReceiveBeginPlay() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorPlayerController_C;
             static Load(InName: string): BP_CurrsorPlayerController_C;
@@ -10603,7 +10602,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: A2DC8AE0497C37C1C79EA988340947B4
+// __TYPE_DECL_START: DF11348D459CED86EA1D2EAF64B6E32B
     namespace Game.Blueprints.System.BP_CurrsorGameState {
         class BP_CurrsorGameState_C extends UE.CurrsorGameState {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10633,7 +10632,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: A5F1606A4EB6C2B590589FA2A0C698A3
+// __TYPE_DECL_START: 4A0639304FF7D2B582156BA60C0968D1
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10717,13 +10716,15 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: FED6A8774C93E53F13E2C685C17DC103
+// __TYPE_DECL_START: F16C81374AB1901A2AD3E293F9EE2224
     namespace Game.UMG.Debug.W_Debug {
         class W_Debug_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
+            ID: UE.TextBlock;
             IsDebug: UE.CheckBox;
             IsDebug_Attack: UE.CheckBox;
+            Overlay_CurrentArea: UE.Overlay;
             Overlay_DebugAttack: UE.Overlay;
             State: UE.TextBlock;
             BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
@@ -10735,6 +10736,7 @@ declare module "ue" {
              */
             Construct() : void;
             ExecuteUbergraph_W_Debug(EntryPoint: number) : void;
+            Get_ID_Text() : string;
             Get_IsDebug_Attack_CheckedState() : UE.ECheckBoxState;
             Get_IsDebug_CheckedState() : UE.ECheckBoxState;
             Get_State_Text() : string;
@@ -10750,6 +10752,21 @@ declare module "ue" {
             static Load(InName: string): W_Debug_C;
         
             __tid_W_Debug_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: E761F4A444EA06773CACE1A131CAFC2C
+    namespace Game.Blueprints.System.BP_CurrsorAreaManager {
+        class BP_CurrsorAreaManager_C extends UE.CurrsorAreaManager {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            DefaultSceneRoot: UE.SceneComponent;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): BP_CurrsorAreaManager_C;
+            static Load(InName: string): BP_CurrsorAreaManager_C;
+        
+            __tid_BP_CurrsorAreaManager_C_0__: boolean;
         }
         
     }

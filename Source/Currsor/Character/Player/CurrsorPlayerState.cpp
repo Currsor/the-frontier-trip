@@ -164,37 +164,37 @@ bool ACurrsorPlayerState::IsWalking() const
 void ACurrsorPlayerState::OnEnterDash(EPlayerState PreviousState)
 {
     // 冲刺开始逻辑
-    UE_LOG(LogTemp, Log, TEXT("Entering Dash state from %d"), PreviousState);
+    //UE_LOG(LogTemp, Log, TEXT("Entering Dash state from %d"), PreviousState);
 }
 
 void ACurrsorPlayerState::OnExitDash()
 {
     // 冲刺结束逻辑
-    UE_LOG(LogTemp, Log, TEXT("Exiting Dash state"));
+    //UE_LOG(LogTemp, Log, TEXT("Exiting Dash state"));
 }
 
 void ACurrsorPlayerState::OnEnterAttack(EPlayerState PreviousState)
 {
     // 攻击开始逻辑
-    UE_LOG(LogTemp, Log, TEXT("Entering Attack state from %d"), PreviousState);
+    //UE_LOG(LogTemp, Log, TEXT("Entering Attack state from %d"), PreviousState);
 }
 
 void ACurrsorPlayerState::OnExitAttack()
 {
     // 攻击结束逻辑
-    UE_LOG(LogTemp, Log, TEXT("Exiting Attack state"));
+    //UE_LOG(LogTemp, Log, TEXT("Exiting Attack state"));
 }
 
 void ACurrsorPlayerState::OnEnterWalk(EPlayerState PreviousState)
 {
     // 行走开始逻辑
-    UE_LOG(LogTemp, Log, TEXT("Entering Walk state from %d"), PreviousState);
+    //UE_LOG(LogTemp, Log, TEXT("Entering Walk state from %d"), PreviousState);
 }
 
 void ACurrsorPlayerState::OnExitWalk()
 {
     // 行走结束逻辑
-    UE_LOG(LogTemp, Log, TEXT("Exiting Walk state"));
+    //UE_LOG(LogTemp, Log, TEXT("Exiting Walk state"));
 }
 
 // 其他状态进入/退出函数类似实现...

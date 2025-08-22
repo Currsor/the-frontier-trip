@@ -30,9 +30,6 @@ public:
 	//~ Begin ICombatStateInterface
 	virtual void AttackEnd_Implementation() override;
 	//~ End ICombatStateInterface
-
-	UPROPERTY()
-	UUserWidget* DebugUIInstance; // Debug UI的实例
 	
 protected:
 	// 输入映射上下文

@@ -20,11 +20,13 @@ class TS_Debug extends jsClass {
     static pawn: UE.CurrsorCharacter;
     static PlayerState: UE.CurrsorPlayerState;
     static GameInstance: UE.CurrsorGameInstance;
+    static GameState: UE.CurrsorGameState;
 
     Construct() {
         TS_Debug.pawn = this.GetOwningPlayerPawn() as UE.CurrsorCharacter;
         TS_Debug.PlayerState = TS_Debug.pawn.PlayerState as UE.CurrsorPlayerState;
         TS_Debug.GameInstance = this.GetWorld().OwningGameInstance as UE.CurrsorGameInstance;
+        TS_Debug.GameState = this.GetWorld().GameState as UE.CurrsorGameState;
         this.Debug();
     }
     
@@ -35,6 +37,7 @@ class TS_Debug extends jsClass {
             TS_Debug.pawn.ArrowComponent_EditorOnly.SetIsScreenSizeScaled(true);
             
             this.Get_State_Text();
+            this.Get_ID_Text();
             // UE.KismetSystemLibrary.PrintString(this, "PlayerState: " + UE.EPlayerState[this.TS_State], true, false, UE.LinearColor.White, 0.0);
 
             this.Overlay_DebugAttack.SetVisibility(UE.ESlateVisibility.Visible);
@@ -67,6 +70,11 @@ class TS_Debug extends jsClass {
         const stateNum = TS_Debug.PlayerState.GetCurrentState();
         return TS_Debug.EPlayerStateMap[stateNum] ?? stateNum.toString();
     }
+
+    Get_ID_Text() : string {
+        return TS_Debug.GameState.GetActorFromID(TS_Debug.GameState.GetCurrentAreaID()).toString();
+    }
+    
 
     BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void {
         TS_Debug.GameInstance.bDebug = bIsChecked;
