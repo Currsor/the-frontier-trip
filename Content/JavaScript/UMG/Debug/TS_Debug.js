@@ -31,18 +31,26 @@ class TS_Debug extends jsClass {
             TS_Debug.pawn.ArrowComponent_EditorOnly.SetIsScreenSizeScaled(true);
             this.Get_State_Text();
             // UE.KismetSystemLibrary.PrintString(this, "PlayerState: " + UE.EPlayerState[this.TS_State], true, false, UE.LinearColor.White, 0.0);
+            this.Overlay_DebugAttack.SetVisibility(UE.ESlateVisibility.Visible);
             if (TS_Debug.GameInstance.bAttackDebug) {
                 TS_Debug.pawn.AttackHitbox.SetHiddenInGame(false, true);
+            }
+            else {
+                TS_Debug.pawn.AttackHitbox.SetHiddenInGame(true, true);
             }
         }
         else {
             TS_Debug.pawn.ArrowComponent_EditorOnly.SetHiddenInGame(true, true);
             TS_Debug.pawn.ArrowComponent_EditorOnly.SetIsScreenSizeScaled(false);
             TS_Debug.pawn.AttackHitbox.SetHiddenInGame(true, true);
+            this.Overlay_DebugAttack.SetVisibility(UE.ESlateVisibility.Hidden);
         }
     }
     Get_IsDebug_CheckedState() {
         return TS_Debug.GameInstance.bDebug ? UE.ECheckBoxState.Checked : UE.ECheckBoxState.Unchecked;
+    }
+    Get_IsDebug_Attack_CheckedState() {
+        return TS_Debug.GameInstance.bAttackDebug ? UE.ECheckBoxState.Checked : UE.ECheckBoxState.Unchecked;
     }
     Get_State_Text() {
         const stateNum = TS_Debug.PlayerState.GetCurrentState();
@@ -50,6 +58,10 @@ class TS_Debug extends jsClass {
     }
     BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked) {
         TS_Debug.GameInstance.bDebug = bIsChecked;
+        this.Debug();
+    }
+    BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked) {
+        TS_Debug.GameInstance.bAttackDebug = bIsChecked;
         this.Debug();
     }
 }

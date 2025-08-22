@@ -10633,7 +10633,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 4F2A1BDC4EE85A5607A287A3B3E35F27
+// __TYPE_DECL_START: A5F1606A4EB6C2B590589FA2A0C698A3
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10717,13 +10717,16 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: CDCA6C9C45A4EAE2238A2191F26ED985
+// __TYPE_DECL_START: FED6A8774C93E53F13E2C685C17DC103
     namespace Game.UMG.Debug.W_Debug {
         class W_Debug_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
             IsDebug: UE.CheckBox;
+            IsDebug_Attack: UE.CheckBox;
+            Overlay_DebugAttack: UE.Overlay;
             State: UE.TextBlock;
+            BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
             BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
             /*
              *Called after the underlying slate widget is constructed.  Depending on how the slate object is used
@@ -10732,9 +10735,9 @@ declare module "ue" {
              */
             Construct() : void;
             ExecuteUbergraph_W_Debug(EntryPoint: number) : void;
+            Get_IsDebug_Attack_CheckedState() : UE.ECheckBoxState;
             Get_IsDebug_CheckedState() : UE.ECheckBoxState;
             Get_State_Text() : string;
-            OnInitialized() : void;
             /*
              *Ticks this widget.  Override in derived classes, but always call the parent implementation.
              *
