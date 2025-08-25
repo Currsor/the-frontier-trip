@@ -54,5 +54,11 @@ void ACurrsorAreaManager::CreateAreaData()
 
 void ACurrsorAreaManager::RemoveAreaData()
 {
-
+	for (auto It = BoxIDMap.CreateIterator(); It; ++It)
+	{
+		if (It->Value == nullptr)
+		{
+			It.RemoveCurrent();
+		}
+	}
 }

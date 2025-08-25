@@ -25,10 +25,10 @@ public:
 	
 	TObjectPtr<AAreaCollisionBox> GetAreaBox(int32 ID);
 	
-	UFUNCTION(CallInEditor, Category = "Area Management")
+	UFUNCTION(CallInEditor, Category = "Currsor|Area Management")
 	void CreateAreaData();
 
-	UFUNCTION(CallInEditor, Category = "Area Management")
+	UFUNCTION(CallInEditor, Category = "Currsor|Area Management")
 	void RemoveAreaData();
 
 private:
