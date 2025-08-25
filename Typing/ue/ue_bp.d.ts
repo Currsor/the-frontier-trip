@@ -10632,7 +10632,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 4A0639304FF7D2B582156BA60C0968D1
+// __TYPE_DECL_START: F2A5B0C240A11BA979081FB32B77A931
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);

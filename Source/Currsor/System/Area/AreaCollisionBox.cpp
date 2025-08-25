@@ -36,6 +36,7 @@ void AAreaCollisionBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent,
 	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin: %s"), *OtherActor->GetName());
 	
 	if (OtherActor && !OtherActor->IsA<ACurrsorCharacter>()) return;
+	if (OtherComp && OtherComp->GetAttachParent() != nullptr) return;
 	
 	if (ACurrsorGameState* GameState = GetWorld()->GetGameState<ACurrsorGameState>())
 	{

@@ -72,7 +72,9 @@ class TS_Debug extends jsClass {
     }
 
     Get_ID_Text() : string {
-        return TS_Debug.GameState.GetActorFromID(TS_Debug.GameState.GetCurrentAreaID()).toString();
+        if (TS_Debug.GameState.GetCurrentAreaID() == 0) return "None";
+        const actor = TS_Debug.GameState.GetNameFromID(TS_Debug.GameState.GetCurrentAreaID());
+        return actor ? actor : "Invalid";
     }
     
 

@@ -17,16 +17,13 @@ class CURRSOR_API ACurrsorAreaManager : public AActor
 public:
 	ACurrsorAreaManager();
 
-	virtual void OnConstruction(const FTransform& Transform) override;
-
 protected:
 	virtual void BeginPlay() override;
 
 public:
 	virtual void Tick(float DeltaTime) override;
-
-	UFUNCTION(BlueprintCallable)
-	AAreaCollisionBox* GetAreaBox(int32 ID) const { return BoxIDMap.FindRef(ID); }
+	
+	TObjectPtr<AAreaCollisionBox> GetAreaBox(int32 ID);
 	
 	UFUNCTION(CallInEditor, Category = "Area Management")
 	void CreateAreaData();
@@ -37,5 +34,5 @@ public:
 private:
 	// 编号与Box的映射表
 	UPROPERTY(VisibleAnywhere)
-	TMap<int32, AAreaCollisionBox*> BoxIDMap;
+	TMap<int32, TObjectPtr<AAreaCollisionBox>> BoxIDMap;
 };

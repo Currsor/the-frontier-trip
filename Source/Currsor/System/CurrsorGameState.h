@@ -40,12 +40,14 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "State")
 	FORCEINLINE void SetCurrentAreaID(int32 InCurrentAreaID) { CurrentAreaID = InCurrentAreaID; UE_LOG(LogTemp, Log, TEXT("SetCurrentAreaID: %d"), InCurrentAreaID); }
+	
+	TObjectPtr<AAreaCollisionBox> GetActorFromID(int32 InID) const;
 
 	UFUNCTION(BlueprintCallable, Category = "State")
-	FORCEINLINE AActor* GetActorFromID(int32 InID) const;
+	FString GetNameFromID(int32 InID) const;
 
 	UFUNCTION(BlueprintCallable)
-	void SetAreaManager(ACurrsorAreaManager* InAreaManager) { AreaManager = InAreaManager; }
+	void SetAreaManager(ACurrsorAreaManager* InAreaManager);
 
 	// ========== 战斗状态相关 ==========
 	private:

@@ -60,7 +60,10 @@ class TS_Debug extends jsClass {
         return TS_Debug.EPlayerStateMap[stateNum] ?? stateNum.toString();
     }
     Get_ID_Text() {
-        return TS_Debug.GameState.GetActorFromID(TS_Debug.GameState.GetCurrentAreaID()).toString();
+        if (TS_Debug.GameState.GetCurrentAreaID() == 0)
+            return "None";
+        const actor = TS_Debug.GameState.GetNameFromID(TS_Debug.GameState.GetCurrentAreaID());
+        return actor ? actor : "Invalid";
     }
     BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked) {
         TS_Debug.GameInstance.bDebug = bIsChecked;

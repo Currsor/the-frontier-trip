@@ -19,6 +19,9 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	UBoxComponent* BoxCollision;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Area")
+	FString Name;
+
 	UFUNCTION(BlueprintCallable, Category = "Area")
 	void SetAreaID(const int32& InAreaID) { AreaID = InAreaID; }
 

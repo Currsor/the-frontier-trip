@@ -9,9 +9,9 @@ ACurrsorAreaManager::ACurrsorAreaManager()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void ACurrsorAreaManager::OnConstruction(const FTransform& Transform)
+void ACurrsorAreaManager::BeginPlay()
 {
-	Super::OnConstruction(Transform);
+	Super::BeginPlay();
 
 	if (ACurrsorGameState* State = Cast<ACurrsorGameState>(GetWorld()->GetGameState()))
 	{
@@ -19,21 +19,19 @@ void ACurrsorAreaManager::OnConstruction(const FTransform& Transform)
 	}
 }
 
-void ACurrsorAreaManager::BeginPlay()
-{
-	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("CurrsorAreaManager BoxIDMap Num: %d"), BoxIDMap.Num());
-}
-
 void ACurrsorAreaManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 }
 
+TObjectPtr<AAreaCollisionBox> ACurrsorAreaManager::GetAreaBox(int32 ID)
+{
+	return BoxIDMap[ID];
+}
+
 void ACurrsorAreaManager::CreateAreaData()
 {
-	AAreaCollisionBox* NewCollisionBox = GetWorld()->SpawnActor<AAreaCollisionBox>(AAreaCollisionBox::StaticClass(), GetActorLocation(), GetActorRotation());
+	TObjectPtr<AAreaCollisionBox> NewCollisionBox = GetWorld()->SpawnActor<AAreaCollisionBox>(AAreaCollisionBox::StaticClass(), GetActorLocation(), GetActorRotation());
 
 	check(NewCollisionBox);
 
