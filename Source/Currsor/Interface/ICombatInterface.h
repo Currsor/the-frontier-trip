@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Object.h"
-#include "CombatInterface.generated.h"
+#include "ICombatInterface.generated.h"
 
 UINTERFACE(MinimalAPI)
 class UCombatInterface : public UInterface
@@ -18,5 +18,11 @@ public:
 	// 基础战斗状态
 	UFUNCTION(BlueprintNativeEvent, Category = "Combat|State")
 	void AttackEnd();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Combat|Hitbox")
+	void AttackHitboxOn();
+
+	UFUNCTION(BlueprintNativeEvent, Category = "Combat|Hitbox")
+	void AttackHitboxOff();
 
 };

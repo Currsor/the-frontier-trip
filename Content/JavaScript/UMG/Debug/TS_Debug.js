@@ -26,6 +26,16 @@ class TS_Debug extends jsClass {
         TS_Debug.GameState = this.GetWorld().GameState;
         this.Debug();
     }
+    Tick(MyGeometry, InDeltaTime) {
+        if (!TS_Debug.GameInstance.bAttackDebug)
+            return;
+        if (TS_Debug.pawn.AttackHitbox.GetCollisionProfileName() == "OverlapAll") {
+            TS_Debug.pawn.AttackHitbox.SetHiddenInGame(false, true);
+        }
+        else {
+            TS_Debug.pawn.AttackHitbox.SetHiddenInGame(true, true);
+        }
+    }
     // Debug
     Debug() {
         if (TS_Debug.GameInstance.bDebug) {
@@ -35,12 +45,6 @@ class TS_Debug extends jsClass {
             this.Get_ID_Text();
             // UE.KismetSystemLibrary.PrintString(this, "PlayerState: " + UE.EPlayerState[this.TS_State], true, false, UE.LinearColor.White, 0.0);
             this.Overlay_DebugAttack.SetVisibility(UE.ESlateVisibility.Visible);
-            if (TS_Debug.GameInstance.bAttackDebug) {
-                TS_Debug.pawn.AttackHitbox.SetHiddenInGame(false, true);
-            }
-            else {
-                TS_Debug.pawn.AttackHitbox.SetHiddenInGame(true, true);
-            }
         }
         else {
             TS_Debug.pawn.ArrowComponent_EditorOnly.SetHiddenInGame(true, true);
@@ -72,6 +76,8 @@ class TS_Debug extends jsClass {
     BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked) {
         TS_Debug.GameInstance.bAttackDebug = bIsChecked;
         this.Debug();
+    }
+    BndEvt__W_Debug_Button_EnterBattle_K2Node_ComponentBoundEvent_2_OnButtonClickedEvent__DelegateSignature() {
     }
 }
 puerts_1.blueprint.mixin(jsClass, TS_Debug);

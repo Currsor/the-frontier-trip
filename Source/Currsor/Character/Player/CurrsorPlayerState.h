@@ -1,27 +1,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerState.h"
+#include "Currsor/Character/Component/BaseState.h"
 #include "CurrsorPlayerState.generated.h"
 
 class ACurrsorCharacter;
 class ACurrsorPlayerController;
 
-UENUM(BlueprintType)
-enum class EPlayerState : uint8
-{
-    Idle        UMETA(DisplayName = "Idle"),
-    Walk        UMETA(DisplayName = "Walk"),
-    Run         UMETA(DisplayName = "Run"),
-    Jump        UMETA(DisplayName = "Jump"),
-    Fall        UMETA(DisplayName = "Fall"),
-    Attack      UMETA(DisplayName = "Attack"),
-    RunAttack   UMETA(DisplayName = "RunAttack"),
-    Dash        UMETA(DisplayName = "Dash")
-};
-
 UCLASS()
-class CURRSOR_API ACurrsorPlayerState : public APlayerState
+class CURRSOR_API ACurrsorPlayerState : public ABaseState
 {
     GENERATED_BODY()
 
@@ -40,7 +27,7 @@ public:
 
     // 状态检测
     UFUNCTION(BlueprintPure, Category = "Player State")
-    bool IsDashing() const;
+    bool IsDashing() const {return bIsDashing;}
     
     UFUNCTION(BlueprintPure, Category = "Player State")
     bool IsAttacking() const;
@@ -85,6 +72,13 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Player State")
     bool CanStartAttack() const;
+
+    // Attack
+    UFUNCTION(BlueprintCallable, Category = "Player State|Attack")
+    int GetAttackNum() const { return AttackNum; }
+    
+    UFUNCTION(BlueprintCallable, Category = "Player State|Attack")
+    void SetAttackNum(int Num) { AttackNum = Num; }
 
 protected:
     // 状态变更核心逻辑
@@ -154,4 +148,7 @@ private:
     // 按键标志
     UPROPERTY(VisibleInstanceOnly, Category = "Player State")
     bool bIsAttackKeyReleased = false;
+
+    UPROPERTY(VisibleInstanceOnly, Category = "Player State|Attack")
+    int AttackNum = 0;
 };

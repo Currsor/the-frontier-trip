@@ -36,5 +36,8 @@
 			"Name": "CurrsorToon",
 			"Enabled": false
 		}
+	],
+	"TargetPlatforms": [
+		"Windows"
 	]
 }

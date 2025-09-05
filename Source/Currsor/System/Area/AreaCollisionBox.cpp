@@ -4,7 +4,9 @@
 
 #include "Components/BillboardComponent.h"
 #include "../CurrsorGameState.h"
+#include "Components/ArrowComponent.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
+#include "Currsor/System/CurrsorGameInstance.h"
 
 // Sets default values
 AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -56,14 +58,14 @@ void AAreaCollisionBox::UpdateSymmetricBillboard(USceneComponent* UpdatedCompone
 	{
 		FVector MainLocation = MainBattleBillboard->GetComponentLocation();
 		FVector PlayerLocation = PlayerBillboard->GetComponentLocation();
-		FVector SymmetricLocation = MainLocation * 2 - PlayerLocation;
+		FVector SymmetricLocation = FVector(MainLocation.X * 2 - PlayerLocation.X, MainLocation.Y * 2 - PlayerLocation.Y, PlayerLocation.Z);
 		EnemyBillboard->SetWorldLocation(SymmetricLocation);
 	}
 	else if (UpdatedComponent == EnemyBillboard)
 	{
 		FVector MainLocation = MainBattleBillboard->GetComponentLocation();
 		FVector EnemyLocation = EnemyBillboard->GetComponentLocation();
-		FVector SymmetricLocation = MainLocation * 2 - EnemyLocation;
+		FVector SymmetricLocation = FVector(MainLocation.X * 2 - EnemyLocation.X, MainLocation.Y * 2 - EnemyLocation.Y, EnemyLocation.Z);
 		PlayerBillboard->SetWorldLocation(SymmetricLocation);
 	}
 }
@@ -86,9 +88,24 @@ void AAreaCollisionBox::SetupBillboards()
 	CameraBillboard->SetupAttachment(MainBattleBillboard);
 	CameraBillboard->SetSprite(CameraTexture);
 	
-	PlayerBillboard->SetRelativeLocation(FVector(0.0f, -100.0f, 0.0f));
-	EnemyBillboard->SetRelativeLocation(FVector(0.0f, 100.0f, 0.0f));
-	CameraBillboard->SetRelativeLocation(FVector(100.0f, 0.0f, 0.0f));
+	PlayerBillboard->SetRelativeLocation(FVector(0.0f, -200.0f, 0.0f));
+	EnemyBillboard->SetRelativeLocation(FVector(0.0f, 200.0f, 0.0f));
+	CameraBillboard->SetRelativeLocation(FVector(200.0f, 0.0f, 0.0f));
+	
+	// 设置PlayerBillboard和EnemyBillboard的旋转角度，使其x轴指向MainBattleBillboard
+	PlayerBillboard->SetRelativeRotation(FRotator(0.0f, 90.0f, 0.0f));
+	EnemyBillboard->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
+	CameraBillboard->SetRelativeRotation(FRotator(0.0f, 180.0f, 0.0f));
+	
+	// 添加箭头组件，旋转角度与父类一致
+	PlayerArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("PlayerArrow"));
+	PlayerArrow->SetupAttachment(PlayerBillboard);
+
+	EnemyArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("EnemyArrow"));
+	EnemyArrow->SetupAttachment(EnemyBillboard);
+
+	CameraArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("CameraArrow"));
+	CameraArrow->SetupAttachment(CameraBillboard);
 	
 	// 添加事件绑定
 	PlayerBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);

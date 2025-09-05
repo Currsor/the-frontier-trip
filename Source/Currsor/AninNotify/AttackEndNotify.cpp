@@ -5,7 +5,7 @@
 
 #include "PaperZDCharacter.h"
 #include "PaperZDAnimInstance.h"
-#include "Currsor/Interface/CombatInterface.h"
+#include "Currsor/Interface/ICombatInterface.h"
 
 void UAttackEndNotify::OnReceiveNotify_Implementation(UPaperZDAnimInstance* OwningInstance) const
 {

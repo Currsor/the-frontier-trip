@@ -106,6 +106,24 @@ void ACurrsorPlayerController::AttackEnd_Implementation()
     if (!PlayerStateComponent->GetAttackKey()) PlayerActionComponent->AttackCompleted();
 }
 
+void ACurrsorPlayerController::AttackHitboxOn_Implementation()
+{
+    ICombatInterface::AttackHitboxOn_Implementation();
+
+    PlayerStateComponent->SetAttackNum(1.f);
+
+    CurrsorPlayer->SetHitboxCollision(true);
+}
+
+void ACurrsorPlayerController::AttackHitboxOff_Implementation()
+{
+    ICombatInterface::AttackHitboxOff_Implementation();
+
+    PlayerStateComponent->SetAttackNum(0.f);
+    
+    CurrsorPlayer->SetHitboxCollision(false);
+}
+
 // TODO: 这里可以添加其他输入处理函数
 // void ACurrsorPlayerController::JumpStarted() { PlayerActionComponent->JumpStarted(); }
 // void ACurrsorPlayerController::JumpCompleted() { PlayerActionComponent->JumpCompleted(); }

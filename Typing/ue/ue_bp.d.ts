@@ -10507,6 +10507,20 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnCombatStateChangedDelegate__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnCombatStateChangedDelegate__PythonCallable;
+            static Load(InName: string): OnCombatStateChangedDelegate__PythonCallable;
+        
+            __tid_OnCombatStateChangedDelegate__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
 // __TYPE_DECL_START: 3B16701841D71083FA784FAE75A623CD
     namespace Game.Blueprints.BP_Cube {
         class BP_Cube_C extends UE.Actor {
@@ -10529,11 +10543,12 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F1499A714A0958F7285AEB8E30E7CEFA
+// __TYPE_DECL_START: 0CEA3F074C72DD5371D2FE9FDEA32863
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
+            BndEvt__BP_CurrsorCharacter_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent: $Nullable<UE.PrimitiveComponent>, OtherActor: $Nullable<UE.Actor>, OtherComp: $Nullable<UE.PrimitiveComponent>, OtherBodyIndex: number, bFromSweep: boolean, SweepResult: UE.HitResult) : void;
             ExecuteUbergraph_BP_CurrsorCharacter(EntryPoint: number) : void;
             /*
              *Event when play begins for this actor.
@@ -10571,6 +10586,7 @@ declare module "ue" {
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerController {
         class BP_CurrsorPlayerController_C extends UE.CurrsorPlayerController {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            ReceiveBeginPlay() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorPlayerController_C;
             static Load(InName: string): BP_CurrsorPlayerController_C;
@@ -10632,7 +10648,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F2A5B0C240A11BA979081FB32B77A931
+// __TYPE_DECL_START: 0270E9C3496F8003D5FDE99778D614C0
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10664,7 +10680,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: EEDFA039405100D0794AE395FB78E575
+// __TYPE_DECL_START: 7EA0529F43681ACB8465E3B15FDB3729
     namespace Game.Blueprints.Character.Player.BPA_PlayerAnim {
         class BPA_PlayerAnim_C extends UE.PaperZDAnimInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10703,8 +10719,10 @@ declare module "ue" {
             ZDRule_Transition_2(bCanEnterTransition: $Ref<boolean>) : void;
             ZDRule_Transition_3(bCanEnterTransition: $Ref<boolean>) : void;
             ZDRule_Transition_4(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_5(bCanEnterTransition: $Ref<boolean>) : void;
             ZDRule_Transition_6(bCanEnterTransition: $Ref<boolean>) : void;
             ZDRule_Transition_7(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_8(bCanEnterTransition: $Ref<boolean>) : void;
             ZDRule_Transition_9(bCanEnterTransition: $Ref<boolean>) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BPA_PlayerAnim_C;
@@ -10716,17 +10734,20 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F16C81374AB1901A2AD3E293F9EE2224
+// __TYPE_DECL_START: 9423BF5C4DAABB6902F0059D668A2355
     namespace Game.UMG.Debug.W_Debug {
         class W_Debug_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
+            Button_EnterCombat: UE.Button;
             ID: UE.TextBlock;
             IsDebug: UE.CheckBox;
             IsDebug_Attack: UE.CheckBox;
             Overlay_CurrentArea: UE.Overlay;
             Overlay_DebugAttack: UE.Overlay;
+            Overlay_EnterCombat: UE.Overlay;
             State: UE.TextBlock;
+            BndEvt__W_Debug_Button_EnterBattle_K2Node_ComponentBoundEvent_2_OnButtonClickedEvent__DelegateSignature() : void;
             BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
             BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
             /*
@@ -10767,6 +10788,34 @@ declare module "ue" {
             static Load(InName: string): BP_CurrsorAreaManager_C;
         
             __tid_BP_CurrsorAreaManager_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: BEB6CAFA4A7FCAB353448DAC19072B48
+    namespace Game.Blueprints.Character.Player.Combat.BP_CombatCharacter {
+        class BP_CombatCharacter_C extends UE.CombatCharacter {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): BP_CombatCharacter_C;
+            static Load(InName: string): BP_CombatCharacter_C;
+        
+            __tid_BP_CombatCharacter_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 3555178744C817219FE851B596E0FE0F
+    namespace Game.Blueprints.Character.Enemy.BP_BaseEnemy {
+        class BP_BaseEnemy_C extends UE.BaseEnemy {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): BP_BaseEnemy_C;
+            static Load(InName: string): BP_BaseEnemy_C;
+        
+            __tid_BP_BaseEnemy_C_0__: boolean;
         }
         
     }

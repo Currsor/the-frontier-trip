@@ -5,7 +5,11 @@ const puerts_1 = require("puerts");
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorPlayerController.BP_CurrsorPlayerController_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_CurrsorPlayerController extends jsClass {
+    static CurrsorPlayer;
+    static CurrsorPlayerState;
     ReceiveBeginPlay() {
+        TS_CurrsorPlayerController.CurrsorPlayer = UE.GameplayStatics.GetPlayerPawn(this, 0);
+        TS_CurrsorPlayerController.CurrsorPlayerState = TS_CurrsorPlayerController.CurrsorPlayer.PlayerState;
         // 在游戏开始时添加调试小部件到视口
         this.AddDebugWidgetToViewport();
     }

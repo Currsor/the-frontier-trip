@@ -38,8 +38,14 @@ void ACurrsorPlayerState::UpdateState()
     if (!CurrsorCharacter.IsValid()) return;
     CurrsorVelocity = CurrsorCharacter->GetVelocity();
 
-    // 优先级：Dash > Attack > Jump/Fall > 移动 > Idle
-    if (IsDashing()) {
+    // 优先级：Dead > Hurt > Dash > Attack > Jump/Fall > 移动 > Idle
+    if (IsDead()) {
+        NewState = EPlayerState::Dead;
+    }
+    else if (IsHurt()) {
+        NewState = EPlayerState::Hurt;
+    }
+    else if (IsDashing()) {
         NewState = EPlayerState::Dash;
     } 
     else if (IsAttacking()) {
@@ -126,11 +132,6 @@ void ACurrsorPlayerState::ChangeState(EPlayerState NewState)
     case EPlayerState::Idle:
         break;
     }
-}
-
-bool ACurrsorPlayerState::IsDashing() const
-{
-    return bIsDashing;
 }
 
 bool ACurrsorPlayerState::IsAttacking() const

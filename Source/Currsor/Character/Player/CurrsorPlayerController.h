@@ -3,7 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Currsor/Interface/CombatInterface.h"
+#include "Currsor/Interface/ICombatInterface.h"
+#include "Currsor/Interface/IDamageable.h"
 #include "GameFramework/PlayerController.h"
 #include "CurrsorPlayerController.generated.h"
 
@@ -19,7 +20,7 @@ class UInputAction;
  * 玩家控制器类
  */
 UCLASS()
-class CURRSOR_API ACurrsorPlayerController : public APlayerController, public ICombatInterface
+class CURRSOR_API ACurrsorPlayerController : public APlayerController, public ICombatInterface, public IDamageable
 {
 	GENERATED_BODY()
 public:
@@ -29,7 +30,13 @@ public:
 
 	//~ Begin ICombatStateInterface
 	virtual void AttackEnd_Implementation() override;
+	virtual void AttackHitboxOn_Implementation() override;
+	virtual void AttackHitboxOff_Implementation() override;
 	//~ End ICombatStateInterface
+
+	//~ Begin IDamageable
+	// virtual void ApplyDamage_Implementation(float DamageAmount) override;
+	//~ End IDamageable
 	
 protected:
 	// 输入映射上下文

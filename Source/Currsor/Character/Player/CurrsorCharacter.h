@@ -7,6 +7,7 @@
 #include "PaperZDCharacter.h"
 #include "CurrsorCharacter.generated.h"
 
+class ACurrsorGameMode;
 class UBoxComponent;
 class ACurrsorPlayerState;
 class UCurrsorCameraComponent;
@@ -25,20 +26,22 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void SetHitboxCollision(bool bCollision);
+
 private:
 	// 弹簧臂组件
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USpringArmComponent> SpringArmComponent;
 
 	// 相机组件
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCurrsorCameraComponent> CameraComponent;
 
 	// 攻击碰撞盒
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Attack, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Attack", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UBoxComponent> AttackHitbox;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<ACurrsorPlayerState> CurrsorPlayerState = Cast<ACurrsorPlayerState>(GetPlayerState());
 	
 	// 上一帧的弹簧臂长度
@@ -48,4 +51,6 @@ private:
 	// 上一帧的碰撞状态
 	UPROPERTY(VisibleInstanceOnly)
 	bool LastCollisionState;
+
+	TObjectPtr<ACurrsorGameMode> GameMode;
 };

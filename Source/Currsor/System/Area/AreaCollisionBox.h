@@ -7,6 +7,7 @@
 #include "Components/BoxComponent.h"
 #include "AreaCollisionBox.generated.h"
 
+class UArrowComponent;
 class ABattleBillboard;
 
 UCLASS()
@@ -26,7 +27,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Currsor|Area")
 	void SetAreaID(const int32& InAreaID) { AreaID = InAreaID; }
-
+	
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
@@ -49,6 +50,15 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	UBillboardComponent* CameraBillboard;
+
+	UPROPERTY(VisibleAnywhere)
+	UArrowComponent* PlayerArrow;
+
+	UPROPERTY(VisibleAnywhere)
+	UArrowComponent* EnemyArrow;
+
+	UPROPERTY(VisibleAnywhere)
+	UArrowComponent* CameraArrow;
 
 	UPROPERTY(VisibleAnywhere, Category = "Currsor|Billboard")
 	UTexture2D* MainTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Engine/MobileResources/HUD/AnalogHat.AnalogHat"));

@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "katana_AttackHitboxOff.h"
+#include "AttackHitboxOn.h"
 
 #include "PaperZDAnimInstance.h"
 #include "PaperZDCharacter.h"
-#include "Currsor/Interface/CombatInterface.h"
+#include "Currsor/Interface/ICombatInterface.h"
 
-void Ukatana_AttackHitboxOff::OnReceiveNotify_Implementation(UPaperZDAnimInstance* OwningInstance) const
+void UAttackHitboxOn::OnReceiveNotify_Implementation(UPaperZDAnimInstance* OwningInstance) const
 {
 	Super::OnReceiveNotify_Implementation(OwningInstance);
 
@@ -18,6 +18,6 @@ void Ukatana_AttackHitboxOff::OnReceiveNotify_Implementation(UPaperZDAnimInstanc
 	if (PaperChar && PaperChar->GetController()->Implements<UCombatInterface>()) 
 	{
 		// 自动处理C++和蓝图的调用
-		ICombatInterface::Execute_AttackEnd(PaperChar->GetController());
+		ICombatInterface::Execute_AttackHitboxOn(PaperChar->GetController());
 	}
 }

@@ -6,11 +6,16 @@ const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorPlayer
 const jsClass = blueprint.tojs<typeof UE.Game.Blueprints.Character.Player.BP_CurrsorPlayerController.BP_CurrsorPlayerController_C>(uclass);
 
 class TS_CurrsorPlayerController extends jsClass {
+    static CurrsorPlayer: UE.CurrsorCharacter;
+    static CurrsorPlayerState: UE.CurrsorPlayerState;
+
     ReceiveBeginPlay(): void {
+        TS_CurrsorPlayerController.CurrsorPlayer = UE.GameplayStatics.GetPlayerPawn(this, 0) as UE.CurrsorCharacter;
+        TS_CurrsorPlayerController.CurrsorPlayerState = TS_CurrsorPlayerController.CurrsorPlayer.PlayerState as UE.CurrsorPlayerState;
 
         // 在游戏开始时添加调试小部件到视口
         this.AddDebugWidgetToViewport();
-        
+
     }
 
     private AddDebugWidgetToViewport(): void {

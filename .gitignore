@@ -77,3 +77,6 @@ DerivedDataCache/*
 
 # Plugin folders
 Plugins/Developer/*
+
+# Settings files
+*.DotSettings.user

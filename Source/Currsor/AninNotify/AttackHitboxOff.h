@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "PaperZDAnimNotify.h"
-#include "katana_AttackHitboxOff.generated.h"
+#include "AttackHitboxOff.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class CURRSOR_API Ukatana_AttackHitboxOff : public UPaperZDAnimNotify
+class CURRSOR_API UAttackHitboxOff : public UPaperZDAnimNotify
 {
 	GENERATED_BODY()
 public:
-	virtual FName GetDisplayName_Implementation() const override { return TEXT("katana_AttackHitboxOff"); }
+	virtual FName GetDisplayName_Implementation() const override { return TEXT("AttackHitboxOff"); }
 
 	virtual void OnReceiveNotify_Implementation(UPaperZDAnimInstance* OwningInstance) const override;
 };

@@ -17,6 +17,7 @@ ACurrsorCharacter::ACurrsorCharacter()
 	
 	AttackHitbox = CreateDefaultSubobject<UBoxComponent>(TEXT("Attack Hitbox"));
 	AttackHitbox->SetupAttachment(RootComponent);
+	AttackHitbox->SetCollisionProfileName(TEXT("NoCollision"));
 	
 	const FVector Start = SpringArmComponent->GetComponentLocation();
 	const FVector End = SpringArmComponent->GetSocketLocation(SpringArmComponent->SocketName);
@@ -49,4 +50,9 @@ void ACurrsorCharacter::Tick(float DeltaTime)
 		LastArmLength = CurrentLength;
 		LastCollisionState = CurrentCollisionState;
 	}
+}
+
+void ACurrsorCharacter::SetHitboxCollision(bool bCollision)
+{
+	AttackHitbox->SetCollisionProfileName(bCollision ? TEXT("OverlapAll") : TEXT("NoCollision"));
 }
