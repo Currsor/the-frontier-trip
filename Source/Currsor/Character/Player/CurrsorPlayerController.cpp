@@ -10,6 +10,9 @@
 #include "Blueprint/UserWidget.h"
 #include "Component/CurrsorActionComponent.h"
 #include "Currsor/System/CurrsorGameInstance.h"
+#include "Currsor/System/GameSystemManager.h"
+#include "Currsor/System/Components/AttackSystemComponent.h"
+#include "Currsor/System/Components/StateManagerComponent.h"
 
 void ACurrsorPlayerController::SetupInputComponent()
 {
@@ -42,6 +45,20 @@ void ACurrsorPlayerController::BeginPlay()
     CurrsorPlayer = Cast<ACurrsorCharacter>(GetCharacter());
     CurrsorPlayerState = GetPlayerState<ACurrsorPlayerState>();
     CurrsorPlayerState = Cast<ACurrsorPlayerState>(CurrsorPlayerState);
+
+    // 初始化游戏系统管理器
+    GameSystemManager = UGameSystemManager::GetInstance(GetWorld());
+    if (GameSystemManager && !GameSystemManager->IsInitialized())
+    {
+        GameSystemManager->Initialize(GetWorld());
+    }
+
+    // 获取系统引用
+    if (GameSystemManager)
+    {
+        AttackSystem = GameSystemManager->GetAttackSystem();
+        StateManager = GameSystemManager->GetStateManager();
+    }
 
     // 依赖项通过 Initialize 注入
     PlayerActionComponent = NewObject<UCurrsorActionComponent>(this);
@@ -83,6 +100,13 @@ void ACurrsorPlayerController::AttackStarted()
 {
     UE_LOG(LogTemp, Log, TEXT("Attack"));
     CurrsorPlayerState -> SetAttackKey(true);
+    
+    // 使用新的攻击系统
+    if (AttackSystem && AttackSystem->CanAttack(CurrsorPlayer))
+    {
+        AttackSystem->StartAttack(CurrsorPlayer, TEXT("Normal"));
+    }
+    
     if (PlayerActionComponent) PlayerActionComponent->TryStartAttack();
 }
 
@@ -102,6 +126,12 @@ void ACurrsorPlayerController::AttackCompleted()
 void ACurrsorPlayerController::AttackEnd_Implementation()
 {
     ICombatInterface::AttackEnd_Implementation();
+
+    // 使用新的攻击系统
+    if (AttackSystem)
+    {
+        AttackSystem->EndAttack(CurrsorPlayer);
+    }
 
     if (!PlayerStateComponent->GetAttackKey()) PlayerActionComponent->AttackCompleted();
 }

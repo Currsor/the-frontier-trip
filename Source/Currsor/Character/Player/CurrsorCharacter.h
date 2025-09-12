@@ -14,6 +14,8 @@ class ACurrsorPlayerState;
 class UCurrsorCameraComponent;
 class USpringArmComponent;
 class UHealthComponent;
+class UGameSystemManager;
+class UAttackSystemComponent;
 /**
  * 玩家角色类
  */
@@ -24,6 +26,8 @@ class CURRSOR_API ACurrsorCharacter : public APaperZDCharacter, public IDamageab
 	
 public:
 	ACurrsorCharacter();
+
+	virtual void BeginPlay() override;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -63,6 +67,13 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<ACurrsorPlayerState> CurrsorPlayerState = Cast<ACurrsorPlayerState>(GetPlayerState());
+	
+	// 系统管理器
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Systems", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UGameSystemManager> GameSystemManager;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Systems", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UAttackSystemComponent> AttackSystem;
 	
 	// 上一帧的弹簧臂长度
 	UPROPERTY(VisibleInstanceOnly)

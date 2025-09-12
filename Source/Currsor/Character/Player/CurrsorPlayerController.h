@@ -12,6 +12,9 @@ class UCurrsorActionComponent;
 class ACurrsorCharacter;
 struct FInputActionValue;
 class ACurrsorPlayerState;
+class UGameSystemManager;
+class UAttackSystemComponent;
+class UStateManagerComponent;
 
 class UInputMappingContext;
 class UInputAction;
@@ -59,6 +62,16 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Components")
 	TObjectPtr<ACurrsorPlayerState> PlayerStateComponent;
+
+	// 系统管理器
+	UPROPERTY(BlueprintReadOnly, Category = "Systems")
+	TObjectPtr<UGameSystemManager> GameSystemManager;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Systems")
+	TObjectPtr<UAttackSystemComponent> AttackSystem;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Systems")
+	TObjectPtr<UStateManagerComponent> StateManager;
 
 	// 输入动作
 	UPROPERTY(EditDefaultsOnly, Category = "Enhanced Input")
