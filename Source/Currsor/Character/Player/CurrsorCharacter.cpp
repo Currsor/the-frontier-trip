@@ -7,6 +7,8 @@
 #include "Components/BoxComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Currsor/Component/HealthComponent.h"
+#include "Currsor/System/GameSystemManager.h"
+#include "Currsor/System/Components/AttackSystemComponent.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
 {
@@ -40,6 +42,24 @@ ACurrsorCharacter::ACurrsorCharacter()
 	CameraComponent->UpdateDOF(CurrentLength, LastCollisionState, SpringArmComponent->TargetArmLength);
 	
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void ACurrsorCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	// 初始化游戏系统管理器
+	GameSystemManager = UGameSystemManager::GetInstance(GetWorld());
+	if (GameSystemManager && !GameSystemManager->IsInitialized())
+	{
+		GameSystemManager->Initialize(GetWorld());
+	}
+
+	// 获取攻击系统引用
+	if (GameSystemManager)
+	{
+		AttackSystem = GameSystemManager->GetAttackSystem();
+	}
 }
 
 void ACurrsorCharacter::Tick(float DeltaTime)
