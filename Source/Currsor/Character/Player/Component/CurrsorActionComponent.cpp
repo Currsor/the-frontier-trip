@@ -41,6 +41,9 @@ void UCurrsorActionComponent::AttackCompleted()
 void UCurrsorActionComponent::Move(const FInputActionValue& Value)
 {
 	if (!CurrsorPlayerState->ShouldMove()) return;
+
+	// 判定是否状态为Walk，若不是则设置为Walk
+	if (CurrsorPlayerState->GetCurrentState() != ECharacterState::Walk) CurrsorPlayerState->ChangeState(ECharacterState::Walk);
 	
 	if (CurrsorPlayer && CurrsorPlayerController)
 	{

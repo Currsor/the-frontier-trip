@@ -6,6 +6,7 @@
 #include "Component/CurrsorCameraComponent.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Currsor/Component/HealthComponent.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
 {
@@ -18,6 +19,16 @@ ACurrsorCharacter::ACurrsorCharacter()
 	AttackHitbox = CreateDefaultSubobject<UBoxComponent>(TEXT("Attack Hitbox"));
 	AttackHitbox->SetupAttachment(RootComponent);
 	AttackHitbox->SetCollisionProfileName(TEXT("NoCollision"));
+	
+	// 设置攻击碰撞盒的大小和位置
+	AttackHitbox->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
+	AttackHitbox->SetRelativeLocation(FVector(60.0f, 0.0f, 0.0f)); // 在角色前方
+	
+	UE_LOG(LogTemp, Warning, TEXT("CurrsorCharacter AttackHitbox created and configured"));
+
+	// 创建生命值组件
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
+	HealthComponent->SetMaxHealth(100.0f);
 	
 	const FVector Start = SpringArmComponent->GetComponentLocation();
 	const FVector End = SpringArmComponent->GetSocketLocation(SpringArmComponent->SocketName);
@@ -55,4 +66,48 @@ void ACurrsorCharacter::Tick(float DeltaTime)
 void ACurrsorCharacter::SetHitboxCollision(bool bCollision)
 {
 	AttackHitbox->SetCollisionProfileName(bCollision ? TEXT("OverlapAll") : TEXT("NoCollision"));
+}
+
+void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* DamageInstigator, const FHitResult& HitResult)
+{
+	IDamageable::ApplyDamage_Implementation(DamageAmount, DamageInstigator, HitResult);
+
+	if (!HealthComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("HealthComponent is null!"));
+		return;
+	}
+
+	// 应用伤害
+	HealthComponent->TakeDamage(DamageAmount);
+	
+	if (HealthComponent->IsDead())
+	{
+		// 死亡逻辑
+		UE_LOG(LogTemp, Warning, TEXT("Player Die"));
+		CurrsorPlayerState->ChangeState(ECharacterState::Dead);
+	}
+	else
+	{
+		// 受击逻辑
+		UE_LOG(LogTemp, Warning, TEXT("Player Take Damage: %f, Current Health: %f"), 
+			DamageAmount, HealthComponent->GetCurrentHealth());
+		CurrsorPlayerState->ChangeState(ECharacterState::Hurt);
+	}
+	
+}
+
+float ACurrsorCharacter::GetHealth() const
+{
+	return HealthComponent ? HealthComponent->GetCurrentHealth() : 0.0f;
+}
+
+float ACurrsorCharacter::GetMaxHealth() const
+{
+	return HealthComponent ? HealthComponent->GetMaxHealth() : 0.0f;
+}
+
+bool ACurrsorCharacter::IsDead() const
+{
+	return HealthComponent ? HealthComponent->IsDead() : false;
 }

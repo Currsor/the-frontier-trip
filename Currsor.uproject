@@ -35,6 +35,10 @@
 		{
 			"Name": "CurrsorToon",
 			"Enabled": false
+		},
+		{
+			"Name": "CurrsorTool",
+			"Enabled": false
 		}
 	],
 	"TargetPlatforms": [

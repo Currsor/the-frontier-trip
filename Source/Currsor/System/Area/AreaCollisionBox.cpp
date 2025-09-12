@@ -2,14 +2,18 @@
 
 #include "AreaCollisionBox.h"
 
-#include "Components/BillboardComponent.h"
 #include "../CurrsorGameState.h"
-#include "Components/ArrowComponent.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
 #include "Currsor/System/CurrsorGameInstance.h"
 
+// 设置纹理路径常量
+const FSoftObjectPath MAIN_TEXTURE_PATH(TEXT("/Engine/EditorResources/S_ReflActorIcon.S_ReflActorIcon"));
+const FSoftObjectPath PLAYER_TEXTURE_PATH(TEXT("/Engine/EngineResources/AICON-Green.AICON-Green"));
+const FSoftObjectPath ENEMY_TEXTURE_PATH(TEXT("/Engine/EngineResources/AICON-Red.AICON-Red"));
+const FSoftObjectPath CAMERA_TEXTURE_PATH(TEXT("/Engine/Tutorial/Basics/TutorialAssets/CameraActor_64x.CameraActor_64x"));
+
 // Sets default values
-AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer), MainTexture(MAIN_TEXTURE_PATH), PlayerTexture(PLAYER_TEXTURE_PATH), EnemyTexture(ENEMY_TEXTURE_PATH), CameraTexture(CAMERA_TEXTURE_PATH)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -23,7 +27,7 @@ AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer
 	SetupBillboards();
 }
 
-AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer, const FVector& InitialLocation) : Super(ObjectInitializer)
+AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer, const FVector& InitialLocation) : Super(ObjectInitializer), MainTexture(MAIN_TEXTURE_PATH), PlayerTexture(PLAYER_TEXTURE_PATH), EnemyTexture(ENEMY_TEXTURE_PATH), CameraTexture(CAMERA_TEXTURE_PATH)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -74,19 +78,20 @@ void AAreaCollisionBox::SetupBillboards()
 {
 	MainBattleBillboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("MainBattleBillboard"));
 	MainBattleBillboard->SetupAttachment(RootComponent);
-	MainBattleBillboard->SetSprite(MainTexture);
+	MainBattleBillboard->bIsScreenSizeScaled = true;
+	if (MainTexture.IsValid()) MainBattleBillboard->SetSprite(MainTexture.Get());
 
 	PlayerBillboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("PlayerBillboard"));
 	PlayerBillboard->SetupAttachment(MainBattleBillboard);
-	PlayerBillboard->SetSprite(PlayerTexture);
+	if (PlayerTexture.IsValid()) PlayerBillboard->SetSprite(PlayerTexture.Get());
 
 	EnemyBillboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("EnemyBillboard"));
 	EnemyBillboard->SetupAttachment(MainBattleBillboard);
-	EnemyBillboard->SetSprite(EnemyTexture);
+	if (EnemyTexture.IsValid()) EnemyBillboard->SetSprite(EnemyTexture.Get());
 
 	CameraBillboard = CreateDefaultSubobject<UBillboardComponent>(TEXT("CameraBillboard"));
 	CameraBillboard->SetupAttachment(MainBattleBillboard);
-	CameraBillboard->SetSprite(CameraTexture);
+	if (CameraTexture.IsValid()) CameraBillboard->SetSprite(CameraTexture.Get());
 	
 	PlayerBillboard->SetRelativeLocation(FVector(0.0f, -200.0f, 0.0f));
 	EnemyBillboard->SetRelativeLocation(FVector(0.0f, 200.0f, 0.0f));

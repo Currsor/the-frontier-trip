@@ -80,3 +80,6 @@ Plugins/Developer/*
 
 # Settings files
 *.DotSettings.user
+
+# vscode
+.vscode/*

@@ -7,7 +7,7 @@
 #include "BaseState.generated.h"
 
 UENUM(BlueprintType)
-enum class EPlayerState : uint8
+enum class ECharacterState : uint8
 {
 	Idle        UMETA(DisplayName = "Idle"),
 	Walk        UMETA(DisplayName = "Walk"),
@@ -31,28 +31,65 @@ class CURRSOR_API ABaseState : public APlayerState
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintPure, Category = "Player State")
-	bool IsDead() const;
-
-	UFUNCTION(BlueprintPure, Category = "Player State")
-	bool IsHurt() const;
+	virtual void Tick(float DeltaSeconds) override;
 	
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-	float GetHealth() const { return Health; }
+	// 状态更新
+	UFUNCTION(BlueprintCallable, Category = "Player State")
+	void UpdateState();
 
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-	void SetHealth(float NewHealth) { Health = NewHealth; }
+	// 状态变更核心逻辑
+	UFUNCTION(BlueprintCallable, Category = "Player State")
+	void ChangeState(ECharacterState NewState);
 
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-	float GetMaxHealth() const { return MaxHealth; }
+	// 获取当前状态
+	UFUNCTION(BlueprintPure, Category = "Player State")
+	ECharacterState GetCurrentState() const { return CurrentState; }
+	
+	UFUNCTION(BlueprintPure, Category = "Player State")
+	bool IsDead() const { return CurrentState == ECharacterState::Dead; }
 
-	UFUNCTION(BlueprintCallable, Category = "Stats")
-	void SetMaxHealth(float NewMaxHealth) { MaxHealth = NewMaxHealth; }
+	UFUNCTION(BlueprintPure, Category = "Player State")
+	bool IsHurt() const { return CurrentState == ECharacterState::Hurt; }
+	
+	UFUNCTION(BlueprintPure, Category = "Player State")
+	bool IsFalling() const;
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
-	float Health;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Stats")
-	float MaxHealth;
+	// 状态标志
+	UPROPERTY(VisibleInstanceOnly, Category = "Player State")
+	bool bIsDashing = false;
+
+	UPROPERTY(VisibleInstanceOnly, Category = "Player State")
+	bool bIsAttacking = false;
+
+	UPROPERTY(VisibleInstanceOnly, Category = "Player State")
+	bool bIsJumping = false;
+
+	UPROPERTY(VisibleInstanceOnly, Category = "Player State")
+	bool bIsWalk = false;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Player State")
+	ECharacterState CurrentState = ECharacterState::Idle;
+
+	// 阈值
+	UPROPERTY(EditDefaultsOnly, Category = "Player State|Thresholds")
+	float WalkThreshold = 10.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player State|Thresholds")
+	float RunThreshold = 700.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player State|Thresholds")
+	float RunAttackThreshold = 10.0f;
+
+	// 状态进入/退出函数
+	void OnEnterDash(ECharacterState PreviousState);
+	void OnExitDash();
+    
+	void OnEnterAttack(ECharacterState PreviousState);
+	void OnExitAttack();
+
+	void OnEnterWalk(ECharacterState PreviousState);
+	void OnExitWalk();
+
 };

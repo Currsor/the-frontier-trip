@@ -1,76 +1,78 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/BoxComponent.h"
+#include "Components/BillboardComponent.h"
+#include "Components/ArrowComponent.h"
 #include "AreaCollisionBox.generated.h"
-
-class UArrowComponent;
-class ABattleBillboard;
 
 UCLASS()
 class CURRSOR_API AAreaCollisionBox : public AActor
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	AAreaCollisionBox(const FObjectInitializer& ObjectInitializer);
-	AAreaCollisionBox(const FObjectInitializer& ObjectInitializer, const FVector& InitialLocation);
-	
-	UPROPERTY(VisibleAnywhere)
-	UBoxComponent* BoxCollision;
+    AAreaCollisionBox(const FObjectInitializer& ObjectInitializer);
+    AAreaCollisionBox(const FObjectInitializer& ObjectInitializer, const FVector& InitialLocation);
+    
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+    UBoxComponent* BoxCollision;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Currsor|Area")
-	FString Name;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Currsor|Area")
+    FString Name;
 
-	UFUNCTION(BlueprintCallable, Category = "Currsor|Area")
-	void SetAreaID(const int32& InAreaID) { AreaID = InAreaID; }
-	
-	UFUNCTION()
-	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-	
-	void UpdateSymmetricBillboard(USceneComponent* UpdatedComponent, EUpdateTransformFlags UpdateTransformFlags, ETeleportType Teleport);
+    UFUNCTION(BlueprintCallable, Category = "Currsor|Area")
+    void SetAreaID(int32 InAreaID) { AreaID = InAreaID; }
+    
+    UFUNCTION()
+    void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
+                       UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, 
+                       bool bFromSweep, const FHitResult& SweepResult);
+    
+    void UpdateSymmetricBillboard(USceneComponent* UpdatedComponent, 
+                                 EUpdateTransformFlags UpdateTransformFlags, 
+                                 ETeleportType Teleport);
 
 private:
-	UPROPERTY(VisibleAnywhere)
-	int32 AreaID;
+    UPROPERTY(VisibleAnywhere)
+    int32 AreaID;
 
-	// ========== 战斗位置 ==========
-	
-	UPROPERTY(VisibleAnywhere)
-	UBillboardComponent* MainBattleBillboard;
+    // ========== Category声明 ==========
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UBillboardComponent* MainBattleBillboard;
 
-	UPROPERTY(VisibleAnywhere)
-	UBillboardComponent* PlayerBillboard;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UBillboardComponent* PlayerBillboard;
 
-	UPROPERTY(VisibleAnywhere)
-	UBillboardComponent* EnemyBillboard;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UBillboardComponent* EnemyBillboard;
 
-	UPROPERTY(VisibleAnywhere)
-	UBillboardComponent* CameraBillboard;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UBillboardComponent* CameraBillboard;
 
-	UPROPERTY(VisibleAnywhere)
-	UArrowComponent* PlayerArrow;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UArrowComponent* PlayerArrow;
 
-	UPROPERTY(VisibleAnywhere)
-	UArrowComponent* EnemyArrow;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UArrowComponent* EnemyArrow;
 
-	UPROPERTY(VisibleAnywhere)
-	UArrowComponent* CameraArrow;
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UArrowComponent* CameraArrow;
 
-	UPROPERTY(VisibleAnywhere, Category = "Currsor|Billboard")
-	UTexture2D* MainTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Engine/MobileResources/HUD/AnalogHat.AnalogHat"));
+    // ========== 加载 ==========
+    UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")
+    TSoftObjectPtr<UTexture2D> MainTexture;
 
-	UPROPERTY(VisibleAnywhere, Category = "Currsor|Billboard")
-	UTexture2D* PlayerTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Engine/EngineResources/AICON-Green.AICON-Green"));
+    UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")
+    TSoftObjectPtr<UTexture2D> PlayerTexture;
 
-	UPROPERTY(VisibleAnywhere, Category = "Currsor|Billboard")
-	UTexture2D* EnemyTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Engine/EngineResources/AICON-Red.AICON-Red"));
+    UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")
+    TSoftObjectPtr<UTexture2D> EnemyTexture;
 
-	UPROPERTY(VisibleAnywhere, Category = "Currsor|Billboard")
-	UTexture2D* CameraTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Engine/Tutorial/Basics/TutorialAssets/CameraActor_64x.CameraActor_64x"));
+    UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")
+    TSoftObjectPtr<UTexture2D> CameraTexture;
 
-	void SetupBillboards();
+    UFUNCTION()
+    void SetupBillboards();
 };
