@@ -5,12 +5,16 @@
 
 #include "Component/CurrsorCameraComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/BillboardComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/PlayerController.h"
 #include "Currsor/Component/HealthComponent.h"
 #include "Currsor/System/GameSystemManager.h"
 #include "Currsor/System/Components/AttackSystemComponent.h"
 #include "Currsor/System/Components/BattleAreaTeleportComponent.h"
 #include "Currsor/System/CurrsorGameState.h"
+#include "CurrsorPlayerController.h"
+#include "Component/CurrsorActionComponent.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
 {
@@ -165,4 +169,56 @@ void ACurrsorCharacter::SetCurrentAreaID(int32 NewAreaID)
 bool ACurrsorCharacter::HasValidAreaID() const
 {
 	return GetCurrentAreaID() > 0;
+}
+
+void ACurrsorCharacter::SetRotationAdjustmentEnabled(bool bEnabled)
+{
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			ActionComponent->SetRotationAdjustmentEnabled(bEnabled);
+		}
+	}
+}
+
+bool ACurrsorCharacter::IsRotationAdjustmentEnabled() const
+{
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			return ActionComponent->IsRotationAdjustmentEnabled();
+		}
+	}
+	return false;
+}
+
+void ACurrsorCharacter::ResetRotationAdjustment()
+{
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			ActionComponent->ResetRotationAdjustment();
+		}
+	}
+}
+
+void ACurrsorCharacter::SwitchToPlayerCamera()
+{
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		// 切换回玩家角色作为视角目标
+		PlayerController->SetViewTarget(this);
+		UE_LOG(LogTemp, Log, TEXT("Switched back to player camera"));
+	}
+}
+
+void ACurrsorCharacter::SwitchToBattleCamera(UBillboardComponent* CameraBillboard)
+{
+	if (BattleAreaTeleportComponent)
+	{
+		BattleAreaTeleportComponent->SwitchToBattleCamera(this, CameraBillboard);
+	}
 }

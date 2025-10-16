@@ -59,6 +59,23 @@ public:
 	UFUNCTION(BlueprintPure, Category = "BattleArea")
 	bool HasValidAreaID() const;
 
+	// 旋转调整控制方法
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void SetRotationAdjustmentEnabled(bool bEnabled);
+
+	UFUNCTION(BlueprintPure, Category = "Movement")
+	bool IsRotationAdjustmentEnabled() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void ResetRotationAdjustment();
+
+	// 相机切换方法
+	UFUNCTION(BlueprintCallable, Category = "Camera")
+	void SwitchToPlayerCamera();
+
+	UFUNCTION(BlueprintCallable, Category = "Camera")
+	void SwitchToBattleCamera(class UBillboardComponent* CameraBillboard);
+
 private:
 	// 弹簧臂组件
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))

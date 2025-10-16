@@ -40,6 +40,10 @@ public:
 	//~ Begin IDamageable
 	// virtual void ApplyDamage_Implementation(float DamageAmount) override;
 	//~ End IDamageable
+
+	// 公共访问方法
+	UFUNCTION(BlueprintCallable, Category = "Components")
+	UCurrsorActionComponent* GetPlayerActionComponent() const { return PlayerActionComponent; }
 	
 protected:
 	// 输入映射上下文

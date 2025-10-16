@@ -6,7 +6,10 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/BillboardComponent.h"
+#include "Engine/Engine.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
+#include "Currsor/Character/Player/CurrsorPlayerController.h"
+#include "Currsor/Character/Player/Component/CurrsorActionComponent.h"
 #include "Currsor/Character/Enemy/BaseEnemy.h"
 #include "Currsor/System/Area/AreaCollisionBox.h"
 #include "Currsor/System/CurrsorGameState.h"
@@ -126,11 +129,11 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 
 	// 延迟执行传送以确保攻击动画完成
 	FTimerHandle TeleportTimer;
-	GetWorld()->GetTimerManager().SetTimer(TeleportTimer, [this, Player, Enemy, PlayerTargetLocation, PlayerTargetRotation, EnemyTargetLocation, EnemyTargetRotation, CameraTargetLocation, CameraTargetRotation, AreaID, bUsingPlayerAreaID]()
+	GetWorld()->GetTimerManager().SetTimer(TeleportTimer, [this, Player, Enemy, PlayerTargetLocation, PlayerTargetRotation, EnemyTargetLocation, EnemyTargetRotation, CameraBillboard, AreaID, bUsingPlayerAreaID]()
 	{
 		TeleportPlayer(Player, PlayerTargetLocation, PlayerTargetRotation);
 		TeleportEnemy(Enemy, EnemyTargetLocation, EnemyTargetRotation);
-		MoveCameraToPosition(Player, CameraTargetLocation, CameraTargetRotation);
+		SwitchToBattleCamera(Player, CameraBillboard);
 		
 		if (bEnableDebugLogging)
 		{
@@ -151,6 +154,20 @@ void UBattleAreaTeleportComponent::TeleportPlayer(ACurrsorCharacter* Player, con
 
 	Player->SetActorLocation(TargetLocation);
 	Player->SetActorRotation(TargetRotation);
+
+	// 获取玩家控制器并禁用旋转调整
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(Player->GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			ActionComponent->SetRotationAdjustmentEnabled(false);
+			
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("Rotation adjustment disabled for player after teleport to battle area"));
+			}
+		}
+	}
 
 	if (bEnableDebugLogging)
 	{
@@ -243,6 +260,59 @@ bool UBattleAreaTeleportComponent::ValidateTeleportConditions(ACurrsorCharacter*
 	}
 
 	return true;
+}
+
+void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Player, UBillboardComponent* CameraBillboard)
+{
+	if (!Player || !CameraBillboard)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player or CameraBillboard is null, cannot switch camera"));
+		}
+		return;
+	}
+
+	// 获取玩家控制器
+	APlayerController* PlayerController = Cast<APlayerController>(Player->GetController());
+	if (!PlayerController)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("Player has no PlayerController, cannot switch camera"));
+		}
+		return;
+	}
+
+	// 获取CameraBillboard所在的AreaCollisionBox
+	AAreaCollisionBox* AreaBox = Cast<AAreaCollisionBox>(CameraBillboard->GetOwner());
+	if (!AreaBox)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("CameraBillboard owner is not an AreaCollisionBox, cannot find battle camera"));
+		}
+		return;
+	}
+
+	// 直接获取AreaCollisionBox中的BattleCameraComponent
+	UCameraComponent* BattleCamera = AreaBox->FindComponentByClass<UCameraComponent>();
+	if (!BattleCamera)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No BattleCameraComponent found in AreaCollisionBox, cannot switch camera"));
+		}
+		return;
+	}
+
+	// 切换视角目标到战斗相机所在的Actor（即AreaCollisionBox）
+	PlayerController->SetViewTarget(AreaBox);
+
+	if (bEnableDebugLogging)
+	{
+		UE_LOG(LogTemp, Log, TEXT("Switched camera to battle camera in AreaCollisionBox: %s"), *AreaBox->GetName());
+	}
 }
 
 ACurrsorGameState* UBattleAreaTeleportComponent::GetCurrsorGameState() const

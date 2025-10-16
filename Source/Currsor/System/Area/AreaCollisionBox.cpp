@@ -5,6 +5,9 @@
 #include "../CurrsorGameState.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
 #include "Currsor/System/CurrsorGameInstance.h"
+#include "Camera/CameraComponent.h"
+#include "Components/SceneComponent.h"
+#include "Engine/World.h"
 
 // 设置纹理路径常量
 const FSoftObjectPath MAIN_TEXTURE_PATH(TEXT("/Engine/EditorResources/S_ReflActorIcon.S_ReflActorIcon"));
@@ -112,7 +115,11 @@ void AAreaCollisionBox::SetupBillboards()
 	CameraArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("CameraArrow"));
 	CameraArrow->SetupAttachment(CameraBillboard);
 	
-	// 添加事件绑定
+	// 创建战斗相机组件
+	BattleCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("BattleCameraComponent"));
+	BattleCameraComponent->SetupAttachment(CameraBillboard);
+	
 	PlayerBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);
 	EnemyBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);
 }
+

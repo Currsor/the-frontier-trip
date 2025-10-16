@@ -56,13 +56,21 @@ public:
 	void TeleportEnemy(ABaseEnemy* Enemy, const FVector& TargetLocation, const FRotator& TargetRotation);
 
 	/**
-	 * 移动相机到指定位置
+	 * 移动相机到指定位置（已弃用，保留兼容性）
 	 * @param Player 玩家角色（用于获取相机）
 	 * @param TargetLocation 目标位置
 	 * @param TargetRotation 目标旋转
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Battle Area Teleport")
 	void MoveCameraToPosition(ACurrsorCharacter* Player, const FVector& TargetLocation, const FRotator& TargetRotation);
+
+	/**
+	 * 切换到战斗区域相机
+	 * @param Player 玩家角色
+	 * @param CameraBillboard 相机Billboard组件，用于查找子相机
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area Teleport")
+	void SwitchToBattleCamera(ACurrsorCharacter* Player, class UBillboardComponent* CameraBillboard);
 
 	/**
 	 * 获取区域碰撞盒

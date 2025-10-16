@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/BillboardComponent.h"
 #include "Components/ArrowComponent.h"
+#include "Camera/CameraComponent.h"
 #include "AreaCollisionBox.generated.h"
 
 UCLASS()
@@ -62,6 +63,10 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category = "Components")
     UArrowComponent* CameraArrow;
+
+    // ========== 战斗相机组件 ==========
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UCameraComponent* BattleCameraComponent;
 
     // ========== 加载 ==========
     UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")

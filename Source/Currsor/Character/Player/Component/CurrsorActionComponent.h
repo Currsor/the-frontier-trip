@@ -42,6 +42,17 @@ public:
 	UFUNCTION()
 	float GetMovementSpeed() const;
 
+	// 旋转调整控制方法
+	UFUNCTION(BlueprintCallable, Category = "Rotation Control")
+	void SetRotationAdjustmentEnabled(bool bEnabled);
+	
+	UFUNCTION(BlueprintCallable, Category = "Rotation Control")
+	bool IsRotationAdjustmentEnabled() const;
+
+	// 重置旋转调整为默认启用状态（便捷方法）
+	UFUNCTION(BlueprintCallable, Category = "Rotation Control")
+	void ResetRotationAdjustment();
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Player")
 	TObjectPtr<ACurrsorCharacter> CurrsorPlayer;
@@ -57,4 +68,8 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Config|Movement", meta = (AllowPrivateAccess = "true"))
 	float MovementSpeed = 600.0f;
+
+	// 旋转调整开关控制变量
+	UPROPERTY(BlueprintReadWrite, Category = "Config|Rotation", meta = (AllowPrivateAccess = "true"))
+	bool bRotationAdjustmentEnabled = true;
 };

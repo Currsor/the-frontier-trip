@@ -72,6 +72,12 @@ void UCurrsorActionComponent::Move(const FInputActionValue& Value)
 
 void UCurrsorActionComponent::UpdateRotationBasedOnInput(float DeltaTime)
 {
+	// 检查旋转调整是否启用
+	if (!bRotationAdjustmentEnabled)
+	{
+		return;
+	}
+
 	if (this&& FMath::Abs(CurrentMovementVector) > KINDA_SMALL_NUMBER)
 	{
 		// 计算移动方向
@@ -99,4 +105,21 @@ void UCurrsorActionComponent::SetMovementSpeed(float NewSpeed)
 float UCurrsorActionComponent::GetMovementSpeed() const
 {
 	return MovementSpeed;
+}
+
+void UCurrsorActionComponent::SetRotationAdjustmentEnabled(bool bEnabled)
+{
+	bRotationAdjustmentEnabled = bEnabled;
+	UE_LOG(LogTemp, Log, TEXT("Rotation adjustment %s"), bEnabled ? TEXT("enabled") : TEXT("disabled"));
+}
+
+bool UCurrsorActionComponent::IsRotationAdjustmentEnabled() const
+{
+	return bRotationAdjustmentEnabled;
+}
+
+void UCurrsorActionComponent::ResetRotationAdjustment()
+{
+	SetRotationAdjustmentEnabled(true);
+	UE_LOG(LogTemp, Log, TEXT("Rotation adjustment reset to enabled state"));
 }
