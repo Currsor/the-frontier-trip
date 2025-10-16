@@ -9,6 +9,8 @@
 #include "Currsor/Component/HealthComponent.h"
 #include "Currsor/System/GameSystemManager.h"
 #include "Currsor/System/Components/AttackSystemComponent.h"
+#include "Currsor/System/Components/BattleAreaTeleportComponent.h"
+#include "Currsor/System/CurrsorGameState.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
 {
@@ -31,6 +33,9 @@ ACurrsorCharacter::ACurrsorCharacter()
 	// 创建生命值组件
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 	HealthComponent->SetMaxHealth(100.0f);
+
+	// 创建战斗区域传送组件
+	BattleAreaTeleportComponent = CreateDefaultSubobject<UBattleAreaTeleportComponent>(TEXT("Battle Area Teleport Component"));
 	
 	const FVector Start = SpringArmComponent->GetComponentLocation();
 	const FVector End = SpringArmComponent->GetSocketLocation(SpringArmComponent->SocketName);
@@ -59,6 +64,12 @@ void ACurrsorCharacter::BeginPlay()
 	if (GameSystemManager)
 	{
 		AttackSystem = GameSystemManager->GetAttackSystem();
+		
+		// 设置攻击系统的战斗区域传送组件
+		if (AttackSystem && BattleAreaTeleportComponent)
+		{
+			AttackSystem->SetBattleAreaTeleportComponent(BattleAreaTeleportComponent);
+		}
 	}
 }
 
@@ -130,4 +141,28 @@ float ACurrsorCharacter::GetMaxHealth() const
 bool ACurrsorCharacter::IsDead() const
 {
 	return HealthComponent ? HealthComponent->IsDead() : false;
+}
+
+// ========== 区域ID相关方法实现 ==========
+
+int32 ACurrsorCharacter::GetCurrentAreaID() const
+{
+	if (const ACurrsorGameState* GameState = GetWorld()->GetGameState<ACurrsorGameState>())
+	{
+		return GameState->GetCurrentAreaID();
+	}
+	return 0;
+}
+
+void ACurrsorCharacter::SetCurrentAreaID(int32 NewAreaID)
+{
+	if (ACurrsorGameState* GameState = GetWorld()->GetGameState<ACurrsorGameState>())
+	{
+		GameState->SetCurrentAreaID(NewAreaID);
+	}
+}
+
+bool ACurrsorCharacter::HasValidAreaID() const
+{
+	return GetCurrentAreaID() > 0;
 }

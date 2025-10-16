@@ -8,7 +8,6 @@ require("./Blueprints/System/TS_CurrsorGameMode");
 require("./Config/GameConfig");
 require("./GameSystemManager");
 require("./Managers/GameLogicManager");
-require("./Managers/StateManager");
 require("./Managers/UIManager");
 require("./Systems/AttackSystem");
 require("./Systems/EventSystem");

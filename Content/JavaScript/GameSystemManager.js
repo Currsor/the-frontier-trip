@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.gameSystemManager = exports.GameSystemManager = void 0;
 const GameLogicManager_1 = require("./Managers/GameLogicManager");
-const StateManager_1 = require("./Managers/StateManager");
 const UIManager_1 = require("./Managers/UIManager");
 const AttackSystem_1 = require("./Systems/AttackSystem");
 const LootSystem_1 = require("./Systems/LootSystem");
@@ -71,9 +70,6 @@ class GameSystemManager {
         // 游戏逻辑管理器
         const gameLogicManager = GameLogicManager_1.GameLogicManager.getInstance();
         this.systems.set("GameLogicManager", gameLogicManager);
-        // 状态管理器
-        const stateManager = StateManager_1.StateManager.getInstance();
-        this.systems.set("StateManager", stateManager);
         // UI管理器
         const uiManager = UIManager_1.UIManager.getInstance();
         this.systems.set("UIManager", uiManager);
@@ -84,9 +80,10 @@ class GameSystemManager {
      */
     initializeSystems() {
         console.log("Initializing systems...");
-        // 攻击系统
+        // 攻击系统代理（实际逻辑在 C++ 中）
         const attackSystem = AttackSystem_1.AttackSystem.getInstance();
         this.systems.set("AttackSystem", attackSystem);
+        console.log("AttackSystem proxy initialized - All logic handled in C++");
         // 掉落系统
         const lootSystem = LootSystem_1.LootSystem.getInstance();
         this.systems.set("LootSystem", lootSystem);
@@ -105,16 +102,17 @@ class GameSystemManager {
     }
     /**
      * 设置攻击系统连接
+     * 注意：攻击逻辑完全在 C++ 中处理，这里只处理 UI 响应
      */
     setupAttackSystemConnections() {
-        // 攻击命中时触发UI效果
+        // 攻击命中时触发UI效果（事件由 C++ 发出）
         EventSystem_1.EventSystem.subscribe("onAttackHit", (data) => {
             const uiManager = this.getSystem("UIManager");
             uiManager.showHitEffect(data.target, data.isCritical);
         });
-        // 攻击开始时更新状态
+        // 攻击开始时更新状态（事件由 C++ 发出）
         EventSystem_1.EventSystem.subscribe("onAttackStarted", (data) => {
-            console.log(`Attack system: ${data.attacker.GetName()} started attacking`);
+            console.log(`Attack system (C++): ${data.attacker.GetName()} started attacking`);
         });
     }
     /**
@@ -191,14 +189,11 @@ class GameSystemManager {
      */
     resetAllSystems() {
         console.log("Resetting all systems...");
-        // 重置各个系统
+        // 重置攻击系统（通过代理调用 C++ 重置）
         const attackSystem = this.getSystem("AttackSystem");
         if (attackSystem) {
             attackSystem.reset();
-        }
-        const stateManager = this.getSystem("StateManager");
-        if (stateManager) {
-            stateManager.reset();
+            console.log("AttackSystem reset via C++ proxy");
         }
         const lootSystem = this.getSystem("LootSystem");
         if (lootSystem) {

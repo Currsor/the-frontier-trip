@@ -1,5 +1,4 @@
 import { GameLogicManager } from "./Managers/GameLogicManager";
-import { StateManager } from "./Managers/StateManager";
 import { UIManager } from "./Managers/UIManager";
 import { AttackSystem } from "./Systems/AttackSystem";
 import { LootSystem } from "./Systems/LootSystem";
@@ -83,9 +82,7 @@ export class GameSystemManager {
         const gameLogicManager = GameLogicManager.getInstance();
         this.systems.set("GameLogicManager", gameLogicManager);
         
-        // 状态管理器
-        const stateManager = StateManager.getInstance();
-        this.systems.set("StateManager", stateManager);
+
         
         // UI管理器
         const uiManager = UIManager.getInstance();
@@ -100,9 +97,10 @@ export class GameSystemManager {
     private initializeSystems(): void {
         console.log("Initializing systems...");
         
-        // 攻击系统
+        // 攻击系统代理（实际逻辑在 C++ 中）
         const attackSystem = AttackSystem.getInstance();
         this.systems.set("AttackSystem", attackSystem);
+        console.log("AttackSystem proxy initialized - All logic handled in C++");
         
         // 掉落系统
         const lootSystem = LootSystem.getInstance();
@@ -127,17 +125,18 @@ export class GameSystemManager {
 
     /**
      * 设置攻击系统连接
+     * 注意：攻击逻辑完全在 C++ 中处理，这里只处理 UI 响应
      */
     private setupAttackSystemConnections(): void {
-        // 攻击命中时触发UI效果
+        // 攻击命中时触发UI效果（事件由 C++ 发出）
         EventSystem.subscribe("onAttackHit", (data: any) => {
             const uiManager = this.getSystem("UIManager") as UIManager;
             uiManager.showHitEffect(data.target, data.isCritical);
         });
 
-        // 攻击开始时更新状态
+        // 攻击开始时更新状态（事件由 C++ 发出）
         EventSystem.subscribe("onAttackStarted", (data: any) => {
-            console.log(`Attack system: ${data.attacker.GetName()} started attacking`);
+            console.log(`Attack system (C++): ${data.attacker.GetName()} started attacking`);
         });
     }
 
@@ -225,15 +224,11 @@ export class GameSystemManager {
     public resetAllSystems(): void {
         console.log("Resetting all systems...");
 
-        // 重置各个系统
+        // 重置攻击系统（通过代理调用 C++ 重置）
         const attackSystem = this.getSystem("AttackSystem") as AttackSystem;
         if (attackSystem) {
             attackSystem.reset();
-        }
-
-        const stateManager = this.getSystem("StateManager") as StateManager;
-        if (stateManager) {
-            stateManager.reset();
+            console.log("AttackSystem reset via C++ proxy");
         }
 
         const lootSystem = this.getSystem("LootSystem") as LootSystem;

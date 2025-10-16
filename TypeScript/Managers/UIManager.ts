@@ -45,6 +45,7 @@ export class UIManager {
             this.showLootNotification(data.items);
         });
 
+        // 监听攻击命中事件（由 C++ AttackSystemComponent 发出）
         EventSystem.subscribe("onAttackHit", (data: any) => {
             this.showHitEffect(data.target, data.isCritical);
         });

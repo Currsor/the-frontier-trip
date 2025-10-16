@@ -6,7 +6,7 @@ import "./Blueprints/System/TS_CurrsorGameMode";
 import "./Config/GameConfig";
 import "./GameSystemManager";
 import "./Managers/GameLogicManager";
-import "./Managers/StateManager";
+
 import "./Managers/UIManager";
 import "./Systems/AttackSystem";
 import "./Systems/EventSystem";

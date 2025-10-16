@@ -2,7 +2,6 @@ import * as UE from 'ue';
 import { $ref, blueprint } from 'puerts';
 import { gameSystemManager } from '../../../GameSystemManager';
 import { AttackSystem } from '../../../Systems/AttackSystem';
-import { StateManager } from '../../../Managers/StateManager';
 import { EventSystem } from '../../../Systems/EventSystem';
 
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorPlayerController.BP_CurrsorPlayerController_C");
@@ -14,7 +13,6 @@ class TS_CurrsorPlayerController extends jsClass {
     static CurrsorPlayerState: UE.CurrsorPlayerState;
     
     private attackSystem!: AttackSystem;
-    private stateManager!: StateManager;
     private isSystemsInitialized: boolean = false;
 
     ReceiveBeginPlay(): void {
@@ -37,7 +35,6 @@ class TS_CurrsorPlayerController extends jsClass {
 
             // 获取系统实例
             this.attackSystem = gameSystemManager.getSystem("AttackSystem");
-            this.stateManager = gameSystemManager.getSystem("StateManager");
             
             this.isSystemsInitialized = true;
             console.log("TS_CurrsorPlayerController: Game systems initialized successfully");
@@ -80,16 +77,12 @@ class TS_CurrsorPlayerController extends jsClass {
             return;
         }
 
-        console.log("TS: Attack input received");
+        console.log("TS: Attack input received - forwarding directly to C++");
         
         const playerActor = TS_CurrsorPlayerController.CurrsorPlayer;
         if (playerActor) {
-            // 广播攻击输入事件，让攻击系统处理
-            EventSystem.emit("onAttackInput", {
-                attacker: playerActor,
-                inputType: "primary",
-                timestamp: Date.now()
-            });
+            // 直接调用 C++ 攻击系统，不通过事件系统
+            this.attackSystem.handleAttackInput(playerActor);
         }
     }
 
@@ -123,8 +116,12 @@ class TS_CurrsorPlayerController extends jsClass {
                 timestamp: Date.now()
             });
 
-            // 尝试转换到跳跃状态
-            this.stateManager.changeState(StateManager.STATES.JUMP);
+            // 通过事件系统请求C++层进行状态转换
+            EventSystem.emit("onRequestStateChange", {
+                actor: playerActor,
+                requestedState: "Jump",
+                source: "PlayerController"
+            });
         }
     }
 
@@ -141,73 +138,60 @@ class TS_CurrsorPlayerController extends jsClass {
                 timestamp: Date.now()
             });
 
-            // 尝试转换到冲刺状态
-            this.stateManager.changeState(StateManager.STATES.DASH);
+            // 通过事件系统请求C++层进行状态转换
+            EventSystem.emit("onRequestStateChange", {
+                actor: playerActor,
+                requestedState: "Dash",
+                source: "PlayerController"
+            });
         }
     }
 
     // 更新移动状态
     private updateMovementState(inputVector: UE.Vector): void {
-        if (!inputVector || !this.stateManager) return;
+        if (!inputVector) return;
 
         const inputMagnitude = Math.sqrt(inputVector.X * inputVector.X + inputVector.Y * inputVector.Y);
+        const playerActor = TS_CurrsorPlayerController.CurrsorPlayer;
         
         if (inputMagnitude > 0.1) {
             // 根据输入强度决定是走路还是跑步
-            const targetState = inputMagnitude > 0.8 ? 
-                StateManager.STATES.RUN : StateManager.STATES.WALK;
+            const targetState = inputMagnitude > 0.8 ? "Run" : "Walk";
             
-            // 只有在不是攻击状态时才改变移动状态
-            if (!this.stateManager.isAttacking()) {
-                this.stateManager.changeState(targetState);
-            }
+            // 通过事件系统请求C++层进行状态转换
+            EventSystem.emit("onRequestStateChange", {
+                actor: playerActor,
+                requestedState: targetState,
+                source: "PlayerController"
+            });
         } else {
             // 没有输入时回到Idle状态
-            if (this.stateManager.isMoving() && !this.stateManager.isAttacking()) {
-                this.stateManager.changeState(StateManager.STATES.IDLE);
-            }
+            EventSystem.emit("onRequestStateChange", {
+                actor: playerActor,
+                requestedState: "Idle",
+                source: "PlayerController"
+            });
         }
     }
 
     // 检查是否可以跳跃
     private canJump(): boolean {
-        if (!this.stateManager) return false;
-        
-        // 死亡或受伤时不能跳跃
-        if (this.stateManager.isDead() || this.stateManager.isHurt()) {
-            return false;
-        }
-
-        // 已经在跳跃或下落时不能再次跳跃
-        const currentState = this.stateManager.getCurrentState();
-        if (currentState === StateManager.STATES.JUMP || currentState === StateManager.STATES.FALL) {
-            return false;
-        }
-
+        // 跳跃检查由C++层的StateManagerComponent处理
+        // 这里暂时返回true，具体逻辑由C++层决定
         return true;
     }
 
     // 检查是否可以冲刺
     private canDash(): boolean {
-        if (!this.stateManager) return false;
-        
-        // 死亡或受伤时不能冲刺
-        if (this.stateManager.isDead() || this.stateManager.isHurt()) {
-            return false;
-        }
-
-        // 已经在冲刺时不能再次冲刺
-        if (this.stateManager.isDashing()) {
-            return false;
-        }
-
+        // 冲刺检查由C++层的StateManagerComponent处理
+        // 这里暂时返回true，具体逻辑由C++层决定
         return true;
     }
 
     // 获取当前状态信息（供调试使用）
     public getStateInfo(): any {
-        if (!this.stateManager) return null;
-        return this.stateManager.getStateStats();
+        // 状态信息由C++层的StateManagerComponent提供
+        return { message: "State info now handled by C++ StateManagerComponent" };
     }
 
     // 获取攻击统计信息（供调试使用）
@@ -223,13 +207,15 @@ class TS_CurrsorPlayerController extends jsClass {
 
     // 重置控制器状态
     public resetController(): void {
-        if (this.stateManager) {
-            this.stateManager.reset();
-        }
-        
         if (this.attackSystem) {
             this.attackSystem.reset();
         }
+        
+        // 通过事件系统请求C++层重置状态
+        EventSystem.emit("onRequestSystemReset", {
+            system: "StateManager",
+            source: "PlayerController"
+        });
         
         console.log("TS_CurrsorPlayerController reset");
     }

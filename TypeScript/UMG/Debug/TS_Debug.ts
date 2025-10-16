@@ -1,12 +1,11 @@
 import * as UE from 'ue';
 import { $ref, blueprint } from 'puerts';
 import { gameSystemManager } from '../../GameSystemManager';
-import { AttackSystem } from '../../Systems/AttackSystem';
-import { StateManager } from '../../Managers/StateManager';
 import { EventSystem } from '../../Systems/EventSystem';
 import { GameLogicManager } from '../../Managers/GameLogicManager';
 import { UIManager } from '../../Managers/UIManager';
 import { LootSystem } from '../../Systems/LootSystem';
+import { AttackSystem } from '../../Systems/AttackSystem';
 
 const uclass = UE.Class.Load("/Game/UMG/Debug/W_Debug.W_Debug_C");
 const jsClass = blueprint.tojs<typeof UE.Game.UMG.Debug.W_Debug.W_Debug_C>(uclass);
@@ -31,7 +30,7 @@ class TS_Debug extends jsClass {
     
     // 新架构系统引用
     private attackSystem!: AttackSystem;
-    private stateManager!: StateManager;
+
     private gameLogicManager!: GameLogicManager;
     private uiManager!: UIManager;
     private lootSystem!: LootSystem;
@@ -58,7 +57,7 @@ class TS_Debug extends jsClass {
 
             // 获取系统实例
             this.attackSystem = gameSystemManager.getSystem("AttackSystem");
-            this.stateManager = gameSystemManager.getSystem("StateManager");
+
             this.gameLogicManager = gameSystemManager.getSystem("GameLogicManager");
             this.uiManager = gameSystemManager.getSystem("UIManager");
             this.lootSystem = gameSystemManager.getSystem("LootSystem");
@@ -115,12 +114,8 @@ class TS_Debug extends jsClass {
     Get_State_Text(): string {
         let stateText = "";
         
-        // 新架构状态信息
-        if (this.isSystemsInitialized && this.stateManager) {
-            const currentState = this.stateManager.getCurrentState();
-            const stateDuration = this.stateManager.getStateDuration();
-            stateText += `TS: ${currentState} (${stateDuration}ms)`;
-        }
+        // 状态信息由C++层的StateManagerComponent管理
+        stateText += "TS: State managed by C++ StateManagerComponent";
         
         // 原有系统状态信息
         if (TS_Debug.PlayerState) {
@@ -215,16 +210,28 @@ class TS_Debug extends jsClass {
 
     // 测试新架构功能的按钮事件
 
-    // 测试攻击系统
+    // 测试攻击系统 - 直接调用 C++ 攻击系统
     Test_Attack_System(): void {
-        console.log("Testing Attack System");
+        console.log("Testing Attack System (C++ Direct Call)");
         
         if (this.isSystemsInitialized && TS_Debug.pawn) {
-            EventSystem.emit("onAttackInput", {
-                attacker: TS_Debug.pawn,
-                inputType: "debug_test",
-                timestamp: Date.now()
-            });
+            try {
+                // 直接调用 C++ 攻击系统
+                const gameSystemManager = (UE as any).GameSystemManager?.GetInstance?.();
+                if (gameSystemManager) {
+                    const attackComponent = gameSystemManager.GetAttackSystem();
+                    if (attackComponent) {
+                        attackComponent.ProcessAttackInput(TS_Debug.pawn);
+                        console.log("Attack system test: Direct C++ call successful");
+                    } else {
+                        console.error("Attack system test: C++ AttackSystem not found");
+                    }
+                } else {
+                    console.error("Attack system test: GameSystemManager not available");
+                }
+            } catch (error) {
+                console.error("Attack system test: Error calling C++ system:", error);
+            }
         }
     }
 
@@ -232,12 +239,13 @@ class TS_Debug extends jsClass {
     Test_State_Transition(): void {
         console.log("Testing State Transition");
         
-        if (this.isSystemsInitialized && this.stateManager) {
-            const currentState = this.stateManager.getCurrentState();
-            const testState = currentState === StateManager.STATES.IDLE ? 
-                StateManager.STATES.ATTACK : StateManager.STATES.IDLE;
-            
-            this.stateManager.changeState(testState);
+        if (this.isSystemsInitialized && TS_Debug.pawn) {
+            // 通过事件系统请求C++层进行状态转换
+            EventSystem.emit("onRequestStateChange", {
+                actor: TS_Debug.pawn,
+                requestedState: "Attack",
+                source: "DebugUI"
+            });
         }
     }
 
@@ -268,7 +276,11 @@ class TS_Debug extends jsClass {
         console.log("Resetting All Systems");
         
         if (this.isSystemsInitialized) {
-            gameSystemManager.resetAllSystems();
+            // 通过事件系统请求C++层重置系统
+            EventSystem.emit("onRequestSystemReset", {
+                system: "All",
+                source: "DebugUI"
+            });
         }
     }
 

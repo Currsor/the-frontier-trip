@@ -39,6 +39,7 @@ class UIManager {
         EventSystem_1.EventSystem.subscribe("onLootGenerated", (data) => {
             this.showLootNotification(data.items);
         });
+        // 监听攻击命中事件（由 C++ AttackSystemComponent 发出）
         EventSystem_1.EventSystem.subscribe("onAttackHit", (data) => {
             this.showHitEffect(data.target, data.isCritical);
         });

@@ -24,6 +24,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Currsor|Area")
     void SetAreaID(int32 InAreaID) { AreaID = InAreaID; }
+
+    UFUNCTION(BlueprintPure, Category = "Currsor|Area")
+    int32 GetAreaID() const { return AreaID; }
     
     UFUNCTION()
     void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
