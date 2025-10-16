@@ -118,37 +118,37 @@ void ABaseState::ChangeState(ECharacterState NewState)
 void ABaseState::OnEnterDash(ECharacterState PreviousState)
 {
 	// 冲刺开始逻辑
-	//UE_LOG(LogTemp, Log, TEXT("Entering Dash state from %d"), PreviousState);
+	//UE_LOG(LogTemp, Log, TEXT("从状态 %d 进入冲刺状态"), PreviousState);
 }
 
 void ABaseState::OnExitDash()
 {
 	// 冲刺结束逻辑
-	//UE_LOG(LogTemp, Log, TEXT("Exiting Dash state"));
+	//UE_LOG(LogTemp, Log, TEXT("退出冲刺状态"));
 }
 
 void ABaseState::OnEnterAttack(ECharacterState PreviousState)
 {
 	// 攻击开始逻辑
-	//UE_LOG(LogTemp, Log, TEXT("Entering Attack state from %d"), PreviousState);
+	//UE_LOG(LogTemp, Log, TEXT("从状态 %d 进入攻击状态"), PreviousState);
 }
 
 void ABaseState::OnExitAttack()
 {
 	// 攻击结束逻辑
-	//UE_LOG(LogTemp, Log, TEXT("Exiting Attack state"));
+	//UE_LOG(LogTemp, Log, TEXT("退出攻击状态"));
 }
 
 void ABaseState::OnEnterWalk(ECharacterState PreviousState)
 {
 	// 行走开始逻辑
-	//UE_LOG(LogTemp, Log, TEXT("Entering Walk state from %d"), PreviousState);
+	//UE_LOG(LogTemp, Log, TEXT("从状态 %d 进入行走状态"), PreviousState);
 }
 
 void ABaseState::OnExitWalk()
 {
 	// 行走结束逻辑
-	//UE_LOG(LogTemp, Log, TEXT("Exiting Walk state"));
+	//UE_LOG(LogTemp, Log, TEXT("退出行走状态"));
 }
 
 // 其他状态进入/退出函数类似实现...

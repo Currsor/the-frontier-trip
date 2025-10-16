@@ -51,7 +51,7 @@ void ACurrsorAreaManager::CreateAreaData()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Duplicate Box ID generated: %d"), NewID);
+		UE_LOG(LogTemp, Error, TEXT("生成了重复的盒子ID: %d"), NewID);
 	}
 }
 
@@ -68,7 +68,7 @@ void ACurrsorAreaManager::RemoveAreaData()
 
 void ACurrsorAreaManager::SpawnAllTestDummies()
 {
-	UE_LOG(LogTemp, Log, TEXT("AreaManager: Spawning test dummies for all areas"));
+	UE_LOG(LogTemp, Log, TEXT("AreaManager: 为所有区域生成测试假人"));
 	
 	for (auto& Pair : BoxIDMap)
 	{
@@ -81,7 +81,7 @@ void ACurrsorAreaManager::SpawnAllTestDummies()
 
 void ACurrsorAreaManager::DestroyAllTestDummies()
 {
-	UE_LOG(LogTemp, Log, TEXT("AreaManager: Destroying test dummies for all areas"));
+	UE_LOG(LogTemp, Log, TEXT("AreaManager: 销毁所有区域的测试假人"));
 	
 	for (auto& Pair : BoxIDMap)
 	{

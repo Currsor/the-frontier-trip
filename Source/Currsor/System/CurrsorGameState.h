@@ -39,7 +39,7 @@ public:
 	FORCEINLINE int32 GetCurrentAreaID() const { return CurrentAreaID; }
 
 	UFUNCTION(BlueprintCallable, Category = "State")
-	FORCEINLINE void SetCurrentAreaID(int32 InCurrentAreaID) { CurrentAreaID = InCurrentAreaID; UE_LOG(LogTemp, Log, TEXT("SetCurrentAreaID: %d"), InCurrentAreaID); }
+	FORCEINLINE void SetCurrentAreaID(int32 InCurrentAreaID) { CurrentAreaID = InCurrentAreaID; UE_LOG(LogTemp, Log, TEXT("设置当前区域ID: %d"), InCurrentAreaID); }
 	
 	TObjectPtr<AAreaCollisionBox> GetActorFromID(int32 InID) const;
 

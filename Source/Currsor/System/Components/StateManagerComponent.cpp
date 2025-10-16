@@ -29,7 +29,7 @@ void UStateManagerComponent::OnInitialize()
 
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("StateManager initialized with %d priorities and %d transition rules"), 
+        UE_LOG(LogTemp, Log, TEXT("状态管理器已初始化，包含 %d 个优先级和 %d 个转换规则"),
                StatePriorities.Num(), TransitionRules.Num());
     }
 }
@@ -43,7 +43,7 @@ void UStateManagerComponent::OnReset()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("StateManager reset - cleared all actor states"));
+    UE_LOG(LogTemp, Log, TEXT("状态管理器已重置 - 清除了所有Actor状态"));
     }
 }
 
@@ -59,7 +59,7 @@ void UStateManagerComponent::OnShutdown()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("StateManager shutdown"));
+        UE_LOG(LogTemp, Log, TEXT("状态管理器已关闭"));
     }
 }
 
@@ -86,13 +86,13 @@ bool UStateManagerComponent::ChangeState(AActor* Actor, ECharacterState NewState
 {
     if (!bIsInitialized)
     {
-        UE_LOG(LogTemp, Error, TEXT("StateManager not initialized"));
+        UE_LOG(LogTemp, Error, TEXT("状态管理器未初始化"));
         return false;
     }
 
     if (!Actor)
     {
-        UE_LOG(LogTemp, Error, TEXT("ChangeState: Invalid actor"));
+        UE_LOG(LogTemp, Error, TEXT("ChangeState: Actor无效"));
         return false;
     }
 
@@ -125,10 +125,8 @@ bool UStateManagerComponent::ChangeState(AActor* Actor, ECharacterState NewState
         
         if (bEnableDebugLogging)
         {
-            UE_LOG(LogTemp, Warning, TEXT("State transition failed: %s -> %s for %s"), 
-                   *UEnum::GetValueAsString(CurrentState), 
-                   *UEnum::GetValueAsString(NewState), 
-                   *Actor->GetName());
+            UE_LOG(LogTemp, Warning, TEXT("状态转换失败: %s -> %s 于 %s"),
+                   *UEnum::GetValueAsString(CurrentState), *UEnum::GetValueAsString(NewState), *Actor->GetName());
         }
         return false;
     }
@@ -144,10 +142,8 @@ bool UStateManagerComponent::ChangeState(AActor* Actor, ECharacterState NewState
 
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("State changed: %s -> %s for %s"), 
-               *UEnum::GetValueAsString(CurrentState), 
-               *UEnum::GetValueAsString(NewState), 
-               *Actor->GetName());
+            UE_LOG(LogTemp, Log, TEXT("状态已改变: %s -> %s 于 %s"),
+                   *UEnum::GetValueAsString(CurrentState), *UEnum::GetValueAsString(NewState), *Actor->GetName());
     }
 
     return true;

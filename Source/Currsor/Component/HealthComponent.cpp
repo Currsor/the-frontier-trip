@@ -22,7 +22,7 @@ void UHealthComponent::SetMaxHealth(float NewMaxHealth)
 {
     if (NewMaxHealth <= 0.0f)
     {
-        UE_LOG(LogTemp, Warning, TEXT("MaxHealth must be greater than 0"));
+		UE_LOG(LogTemp, Warning, TEXT("最大生命值必须大于0"));
         return;
     }
 

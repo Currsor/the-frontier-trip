@@ -26,7 +26,7 @@ void UAttackSystemComponent::OnInitialize()
 
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("AttackSystem initialized with global damage multiplier: %f"), GlobalDamageMultiplier);
+        UE_LOG(LogTemp, Log, TEXT("攻击系统已初始化，全局伤害倍数: %f"), GlobalDamageMultiplier);
     }
 }
 
@@ -40,7 +40,7 @@ void UAttackSystemComponent::OnReset()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("AttackSystem reset - cleared %d active attacks"), ActiveAttacks.Num());
+        UE_LOG(LogTemp, Log, TEXT("攻击系统已重置 - 清除了 %d 个活跃攻击"), ActiveAttacks.Num());
     }
 }
 
@@ -54,7 +54,7 @@ void UAttackSystemComponent::OnShutdown()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("AttackSystem shutdown - Total attacks processed: %d, Total damage dealt: %d"), 
+        UE_LOG(LogTemp, Log, TEXT("攻击系统已关闭 - 处理的攻击总数: %d, 造成的伤害总量: %d"), 
                TotalAttacksProcessed, TotalDamageDealt);
     }
 }
@@ -63,20 +63,20 @@ bool UAttackSystemComponent::ProcessAttack(AActor* Attacker, AActor* Target, con
 {
     if (!bIsInitialized)
     {
-        UE_LOG(LogTemp, Error, TEXT("AttackSystem not initialized"));
+        UE_LOG(LogTemp, Error, TEXT("攻击系统未初始化"));
         return false;
     }
 
     if (!Attacker || !Target)
     {
-        UE_LOG(LogTemp, Error, TEXT("ProcessAttack: Invalid attacker or target"));
+		UE_LOG(LogTemp, Error, TEXT("ProcessAttack: 攻击者或目标无效"));
         return false;
     }
 
     // 检查对象有效性
     if (!IsValid(Attacker) || !IsValid(Target))
     {
-        UE_LOG(LogTemp, Error, TEXT("ProcessAttack: Attacker or Target is not valid"));
+		UE_LOG(LogTemp, Error, TEXT("ProcessAttack: 攻击者或目标无效"));
         return false;
     }
 
@@ -85,7 +85,7 @@ bool UAttackSystemComponent::ProcessAttack(AActor* Attacker, AActor* Target, con
         if (bEnableDebugLogging)
         {
             FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
-            UE_LOG(LogTemp, Warning, TEXT("ProcessAttack: %s cannot attack (cooldown)"), 
+            UE_LOG(LogTemp, Warning, TEXT("ProcessAttack: %s 无法攻击（冷却中）"), 
                    *AttackerName);
         }
         return false;
@@ -119,9 +119,9 @@ bool UAttackSystemComponent::ProcessAttack(AActor* Attacker, AActor* Target, con
         {
             FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
             FString TargetName = IsValid(Target) ? Target->GetName() : TEXT("Invalid");
-            UE_LOG(LogTemp, Log, TEXT("Attack processed: %s -> %s, Damage: %f %s"), 
+            UE_LOG(LogTemp, Log, TEXT("攻击已处理: %s -> %s, 伤害: %f %s"), 
                    *AttackerName, *TargetName, FinalDamage, 
-                   bIsCritical ? TEXT("(CRITICAL)") : TEXT(""));
+                   bIsCritical ? TEXT("(暴击)") : TEXT(""));
         }
 
         return true;
@@ -148,13 +148,13 @@ bool UAttackSystemComponent::ProcessAttackInput(AActor* Attacker)
 {
     if (!bIsInitialized)
     {
-        UE_LOG(LogTemp, Error, TEXT("AttackSystem not initialized"));
+        UE_LOG(LogTemp, Error, TEXT("攻击系统未初始化"));
         return false;
     }
 
     if (!Attacker)
     {
-        UE_LOG(LogTemp, Error, TEXT("ProcessAttackInput: Invalid attacker"));
+        UE_LOG(LogTemp, Error, TEXT("ProcessAttackInput: 攻击者无效"));
         return false;
     }
 
@@ -163,7 +163,7 @@ bool UAttackSystemComponent::ProcessAttackInput(AActor* Attacker)
         if (bEnableDebugLogging)
         {
             FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
-            UE_LOG(LogTemp, Warning, TEXT("ProcessAttackInput: %s cannot attack (cooldown or already attacking)"), 
+            UE_LOG(LogTemp, Warning, TEXT("ProcessAttackInput: %s 无法攻击（冷却中或正在攻击）"), 
                    *AttackerName);
         }
         return false;
@@ -175,7 +175,7 @@ bool UAttackSystemComponent::ProcessAttackInput(AActor* Attacker)
     if (bEnableDebugLogging)
     {
         FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Log, TEXT("Attack input processed for: %s"), *AttackerName);
+        UE_LOG(LogTemp, Log, TEXT("已处理攻击输入: %s"), *AttackerName);
     }
 
     return true;
@@ -185,13 +185,13 @@ bool UAttackSystemComponent::ProcessAttackHit(AActor* Attacker, AActor* Target, 
 {
     if (!bIsInitialized)
     {
-        UE_LOG(LogTemp, Error, TEXT("AttackSystem not initialized"));
+        UE_LOG(LogTemp, Error, TEXT("攻击系统未初始化"));
         return false;
     }
 
     if (!Attacker || !Target)
     {
-        UE_LOG(LogTemp, Error, TEXT("ProcessAttackHit: Invalid attacker or target"));
+        UE_LOG(LogTemp, Error, TEXT("ProcessAttackHit: 攻击者或目标无效"));
         return false;
     }
 
@@ -202,7 +202,7 @@ bool UAttackSystemComponent::ProcessAttackHit(AActor* Attacker, AActor* Target, 
     {
         FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
         FString TargetName = IsValid(Target) ? Target->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Log, TEXT("ProcessAttackHit: %s hit %s"), 
+        UE_LOG(LogTemp, Log, TEXT("ProcessAttackHit: %s 命中 %s"), 
                *AttackerName, *TargetName);
     }
 
@@ -230,7 +230,7 @@ bool UAttackSystemComponent::CanAttack(AActor* Attacker, bool bAllowDuringAttack
         UWorld* World = GetWorld();
         if (!World)
         {
-            UE_LOG(LogTemp, Error, TEXT("CanAttack: GetWorld() returned null"));
+            UE_LOG(LogTemp, Error, TEXT("CanAttack: GetWorld() 返回空值"));
             return false;
         }
         
@@ -257,7 +257,7 @@ void UAttackSystemComponent::StartAttack(AActor* Attacker, const FString& Attack
     if (bEnableDebugLogging)
     {
         FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Log, TEXT("Attack started: %s (%s)"), *AttackerName, *AttackType);
+        UE_LOG(LogTemp, Log, TEXT("攻击开始: %s (%s)"), *AttackerName, *AttackType);
     }
 }
 
@@ -274,7 +274,7 @@ void UAttackSystemComponent::EndAttack(AActor* Attacker)
     if (bEnableDebugLogging)
     {
         FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Log, TEXT("Attack ended: %s"), *AttackerName);
+        UE_LOG(LogTemp, Log, TEXT("攻击结束: %s"), *AttackerName);
     }
 }
 
@@ -311,7 +311,7 @@ bool UAttackSystemComponent::ApplyDamageToTarget(AActor* Target, float Damage, A
     if (bEnableDebugLogging)
     {
         FString TargetName = IsValid(Target) ? Target->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Warning, TEXT("Target %s does not implement IDamageable interface"), 
+        UE_LOG(LogTemp, Warning, TEXT("目标 %s 未实现 IDamageable 接口"), 
                *TargetName);
     }
 
@@ -326,7 +326,7 @@ void UAttackSystemComponent::BroadcastAttackHit(AActor* Attacker, AActor* Target
     {
         FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
         FString TargetName = IsValid(Target) ? Target->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Log, TEXT("Attack hit broadcasted: %s -> %s, Damage: %f"), 
+        UE_LOG(LogTemp, Log, TEXT("攻击命中广播: %s -> %s, 伤害: %f"), 
                *AttackerName, *TargetName, Damage);
     }
 }
@@ -337,8 +337,8 @@ void UAttackSystemComponent::SetBattleAreaTeleportComponent(UBattleAreaTeleportC
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("BattleAreaTeleportComponent set: %s"), 
-               TeleportComponent ? TEXT("Valid") : TEXT("Null"));
+        UE_LOG(LogTemp, Log, TEXT("BattleAreaTeleportComponent 设置: %s"), 
+               TeleportComponent ? TEXT("有效") : TEXT("空值"));
     }
 }
 
@@ -370,8 +370,8 @@ void UAttackSystemComponent::ProcessBattleAreaTeleportIfNeeded(AActor* Attacker,
     {
         FString AttackerName = IsValid(Attacker) ? Attacker->GetName() : TEXT("Invalid");
         FString TargetName = IsValid(Target) ? Target->GetName() : TEXT("Invalid");
-        UE_LOG(LogTemp, Log, TEXT("Battle area teleport %s for %s -> %s"), 
-               bTeleportSuccess ? TEXT("succeeded") : TEXT("failed"),
+        UE_LOG(LogTemp, Log, TEXT("战斗区域传送 %s 于 %s -> %s"), 
+               bTeleportSuccess ? TEXT("成功") : TEXT("失败"),
                *AttackerName, *TargetName);
     }
 }

@@ -98,7 +98,7 @@ void UCurrsorActionComponent::SetMovementSpeed(float NewSpeed)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("CurrsorPlayer is null in UCurrsorActionComponent::SetMovementSpeed"));
+		UE_LOG(LogTemp, Warning, TEXT("UCurrsorActionComponent::SetMovementSpeed 中 CurrsorPlayer 为空"));
 	}
 }
 
@@ -110,7 +110,7 @@ float UCurrsorActionComponent::GetMovementSpeed() const
 void UCurrsorActionComponent::SetRotationAdjustmentEnabled(bool bEnabled)
 {
 	bRotationAdjustmentEnabled = bEnabled;
-	UE_LOG(LogTemp, Log, TEXT("Rotation adjustment %s"), bEnabled ? TEXT("enabled") : TEXT("disabled"));
+	UE_LOG(LogTemp, Log, TEXT("旋转调整 %s"), bEnabled ? TEXT("已启用") : TEXT("已禁用"));
 }
 
 bool UCurrsorActionComponent::IsRotationAdjustmentEnabled() const
@@ -121,5 +121,5 @@ bool UCurrsorActionComponent::IsRotationAdjustmentEnabled() const
 void UCurrsorActionComponent::ResetRotationAdjustment()
 {
 	SetRotationAdjustmentEnabled(true);
-	UE_LOG(LogTemp, Log, TEXT("Rotation adjustment reset to enabled state"));
+	UE_LOG(LogTemp, Log, TEXT("旋转调整已重置为启用状态"));
 }

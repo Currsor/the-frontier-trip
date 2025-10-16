@@ -14,7 +14,7 @@ void UGameLogicManagerComponent::OnInitialize()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("GameLogicManager initialized"));
+	UE_LOG(LogTemp, Log, TEXT("GameLogicManager 已初始化"));
     }
 }
 
@@ -24,7 +24,7 @@ void UGameLogicManagerComponent::OnReset()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("GameLogicManager reset"));
+	UE_LOG(LogTemp, Log, TEXT("GameLogicManager 已重置"));
     }
 }
 
@@ -34,7 +34,7 @@ void UGameLogicManagerComponent::OnShutdown()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("GameLogicManager shutdown"));
+	UE_LOG(LogTemp, Log, TEXT("GameLogicManager 已关闭"));
     }
 }
 
@@ -42,13 +42,13 @@ bool UGameLogicManagerComponent::ProcessGameEvent(const FString& EventType, cons
 {
     if (!bIsInitialized)
     {
-        UE_LOG(LogTemp, Error, TEXT("GameLogicManager not initialized"));
+		UE_LOG(LogTemp, Error, TEXT("GameLogicManager 未初始化"));
         return false;
     }
 
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("Processing game event: %s"), *EventType);
+	UE_LOG(LogTemp, Log, TEXT("正在处理游戏事件: %s"), *EventType);
     }
 
     // 这里可以添加具体的事件处理逻辑

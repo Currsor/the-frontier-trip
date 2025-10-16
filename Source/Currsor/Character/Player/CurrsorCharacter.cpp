@@ -32,7 +32,7 @@ ACurrsorCharacter::ACurrsorCharacter()
 	AttackHitbox->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
 	AttackHitbox->SetRelativeLocation(FVector(60.0f, 0.0f, 0.0f)); // 在角色前方
 	
-	UE_LOG(LogTemp, Warning, TEXT("CurrsorCharacter AttackHitbox created and configured"));
+	UE_LOG(LogTemp, Warning, TEXT("CurrsorCharacter AttackHitbox 已创建并配置"));
 
 	// 创建生命值组件
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
@@ -109,7 +109,7 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 
 	if (!HealthComponent)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HealthComponent is null!"));
+		UE_LOG(LogTemp, Warning, TEXT("HealthComponent 为空!"));
 		return;
 	}
 
@@ -119,13 +119,13 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 	if (HealthComponent->IsDead())
 	{
 		// 死亡逻辑
-		UE_LOG(LogTemp, Warning, TEXT("Player Die"));
+		UE_LOG(LogTemp, Warning, TEXT("玩家死亡"));
 		CurrsorPlayerState->ChangeState(ECharacterState::Dead);
 	}
 	else
 	{
 		// 受击逻辑
-		UE_LOG(LogTemp, Warning, TEXT("Player Take Damage: %f, Current Health: %f"), 
+		UE_LOG(LogTemp, Warning, TEXT("玩家受到伤害: %f, 当前生命值: %f"), 
 			DamageAmount, HealthComponent->GetCurrentHealth());
 		CurrsorPlayerState->ChangeState(ECharacterState::Hurt);
 	}
@@ -211,7 +211,7 @@ void ACurrsorCharacter::SwitchToPlayerCamera()
 	{
 		// 切换回玩家角色作为视角目标
 		PlayerController->SetViewTarget(this);
-		UE_LOG(LogTemp, Log, TEXT("Switched back to player camera"));
+		UE_LOG(LogTemp, Log, TEXT("已切换回玩家摄像机"));
 	}
 }
 

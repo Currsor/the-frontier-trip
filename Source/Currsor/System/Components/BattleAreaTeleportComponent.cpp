@@ -25,7 +25,7 @@ void UBattleAreaTeleportComponent::BeginPlay()
 	
 	if (bEnableDebugLogging)
 	{
-		UE_LOG(LogTemp, Log, TEXT("BattleAreaTeleportComponent initialized"));
+		UE_LOG(LogTemp, Log, TEXT("BattleAreaTeleportComponent 已初始化"));
 	}
 }
 
@@ -48,7 +48,7 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 		
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Log, TEXT("Using Player's Area ID (from GameState): %d"), AreaID);
+			UE_LOG(LogTemp, Log, TEXT("使用玩家的区域ID（来自 GameState）: %d"), AreaID);
 		}
 	}
 	// 如果玩家没有有效的区域ID，检查敌人的区域ID
@@ -59,7 +59,7 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 		
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Log, TEXT("Player has no valid Area ID, using Enemy's Area ID: %d"), AreaID);
+			UE_LOG(LogTemp, Log, TEXT("玩家没有有效的区域ID，使用敌人的区域ID: %d"), AreaID);
 		}
 	}
 	// 如果两者都没有有效的区域ID，跳过传送
@@ -67,7 +67,7 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Neither Player nor Enemy %s has a valid area ID, skipping teleport"), *Enemy->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("玩家和敌人 %s 都没有有效的区域ID，跳过传送"), *Enemy->GetName());
 		}
 		return false;
 	}
@@ -77,7 +77,7 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Could not find area collision box for ID: %d"), AreaID);
+			UE_LOG(LogTemp, Error, TEXT("无法找到ID为 %d 的区域碰撞盒"), AreaID);
 		}
 		return false;
 	}
@@ -112,7 +112,7 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Missing billboard components in area %d"), AreaID);
+			UE_LOG(LogTemp, Error, TEXT("区域 %d 中缺少 billboard components"), AreaID);
 		}
 		return false;
 	}
@@ -137,8 +137,8 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 		
 		if (bEnableDebugLogging)
 		{
-			FString AreaIDSource = bUsingPlayerAreaID ? TEXT("Player") : TEXT("Enemy");
-			UE_LOG(LogTemp, Log, TEXT("Battle area teleport completed for area ID: %d (from %s)"), AreaID, *AreaIDSource);
+			FString AreaIDSource = bUsingPlayerAreaID ? TEXT("玩家") : TEXT("敌人");
+			UE_LOG(LogTemp, Log, TEXT("战斗区域传送完成，区域ID: %d（来自 %s）"), AreaID, *AreaIDSource);
 		}
 	}, TeleportDelay, false);
 
@@ -164,14 +164,14 @@ void UBattleAreaTeleportComponent::TeleportPlayer(ACurrsorCharacter* Player, con
 			
 			if (bEnableDebugLogging)
 			{
-				UE_LOG(LogTemp, Log, TEXT("Rotation adjustment disabled for player after teleport to battle area"));
+				UE_LOG(LogTemp, Log, TEXT("传送到战斗区域后已禁用玩家的旋转调整"));
 			}
 		}
 	}
 
 	if (bEnableDebugLogging)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Player teleported to: %s"), *TargetLocation.ToString());
+		UE_LOG(LogTemp, Log, TEXT("玩家传送到: %s"), *TargetLocation.ToString());
 	}
 }
 
@@ -187,7 +187,7 @@ void UBattleAreaTeleportComponent::TeleportEnemy(ABaseEnemy* Enemy, const FVecto
 
 	if (bEnableDebugLogging)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Enemy %s teleported to: %s"), *Enemy->GetName(), *TargetLocation.ToString());
+		UE_LOG(LogTemp, Log, TEXT("敌人 %s 传送到: %s"), *Enemy->GetName(), *TargetLocation.ToString());
 	}
 }
 
@@ -204,7 +204,7 @@ void UBattleAreaTeleportComponent::MoveCameraToPosition(ACurrsorCharacter* Playe
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Player has no SpringArmComponent, cannot move camera"));
+			UE_LOG(LogTemp, Warning, TEXT("玩家没有 SpringArmComponent，无法移动摄像机"));
 		}
 		return;
 	}
@@ -215,7 +215,7 @@ void UBattleAreaTeleportComponent::MoveCameraToPosition(ACurrsorCharacter* Playe
 
 	if (bEnableDebugLogging)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Camera moved to: %s"), *TargetLocation.ToString());
+		UE_LOG(LogTemp, Log, TEXT("摄像机移动到: %s"), *TargetLocation.ToString());
 	}
 }
 
@@ -236,7 +236,7 @@ bool UBattleAreaTeleportComponent::ValidateTeleportConditions(ACurrsorCharacter*
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Player is null"));
+			UE_LOG(LogTemp, Error, TEXT("玩家为空"));
 		}
 		return false;
 	}
@@ -245,7 +245,7 @@ bool UBattleAreaTeleportComponent::ValidateTeleportConditions(ACurrsorCharacter*
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Enemy is null"));
+			UE_LOG(LogTemp, Error, TEXT("敌人为空"));
 		}
 		return false;
 	}
@@ -254,7 +254,7 @@ bool UBattleAreaTeleportComponent::ValidateTeleportConditions(ACurrsorCharacter*
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Enemy %s is dead, skipping teleport"), *Enemy->GetName());
+			UE_LOG(LogTemp, Warning, TEXT("敌人 %s 已死亡，跳过传送"), *Enemy->GetName());
 		}
 		return false;
 	}
@@ -268,7 +268,7 @@ void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Playe
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Player or CameraBillboard is null, cannot switch camera"));
+			UE_LOG(LogTemp, Warning, TEXT("玩家或 CameraBillboard 为空，无法切换摄像机"));
 		}
 		return;
 	}
@@ -279,7 +279,7 @@ void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Playe
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Player has no PlayerController, cannot switch camera"));
+			UE_LOG(LogTemp, Warning, TEXT("玩家没有 PlayerController，无法切换摄像机"));
 		}
 		return;
 	}
@@ -290,7 +290,7 @@ void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Playe
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("CameraBillboard owner is not an AreaCollisionBox, cannot find battle camera"));
+			UE_LOG(LogTemp, Warning, TEXT("CameraBillboard 的所有者不是 AreaCollisionBox，无法找到战斗摄像机"));
 		}
 		return;
 	}
@@ -301,7 +301,7 @@ void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Playe
 	{
 		if (bEnableDebugLogging)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("No BattleCameraComponent found in AreaCollisionBox, cannot switch camera"));
+			UE_LOG(LogTemp, Warning, TEXT("在 AreaCollisionBox 中未找到 BattleCameraComponent，无法切换摄像机"));
 		}
 		return;
 	}
@@ -311,7 +311,7 @@ void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Playe
 
 	if (bEnableDebugLogging)
 	{
-		UE_LOG(LogTemp, Log, TEXT("Switched camera to battle camera in AreaCollisionBox: %s"), *AreaBox->GetName());
+		UE_LOG(LogTemp, Log, TEXT("已将摄像机切换到 AreaCollisionBox 中的战斗摄像机: %s"), *AreaBox->GetName());
 	}
 }
 

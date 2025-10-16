@@ -50,7 +50,7 @@ AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer
 
 void AAreaCollisionBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin: %s"), *OtherActor->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("重叠开始: %s"), *OtherActor->GetName());
 	
 	if (OtherActor && !OtherActor->IsA<ACurrsorCharacter>()) return;
 	if (OtherComp && OtherComp->GetAttachParent() != nullptr) return;
@@ -147,7 +147,7 @@ void AAreaCollisionBox::SpawnTestDummies()
 	
 	if (!AreaManager)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AreaCollisionBox: Owner is not an AreaManager, cannot spawn test dummies"));
+		UE_LOG(LogTemp, Warning, TEXT("AreaCollisionBox: 所有者不是 AreaManager，无法生成测试假人"));
 		return;
 	}
 	
@@ -165,7 +165,7 @@ void AAreaCollisionBox::SpawnTestDummies()
 		
 		if (TestPlayerDummy)
 		{
-			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Spawned test player dummy at %s"), 
+			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 在 %s 生成测试玩家假人"), 
 				*PlayerLocation.ToString());
 		}
 	}
@@ -184,7 +184,7 @@ void AAreaCollisionBox::SpawnTestDummies()
 		
 		if (TestEnemyDummy)
 		{
-			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Spawned test enemy dummy at %s"), 
+			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 在 %s 生成测试敌人假人"), 
 				*EnemyLocation.ToString());
 		}
 	}
@@ -195,7 +195,7 @@ void AAreaCollisionBox::DestroyTestDummies()
 	// 销毁玩家假人
 	if (TestPlayerDummy && IsValid(TestPlayerDummy))
 	{
-		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Destroying test player dummy"));
+		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 销毁测试玩家假人"));
 		TestPlayerDummy->Destroy();
 		TestPlayerDummy = nullptr;
 	}
@@ -203,7 +203,7 @@ void AAreaCollisionBox::DestroyTestDummies()
 	// 销毁敌人假人
 	if (TestEnemyDummy && IsValid(TestEnemyDummy))
 	{
-		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Destroying test enemy dummy"));
+		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 销毁测试敌人假人"));
 		TestEnemyDummy->Destroy();
 		TestEnemyDummy = nullptr;
 	}

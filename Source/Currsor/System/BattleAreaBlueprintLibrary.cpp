@@ -195,7 +195,7 @@ bool UBattleAreaBlueprintLibrary::GetAreaPositions(AAreaCollisionBox* AreaBox, F
 
 	if (!PlayerBillboard || !EnemyBillboard || !CameraBillboard)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("GetAreaPositions: Missing billboard components in area"));
+		UE_LOG(LogTemp, Warning, TEXT("获取区域位置: 区域中缺少billboard components"));
 		return false;
 	}
 
@@ -303,7 +303,7 @@ void UBattleAreaBlueprintLibrary::SpawnTestDummiesForArea(AAreaCollisionBox* Are
 {
 	if (!AreaBox)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaBox is null"));
+		UE_LOG(LogTemp, Warning, TEXT("战斗区域蓝图库: 区域碰撞盒为空"));
 		return;
 	}
 
@@ -314,7 +314,7 @@ void UBattleAreaBlueprintLibrary::DestroyTestDummiesForArea(AAreaCollisionBox* A
 {
 	if (!AreaBox)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaBox is null"));
+		UE_LOG(LogTemp, Warning, TEXT("战斗区域蓝图库: 区域碰撞盒为空"));
 		return;
 	}
 
@@ -325,14 +325,14 @@ void UBattleAreaBlueprintLibrary::SpawnAllTestDummies(const UObject* WorldContex
 {
 	if (!WorldContext)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: WorldContext is null"));
+		UE_LOG(LogTemp, Warning, TEXT("战斗区域蓝图库: 世界上下文为空"));
 		return;
 	}
 
 	UWorld* World = WorldContext->GetWorld();
 	if (!World)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: World is null"));
+		UE_LOG(LogTemp, Warning, TEXT("战斗区域蓝图库: 世界对象为空"));
 		return;
 	}
 
@@ -345,12 +345,12 @@ void UBattleAreaBlueprintLibrary::SpawnAllTestDummies(const UObject* WorldContex
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaManager not found"));
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: 未找到 AreaManager"));
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: GameState not found"));
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: 未找到 GameState"));
 	}
 }
 
@@ -358,14 +358,14 @@ void UBattleAreaBlueprintLibrary::DestroyAllTestDummies(const UObject* WorldCont
 {
 	if (!WorldContext)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: WorldContext is null"));
+		UE_LOG(LogTemp, Warning, TEXT("战斗区域蓝图库: 世界上下文为空"));
 		return;
 	}
 
 	UWorld* World = WorldContext->GetWorld();
 	if (!World)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: World is null"));
+		UE_LOG(LogTemp, Warning, TEXT("战斗区域蓝图库: 世界对象为空"));
 		return;
 	}
 
@@ -378,11 +378,11 @@ void UBattleAreaBlueprintLibrary::DestroyAllTestDummies(const UObject* WorldCont
 		}
 		else
 		{
-			UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaManager not found"));
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: 未找到 AreaManager"));
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: GameState not found"));
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: 未找到 GameState"));
 	}
 }

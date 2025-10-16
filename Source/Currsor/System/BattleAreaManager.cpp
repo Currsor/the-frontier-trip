@@ -10,14 +10,14 @@ void UBattleAreaManager::Initialize(FSubsystemCollectionBase& Collection)
 {
 	Super::Initialize(Collection);
 	
-	UE_LOG(LogTemp, Log, TEXT("BattleAreaManager initialized"));
+	UE_LOG(LogTemp, Log, TEXT("BattleAreaManager 已初始化"));
 }
 
 void UBattleAreaManager::SetEnemyAreaID(ABaseEnemy* Enemy, int32 AreaID)
 {
 	if (!Enemy)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("SetEnemyAreaID: Enemy is null"));
+		UE_LOG(LogTemp, Warning, TEXT("SetEnemyAreaID: 敌人为空"));
 		return;
 	}
 
@@ -46,7 +46,7 @@ void UBattleAreaManager::SetEnemyAreaID(ABaseEnemy* Enemy, int32 AreaID)
 	}
 	AreaEnemyMap[AreaID].AddUnique(Enemy);
 
-	UE_LOG(LogTemp, Log, TEXT("Enemy %s assigned to area ID: %d"), *Enemy->GetName(), AreaID);
+	UE_LOG(LogTemp, Log, TEXT("敌人 %s 已分配到区域ID: %d"), *Enemy->GetName(), AreaID);
 }
 
 int32 UBattleAreaManager::GetEnemyAreaID(ABaseEnemy* Enemy) const
@@ -68,7 +68,7 @@ void UBattleAreaManager::AssignEnemiesInArea(AAreaCollisionBox* AreaBox, float S
 {
 	if (!AreaBox)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AssignEnemiesInArea: AreaBox is null"));
+		UE_LOG(LogTemp, Warning, TEXT("AssignEnemiesInArea: AreaBox 为空"));
 		return;
 	}
 
@@ -83,7 +83,7 @@ void UBattleAreaManager::AssignEnemiesInArea(AAreaCollisionBox* AreaBox, float S
 		SetEnemyAreaID(Enemy, AreaID);
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("Assigned %d enemies to area ID: %d"), EnemiesInRadius.Num(), AreaID);
+	UE_LOG(LogTemp, Log, TEXT("已将 %d 个敌人分配到区域ID: %d"), EnemiesInRadius.Num(), AreaID);
 }
 
 void UBattleAreaManager::ClearEnemyAreaID(ABaseEnemy* Enemy)
@@ -110,7 +110,7 @@ void UBattleAreaManager::ClearEnemyAreaID(ABaseEnemy* Enemy)
 	}
 
 	Enemy->SetAreaID(-1);
-	UE_LOG(LogTemp, Log, TEXT("Cleared area ID for enemy: %s"), *Enemy->GetName());
+	UE_LOG(LogTemp, Log, TEXT("已清除敌人 %s 的区域ID"), *Enemy->GetName());
 }
 
 TArray<ABaseEnemy*> UBattleAreaManager::GetEnemiesInArea(int32 AreaID) const

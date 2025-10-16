@@ -22,17 +22,17 @@ class GameSystemManager {
         return GameSystemManager.instance;
     }
     constructor() {
-        console.log("GameSystemManager created");
+        console.log("游戏系统管理器已创建");
     }
     /**
      * 初始化所有游戏系统
      */
     initialize() {
         if (this.isInitialized) {
-            console.log("GameSystemManager already initialized");
+            console.log("游戏系统管理器已初始化");
             return;
         }
-        console.log("Initializing GameSystemManager...");
+        console.log("正在初始化游戏系统管理器...");
         try {
             // 按依赖顺序初始化系统
             this.initializeCore();
@@ -40,14 +40,14 @@ class GameSystemManager {
             this.initializeSystems();
             this.setupSystemConnections();
             this.isInitialized = true;
-            console.log("GameSystemManager initialized successfully");
+            console.log("游戏系统管理器初始化成功");
             // 广播初始化完成事件
             EventSystem_1.EventSystem.emit("onGameSystemsInitialized", {
                 timestamp: Date.now()
             });
         }
         catch (error) {
-            console.error("Failed to initialize GameSystemManager:", error);
+            console.error("初始化游戏系统管理器失败:", error);
             throw error;
         }
     }
@@ -55,50 +55,50 @@ class GameSystemManager {
      * 初始化核心系统
      */
     initializeCore() {
-        console.log("Initializing core systems...");
+        console.log("正在初始化核心系统...");
         // 事件系统最先初始化
         this.systems.set("EventSystem", EventSystem_1.EventSystem);
         // 配置系统
         this.systems.set("GameConfig", GameConfig_1.GameConfig);
-        console.log("Core systems initialized");
+        console.log("核心系统已初始化");
     }
     /**
      * 初始化管理器
      */
     initializeManagers() {
-        console.log("Initializing managers...");
+        console.log("正在初始化管理器...");
         // 游戏逻辑管理器
         const gameLogicManager = GameLogicManager_1.GameLogicManager.getInstance();
         this.systems.set("GameLogicManager", gameLogicManager);
         // UI管理器
         const uiManager = UIManager_1.UIManager.getInstance();
         this.systems.set("UIManager", uiManager);
-        console.log("Managers initialized");
+        console.log("管理器已初始化");
     }
     /**
      * 初始化系统
      */
     initializeSystems() {
-        console.log("Initializing systems...");
+        console.log("正在初始化系统...");
         // 攻击系统代理（实际逻辑在 C++ 中）
         const attackSystem = AttackSystem_1.AttackSystem.getInstance();
         this.systems.set("AttackSystem", attackSystem);
-        console.log("AttackSystem proxy initialized - All logic handled in C++");
+        console.log("攻击系统代理已初始化 - 所有逻辑在C++中处理");
         // 掉落系统
         const lootSystem = LootSystem_1.LootSystem.getInstance();
         this.systems.set("LootSystem", lootSystem);
-        console.log("Systems initialized");
+        console.log("系统已初始化");
     }
     /**
      * 设置系统间连接
      */
     setupSystemConnections() {
-        console.log("Setting up system connections...");
+        console.log("正在设置系统连接...");
         // 设置系统间的事件连接
         this.setupAttackSystemConnections();
         this.setupLootSystemConnections();
         this.setupUIConnections();
-        console.log("System connections established");
+        console.log("系统连接已建立");
     }
     /**
      * 设置攻击系统连接
@@ -112,7 +112,7 @@ class GameSystemManager {
         });
         // 攻击开始时更新状态（事件由 C++ 发出）
         EventSystem_1.EventSystem.subscribe("onAttackStarted", (data) => {
-            console.log(`Attack system (C++): ${data.attacker.GetName()} started attacking`);
+            console.log(`攻击系统 (C++): ${data.attacker.GetName()} 开始攻击`);
         });
     }
     /**
@@ -153,7 +153,7 @@ class GameSystemManager {
     getSystem(systemName) {
         const system = this.systems.get(systemName);
         if (!system) {
-            console.error(`System not found: ${systemName}`);
+            console.error(`系统未找到: ${systemName}`);
             return null;
         }
         return system;
@@ -188,12 +188,12 @@ class GameSystemManager {
      * 重置所有系统
      */
     resetAllSystems() {
-        console.log("Resetting all systems...");
+        console.log("正在重置所有系统...");
         // 重置攻击系统（通过代理调用 C++ 重置）
         const attackSystem = this.getSystem("AttackSystem");
         if (attackSystem) {
             attackSystem.reset();
-            console.log("AttackSystem reset via C++ proxy");
+            console.log("攻击系统通过C++代理重置");
         }
         const lootSystem = this.getSystem("LootSystem");
         if (lootSystem) {
@@ -203,13 +203,13 @@ class GameSystemManager {
         if (uiManager) {
             uiManager.cleanup();
         }
-        console.log("All systems reset");
+        console.log("所有系统已重置");
     }
     /**
      * 销毁所有系统
      */
     shutdown() {
-        console.log("Shutting down GameSystemManager...");
+        console.log("正在关闭游戏系统管理器...");
         // 清理UI资源
         const uiManager = this.getSystem("UIManager");
         if (uiManager) {
@@ -220,7 +220,7 @@ class GameSystemManager {
         // 清空系统映射
         this.systems.clear();
         this.isInitialized = false;
-        console.log("GameSystemManager shutdown complete");
+        console.log("游戏系统管理器关闭完成");
     }
     /**
      * 获取系统状态信息
@@ -253,11 +253,11 @@ class GameSystemManager {
      * 调试信息输出
      */
     debugPrintStatus() {
-        console.log("=== Game System Manager Status ===");
-        console.log(`Initialized: ${this.isInitialized}`);
-        console.log(`Systems Count: ${this.systems.size}`);
+        console.log("=== 游戏系统管理器状态 ===");
+        console.log(`已初始化: ${this.isInitialized}`);
+        console.log(`系统数量: ${this.systems.size}`);
         this.systems.forEach((system, name) => {
-            console.log(`- ${name}: ${system ? 'Active' : 'Inactive'}`);
+            console.log(`- ${name}: ${system ? '活跃' : '未活跃'}`);
         });
         EventSystem_1.EventSystem.debugPrintListeners();
         console.log("==================================");

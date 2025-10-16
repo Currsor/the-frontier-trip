@@ -41,7 +41,7 @@ ADestructibleItem::ADestructibleItem()
         MeshComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Overlap);
         MeshComp->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
         
-        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s collision configured for attack detection"), *GetName());
+        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s 碰撞已配置用于攻击检测"), *GetName());
     }
 }
 
@@ -58,17 +58,17 @@ void ADestructibleItem::BeginPlay()
     // 验证接口实现
     if (this->Implements<UDamageable>())
     {
-        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s correctly implements IDamageable interface"), *GetName());
+        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s 正确实现了 IDamageable 接口"), *GetName());
     }
     else
     {
-        UE_LOG(LogTemp, Error, TEXT("DestructibleItem %s does NOT implement IDamageable interface!"), *GetName());
+        UE_LOG(LogTemp, Error, TEXT("DestructibleItem %s 未实现 IDamageable 接口!"), *GetName());
     }
 
     // 输出碰撞配置信息
     if (UStaticMeshComponent* MeshComp = GetStaticMeshComponent())
     {
-        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s collision settings: Enabled=%d, GenerateOverlapEvents=%d"), 
+        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s 碰撞设置: Enabled=%d, GenerateOverlapEvents=%d"), 
                *GetName(), 
                (int32)MeshComp->GetCollisionEnabled(),
                MeshComp->GetGenerateOverlapEvents());
@@ -80,31 +80,31 @@ void ADestructibleItem::ApplyDamage_Implementation(float DamageAmount, AActor* D
     // 调用接口的默认实现
     IDamageable::ApplyDamage_Implementation(DamageAmount, DamageInstigator, HitResult);
 
-    UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s ApplyDamage called! Damage: %f, Instigator: %s"), 
+    UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s ApplyDamage 被调用! 伤害: %f, 攻击者: %s"), 
            *GetName(), 
            DamageAmount, 
-           DamageInstigator ? *DamageInstigator->GetName() : TEXT("Unknown"));
+           DamageInstigator ? *DamageInstigator->GetName() : TEXT("未知"));
 
     // 如果已经被破坏，不再处理伤害
     if (bIsDestroyed)
     {
-        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s is already destroyed, ignoring damage"), *GetName());
+        UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s 已被破坏，忽略伤害"), *GetName());
         return;
     }
 
     if (!HealthComponent)
     {
-        UE_LOG(LogTemp, Error, TEXT("DestructibleItem %s has no HealthComponent!"), *GetName());
+        UE_LOG(LogTemp, Error, TEXT("DestructibleItem %s 没有 HealthComponent!"), *GetName());
         return;
     }
 
     // 应用伤害到生命值组件
     HealthComponent->TakeDamage(DamageAmount, DamageInstigator);
 
-    UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s took %f damage from %s. Health: %f/%f"), 
+    UE_LOG(LogTemp, Warning, TEXT("DestructibleItem %s 受到来自 %s 的 %f 点伤害。生命值: %f/%f"), 
            *GetName(), 
+           DamageInstigator ? *DamageInstigator->GetName() : TEXT("未知"),
            DamageAmount, 
-           DamageInstigator ? *DamageInstigator->GetName() : TEXT("Unknown"),
            HealthComponent->GetCurrentHealth(),
            HealthComponent->GetMaxHealth());
 }
@@ -180,7 +180,7 @@ void ADestructibleItem::HandleDestruction_Implementation()
         }
     }
 
-    UE_LOG(LogTemp, Log, TEXT("%s has been destroyed"), *GetName());
+    UE_LOG(LogTemp, Log, TEXT("%s 已被破坏"), *GetName());
 }
 
 void ADestructibleItem::SpawnLoot_Implementation()
@@ -221,7 +221,7 @@ void ADestructibleItem::SpawnLoot_Implementation()
         
         if (DroppedItem)
         {
-            UE_LOG(LogTemp, Log, TEXT("Spawned loot: %s at location %s"), 
+            UE_LOG(LogTemp, Log, TEXT("生成战利品: %s 位置 %s"), 
                    *DroppedItem->GetName(), 
                    *DropLocation.ToString());
         }

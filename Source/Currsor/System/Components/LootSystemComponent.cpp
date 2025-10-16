@@ -48,7 +48,7 @@ void ULootSystemComponent::OnInitialize()
 
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("LootSystem initialized with %d loot tables"), LootTableIndices.Num());
+        UE_LOG(LogTemp, Log, TEXT("战利品系统已初始化，包含 %d 个战利品表"), LootTableIndices.Num());
     }
 }
 
@@ -62,7 +62,7 @@ void ULootSystemComponent::OnReset()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("LootSystem reset"));
+    UE_LOG(LogTemp, Log, TEXT("战利品系统已重置"));
     }
 }
 
@@ -79,7 +79,7 @@ void ULootSystemComponent::OnShutdown()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("LootSystem shutdown - Total drops generated: %d"), TotalDropsGenerated);
+        UE_LOG(LogTemp, Log, TEXT("战利品系统已关闭 - 生成的战利品总数: %d"), TotalDropsGenerated);
     }
 }
 
@@ -89,13 +89,13 @@ TArray<FLootItem> ULootSystemComponent::GenerateLoot(AActor* Source, const FStri
     
     if (!bIsInitialized)
     {
-        UE_LOG(LogTemp, Error, TEXT("LootSystem not initialized"));
+        UE_LOG(LogTemp, Error, TEXT("战利品系统未初始化"));
         return GeneratedLoot;
     }
 
     if (!Source)
     {
-        UE_LOG(LogTemp, Error, TEXT("GenerateLoot: Invalid source actor"));
+        UE_LOG(LogTemp, Error, TEXT("GenerateLoot: 源Actor无效"));
         return GeneratedLoot;
     }
 
@@ -105,14 +105,14 @@ TArray<FLootItem> ULootSystemComponent::GenerateLoot(AActor* Source, const FStri
     {
         if (bEnableDebugLogging)
         {
-            UE_LOG(LogTemp, Warning, TEXT("Loot table not found: %s, using Default"), *LootTableName);
+        UE_LOG(LogTemp, Warning, TEXT("未找到战利品表: %s，使用默认表"), *LootTableName);
         }
         TableIndexPtr = LootTableIndices.Find(TEXT("Default"));
     }
 
     if (!TableIndexPtr || !LootTableStartIndices.IsValidIndex(*TableIndexPtr) || !LootTableLengths.IsValidIndex(*TableIndexPtr))
     {
-        UE_LOG(LogTemp, Error, TEXT("No loot tables available"));
+        UE_LOG(LogTemp, Error, TEXT("没有可用的战利品表"));
         return GeneratedLoot;
     }
     
@@ -150,7 +150,7 @@ TArray<FLootItem> ULootSystemComponent::GenerateLoot(AActor* Source, const FStri
             
             if (bEnableDebugLogging)
             {
-                UE_LOG(LogTemp, Log, TEXT("Loot generated: %s"), *DropRecord);
+        UE_LOG(LogTemp, Log, TEXT("已生成战利品: %s"), *DropRecord);
             }
         }
     }
@@ -176,8 +176,8 @@ void ULootSystemComponent::SpawnLoot(AActor* Source, const TArray<FLootItem>& It
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("Spawning %d loot items at location %s"), 
-               Items.Num(), *Location.ToString());
+        UE_LOG(LogTemp, Log, TEXT("在位置 %s 生成 %d 个战利品"), 
+               *Location.ToString(), Items.Num());
     }
 }
 
@@ -202,7 +202,7 @@ bool ULootSystemComponent::AddLootTable(const FString& TableName, const TArray<F
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("Added loot table '%s' with %d items"), *TableName, Items.Num());
+    UE_LOG(LogTemp, Log, TEXT("已添加战利品表 '%s'，包含 %d 个物品"), *TableName, Items.Num());
     }
     
     return true;
@@ -214,7 +214,7 @@ void ULootSystemComponent::ClearDropHistory()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("Drop history cleared"));
+    UE_LOG(LogTemp, Log, TEXT("掉落历史已清除"));
     }
 }
 

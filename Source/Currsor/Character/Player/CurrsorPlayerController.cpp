@@ -93,12 +93,12 @@ void ACurrsorPlayerController::MoveCompleted()
 
 void ACurrsorPlayerController::AttackTriggered()
 {
-    UE_LOG(LogTemp, Log, TEXT("AttackContinous"));
+	UE_LOG(LogTemp, Log, TEXT("连续攻击"));
 }
 
 void ACurrsorPlayerController::AttackStarted()
 {
-    UE_LOG(LogTemp, Log, TEXT("Attack"));
+	UE_LOG(LogTemp, Log, TEXT("攻击"));
     CurrsorPlayerState -> SetAttackKey(true);
     
     // 使用新的攻击系统
@@ -112,13 +112,13 @@ void ACurrsorPlayerController::AttackStarted()
 
 void ACurrsorPlayerController::AttackCanceled()
 {
-    UE_LOG(LogTemp, Log, TEXT("Attack_End"));
+	UE_LOG(LogTemp, Log, TEXT("攻击结束"));
     CurrsorPlayerState -> SetAttackKey(false);
 }
 
 void ACurrsorPlayerController::AttackCompleted()
 {
-    UE_LOG(LogTemp, Log, TEXT("AttackContinous_End"));
+	UE_LOG(LogTemp, Log, TEXT("连续攻击结束"));
     CurrsorPlayerState -> SetAttackKey(false);
     
 }
