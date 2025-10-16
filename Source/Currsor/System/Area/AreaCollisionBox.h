@@ -38,6 +38,13 @@ public:
                                  EUpdateTransformFlags UpdateTransformFlags, 
                                  ETeleportType Teleport);
 
+    // ========== 测试假人管理 ==========
+    UFUNCTION(CallInEditor, Category = "Currsor | Battle Area", Meta = (DisplayPriority = "0"))
+    void SpawnTestDummies();
+
+    UFUNCTION(CallInEditor, Category = "Currsor | Battle Area", Meta = (DisplayPriority = "0"))
+    void DestroyTestDummies();
+
 private:
     UPROPERTY(VisibleAnywhere)
     int32 AreaID;
@@ -68,6 +75,13 @@ private:
     UPROPERTY(VisibleAnywhere, Category = "Components")
     UCameraComponent* BattleCameraComponent;
 
+    // ========== 测试假人 ==========
+    UPROPERTY(VisibleAnywhere, Category = "Battle|Test Dummies")
+    APawn* TestPlayerDummy;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Battle|Test Dummies")
+    APawn* TestEnemyDummy;
+
     // ========== 加载 ==========
     UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")
     TSoftObjectPtr<UTexture2D> MainTexture;
@@ -83,4 +97,7 @@ private:
 
     UFUNCTION()
     void SetupBillboards();
+
+protected:
+    virtual void BeginPlay() override;
 };

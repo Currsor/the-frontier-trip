@@ -39,6 +39,9 @@ void ACurrsorAreaManager::CreateAreaData()
 	int32 NewID = GetTypeHash(NewCollisionBox);
 	
 	NewCollisionBox->SetAreaID(NewID);
+	
+	NewCollisionBox->SetOwner(this);
+	
 	NewCollisionBox->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 
 	// Add to map
@@ -59,6 +62,32 @@ void ACurrsorAreaManager::RemoveAreaData()
 		if (It->Value == nullptr)
 		{
 			It.RemoveCurrent();
+		}
+	}
+}
+
+void ACurrsorAreaManager::SpawnAllTestDummies()
+{
+	UE_LOG(LogTemp, Log, TEXT("AreaManager: Spawning test dummies for all areas"));
+	
+	for (auto& Pair : BoxIDMap)
+	{
+		if (Pair.Value && IsValid(Pair.Value))
+		{
+			Pair.Value->SpawnTestDummies();
+		}
+	}
+}
+
+void ACurrsorAreaManager::DestroyAllTestDummies()
+{
+	UE_LOG(LogTemp, Log, TEXT("AreaManager: Destroying test dummies for all areas"));
+	
+	for (auto& Pair : BoxIDMap)
+	{
+		if (Pair.Value && IsValid(Pair.Value))
+		{
+			Pair.Value->DestroyTestDummies();
 		}
 	}
 }

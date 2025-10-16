@@ -48,6 +48,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void SetAreaManager(ACurrsorAreaManager* InAreaManager);
+	
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE ACurrsorAreaManager* GetAreaManager() const { return AreaManager; }
 
 	// ========== 战斗状态相关 ==========
 	private:

@@ -8,6 +8,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SceneComponent.h"
 #include "Engine/World.h"
+#include "CurrsorAreaManager.h"
+#include "GameFramework/Pawn.h"
 
 // 设置纹理路径常量
 const FSoftObjectPath MAIN_TEXTURE_PATH(TEXT("/Engine/EditorResources/S_ReflActorIcon.S_ReflActorIcon"));
@@ -121,5 +123,89 @@ void AAreaCollisionBox::SetupBillboards()
 	
 	PlayerBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);
 	EnemyBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);
+	
+	// 初始化假人指针
+	TestPlayerDummy = nullptr;
+	TestEnemyDummy = nullptr;
+}
+
+void AAreaCollisionBox::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	// 游戏开始时销毁假人
+	DestroyTestDummies();
+}
+
+void AAreaCollisionBox::SpawnTestDummies()
+{
+	// 先销毁已存在的假人
+	DestroyTestDummies();
+	
+	// 直接从Owner获取AreaManager
+	ACurrsorAreaManager* AreaManager = Cast<ACurrsorAreaManager>(GetOwner());
+	
+	if (!AreaManager)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AreaCollisionBox: Owner is not an AreaManager, cannot spawn test dummies"));
+		return;
+	}
+	
+	// 生成玩家假人
+	if (AreaManager->TestPlayerDummyClass && PlayerBillboard)
+	{
+		FVector PlayerLocation = PlayerBillboard->GetComponentLocation();
+		FRotator PlayerRotation = PlayerArrow->GetComponentRotation();
+		
+		TestPlayerDummy = GetWorld()->SpawnActor<APawn>(
+			AreaManager->TestPlayerDummyClass,
+			PlayerLocation,
+			PlayerRotation
+		);
+		
+		if (TestPlayerDummy)
+		{
+			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Spawned test player dummy at %s"), 
+				*PlayerLocation.ToString());
+		}
+	}
+	
+	// 生成敌人假人
+	if (AreaManager->TestEnemyDummyClass && EnemyBillboard)
+	{
+		FVector EnemyLocation = EnemyBillboard->GetComponentLocation();
+		FRotator EnemyRotation = EnemyArrow->GetComponentRotation();
+		
+		TestEnemyDummy = GetWorld()->SpawnActor<APawn>(
+			AreaManager->TestEnemyDummyClass,
+			EnemyLocation,
+			EnemyRotation
+		);
+		
+		if (TestEnemyDummy)
+		{
+			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Spawned test enemy dummy at %s"), 
+				*EnemyLocation.ToString());
+		}
+	}
+}
+
+void AAreaCollisionBox::DestroyTestDummies()
+{
+	// 销毁玩家假人
+	if (TestPlayerDummy && IsValid(TestPlayerDummy))
+	{
+		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Destroying test player dummy"));
+		TestPlayerDummy->Destroy();
+		TestPlayerDummy = nullptr;
+	}
+	
+	// 销毁敌人假人
+	if (TestEnemyDummy && IsValid(TestEnemyDummy))
+	{
+		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: Destroying test enemy dummy"));
+		TestEnemyDummy->Destroy();
+		TestEnemyDummy = nullptr;
+	}
 }
 

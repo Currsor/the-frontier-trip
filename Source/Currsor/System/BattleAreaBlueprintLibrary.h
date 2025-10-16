@@ -170,4 +170,33 @@ public:
 	 */
 	UFUNCTION(BlueprintPure, Category = "Battle Area|AreaBox")
 	static bool DoesEnemyHaveSelectedAreaBox(ABaseEnemy* Enemy);
+
+	// ========== 测试假人管理 ==========
+	/**
+	 * 为指定区域生成测试假人
+	 * @param AreaBox 区域碰撞盒
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area|Test Dummies", CallInEditor)
+	static void SpawnTestDummiesForArea(AAreaCollisionBox* AreaBox);
+
+	/**
+	 * 销毁指定区域的测试假人
+	 * @param AreaBox 区域碰撞盒
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area|Test Dummies", CallInEditor)
+	static void DestroyTestDummiesForArea(AAreaCollisionBox* AreaBox);
+
+	/**
+	 * 为所有区域生成测试假人
+	 * @param WorldContext 世界上下文
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area|Test Dummies", CallInEditor, meta = (WorldContext = "WorldContext"))
+	static void SpawnAllTestDummies(const UObject* WorldContext);
+
+	/**
+	 * 销毁所有区域的测试假人
+	 * @param WorldContext 世界上下文
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area|Test Dummies", CallInEditor, meta = (WorldContext = "WorldContext"))
+	static void DestroyAllTestDummies(const UObject* WorldContext);
 };

@@ -7,6 +7,8 @@
 #include "Currsor/Character/Player/CurrsorCharacter.h"
 #include "Currsor/System/Area/AreaCollisionBox.h"
 #include "Currsor/System/BattleAreaManager.h"
+#include "Currsor/System/CurrsorGameState.h"
+#include "Currsor/System/Area/CurrsorAreaManager.h"
 
 UBattleAreaManager* UBattleAreaBlueprintLibrary::GetBattleAreaManager(const UObject* WorldContext)
 {
@@ -294,4 +296,93 @@ bool UBattleAreaBlueprintLibrary::GetEffectiveAreaID(ACurrsorCharacter* Player, 
 	OutAreaID = -1;
 	OutIsFromPlayer = false;
 	return false;
+}
+
+// ========== 测试假人管理实现 ==========
+void UBattleAreaBlueprintLibrary::SpawnTestDummiesForArea(AAreaCollisionBox* AreaBox)
+{
+	if (!AreaBox)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaBox is null"));
+		return;
+	}
+
+	AreaBox->SpawnTestDummies();
+}
+
+void UBattleAreaBlueprintLibrary::DestroyTestDummiesForArea(AAreaCollisionBox* AreaBox)
+{
+	if (!AreaBox)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaBox is null"));
+		return;
+	}
+
+	AreaBox->DestroyTestDummies();
+}
+
+void UBattleAreaBlueprintLibrary::SpawnAllTestDummies(const UObject* WorldContext)
+{
+	if (!WorldContext)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: WorldContext is null"));
+		return;
+	}
+
+	UWorld* World = WorldContext->GetWorld();
+	if (!World)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: World is null"));
+		return;
+	}
+
+	// 通过GameState获取AreaManager
+	if (ACurrsorGameState* GameState = World->GetGameState<ACurrsorGameState>())
+	{
+		if (ACurrsorAreaManager* AreaManager = GameState->GetAreaManager())
+		{
+			AreaManager->SpawnAllTestDummies();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaManager not found"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: GameState not found"));
+	}
+}
+
+void UBattleAreaBlueprintLibrary::DestroyAllTestDummies(const UObject* WorldContext)
+{
+	if (!WorldContext)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: WorldContext is null"));
+		return;
+	}
+
+	UWorld* World = WorldContext->GetWorld();
+	if (!World)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: World is null"));
+		return;
+	}
+
+	// 通过GameState获取AreaManager
+	if (ACurrsorGameState* GameState = World->GetGameState<ACurrsorGameState>())
+	{
+		if (ACurrsorAreaManager* AreaManager = GameState->GetAreaManager())
+		{
+			AreaManager->DestroyAllTestDummies();
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: AreaManager not found"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("BattleAreaBlueprintLibrary: GameState not found"));
+	}
 }

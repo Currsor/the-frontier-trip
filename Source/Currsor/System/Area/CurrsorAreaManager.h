@@ -23,12 +23,26 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 	
+	// ========== 测试假人配置 ==========
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Currsor |Test Dummies")
+	TSubclassOf<APawn> TestPlayerDummyClass;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Currsor |Test Dummies")
+	TSubclassOf<APawn> TestEnemyDummyClass;
+	
+	// ========== 测试假人管理 ==========
+	UFUNCTION(CallInEditor, Category = "Currsor |Test Dummies")
+	void SpawnAllTestDummies();
+	
+	UFUNCTION(CallInEditor, Category = "Currsor |Test Dummies")
+	void DestroyAllTestDummies();
+	
 	TObjectPtr<AAreaCollisionBox> GetAreaBox(int32 ID);
 	
-	UFUNCTION(CallInEditor, Category = "Currsor|Area Management")
+	UFUNCTION(CallInEditor, Category = "Currsor |Area Management")
 	void CreateAreaData();
 
-	UFUNCTION(CallInEditor, Category = "Currsor|Area Management")
+	UFUNCTION(CallInEditor, Category = "Currsor |Area Management")
 	void RemoveAreaData();
 
 private:
