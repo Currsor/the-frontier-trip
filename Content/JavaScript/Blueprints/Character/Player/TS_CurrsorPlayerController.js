@@ -47,11 +47,11 @@ class TS_CurrsorPlayerController extends jsClass {
         });
     }
     AddDebugWidgetToViewport() {
-        puerts_1.blueprint.load(UE.Game.UMG.Debug.W_Debug.W_Debug_C);
+        puerts_1.blueprint.load(UE.Game.UI.Blueprints.Debug.W_Debug.W_Debug_C);
         const PlayerController = UE.GameplayStatics.GetPlayerController(this, 0);
-        const debugWidget = UE.WidgetBlueprintLibrary.Create(this, UE.Game.UMG.Debug.W_Debug.W_Debug_C.StaticClass(), PlayerController);
+        const debugWidget = UE.WidgetBlueprintLibrary.Create(this, UE.Game.UI.Blueprints.Debug.W_Debug.W_Debug_C.StaticClass(), PlayerController);
         debugWidget.AddToViewport();
-        puerts_1.blueprint.unload(UE.Game.UMG.Debug.W_Debug.W_Debug_C);
+        puerts_1.blueprint.unload(UE.Game.UI.Blueprints.Debug.W_Debug.W_Debug_C);
     }
     // 攻击输入处理
     onAttackInput() {

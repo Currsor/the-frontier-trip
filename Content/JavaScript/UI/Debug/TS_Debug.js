@@ -4,7 +4,7 @@ const UE = require("ue");
 const puerts_1 = require("puerts");
 const GameSystemManager_1 = require("../../GameSystemManager");
 const EventSystem_1 = require("../../Systems/EventSystem");
-const uclass = UE.Class.Load("/Game/UI/Blueprints/Debug/W_Debug.W_Debug_C");
+const uclass = UE.Class.Load("/Game/UMG/Debug/W_Debug.W_Debug_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_Debug extends jsClass {
     static EPlayerStateMap = {

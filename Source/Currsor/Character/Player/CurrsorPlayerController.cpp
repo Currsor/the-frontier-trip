@@ -13,6 +13,7 @@
 #include "Currsor/System/GameSystemManager.h"
 #include "Currsor/System/Components/AttackSystemComponent.h"
 #include "Currsor/System/Components/StateManagerComponent.h"
+#include "Currsor/System/Components/BattleAreaTeleportComponent.h"
 
 void ACurrsorPlayerController::SetupInputComponent()
 {
@@ -58,6 +59,18 @@ void ACurrsorPlayerController::BeginPlay()
     {
         AttackSystem = GameSystemManager->GetAttackSystem();
         StateManager = GameSystemManager->GetStateManager();
+        
+        // 获取战斗区域传送组件
+        // 获取BattleAreaTeleportComponent（通过AttackSystem）
+        if (AttackSystem)
+        {
+            BattleAreaTeleportComponent = AttackSystem->GetBattleAreaTeleportComponent();
+        }
+        
+        if (bEnableInputDebugLogging)
+        {
+            UE_LOG(LogTemp, Log, TEXT("PlayerController已初始化系统组件"));
+        }
     }
 
     // 依赖项通过 Initialize 注入
@@ -65,6 +78,11 @@ void ACurrsorPlayerController::BeginPlay()
     PlayerActionComponent->Initialize(CurrsorPlayer, CurrsorPlayerState, this);
 
     PlayerStateComponent = GetPlayerState<ACurrsorPlayerState>();
+}
+
+void ACurrsorPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    Super::EndPlay(EndPlayReason);
 }
 
 void ACurrsorPlayerController::Tick(float DeltaTime)
@@ -152,6 +170,74 @@ void ACurrsorPlayerController::AttackHitboxOff_Implementation()
     PlayerStateComponent->SetAttackNum(0.f);
     
     CurrsorPlayer->SetHitboxCollision(false);
+}
+
+void ACurrsorPlayerController::ExitBattleArea()
+{
+    if (!BattleAreaTeleportComponent)
+    {
+        if (bEnableInputDebugLogging)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("BattleAreaTeleportComponent为空，无法退出战斗区域"));
+        }
+        return;
+    }
+    
+    if (!CurrsorPlayer)
+    {
+        if (bEnableInputDebugLogging)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("CurrsorPlayer为空，无法退出战斗区域"));
+        }
+        return;
+    }
+    
+    BattleAreaTeleportComponent->ExitBattleArea(CurrsorPlayer);
+    
+    if (bEnableInputDebugLogging)
+    {
+        UE_LOG(LogTemp, Log, TEXT("PlayerController请求退出战斗区域"));
+    }
+}
+
+void ACurrsorPlayerController::SwitchInputMappingContext(bool bUseCombatInput)
+{
+    if (bIsInCombatInputMode == bUseCombatInput) return;
+
+    if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+    {
+        // 移除当前IMC
+        if (bIsInCombatInputMode && CombatInputMappingContext)
+        {
+            Subsystem->RemoveMappingContext(CombatInputMappingContext);
+        }
+        else if (!bIsInCombatInputMode && InputMappingContext)
+        {
+            Subsystem->RemoveMappingContext(InputMappingContext);
+        }
+
+        // 添加新的IMC
+        if (bUseCombatInput && CombatInputMappingContext)
+        {
+            Subsystem->AddMappingContext(CombatInputMappingContext, 1);
+            bIsInCombatInputMode = true;
+            
+            if (bEnableInputDebugLogging)
+            {
+                UE_LOG(LogTemp, Log, TEXT("切换到战斗输入模式"));
+            }
+        }
+        else if (!bUseCombatInput && InputMappingContext)
+        {
+            Subsystem->AddMappingContext(InputMappingContext, 1);
+            bIsInCombatInputMode = false;
+            
+            if (bEnableInputDebugLogging)
+            {
+                UE_LOG(LogTemp, Log, TEXT("切换到普通输入模式"));
+            }
+        }
+    }
 }
 
 // TODO: 这里可以添加其他输入处理函数

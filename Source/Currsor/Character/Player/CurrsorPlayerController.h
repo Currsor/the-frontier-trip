@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Currsor/Character/Component/BaseState.h"
 #include "Currsor/Interface/ICombatInterface.h"
 #include "Currsor/Interface/IDamageable.h"
 #include "GameFramework/PlayerController.h"
@@ -18,6 +19,7 @@ class UStateManagerComponent;
 
 class UInputMappingContext;
 class UInputAction;
+class UBattleAreaTeleportComponent;
 
 /**
  * 玩家控制器类
@@ -28,6 +30,7 @@ class CURRSOR_API ACurrsorPlayerController : public APlayerController, public IC
 	GENERATED_BODY()
 public:
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	virtual void SetupInputComponent() override;
 	virtual void Tick(float DeltaTime) override;
 
@@ -44,11 +47,23 @@ public:
 	// 公共访问方法
 	UFUNCTION(BlueprintCallable, Category = "Components")
 	UCurrsorActionComponent* GetPlayerActionComponent() const { return PlayerActionComponent; }
+
+	// 输入映射上下文切换
+	UFUNCTION(BlueprintCallable, Category = "Input")
+	void SwitchInputMappingContext(bool bUseCombatInput);
+
+	// 退出战斗区域
+	UFUNCTION(BlueprintCallable, Category = "Battle")
+	void ExitBattleArea();
 	
 protected:
 	// 输入映射上下文
 	UPROPERTY(EditDefaultsOnly, Category = "Enhanced Input")
 	TObjectPtr<UInputMappingContext> InputMappingContext = nullptr;
+
+	// 战斗输入映射上下文
+	UPROPERTY(EditDefaultsOnly, Category = "Enhanced Input")
+	TObjectPtr<UInputMappingContext> CombatInputMappingContext = nullptr;
 
 	// 属性
 	UPROPERTY(BlueprintReadOnly, Category = "Movement")
@@ -89,6 +104,18 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Enhanced Input")
 	TObjectPtr<UInputAction> AttackAction = nullptr;
+
+	// 输入模式控制
+	UPROPERTY(BlueprintReadOnly, Category = "Input")
+	bool bIsInCombatInputMode = false;
+
+	// 战斗区域传送组件引用
+	UPROPERTY(BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UBattleAreaTeleportComponent> BattleAreaTeleportComponent;
+
+	// 调试日志开关
+	UPROPERTY(EditDefaultsOnly, Category = "Debug")
+	bool bEnableInputDebugLogging = true;
 	
 private:
 	// 输入处理函数

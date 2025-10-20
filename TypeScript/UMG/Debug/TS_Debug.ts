@@ -7,8 +7,8 @@ import { UIManager } from '../../Managers/UIManager';
 import { LootSystem } from '../../Systems/LootSystem';
 import { AttackSystem } from '../../Systems/AttackSystem';
 
-const uclass = UE.Class.Load("/Game/UMG/Debug/W_Debug.W_Debug_C");
-const jsClass = blueprint.tojs<typeof UE.Game.UMG.Debug.W_Debug.W_Debug_C>(uclass);
+const uclass = UE.Class.Load("/Game/UI/Blueprints/Debug/W_Debug.W_Debug_C");
+const jsClass = blueprint.tojs<typeof UE.Game.UI.Blueprints.Debug.W_Debug.W_Debug_C>(uclass);
 
 class TS_Debug extends jsClass {
 
@@ -121,7 +121,7 @@ class TS_Debug extends jsClass {
         if (TS_Debug.PlayerState) {
             const stateNum = TS_Debug.PlayerState.GetCurrentState();
             const legacyState = TS_Debug.EPlayerStateMap[stateNum] ?? stateNum.toString();
-            stateText += stateText ? ` | C++: ${legacyState}` : `C++: ${legacyState}`;
+            stateText = `${legacyState}`;
         }
         
         return stateText || "Unknown";

@@ -73,6 +73,20 @@ public:
 	void SwitchToBattleCamera(ACurrsorCharacter* Player, class UBillboardComponent* CameraBillboard);
 
 	/**
+	 * 退出战斗区域
+	 * @param Player 玩家角色
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area Teleport")
+	void ExitBattleArea(ACurrsorCharacter* Player);
+
+	/**
+	 * 切换回玩家相机
+	 * @param Player 玩家角色
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Battle Area Teleport")
+	void SwitchToPlayerCamera(ACurrsorCharacter* Player);
+
+	/**
 	 * 获取区域碰撞盒
 	 * @param AreaID 区域ID
 	 * @return 区域碰撞盒，如果未找到返回nullptr
@@ -104,6 +118,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Battle Area Teleport|Config", meta = (DisplayName = "传送延迟"))
 	float TeleportDelay = 0.1f;
+
+	UPROPERTY(EditAnywhere, Category = "Battle Area Teleport|Config", meta = (DisplayName = "退出战斗延迟"))
+	float ExitBattleDelay = 0.5f;
 
 	UPROPERTY(EditAnywhere, Category = "Battle Area Teleport|Config", meta = (DisplayName = "启用平滑相机过渡"))
 	bool bUseSmoothCameraTransition = true;

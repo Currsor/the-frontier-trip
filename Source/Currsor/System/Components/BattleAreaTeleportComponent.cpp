@@ -135,6 +135,17 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 		TeleportEnemy(Enemy, EnemyTargetLocation, EnemyTargetRotation);
 		SwitchToBattleCamera(Player, CameraBillboard);
 		
+		// 传送完成后切换到战斗输入模式
+		if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(Player->GetController()))
+		{
+			PlayerController->SwitchInputMappingContext(true); // true = 切换到战斗输入模式
+			
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("战斗传送完成后已切换到战斗输入模式"));
+			}
+		}
+		
 		if (bEnableDebugLogging)
 		{
 			FString AreaIDSource = bUsingPlayerAreaID ? TEXT("玩家") : TEXT("敌人");
@@ -312,6 +323,87 @@ void UBattleAreaTeleportComponent::SwitchToBattleCamera(ACurrsorCharacter* Playe
 	if (bEnableDebugLogging)
 	{
 		UE_LOG(LogTemp, Log, TEXT("已将摄像机切换到 AreaCollisionBox 中的战斗摄像机: %s"), *AreaBox->GetName());
+	}
+}
+
+void UBattleAreaTeleportComponent::ExitBattleArea(ACurrsorCharacter* Player)
+{
+	if (!Player)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("玩家为空，无法退出战斗区域"));
+		}
+		return;
+	}
+
+	// 延迟执行退出战斗以确保战斗结束动画完成
+	FTimerHandle ExitBattleTimer;
+	GetWorld()->GetTimerManager().SetTimer(ExitBattleTimer, [this, Player]()
+	{
+		// 切换回玩家相机
+		SwitchToPlayerCamera(Player);
+		
+		// 切换回普通输入模式
+		if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(Player->GetController()))
+		{
+			PlayerController->SwitchInputMappingContext(false); // false = 切换到普通输入模式
+			
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("退出战斗区域后已切换到普通输入模式"));
+			}
+		}
+		
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Log, TEXT("已退出战斗区域"));
+		}
+	}, ExitBattleDelay, false);
+}
+
+void UBattleAreaTeleportComponent::SwitchToPlayerCamera(ACurrsorCharacter* Player)
+{
+	if (!Player)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("玩家为空，无法切换回玩家相机"));
+		}
+		return;
+	}
+
+	// 获取玩家控制器
+	APlayerController* PlayerController = Cast<APlayerController>(Player->GetController());
+	if (!PlayerController)
+	{
+		if (bEnableDebugLogging)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("玩家没有 PlayerController，无法切换相机"));
+		}
+		return;
+	}
+
+	// 切换视角目标回玩家
+	PlayerController->SetViewTarget(Player);
+
+	// 重新启用玩家的旋转调整
+	if (ACurrsorPlayerController* CurrsorPlayerController = Cast<ACurrsorPlayerController>(PlayerController))
+	{
+		if (UCurrsorActionComponent* ActionComponent = CurrsorPlayerController->GetPlayerActionComponent())
+		{
+			ActionComponent->SetRotationAdjustmentEnabled(true);
+			
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("退出战斗区域后已重新启用玩家的旋转调整"));
+			}
+		}
+	}
+
+	if (bEnableDebugLogging)
+	{
+		UE_LOG(LogTemp, Log, TEXT("已切换回玩家相机"));
 	}
 }
 

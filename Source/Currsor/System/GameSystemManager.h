@@ -67,10 +67,10 @@ public:
 
 protected:
     // 初始化步骤
-    void InitializeCore();
-    void InitializeManagers();
-    void InitializeSystems();
-    void SetupSystemConnections();
+    bool InitializeCore();
+    bool InitializeManagers();
+    bool InitializeSystems();
+    bool SetupSystemConnections();
 
     // 系统连接设置
     void SetupAttackSystemConnections();

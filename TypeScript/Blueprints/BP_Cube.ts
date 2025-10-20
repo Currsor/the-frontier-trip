@@ -1,10 +1,10 @@
 import * as UE from 'ue';
 import { $ref, blueprint } from 'puerts';
 
-const uclass = UE.Class.Load("/Game/Blueprints/BP_Cube.BP_Cube_C");
-const jsClass = blueprint.tojs<typeof UE.Game.Blueprints.BP_Cube.BP_Cube_C>(uclass);
+const uclass = UE.Class.Load("/Game/Blueprints/Destructibleltem/BP_Cube.BP_Cube_C");
+const jsClass = blueprint.tojs<typeof UE.Game.Blueprints.Destructibleltem.BP_Cube.BP_Cube_C>(uclass);
 
-interface TS_Cube extends UE.Game.Blueprints.BP_Cube.BP_Cube_C {}
+interface TS_Cube extends UE.Game.Blueprints.Destructibleltem.BP_Cube.BP_Cube_C {}
 
 class TS_Cube extends jsClass {
     /**

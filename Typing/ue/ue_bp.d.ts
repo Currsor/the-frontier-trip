@@ -10521,23 +10521,155 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 3B16701841D71083FA784FAE75A623CD
-    namespace Game.Blueprints.BP_Cube {
-        class BP_Cube_C extends UE.Actor {
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnAttackEnd__PythonCallable extends UE.PythonCallableForDelegate {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            UberGraphFrame: UE.PointerToUberGraphFrame;
-            Cube: UE.StaticMeshComponent;
-            DefaultSceneRoot: UE.SceneComponent;
-            ExecuteUbergraph_BP_Cube(EntryPoint: number) : void;
-            /*
-             *Event called every frame, if ticking is enabled
-             */
-            ReceiveTick(DeltaSeconds: number) : void;
             static StaticClass(): Class;
-            static Find(OrigInName: string, Outer?: Object): BP_Cube_C;
-            static Load(InName: string): BP_Cube_C;
+            static Find(OrigInName: string, Outer?: Object): OnAttackEnd__PythonCallable;
+            static Load(InName: string): OnAttackEnd__PythonCallable;
         
-            __tid_BP_Cube_C_0__: boolean;
+            __tid_OnAttackEnd__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnAttackHit__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnAttackHit__PythonCallable;
+            static Load(InName: string): OnAttackHit__PythonCallable;
+        
+            __tid_OnAttackHit__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnAttackStarted__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnAttackStarted__PythonCallable;
+            static Load(InName: string): OnAttackStarted__PythonCallable;
+        
+            __tid_OnAttackStarted__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnDeath__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnDeath__PythonCallable;
+            static Load(InName: string): OnDeath__PythonCallable;
+        
+            __tid_OnDeath__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnEnemyDeath__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnEnemyDeath__PythonCallable;
+            static Load(InName: string): OnEnemyDeath__PythonCallable;
+        
+            __tid_OnEnemyDeath__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnGameSystemsInitialized__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnGameSystemsInitialized__PythonCallable;
+            static Load(InName: string): OnGameSystemsInitialized__PythonCallable;
+        
+            __tid_OnGameSystemsInitialized__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnHealthChanged__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnHealthChanged__PythonCallable;
+            static Load(InName: string): OnHealthChanged__PythonCallable;
+        
+            __tid_OnHealthChanged__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnItemDestroyed__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnItemDestroyed__PythonCallable;
+            static Load(InName: string): OnItemDestroyed__PythonCallable;
+        
+            __tid_OnItemDestroyed__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnLootGenerated__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnLootGenerated__PythonCallable;
+            static Load(InName: string): OnLootGenerated__PythonCallable;
+        
+            __tid_OnLootGenerated__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnStateChanged__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnStateChanged__PythonCallable;
+            static Load(InName: string): OnStateChanged__PythonCallable;
+        
+            __tid_OnStateChanged__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnStateTransitionFailed__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnStateTransitionFailed__PythonCallable;
+            static Load(InName: string): OnStateTransitionFailed__PythonCallable;
+        
+            __tid_OnStateTransitionFailed__PythonCallable_0__: boolean;
         }
         
     }
@@ -10582,7 +10714,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 6FDCC6AB493B16C0001063B7934F7879
+// __TYPE_DECL_START: FE4B4B314182A1BF91DA60AA2DCD72BE
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerController {
         class BP_CurrsorPlayerController_C extends UE.CurrsorPlayerController {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10648,7 +10780,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 0270E9C3496F8003D5FDE99778D614C0
+// __TYPE_DECL_START: 700DA7B54AD2AF567D3A7CAB644034BB
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10680,7 +10812,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 7EA0529F43681ACB8465E3B15FDB3729
+// __TYPE_DECL_START: 2F55ED0C43548C886F12CC9083165E33
     namespace Game.Blueprints.Character.Player.BPA_PlayerAnim {
         class BPA_PlayerAnim_C extends UE.PaperZDAnimInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10702,8 +10834,23 @@ declare module "ue" {
             PaperZDAnimGraphNode_UseCachedAnimation: UE.PaperZDAnimNode_UseCachedAnimation;
             ["As BP Currsor Character"]: UE.Game.Blueprints.Character.Player.BP_CurrsorCharacter.BP_CurrsorCharacter_C;
             ["As BP Currsor Player State"]: UE.Game.Blueprints.Character.Player.BP_CurrsorPlayerState.BP_CurrsorPlayerState_C;
-            State: UE.EPlayerState;
+            State: UE.ECharacterState;
             ExecuteUbergraph_BPA_PlayerAnim(EntryPoint: number) : void;
+            /*
+             *Called when an AnimSequence completes playback. Will only be called for non-looping sequences, as the looping sequences do not really "end" their playback.
+             *@param InAnimSequence        Sequence that reached its end
+             */
+            OnAnimSequencePlaybackComplete(InAnimSequence: $Nullable<UE.PaperZDAnimSequence>) : void;
+            /*
+             *Event called when we update playback, changing to a new sequence.
+             *Only called for Animation Blueprints with "non-blendable" animation sources (like flipbooks), as these will only ever run one animation at a time.
+             *This behavior can be overridden if "bFireSequenceUpdateEvents" is set to true on the AnimPlayer.
+             *
+             *@param From                          The previously played sequence
+             *@param To                            The sequence that will be played now
+             *@param CurrentProgress       The progress in which the "From" sequence was before changing, ranging from [0-1]
+             */
+            OnAnimSequenceUpdated(From: $Nullable<UE.PaperZDAnimSequence>, To: $Nullable<UE.PaperZDAnimSequence>, CurrentProgress: number) : void;
             /*
              *Called when the AnimInstance has been initialized, but before the first tick.
              */
@@ -10729,50 +10876,6 @@ declare module "ue" {
             static Load(InName: string): BPA_PlayerAnim_C;
         
             __tid_BPA_PlayerAnim_C_0__: boolean;
-        }
-        
-    }
-
-// __TYPE_DECL_END
-// __TYPE_DECL_START: 9423BF5C4DAABB6902F0059D668A2355
-    namespace Game.UMG.Debug.W_Debug {
-        class W_Debug_C extends UE.UserWidget {
-            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            UberGraphFrame: UE.PointerToUberGraphFrame;
-            Button_EnterCombat: UE.Button;
-            ID: UE.TextBlock;
-            IsDebug: UE.CheckBox;
-            IsDebug_Attack: UE.CheckBox;
-            Overlay_CurrentArea: UE.Overlay;
-            Overlay_DebugAttack: UE.Overlay;
-            Overlay_EnterCombat: UE.Overlay;
-            State: UE.TextBlock;
-            BndEvt__W_Debug_Button_EnterBattle_K2Node_ComponentBoundEvent_2_OnButtonClickedEvent__DelegateSignature() : void;
-            BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
-            BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
-            /*
-             *Called after the underlying slate widget is constructed.  Depending on how the slate object is used
-             *this event may be called multiple times due to adding and removing from the hierarchy.
-             *If you need a true called-once-when-created event, use OnInitialized.
-             */
-            Construct() : void;
-            ExecuteUbergraph_W_Debug(EntryPoint: number) : void;
-            Get_ID_Text() : string;
-            Get_IsDebug_Attack_CheckedState() : UE.ECheckBoxState;
-            Get_IsDebug_CheckedState() : UE.ECheckBoxState;
-            Get_State_Text() : string;
-            /*
-             *Ticks this widget.  Override in derived classes, but always call the parent implementation.
-             *
-             *@param  MyGeometry The space allotted for this widget
-             *@param  InDeltaTime  Real time passed since last tick
-             */
-            Tick(MyGeometry: UE.Geometry, InDeltaTime: number) : void;
-            static StaticClass(): Class;
-            static Find(OrigInName: string, Outer?: Object): W_Debug_C;
-            static Load(InName: string): W_Debug_C;
-        
-            __tid_W_Debug_C_0__: boolean;
         }
         
     }
@@ -10807,15 +10910,185 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 3555178744C817219FE851B596E0FE0F
-    namespace Game.Blueprints.Character.Enemy.BP_BaseEnemy {
+// __TYPE_DECL_START: F54EE75640D371805287E4A4F6F741FC
+    namespace Game.Blueprints.Character.Enemy.Base.BP_BaseEnemy {
         class BP_BaseEnemy_C extends UE.BaseEnemy {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            ExecuteUbergraph_BP_BaseEnemy(EntryPoint: number) : void;
+            /*
+             *Event called every frame, if ticking is enabled
+             */
+            ReceiveTick(DeltaSeconds: number) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_BaseEnemy_C;
             static Load(InName: string): BP_BaseEnemy_C;
         
             __tid_BP_BaseEnemy_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 5778C5B34DBE73E6DDEA84ADD9153078
+    namespace Game.Blueprints.Destructibleltem.BP_Cube {
+        class BP_Cube_C extends UE.DestructibleItem {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            ExecuteUbergraph_BP_Cube(EntryPoint: number) : void;
+            /*
+             *Event called every frame, if ticking is enabled
+             */
+            ReceiveTick(DeltaSeconds: number) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): BP_Cube_C;
+            static Load(InName: string): BP_Cube_C;
+        
+            __tid_BP_Cube_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 47B8F94445425302D81B4BAB2B407D0E
+    namespace Game.Blueprints.Character.Enemy.Base.BPA_BaseAnim {
+        class BPA_BaseAnim_C extends UE.PaperZDAnimInstance {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            PaperZDAnimGraphNode_Sink_3: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_PlaySequence_2: UE.PaperZDAnimNode_PlaySequence;
+            PaperZDAnimGraphNode_Sink_2: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_PlaySequence_1: UE.PaperZDAnimNode_PlaySequence;
+            PaperZDAnimGraphNode_Sink_1: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_PlaySequence: UE.PaperZDAnimNode_PlaySequence;
+            PaperZDAnimGraphNode_Sink: UE.PaperZDAnimNode_Sink;
+            PaperZDAnimGraphNode_StateMachine: UE.PaperZDAnimNode_StateMachine;
+            PaperZDAnimGraphNode_CacheAnimation: UE.PaperZDAnimNode_CacheAnimation;
+            PaperZDAnimGraphNode_UseCachedAnimation: UE.PaperZDAnimNode_UseCachedAnimation;
+            PaperZDAnimGraphNode_OverrideSlot: UE.PaperZDAnimNode_OverrideSlot;
+            ["As BP Enemy"]: UE.Game.Blueprints.Character.Player.BP_CurrsorCharacter.BP_CurrsorCharacter_C;
+            ["As Base State"]: UE.BaseState;
+            State: UE.ECharacterState;
+            ["As BP Base Enemy"]: UE.Game.Blueprints.Character.Enemy.Base.BP_BaseEnemy.BP_BaseEnemy_C;
+            ExecuteUbergraph_BPA_BaseAnim(EntryPoint: number) : void;
+            /*
+             *Called when an AnimSequence completes playback. Will only be called for non-looping sequences, as the looping sequences do not really "end" their playback.
+             *@param InAnimSequence        Sequence that reached its end
+             */
+            OnAnimSequencePlaybackComplete(InAnimSequence: $Nullable<UE.PaperZDAnimSequence>) : void;
+            /*
+             *Event called when we update playback, changing to a new sequence.
+             *Only called for Animation Blueprints with "non-blendable" animation sources (like flipbooks), as these will only ever run one animation at a time.
+             *This behavior can be overridden if "bFireSequenceUpdateEvents" is set to true on the AnimPlayer.
+             *
+             *@param From                          The previously played sequence
+             *@param To                            The sequence that will be played now
+             *@param CurrentProgress       The progress in which the "From" sequence was before changing, ranging from [0-1]
+             */
+            OnAnimSequenceUpdated(From: $Nullable<UE.PaperZDAnimSequence>, To: $Nullable<UE.PaperZDAnimSequence>, CurrentProgress: number) : void;
+            /*
+             *Called when the AnimInstance has been initialized, but before the first tick.
+             */
+            OnInit() : void;
+            /*
+             *Called every tick, after all the animations have been processed.
+             */
+            OnTick(DeltaTime: number) : void;
+            ZDRule_Transition(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_1(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_2(bCanEnterTransition: $Ref<boolean>) : void;
+            ZDRule_Transition_3(bCanEnterTransition: $Ref<boolean>) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): BPA_BaseAnim_C;
+            static Load(InName: string): BPA_BaseAnim_C;
+        
+            __tid_BPA_BaseAnim_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: C8F08C5F4763ABD427258FB3DBF8DB17
+    namespace Game.UI.Blueprints.Debug.W_Debug {
+        class W_Debug_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            IsDebug: UE.CheckBox;
+            IsDebug_Attack: UE.CheckBox;
+            Overlay_DebugAttack: UE.Overlay;
+            State: UE.TextBlock;
+            BndEvt__W_Debug_IsDebug_Attack_K2Node_ComponentBoundEvent_1_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
+            BndEvt__W_Debug_IsDebug_K2Node_ComponentBoundEvent_0_OnCheckBoxComponentStateChanged__DelegateSignature(bIsChecked: boolean) : void;
+            /*
+             *Called after the underlying slate widget is constructed.  Depending on how the slate object is used
+             *this event may be called multiple times due to adding and removing from the hierarchy.
+             *If you need a true called-once-when-created event, use OnInitialized.
+             */
+            Construct() : void;
+            ExecuteUbergraph_W_Debug(EntryPoint: number) : void;
+            Get_ID_Text() : string;
+            Get_IsDebug_Attack_CheckedState() : UE.ECheckBoxState;
+            Get_IsDebug_CheckedState() : UE.ECheckBoxState;
+            Get_State_Text() : string;
+            /*
+             *Ticks this widget.  Override in derived classes, but always call the parent implementation.
+             *
+             *@param  MyGeometry The space allotted for this widget
+             *@param  InDeltaTime  Real time passed since last tick
+             */
+            Tick(MyGeometry: UE.Geometry, InDeltaTime: number) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): W_Debug_C;
+            static Load(InName: string): W_Debug_C;
+        
+            __tid_W_Debug_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: BCB86E9D4847EC71CE9E78BC34BAF3AA
+    namespace Game.UI.Blueprints.Cards.Widget_Card {
+        class Widget_Card_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            Classes_Text: UE.TextBlock;
+            Consume_Text: UE.TextBlock;
+            Image: UE.Image;
+            Introduction_Text: UE.TextBlock;
+            Name_Text: UE.TextBlock;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_Card_C;
+            static Load(InName: string): Widget_Card_C;
+        
+            __tid_Widget_Card_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: E797F1FD44AD7262F79DFB9FF3FB6F43
+    namespace Game.UI.Blueprints.Cards.Panel_CardMainUI {
+        class Panel_CardMainUI_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Panel_CardMainUI_C;
+            static Load(InName: string): Panel_CardMainUI_C;
+        
+            __tid_Panel_CardMainUI_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 411F613348AB3EAAF836E4AAD3259EFC
+    namespace Game.UI.Blueprints.Cards.Widget_CardCell {
+        class Widget_CardCell_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_CardCell_C;
+            static Load(InName: string): Widget_CardCell_C;
+        
+            __tid_Widget_CardCell_C_0__: boolean;
         }
         
     }

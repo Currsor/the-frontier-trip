@@ -81,28 +81,45 @@ void UGameSystemManager::Initialize(UWorld* InWorld)
     World = InWorld;
     UE_LOG(LogTemp, Log, TEXT("正在初始化 GameSystemManager..."));
 
-    try
+    // 按依赖顺序初始化系统
+    bool bInitSuccess = true;
+    
+    if (bInitSuccess)
     {
-        // 按依赖顺序初始化系统
-        InitializeCore();
-        InitializeManagers();
-        InitializeSystems();
-        SetupSystemConnections();
+        bInitSuccess = InitializeCore();
+    }
+    
+    if (bInitSuccess)
+    {
+        bInitSuccess = InitializeManagers();
+    }
+    
+    if (bInitSuccess)
+    {
+        bInitSuccess = InitializeSystems();
+    }
+    
+    if (bInitSuccess)
+    {
+        bInitSuccess = SetupSystemConnections();
+    }
 
+    if (bInitSuccess)
+    {
         bIsInitialized = true;
         UE_LOG(LogTemp, Log, TEXT("GameSystemManager 初始化成功"));
 
         // 广播初始化完成事件
         OnGameSystemsInitialized.Broadcast(FPlatformTime::Seconds());
     }
-    catch (...)
+    else
     {
         UE_LOG(LogTemp, Error, TEXT("初始化 GameSystemManager 失败"));
         bIsInitialized = false;
     }
 }
 
-void UGameSystemManager::InitializeCore()
+bool UGameSystemManager::InitializeCore()
 {
     UE_LOG(LogTemp, Log, TEXT("正在初始化核心系统..."));
     
@@ -110,61 +127,72 @@ void UGameSystemManager::InitializeCore()
     // 这些通常是静态的或全局的
     
     UE_LOG(LogTemp, Log, TEXT("核心系统已初始化"));
+    return true;
 }
 
-void UGameSystemManager::InitializeManagers()
+bool UGameSystemManager::InitializeManagers()
 {
     UE_LOG(LogTemp, Log, TEXT("正在初始化管理器..."));
     
     if (!World.IsValid())
     {
         UE_LOG(LogTemp, Error, TEXT("管理器初始化期间世界引用无效"));
-        return;
+        return false;
     }
 
     // 游戏逻辑管理器
     GameLogicManager = NewObject<UGameLogicManagerComponent>(this);
-    if (GameLogicManager)
+    if (!GameLogicManager)
     {
-        GameLogicManager->Initialize();
-        UE_LOG(LogTemp, Log, TEXT("GameLogicManager 已初始化"));
+        UE_LOG(LogTemp, Error, TEXT("创建 GameLogicManager 失败"));
+        return false;
     }
+    GameLogicManager->Initialize();
+    UE_LOG(LogTemp, Log, TEXT("GameLogicManager 已初始化"));
 
     // 状态管理器
     StateManager = NewObject<UStateManagerComponent>(this);
-    if (StateManager)
+    if (!StateManager)
     {
-        StateManager->Initialize();
-        UE_LOG(LogTemp, Log, TEXT("StateManager 已初始化"));
+        UE_LOG(LogTemp, Error, TEXT("创建 StateManager 失败"));
+        return false;
     }
+    StateManager->Initialize();
+    UE_LOG(LogTemp, Log, TEXT("StateManager 已初始化"));
     
     UE_LOG(LogTemp, Log, TEXT("管理器已初始化"));
+    return true;
 }
 
-void UGameSystemManager::InitializeSystems()
+bool UGameSystemManager::InitializeSystems()
 {
     UE_LOG(LogTemp, Log, TEXT("正在初始化系统..."));
     
     // 攻击系统
     AttackSystem = NewObject<UAttackSystemComponent>(this);
-    if (AttackSystem)
+    if (!AttackSystem)
     {
-        AttackSystem->Initialize();
-        UE_LOG(LogTemp, Log, TEXT("AttackSystem 已初始化"));
+        UE_LOG(LogTemp, Error, TEXT("创建 AttackSystem 失败"));
+        return false;
     }
+    AttackSystem->Initialize();
+    UE_LOG(LogTemp, Log, TEXT("AttackSystem 已初始化"));
 
     // 掉落系统
     LootSystem = NewObject<ULootSystemComponent>(this);
-    if (LootSystem)
+    if (!LootSystem)
     {
-        LootSystem->Initialize();
-        UE_LOG(LogTemp, Log, TEXT("LootSystem 已初始化"));
+        UE_LOG(LogTemp, Error, TEXT("创建 LootSystem 失败"));
+        return false;
     }
+    LootSystem->Initialize();
+    UE_LOG(LogTemp, Log, TEXT("LootSystem 已初始化"));
     
     UE_LOG(LogTemp, Log, TEXT("系统已初始化"));
+    return true;
 }
 
-void UGameSystemManager::SetupSystemConnections()
+bool UGameSystemManager::SetupSystemConnections()
 {
     UE_LOG(LogTemp, Log, TEXT("正在设置系统连接..."));
     
@@ -174,6 +202,7 @@ void UGameSystemManager::SetupSystemConnections()
     SetupUIConnections();
     
     UE_LOG(LogTemp, Log, TEXT("系统连接已建立"));
+    return true;
 }
 
 void UGameSystemManager::SetupAttackSystemConnections()

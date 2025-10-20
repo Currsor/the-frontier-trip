@@ -27904,6 +27904,22 @@ declare module "ue" {
         __tid_ActorSoundParameterInterface_0__: boolean;
     }
     
+    enum ECharacterState { Idle, Walk, Run, Jump, Fall, Attack, RunAttack, Dash, Hurt, Dead, ECharacterState_MAX, __typeKeyDoNoAccess}
+    class ActorStateData {
+        constructor();
+        constructor(CurrentState: UE.ECharacterState, PreviousState: UE.ECharacterState, StateStartTime: number, LastTransitionTime: number);
+        CurrentState: UE.ECharacterState;
+        PreviousState: UE.ECharacterState;
+        StateStartTime: number;
+        LastTransitionTime: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ActorStateData_0__: boolean;
+    }
+    
     class StreamableTexture {
         constructor();
         constructor(Name: string, Guid: UE.Guid);
@@ -46721,12 +46737,22 @@ declare module "ue" {
         PlayerArrow: UE.ArrowComponent;
         EnemyArrow: UE.ArrowComponent;
         CameraArrow: UE.ArrowComponent;
-        MainTexture: UE.Texture2D;
-        PlayerTexture: UE.Texture2D;
-        EnemyTexture: UE.Texture2D;
-        CameraTexture: UE.Texture2D;
+        BattleCameraComponent: UE.CameraComponent;
+        TestPlayerDummy: UE.Pawn;
+        TestEnemyDummy: UE.Pawn;
+        MainTexture: TSoftObjectPtr<UE.Texture2D>;
+        PlayerTexture: TSoftObjectPtr<UE.Texture2D>;
+        EnemyTexture: TSoftObjectPtr<UE.Texture2D>;
+        CameraTexture: TSoftObjectPtr<UE.Texture2D>;
+        DestroyTestDummies() : void;
+        GetAreaID() : number;
         OnOverlapBegin(OverlappedComponent: $Nullable<UE.PrimitiveComponent>, OtherActor: $Nullable<UE.Actor>, OtherComp: $Nullable<UE.PrimitiveComponent>, OtherBodyIndex: number, bFromSweep: boolean, SweepResult: UE.HitResult) : void;
         SetAreaID(InAreaID: number) : void;
+        SetupBillboards() : void;
+        /*
+         *========== 测试假人管理 ==========
+         */
+        SpawnTestDummies() : void;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): AreaCollisionBox;
         static Load(InName: string): AreaCollisionBox;
@@ -51212,6 +51238,22 @@ declare module "ue" {
         __tid_AtmosphericFog_0__: boolean;
     }
     
+    class AttackData {
+        constructor();
+        constructor(BaseDamage: number, CriticalChance: number, CriticalMultiplier: number, AttackType: string, bCanInterrupt: boolean);
+        BaseDamage: number;
+        CriticalChance: number;
+        CriticalMultiplier: number;
+        AttackType: string;
+        bCanInterrupt: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AttackData_0__: boolean;
+    }
+    
     class PaperZDAnimNotify_Base extends UE.Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Time: number;
@@ -51865,6 +51907,990 @@ declare module "ue" {
         static Load(InName: string): AttackHitboxOn;
     
         __tid_AttackHitboxOn_0__: boolean;
+    }
+    
+    class BaseSystemComponent extends UE.ActorComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bIsInitialized: boolean;
+        SystemName: string;
+        bAutoInitializeOnBeginPlay: boolean;
+        /*
+         *调试
+         */
+        DebugPrintStatus() : void;
+        GetSystemName() : string;
+        /*
+         *系统生命周期
+         */
+        Initialize() : void;
+        /*
+         *状态查询
+         */
+        IsSystemInitialized() : boolean;
+        Reset() : void;
+        Shutdown() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BaseSystemComponent;
+        static Load(InName: string): BaseSystemComponent;
+    
+        __tid_BaseSystemComponent_0__: boolean;
+    }
+    
+    class SpringArmComponent extends UE.SceneComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        TargetArmLength: number;
+        SocketOffset: UE.Vector;
+        TargetOffset: UE.Vector;
+        ProbeSize: number;
+        ProbeChannel: UE.ECollisionChannel;
+        bDoCollisionTest: boolean;
+        bUsePawnControlRotation: boolean;
+        bInheritPitch: boolean;
+        bInheritYaw: boolean;
+        bInheritRoll: boolean;
+        bEnableCameraLag: boolean;
+        bEnableCameraRotationLag: boolean;
+        bUseCameraLagSubstepping: boolean;
+        bDrawDebugLagMarkers: boolean;
+        CameraLagSpeed: number;
+        CameraRotationLagSpeed: number;
+        CameraLagMaxTimeStep: number;
+        CameraLagMaxDistance: number;
+        bClampToMaxPhysicsDeltaTime: boolean;
+        /*
+         *Get the target rotation we inherit, used as the base target for the boom rotation.
+         *This is derived from attachment to our parent and considering the UsePawnControlRotation and absolute rotation flags.
+         */
+        GetTargetRotation() : UE.Rotator;
+        /*
+         *Get the position where the camera should be without applying the Collision Test displacement
+         */
+        GetUnfixedCameraPosition() : UE.Vector;
+        /*
+         *Is the Collision Test displacement being applied?
+         */
+        IsCollisionFixApplied() : boolean;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SpringArmComponent;
+        static Load(InName: string): SpringArmComponent;
+    
+        __tid_SpringArmComponent_0__: boolean;
+    }
+    
+    class CurrsorCameraComponent extends UE.CameraComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bWasInCollision: boolean;
+        /*
+         *更新景深效果
+         *@param FocalDistance 焦距
+         *@param bIsCollision 是否处于碰撞状态
+         *@param TargetArmLength 目标臂长（弹簧臂的原始长度）
+         */
+        UpdateDOF(FocalDistance: number, bIsCollision: boolean, TargetArmLength: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorCameraComponent;
+        static Load(InName: string): CurrsorCameraComponent;
+    
+        __tid_CurrsorCameraComponent_0__: boolean;
+    }
+    
+    class HealthComponent extends UE.ActorComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnHealthChanged: $MulticastDelegate<(CurrentHealth: number, MaxHealth: number, DamageAmount: number) => void>;
+        OnDeath: $MulticastDelegate<(DeadActor: $Nullable<UE.Actor>) => void>;
+        MaxHealth: number;
+        CurrentHealth: number;
+        bCanTakeDamage: boolean;
+        bAutoRespawn: boolean;
+        RespawnDelay: number;
+        GetCurrentHealth() : number;
+        GetHealthPercentage() : number;
+        GetMaxHealth() : number;
+        Heal(HealAmount: number) : void;
+        IsDead() : boolean;
+        IsFullHealth() : boolean;
+        SetCurrentHealth(NewHealth: number) : void;
+        /*
+         *生命值管理
+         */
+        SetMaxHealth(NewMaxHealth: number) : void;
+        /*
+         *伤害处理
+         */
+        TakeDamage(DamageAmount: number, DamageInstigator?: UE.Actor /* = None */) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): HealthComponent;
+        static Load(InName: string): HealthComponent;
+    
+        __tid_HealthComponent_0__: boolean;
+    }
+    
+    class BaseState extends UE.PlayerState {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bIsDashing: boolean;
+        bIsAttacking: boolean;
+        bIsJumping: boolean;
+        bIsWalk: boolean;
+        CurrentState: UE.ECharacterState;
+        WalkThreshold: number;
+        RunThreshold: number;
+        RunAttackThreshold: number;
+        /*
+         *状态变更核心逻辑
+         */
+        ChangeState(NewState: UE.ECharacterState) : void;
+        /*
+         *获取当前状态
+         */
+        GetCurrentState() : UE.ECharacterState;
+        IsDead() : boolean;
+        IsFalling() : boolean;
+        IsHurt() : boolean;
+        /*
+         *状态更新
+         */
+        UpdateState() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BaseState;
+        static Load(InName: string): BaseState;
+    
+        __tid_BaseState_0__: boolean;
+    }
+    
+    class PlayerMappableKeyOptions {
+        constructor();
+        constructor(Metadata: UE.Object, Name: string, DisplayName: string, DisplayCategory: string);
+        Metadata: UE.Object;
+        Name: string;
+        DisplayName: string;
+        DisplayCategory: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_PlayerMappableKeyOptions_0__: boolean;
+    }
+    
+    class InputActionValue {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InputActionValue_0__: boolean;
+    }
+    
+    enum EInputActionValueType { Boolean, Axis1D, Axis2D, Axis3D, EInputActionValueType_MAX, __typeKeyDoNoAccess}
+    enum EInputActionAccumulationBehavior { TakeHighestAbsoluteValue, Cumulative, EInputActionAccumulationBehavior_MAX, __typeKeyDoNoAccess}
+    class InputModifier extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        /*
+         *Helper to allow debug visualization of the modifier.
+         *@param SampleValue - The base input action value pre-modification (ranging -1 -> 1 across all applicable axes).
+         *@param FinalValue - The post-modification input action value for the provided SampleValue.
+         */
+        GetVisualizationColor(SampleValue: UE.InputActionValue, FinalValue: UE.InputActionValue) : UE.LinearColor;
+        /*
+         *ModifyRaw
+         *Will be called by each modifier in the modifier chain
+         *@param CurrentValue - The modified value returned by the previous modifier in the chain, or the base raw value if this is the first modifier in the chain.
+         */
+        ModifyRaw(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, CurrentValue: UE.InputActionValue, DeltaTime: number) : UE.InputActionValue;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputModifier;
+        static Load(InName: string): InputModifier;
+    
+        __tid_InputModifier_0__: boolean;
+    }
+    
+    class GameplayTagContainer {
+        constructor();
+        constructor(GameplayTags: TArray<UE.GameplayTag>, ParentTags: TArray<UE.GameplayTag>);
+        GameplayTags: TArray<UE.GameplayTag>;
+        ParentTags: TArray<UE.GameplayTag>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_GameplayTagContainer_0__: boolean;
+    }
+    
+    class PlayerMappableKeySettings extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Metadata: UE.Object;
+        Name: string;
+        DisplayName: string;
+        DisplayCategory: string;
+        SupportedKeyProfiles: UE.GameplayTagContainer;
+        /*
+         *Get the known mapping names that are current in use. This is a helper function if you want to use a "GetOptions" metadata on a UPROPERTY.
+         *For example, the following will display a little drop down menu to select from all current mapping names:
+         *
+         * UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(GetOptions="EnhancedInput.PlayerMappableKeySettings.GetKnownMappingNames"))
+         * FName MappingName;
+         */
+        static GetKnownMappingNames_EditorOnly() : TArray<string>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): PlayerMappableKeySettings;
+        static Load(InName: string): PlayerMappableKeySettings;
+    
+        __tid_PlayerMappableKeySettings_0__: boolean;
+    }
+    
+    class InputAction extends UE.DataAsset {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ActionDescription: string;
+        bTriggerWhenPaused: boolean;
+        bConsumeInput: boolean;
+        bConsumesActionAndAxisMappings: boolean;
+        bReserveAllMappings: boolean;
+        TriggerEventsThatConsumeLegacyKeys: number;
+        ValueType: UE.EInputActionValueType;
+        AccumulationBehavior: UE.EInputActionAccumulationBehavior;
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputAction;
+        static Load(InName: string): InputAction;
+    
+        __tid_InputAction_0__: boolean;
+    }
+    
+    class KeyConsumptionOptions {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_KeyConsumptionOptions_0__: boolean;
+    }
+    
+    enum ETriggerEvent { None, Triggered, Started, Ongoing, Canceled, Completed, ETriggerEvent_MAX, __typeKeyDoNoAccess}
+    class InputActionInstance {
+        constructor();
+        constructor(SourceAction: UE.InputAction, TriggerEvent: UE.ETriggerEvent, LastTriggeredWorldTime: number, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, ElapsedProcessedTime: number, ElapsedTriggeredTime: number);
+        SourceAction: UE.InputAction;
+        TriggerEvent: UE.ETriggerEvent;
+        LastTriggeredWorldTime: number;
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        ElapsedProcessedTime: number;
+        ElapsedTriggeredTime: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InputActionInstance_0__: boolean;
+    }
+    
+    class InjectedInput {
+        constructor();
+        constructor(Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>);
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InjectedInput_0__: boolean;
+    }
+    
+    class InjectedInputArray {
+        constructor();
+        constructor(Injected: TArray<UE.InjectedInput>);
+        Injected: TArray<UE.InjectedInput>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InjectedInputArray_0__: boolean;
+    }
+    
+    class EnhancedPlayerInput extends UE.PlayerInput {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        KeyConsumptionData: TMap<UE.InputAction, UE.KeyConsumptionOptions>;
+        AppliedInputContexts: TMap<UE.InputMappingContext, number>;
+        EnhancedActionMappings: TArray<UE.EnhancedActionKeyMapping>;
+        ActionInstanceData: TMap<UE.InputAction, UE.InputActionInstance>;
+        KeysPressedThisTick: TMap<UE.Key, UE.Vector>;
+        InputsInjectedThisTick: TMap<UE.InputAction, UE.InjectedInputArray>;
+        LastInjectedActions: TSet<UE.InputAction>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): EnhancedPlayerInput;
+        static Load(InName: string): EnhancedPlayerInput;
+    
+        __tid_EnhancedPlayerInput_0__: boolean;
+    }
+    
+    enum ETriggerState { None, Ongoing, Triggered, ETriggerState_MAX, __typeKeyDoNoAccess}
+    enum ETriggerType { Explicit, Implicit, Blocker, ETriggerType_MAX, __typeKeyDoNoAccess}
+    class InputTrigger extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ActuationThreshold: number;
+        bShouldAlwaysTick: boolean;
+        LastValue: UE.InputActionValue;
+        /*
+         *Changes the way this trigger affects an action with multiple triggers:
+         *        All implicit triggers must be triggering to trigger the action.
+         *        If there are any explicit triggers at least one must be triggering to trigger the action.
+         */
+        GetTriggerType() : UE.ETriggerType;
+        /*
+         ** Is the value passed in sufficiently large to be of interest to the trigger.
+         ** This is a helper function that implements the most obvious (>=) interpretation of the actuation threshold.
+         */
+        IsActuated(ForValue: UE.InputActionValue) : boolean;
+        /*
+         *This function checks if the requisite conditions have been met for the trigger to fire.
+         * Returns Trigger State None              - No trigger conditions have been met. Trigger is inactive.
+         *                 Trigger State Ongoing   - Some trigger conditions have been met. Trigger is processing but not yet active.
+         *                 Trigger State Triggered - All trigger conditions have been met to fire. Trigger is active.
+         */
+        UpdateState(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, ModifiedValue: UE.InputActionValue, DeltaTime: number) : UE.ETriggerState;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputTrigger;
+        static Load(InName: string): InputTrigger;
+    
+        __tid_InputTrigger_0__: boolean;
+    }
+    
+    enum EPlayerMappableKeySettingBehaviors { InheritSettingsFromAction, OverrideSettings, IgnoreSettings, EPlayerMappableKeySettingBehaviors_MAX, __typeKeyDoNoAccess}
+    class EnhancedActionKeyMapping {
+        constructor();
+        constructor(PlayerMappableOptions: UE.PlayerMappableKeyOptions, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, Action: UE.InputAction, Key: UE.Key, bShouldBeIgnored: boolean, bIsPlayerMappable: boolean, SettingBehavior: UE.EPlayerMappableKeySettingBehaviors, PlayerMappableKeySettings: UE.PlayerMappableKeySettings);
+        PlayerMappableOptions: UE.PlayerMappableKeyOptions;
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        Action: UE.InputAction;
+        Key: UE.Key;
+        bShouldBeIgnored: boolean;
+        bIsPlayerMappable: boolean;
+        SettingBehavior: UE.EPlayerMappableKeySettingBehaviors;
+        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_EnhancedActionKeyMapping_0__: boolean;
+    }
+    
+    class InputMappingContext extends UE.DataAsset {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Mappings: TArray<UE.EnhancedActionKeyMapping>;
+        ContextDescription: string;
+        /*
+         *Map a key to an action within the mapping context.
+         */
+        MapKey(Action: $Nullable<UE.InputAction>, ToKey: UE.Key) : UE.EnhancedActionKeyMapping;
+        UnmapAction(Action: $Nullable<UE.InputAction>) : void;
+        /*
+         *Unmap everything within the mapping context.
+         */
+        UnmapAll() : void;
+        /*
+         *Unmap all key maps to an action within the mapping context.
+         */
+        UnmapAllKeysFromAction(Action: $Nullable<UE.InputAction>) : void;
+        /*
+         *Unmap a key from an action within the mapping context.
+         */
+        UnmapKey(Action: $Nullable<UE.InputAction>, Key: UE.Key) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputMappingContext;
+        static Load(InName: string): InputMappingContext;
+    
+        __tid_InputMappingContext_0__: boolean;
+    }
+    
+    class CurrsorActionComponent extends UE.ActorComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CurrsorPlayer: UE.CurrsorCharacter;
+        CurrsorPlayerState: UE.CurrsorPlayerState;
+        CurrsorPlayerController: UE.CurrsorPlayerController;
+        CurrentMovementVector: number;
+        MovementSpeed: number;
+        bRotationAdjustmentEnabled: boolean;
+        AttackCompleted() : void;
+        GetMovementSpeed() : number;
+        IsRotationAdjustmentEnabled() : boolean;
+        Move(Value: UE.InputActionValue) : void;
+        /*
+         *重置旋转调整为默认启用状态（便捷方法）
+         */
+        ResetRotationAdjustment() : void;
+        /*
+         *旋转调整控制方法
+         */
+        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
+        TryStartAttack() : boolean;
+        UpdateRotationBasedOnInput(DeltaTime: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorActionComponent;
+        static Load(InName: string): CurrsorActionComponent;
+    
+        __tid_CurrsorActionComponent_0__: boolean;
+    }
+    
+    class StateTransitionRule {
+        constructor();
+        constructor(FromState: UE.ECharacterState, ToState: UE.ECharacterState, bIsAllowed: boolean, MinDuration: number);
+        FromState: UE.ECharacterState;
+        ToState: UE.ECharacterState;
+        bIsAllowed: boolean;
+        MinDuration: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_StateTransitionRule_0__: boolean;
+    }
+    
+    class StateManagerComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnStateChanged: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, OldState: UE.ECharacterState) => void>;
+        OnStateTransitionFailed: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, AttemptedState: UE.ECharacterState) => void>;
+        ActorStates: TMap<TWeakObjectPtr<UE.Actor>, UE.ActorStateData>;
+        StatePriorities: TMap<UE.ECharacterState, number>;
+        TransitionRules: TArray<UE.StateTransitionRule>;
+        bEnableDebugLogging: boolean;
+        bEnableStateTicking: boolean;
+        DefaultMinStateDuration: number;
+        /*
+         *转换规则
+         */
+        AddTransitionRule(Rule: UE.StateTransitionRule) : void;
+        CanTransitionTo(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState) : boolean;
+        /*
+         *状态管理
+         */
+        ChangeState(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, bForceChange?: boolean /* = false */) : boolean;
+        ClearTransitionRules() : void;
+        GetCurrentState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
+        GetManagedActorCount() : number;
+        GetPreviousState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
+        /*
+         *状态持续时间
+         */
+        GetStateElapsedTime(Actor: $Nullable<UE.Actor>) : number;
+        /*
+         *状态优先级
+         */
+        GetStatePriority(State: UE.ECharacterState) : number;
+        HasStateMinDurationPassed(Actor: $Nullable<UE.Actor>) : boolean;
+        IsInAnyState(Actor: $Nullable<UE.Actor>, States: TArray<UE.ECharacterState>) : boolean;
+        /*
+         *状态查询
+         */
+        IsInState(Actor: $Nullable<UE.Actor>, State: UE.ECharacterState) : boolean;
+        RemoveTransitionRule(FromState: UE.ECharacterState, ToState: UE.ECharacterState) : void;
+        SetStatePriority(State: UE.ECharacterState, Priority: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): StateManagerComponent;
+        static Load(InName: string): StateManagerComponent;
+    
+        __tid_StateManagerComponent_0__: boolean;
+    }
+    
+    class TableRowBase {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TableRowBase_0__: boolean;
+    }
+    
+    class LootItem extends UE.TableRowBase {
+        constructor();
+        constructor(ItemName: string, ItemID: number, DropChance: number, MinQuantity: number, MaxQuantity: number, Rarity: string);
+        ItemName: string;
+        ItemID: number;
+        DropChance: number;
+        MinQuantity: number;
+        MaxQuantity: number;
+        Rarity: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_LootItem_0__: boolean;
+    }
+    
+    class LootSystemComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnLootGenerated: $MulticastDelegate<(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) => void>;
+        LootTableIndices: TMap<string, number>;
+        AllLootItems: TArray<UE.LootItem>;
+        LootTableStartIndices: TArray<number>;
+        LootTableLengths: TArray<number>;
+        GlobalDropRateMultiplier: number;
+        bEnableDebugLogging: boolean;
+        TotalDropsGenerated: number;
+        RecentDropHistory: TArray<string>;
+        AddLootTable(TableName: string, Items: TArray<UE.LootItem>) : boolean;
+        ClearDropHistory() : void;
+        /*
+         *掉落处理
+         */
+        GenerateLoot(Source: $Nullable<UE.Actor>, LootTableName?: string /* = "Default" */) : TArray<UE.LootItem>;
+        GetGlobalDropRateMultiplier() : number;
+        /*
+         *配置
+         */
+        SetGlobalDropRateMultiplier(Multiplier: number) : void;
+        SpawnLoot(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LootSystemComponent;
+        static Load(InName: string): LootSystemComponent;
+    
+        __tid_LootSystemComponent_0__: boolean;
+    }
+    
+    class GameLogicManagerComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bEnableDebugLogging: boolean;
+        /*
+         *游戏逻辑处理
+         */
+        ProcessGameEvent(EventType: string, EventData: TMap<string, string>) : boolean;
+        UpdateGameState(DeltaTime: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameLogicManagerComponent;
+        static Load(InName: string): GameLogicManagerComponent;
+    
+        __tid_GameLogicManagerComponent_0__: boolean;
+    }
+    
+    class GameSystemManager extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnGameSystemsInitialized: $MulticastDelegate<(Timestamp: number) => void>;
+        bIsInitialized: boolean;
+        World: TWeakObjectPtr<UE.World>;
+        AttackSystem: UE.AttackSystemComponent;
+        StateManager: UE.StateManagerComponent;
+        LootSystem: UE.LootSystemComponent;
+        GameLogicManager: UE.GameLogicManagerComponent;
+        DebugPrintStatus() : void;
+        /*
+         *系统访问
+         */
+        GetAttackSystem() : UE.AttackSystemComponent;
+        GetGameLogicManager() : UE.GameLogicManagerComponent;
+        GetLootSystem() : UE.LootSystemComponent;
+        GetStateManager() : UE.StateManagerComponent;
+        /*
+         *系统生命周期管理
+         */
+        Initialize(InWorld: $Nullable<UE.World>) : void;
+        /*
+         *状态查询
+         */
+        IsInitialized() : boolean;
+        ResetAllSystems() : void;
+        Shutdown() : void;
+        /*
+         *单例访问
+         */
+        static GetInstance(World?: UE.World /* = None */) : UE.GameSystemManager;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameSystemManager;
+        static Load(InName: string): GameSystemManager;
+    
+        __tid_GameSystemManager_0__: boolean;
+    }
+    
+    class CurrsorPlayerController extends UE.PlayerController {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        InputMappingContext: UE.InputMappingContext;
+        CurrentMovementVector: number;
+        CurrsorPlayer: UE.CurrsorCharacter;
+        CurrsorPlayerState: UE.CurrsorPlayerState;
+        PlayerActionComponent: UE.CurrsorActionComponent;
+        PlayerStateComponent: UE.CurrsorPlayerState;
+        GameSystemManager: UE.GameSystemManager;
+        AttackSystem: UE.AttackSystemComponent;
+        StateManager: UE.StateManagerComponent;
+        MoveAction: UE.InputAction;
+        JumpAction: UE.InputAction;
+        DashAction: UE.InputAction;
+        AttackAction: UE.InputAction;
+        /*
+         *对实现此接口的对象施加伤害 __ 伤害值
+         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
+         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
+         */
+        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
+        AttackCanceled() : void;
+        AttackCompleted() : void;
+        /*
+         *基础战斗状态
+         */
+        AttackEnd() : void;
+        AttackHitboxOff() : void;
+        AttackHitboxOn() : void;
+        AttackStarted() : void;
+        AttackTriggered() : void;
+        /*
+         *公共访问方法
+         */
+        GetPlayerActionComponent() : UE.CurrsorActionComponent;
+        /*
+         *输入处理函数
+         */
+        Move(Value: UE.InputActionValue) : void;
+        MoveCompleted() : void;
+        MoveStarted() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerController;
+        static Load(InName: string): CurrsorPlayerController;
+    
+        __tid_CurrsorPlayerController_0__: boolean;
+    }
+    
+    class CurrsorPlayerState extends UE.BaseState {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
+        CurrsorCharacter: TWeakObjectPtr<UE.CurrsorCharacter>;
+        CurrsorVelocity: UE.Vector;
+        bIsAttackKeyReleased: boolean;
+        AttackNum: number;
+        CanStartAttack() : boolean;
+        GetAttackKey() : boolean;
+        /*
+         *Attack
+         */
+        GetAttackNum() : number;
+        /*
+         *状态检测
+         */
+        IsGrounding() : boolean;
+        IsWalking() : boolean;
+        SetAttacking(bAttacking: boolean) : void;
+        SetAttackKey(bAttackKey: boolean) : void;
+        SetAttackNum(Num: number) : void;
+        /*
+         *状态设置
+         */
+        SetDashing(bDashing: boolean) : void;
+        SetJumping(bJumping: boolean) : void;
+        SetWalking(bWalking: boolean) : void;
+        ShouldMove() : boolean;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerState;
+        static Load(InName: string): CurrsorPlayerState;
+    
+        __tid_CurrsorPlayerState_0__: boolean;
+    }
+    
+    class CurrsorCharacter extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        SpringArmComponent: UE.SpringArmComponent;
+        CameraComponent: UE.CurrsorCameraComponent;
+        AttackHitbox: UE.BoxComponent;
+        HealthComponent: UE.HealthComponent;
+        CurrsorPlayerState: UE.CurrsorPlayerState;
+        GameSystemManager: UE.GameSystemManager;
+        AttackSystem: UE.AttackSystemComponent;
+        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
+        LastArmLength: number;
+        LastCollisionState: boolean;
+        /*
+         *对实现此接口的对象施加伤害 __ 伤害值
+         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
+         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
+         */
+        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
+        /*
+         *区域ID相关方法（通过GameState管理）
+         */
+        GetCurrentAreaID() : number;
+        /*
+         *生命值相关方法
+         */
+        GetHealth() : number;
+        GetMaxHealth() : number;
+        HasValidAreaID() : boolean;
+        IsDead() : boolean;
+        IsRotationAdjustmentEnabled() : boolean;
+        ResetRotationAdjustment() : void;
+        SetCurrentAreaID(NewAreaID: number) : void;
+        /*
+         *旋转调整控制方法
+         */
+        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
+        SwitchToBattleCamera(CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        /*
+         *相机切换方法
+         */
+        SwitchToPlayerCamera() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
+        static Load(InName: string): CurrsorCharacter;
+    
+        __tid_CurrsorCharacter_0__: boolean;
+    }
+    
+    class BaseEnemy extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnEnemyDeath: $MulticastDelegate<(DeadEnemy: $Nullable<UE.BaseEnemy>) => void>;
+        HealthComponent: UE.HealthComponent;
+        CurrentState: UE.BaseState;
+        SelectedAreaBox: UE.AreaCollisionBox;
+        AreaID: number;
+        /*
+         *对实现此接口的对象施加伤害 __ 伤害值
+         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
+         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
+         */
+        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
+        /*
+         *区域ID相关功能
+         */
+        GetAreaID() : number;
+        /*
+         *获取生命值组件
+         */
+        GetHealthComponent() : UE.HealthComponent;
+        /*
+         *AreaCollisionBox选择相关功能
+         */
+        GetSelectedAreaBox() : UE.AreaCollisionBox;
+        /*
+         *获取状态组件
+         */
+        GetStateComponent() : UE.BaseState;
+        HandleDeath() : void;
+        HasAreaID() : boolean;
+        /*
+         *检查是否有选中的区域盒子
+         */
+        HasSelectedAreaBox() : boolean;
+        /*
+         *检查是否死亡
+         */
+        IsDead() : boolean;
+        OnDeathBP() : void;
+        /*
+         *死亡处理
+         */
+        OnHealthDepleted(DeadActor: $Nullable<UE.Actor>) : void;
+        /*
+         *受伤处理
+         */
+        OnTakeDamageBP(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>) : void;
+        /*
+         *从选中的AreaCollisionBox读取AreaID
+         */
+        ReadAreaIDFromSelectedBox() : void;
+        SetAreaID(InAreaID: number) : void;
+        SetSelectedAreaBox(InAreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BaseEnemy;
+        static Load(InName: string): BaseEnemy;
+    
+        __tid_BaseEnemy_0__: boolean;
+    }
+    
+    class GameState extends UE.GameStateBase {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        MatchState: string;
+        PreviousMatchState: string;
+        ElapsedTime: number;
+        /*
+         *Gives clients the chance to do something when time gets updates
+         */
+        OnRep_ElapsedTime() : void;
+        /*
+         *Match state has changed
+         */
+        OnRep_MatchState() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameState;
+        static Load(InName: string): GameState;
+    
+        __tid_GameState_0__: boolean;
+    }
+    
+    class CurrsorAreaManager extends UE.Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        TestPlayerDummyClass: UE.Class;
+        TestEnemyDummyClass: UE.Class;
+        BoxIDMap: TMap<number, UE.AreaCollisionBox>;
+        CreateAreaData() : void;
+        DestroyAllTestDummies() : void;
+        RemoveAreaData() : void;
+        /*
+         *========== 测试假人管理 ==========
+         */
+        SpawnAllTestDummies() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorAreaManager;
+        static Load(InName: string): CurrsorAreaManager;
+    
+        __tid_CurrsorAreaManager_0__: boolean;
+    }
+    
+    enum ECombatState { Default, Combat, Victory, Defeat, ECombatState_MAX, __typeKeyDoNoAccess}
+    class CurrsorGameState extends UE.GameState {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CurrentAreaID: number;
+        AreaManager: UE.CurrsorAreaManager;
+        CombatState: UE.ECombatState;
+        LastPlayerCombatPosition: UE.Vector;
+        CurrentPlayerHealth: number;
+        LastEnemyCombatPosition: UE.Vector;
+        CurrentEnemyHealth: number;
+        GetAreaManager() : UE.CurrsorAreaManager;
+        GetCombatState() : UE.ECombatState;
+        GetCurrentAreaID() : number;
+        GetCurrentEnemyHealth() : number;
+        GetCurrentPlayerHealth() : number;
+        GetLastEnemyCombatPosition() : UE.Vector;
+        GetLastPlayerCombatPosition() : UE.Vector;
+        GetNameFromID(InID: number) : string;
+        SetAreaManager(InAreaManager: $Nullable<UE.CurrsorAreaManager>) : void;
+        SetCombatState(InCombatState: UE.ECombatState) : void;
+        SetCurrentAreaID(InCurrentAreaID: number) : void;
+        SetCurrentEnemyHealth(InCurrentEnemyHealth: number) : void;
+        SetCurrentPlayerHealth(InCurrentPlayerHealth: number) : void;
+        SetLastEnemyCombatPosition(InLastEnemyCombatPosition: UE.Vector) : void;
+        SetLastPlayerCombatPosition(InLastPlayerCombatPosition: UE.Vector) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorGameState;
+        static Load(InName: string): CurrsorGameState;
+    
+        __tid_CurrsorGameState_0__: boolean;
+    }
+    
+    class BattleAreaTeleportComponent extends UE.ActorComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bEnableDebugLogging: boolean;
+        TeleportDelay: number;
+        bUseSmoothCameraTransition: boolean;
+        CameraTransitionDuration: number;
+        /*
+         *获取区域碰撞盒
+         *@param AreaID 区域ID
+         *@return 区域碰撞盒，如果未找到返回nullptr
+         */
+        GetAreaCollisionBox(AreaID: number) : UE.AreaCollisionBox;
+        /*
+         *获取游戏状态
+         *@return 游戏状态，如果未找到返回nullptr
+         */
+        GetCurrsorGameState() : UE.CurrsorGameState;
+        /*
+         *移动相机到指定位置（已弃用，保留兼容性）
+         *@param Player 玩家角色（用于获取相机）
+         *@param TargetLocation 目标位置
+         *@param TargetRotation 目标旋转
+         */
+        MoveCameraToPosition(Player: $Nullable<UE.CurrsorCharacter>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        /*
+         *处理战斗区域传送
+         *@param Player 玩家角色
+         *@param Enemy 被攻击的敌人
+         *@return 是否成功执行传送
+         */
+        ProcessBattleAreaTeleport(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        /*
+         *切换到战斗区域相机
+         *@param Player 玩家角色
+         *@param CameraBillboard 相机Billboard组件，用于查找子相机
+         */
+        SwitchToBattleCamera(Player: $Nullable<UE.CurrsorCharacter>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        /*
+         *传送敌人到指定位置
+         *@param Enemy 敌人角色
+         *@param TargetLocation 目标位置
+         *@param TargetRotation 目标旋转
+         */
+        TeleportEnemy(Enemy: $Nullable<UE.BaseEnemy>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        /*
+         *传送玩家到指定位置
+         *@param Player 玩家角色
+         *@param TargetLocation 目标位置
+         *@param TargetRotation 目标旋转
+         */
+        TeleportPlayer(Player: $Nullable<UE.CurrsorCharacter>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        /*
+         *验证传送条件
+         *@param Player 玩家角色
+         *@param Enemy 敌人角色
+         *@return 是否满足传送条件
+         */
+        ValidateTeleportConditions(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BattleAreaTeleportComponent;
+        static Load(InName: string): BattleAreaTeleportComponent;
+    
+        __tid_BattleAreaTeleportComponent_0__: boolean;
+    }
+    
+    class AttackSystemComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnAttackHit: $MulticastDelegate<(Attacker: $Nullable<UE.Actor>, Target: $Nullable<UE.Actor>, Damage: number) => void>;
+        OnAttackStarted: $MulticastDelegate<(Attacker: $Nullable<UE.Actor>, AttackType: string) => void>;
+        OnAttackEnd: $MulticastDelegate<(Attacker: $Nullable<UE.Actor>) => void>;
+        GlobalDamageMultiplier: number;
+        AttackCooldown: number;
+        bEnableDebugLogging: boolean;
+        ActiveAttacks: TSet<TWeakObjectPtr<UE.Actor>>;
+        LastAttackTimes: TMap<TWeakObjectPtr<UE.Actor>, number>;
+        TotalAttacksProcessed: number;
+        TotalDamageDealt: number;
+        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
+        bEnableBattleAreaTeleport: boolean;
+        CalculateDamage(AttackData: UE.AttackData, bIsCritical: $Ref<boolean>) : number;
+        CanAttack(Attacker: $Nullable<UE.Actor>, bAllowDuringAttack?: boolean /* = false */) : boolean;
+        EndAttack(Attacker: $Nullable<UE.Actor>) : void;
+        GetActiveAttackCount() : number;
+        GetBattleAreaTeleportComponent() : UE.BattleAreaTeleportComponent;
+        GetGlobalDamageMultiplier() : number;
+        /*
+         *攻击状态查询
+         */
+        IsAttacking(Attacker: $Nullable<UE.Actor>) : boolean;
+        IsBattleAreaTeleportEnabled() : boolean;
+        /*
+         *攻击处理
+         */
+        ProcessAttack(Attacker: $Nullable<UE.Actor>, Target: $Nullable<UE.Actor>, AttackData?: UE.AttackData /* = () */) : boolean;
+        /*
+         *处理攻击命中（攻击者、目标、命中结果）
+         */
+        ProcessAttackHit(Attacker: $Nullable<UE.Actor>, Target: $Nullable<UE.Actor>, HitResult: UE.HitResult) : boolean;
+        /*
+         *处理攻击输入（仅攻击者，用于开始攻击）
+         */
+        ProcessAttackInput(Attacker: $Nullable<UE.Actor>) : boolean;
+        /*
+         *战斗区域传送功能
+         */
+        SetBattleAreaTeleportComponent(TeleportComponent: $Nullable<UE.BattleAreaTeleportComponent>) : void;
+        SetEnableBattleAreaTeleport(bEnable: boolean) : void;
+        /*
+         *配置
+         */
+        SetGlobalDamageMultiplier(Multiplier: number) : void;
+        StartAttack(Attacker: $Nullable<UE.Actor>, AttackType?: string /* = "Normal" */) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): AttackSystemComponent;
+        static Load(InName: string): AttackSystemComponent;
+    
+        __tid_AttackSystemComponent_0__: boolean;
     }
     
     class AttributeEditorActionPropertySet extends UE.InteractiveToolPropertySet {
@@ -56588,37 +57614,6 @@ declare module "ue" {
         __tid_BasedPosition_0__: boolean;
     }
     
-    class BaseState extends UE.PlayerState {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Health: number;
-        MaxHealth: number;
-        GetHealth() : number;
-        GetMaxHealth() : number;
-        SetHealth(NewHealth: number) : void;
-        SetMaxHealth(NewMaxHealth: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BaseState;
-        static Load(InName: string): BaseState;
-    
-        __tid_BaseState_0__: boolean;
-    }
-    
-    class BaseEnemy extends UE.PaperZDCharacter {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrentState: UE.BaseState;
-        /*
-         *对实现此接口的对象施加伤害 __ 伤害值
-         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
-         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
-         */
-        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BaseEnemy;
-        static Load(InName: string): BaseEnemy;
-    
-        __tid_BaseEnemy_0__: boolean;
-    }
-    
     class BaseIteratePackagesCommandlet extends UE.Commandlet {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -57002,6 +57997,209 @@ declare module "ue" {
         static Load(InName: string): BatchRetargetSettings;
     
         __tid_BatchRetargetSettings_0__: boolean;
+    }
+    
+    class GameInstanceSubsystem extends UE.Subsystem {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameInstanceSubsystem;
+        static Load(InName: string): GameInstanceSubsystem;
+    
+        __tid_GameInstanceSubsystem_0__: boolean;
+    }
+    
+    class BattleAreaManager extends UE.GameInstanceSubsystem {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        EnemyAreaMap: TMap<TWeakObjectPtr<UE.BaseEnemy>, number>;
+        /*
+         *批量设置区域内的敌人
+         *@param AreaBox 区域碰撞盒
+         *@param SearchRadius 搜索半径
+         */
+        AssignEnemiesInArea(AreaBox: $Nullable<UE.AreaCollisionBox>, SearchRadius?: number /* = 500.000000 */) : void;
+        /*
+         *清除敌人的区域ID
+         *@param Enemy 敌人角色
+         */
+        ClearEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : void;
+        /*
+         *检查敌人是否有区域ID
+         *@param Enemy 敌人角色
+         *@return 是否有区域ID
+         */
+        DoesEnemyHaveAreaID(Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        /*
+         *查找区域内的敌人
+         *@param CenterLocation 中心位置
+         *@param SearchRadius 搜索半径
+         *@return 找到的敌人数组
+         */
+        FindEnemiesInRadius(CenterLocation: UE.Vector, SearchRadius: number) : TArray<UE.BaseEnemy>;
+        /*
+         *获取指定区域的所有敌人
+         *@param AreaID 区域ID
+         *@return 敌人数组
+         */
+        GetEnemiesInArea(AreaID: number) : TArray<UE.BaseEnemy>;
+        /*
+         *获取敌人的区域ID
+         *@param Enemy 敌人角色
+         *@return 区域ID，如果未设置返回-1
+         */
+        GetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : number;
+        /*
+         *设置敌人的区域ID
+         *@param Enemy 敌人角色
+         *@param AreaID 区域ID
+         */
+        SetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>, AreaID: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BattleAreaManager;
+        static Load(InName: string): BattleAreaManager;
+    
+        __tid_BattleAreaManager_0__: boolean;
+    }
+    
+    class BattleAreaBlueprintLibrary extends UE.BlueprintFunctionLibrary {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        /*
+         *批量设置区域内的敌人
+         *@param AreaBox 区域碰撞盒
+         *@param SearchRadius 搜索半径
+         */
+        static AssignEnemiesInArea(AreaBox: $Nullable<UE.AreaCollisionBox>, SearchRadius?: number /* = 500.000000 */) : void;
+        /*
+         *清除敌人的区域ID
+         *@param Enemy 敌人角色
+         */
+        static ClearEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : void;
+        /*
+         *清除玩家的区域ID
+         *@param Player 玩家角色
+         */
+        static ClearPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>) : void;
+        /*
+         *销毁所有区域的测试假人
+         *@param WorldContext 世界上下文
+         */
+        static DestroyAllTestDummies(WorldContext: $Nullable<UE.Object>) : void;
+        /*
+         *销毁指定区域的测试假人
+         *@param AreaBox 区域碰撞盒
+         */
+        static DestroyTestDummiesForArea(AreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        /*
+         *检查敌人是否有区域ID
+         *@param Enemy 敌人角色
+         *@return 是否有区域ID
+         */
+        static DoesEnemyHaveAreaID(Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        /*
+         *检查敌人是否有选中的区域碰撞盒
+         *@param Enemy 敌人角色
+         *@return 是否有选中的区域碰撞盒
+         */
+        static DoesEnemyHaveSelectedAreaBox(Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        /*
+         *检查玩家是否有有效的区域ID
+         *@param Player 玩家角色
+         *@return 是否有有效的区域ID
+         */
+        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.CurrsorCharacter>) : boolean;
+        /*
+         *获取区域碰撞盒的位置信息
+         *@param AreaBox 区域碰撞盒
+         *@param PlayerPosition 玩家位置
+         *@param EnemyPosition 敌人位置
+         *@param CameraPosition 相机位置
+         *@return 是否成功获取位置信息
+         */
+        static GetAreaPositions(AreaBox: $Nullable<UE.AreaCollisionBox>, PlayerPosition: $Ref<UE.Vector>, EnemyPosition: $Ref<UE.Vector>, CameraPosition: $Ref<UE.Vector>) : boolean;
+        /*
+         *获取战斗区域管理器
+         *@param WorldContext 世界上下文
+         *@return 战斗区域管理器
+         */
+        static GetBattleAreaManager(WorldContext: $Nullable<UE.Object>) : UE.BattleAreaManager;
+        /*
+         *获取将要使用的区域ID（优先玩家，其次敌人）
+         *@param Player 玩家角色
+         *@param Enemy 敌人角色
+         *@param OutAreaID 输出的区域ID
+         *@param OutIsFromPlayer 是否来自玩家
+         *@return 是否找到有效的区域ID
+         */
+        static GetEffectiveAreaID(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
+        /*
+         *获取指定区域的所有敌人
+         *@param WorldContext 世界上下文
+         *@param AreaID 区域ID
+         *@return 敌人数组
+         */
+        static GetEnemiesInArea(WorldContext: $Nullable<UE.Object>, AreaID: number) : TArray<UE.BaseEnemy>;
+        /*
+         *获取敌人的区域ID
+         *@param Enemy 敌人角色
+         *@return 区域ID
+         */
+        static GetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : number;
+        /*
+         *获取敌人选中的区域碰撞盒
+         *@param Enemy 敌人角色
+         *@return 选中的区域碰撞盒
+         */
+        static GetEnemySelectedAreaBox(Enemy: $Nullable<UE.BaseEnemy>) : UE.AreaCollisionBox;
+        /*
+         *获取玩家的区域ID
+         *@param Player 玩家角色
+         *@return 区域ID
+         */
+        static GetPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>) : number;
+        /*
+         *从选中的区域碰撞盒读取AreaID
+         *@param Enemy 敌人角色
+         */
+        static ReadEnemyAreaIDFromSelectedBox(Enemy: $Nullable<UE.BaseEnemy>) : void;
+        /*
+         *设置敌人的区域ID
+         *@param Enemy 敌人角色
+         *@param AreaID 区域ID
+         */
+        static SetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>, AreaID: number) : void;
+        /*
+         *设置敌人选中的区域碰撞盒
+         *@param Enemy 敌人角色
+         *@param AreaBox 区域碰撞盒
+         */
+        static SetEnemySelectedAreaBox(Enemy: $Nullable<UE.BaseEnemy>, AreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        /*
+         *设置玩家的区域ID
+         *@param Player 玩家角色
+         *@param AreaID 区域ID
+         */
+        static SetPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>, AreaID: number) : void;
+        /*
+         *为所有区域生成测试假人
+         *@param WorldContext 世界上下文
+         */
+        static SpawnAllTestDummies(WorldContext: $Nullable<UE.Object>) : void;
+        /*
+         *为指定区域生成测试假人
+         *@param AreaBox 区域碰撞盒
+         */
+        static SpawnTestDummiesForArea(AreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        /*
+         *验证战斗区域传送条件
+         *@param Player 玩家角色
+         *@param Enemy 敌人角色
+         *@return 是否满足传送条件
+         */
+        static ValidateBattleTeleportConditions(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BattleAreaBlueprintLibrary;
+        static Load(InName: string): BattleAreaBlueprintLibrary;
+    
+        __tid_BattleAreaBlueprintLibrary_0__: boolean;
     }
     
     enum Beam2SourceTargetMethod { PEB2STM_Default, PEB2STM_UserSet, PEB2STM_Emitter, PEB2STM_Particle, PEB2STM_Actor, PEB2STM_MAX, __typeKeyDoNoAccess}
@@ -58046,260 +59244,6 @@ declare module "ue" {
         static Load(InName: string): BlueprintEditorToolMenuContext;
     
         __tid_BlueprintEditorToolMenuContext_0__: boolean;
-    }
-    
-    enum EInputActionValueType { Boolean, Axis1D, Axis2D, Axis3D, EInputActionValueType_MAX, __typeKeyDoNoAccess}
-    enum EInputActionAccumulationBehavior { TakeHighestAbsoluteValue, Cumulative, EInputActionAccumulationBehavior_MAX, __typeKeyDoNoAccess}
-    class InputActionValue {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InputActionValue_0__: boolean;
-    }
-    
-    class KeyConsumptionOptions {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_KeyConsumptionOptions_0__: boolean;
-    }
-    
-    class PlayerMappableKeyOptions {
-        constructor();
-        constructor(Metadata: UE.Object, Name: string, DisplayName: string, DisplayCategory: string);
-        Metadata: UE.Object;
-        Name: string;
-        DisplayName: string;
-        DisplayCategory: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_PlayerMappableKeyOptions_0__: boolean;
-    }
-    
-    class InputModifier extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        /*
-         *Helper to allow debug visualization of the modifier.
-         *@param SampleValue - The base input action value pre-modification (ranging -1 -> 1 across all applicable axes).
-         *@param FinalValue - The post-modification input action value for the provided SampleValue.
-         */
-        GetVisualizationColor(SampleValue: UE.InputActionValue, FinalValue: UE.InputActionValue) : UE.LinearColor;
-        /*
-         *ModifyRaw
-         *Will be called by each modifier in the modifier chain
-         *@param CurrentValue - The modified value returned by the previous modifier in the chain, or the base raw value if this is the first modifier in the chain.
-         */
-        ModifyRaw(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, CurrentValue: UE.InputActionValue, DeltaTime: number) : UE.InputActionValue;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputModifier;
-        static Load(InName: string): InputModifier;
-    
-        __tid_InputModifier_0__: boolean;
-    }
-    
-    enum EPlayerMappableKeySettingBehaviors { InheritSettingsFromAction, OverrideSettings, IgnoreSettings, EPlayerMappableKeySettingBehaviors_MAX, __typeKeyDoNoAccess}
-    class GameplayTagContainer {
-        constructor();
-        constructor(GameplayTags: TArray<UE.GameplayTag>, ParentTags: TArray<UE.GameplayTag>);
-        GameplayTags: TArray<UE.GameplayTag>;
-        ParentTags: TArray<UE.GameplayTag>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_GameplayTagContainer_0__: boolean;
-    }
-    
-    class PlayerMappableKeySettings extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Metadata: UE.Object;
-        Name: string;
-        DisplayName: string;
-        DisplayCategory: string;
-        SupportedKeyProfiles: UE.GameplayTagContainer;
-        /*
-         *Get the known mapping names that are current in use. This is a helper function if you want to use a "GetOptions" metadata on a UPROPERTY.
-         *For example, the following will display a little drop down menu to select from all current mapping names:
-         *
-         * UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(GetOptions="EnhancedInput.PlayerMappableKeySettings.GetKnownMappingNames"))
-         * FName MappingName;
-         */
-        static GetKnownMappingNames_EditorOnly() : TArray<string>;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): PlayerMappableKeySettings;
-        static Load(InName: string): PlayerMappableKeySettings;
-    
-        __tid_PlayerMappableKeySettings_0__: boolean;
-    }
-    
-    class EnhancedActionKeyMapping {
-        constructor();
-        constructor(PlayerMappableOptions: UE.PlayerMappableKeyOptions, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, Action: UE.InputAction, Key: UE.Key, bShouldBeIgnored: boolean, bIsPlayerMappable: boolean, SettingBehavior: UE.EPlayerMappableKeySettingBehaviors, PlayerMappableKeySettings: UE.PlayerMappableKeySettings);
-        PlayerMappableOptions: UE.PlayerMappableKeyOptions;
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        Action: UE.InputAction;
-        Key: UE.Key;
-        bShouldBeIgnored: boolean;
-        bIsPlayerMappable: boolean;
-        SettingBehavior: UE.EPlayerMappableKeySettingBehaviors;
-        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_EnhancedActionKeyMapping_0__: boolean;
-    }
-    
-    class InputMappingContext extends UE.DataAsset {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Mappings: TArray<UE.EnhancedActionKeyMapping>;
-        ContextDescription: string;
-        /*
-         *Map a key to an action within the mapping context.
-         */
-        MapKey(Action: $Nullable<UE.InputAction>, ToKey: UE.Key) : UE.EnhancedActionKeyMapping;
-        UnmapAction(Action: $Nullable<UE.InputAction>) : void;
-        /*
-         *Unmap everything within the mapping context.
-         */
-        UnmapAll() : void;
-        /*
-         *Unmap all key maps to an action within the mapping context.
-         */
-        UnmapAllKeysFromAction(Action: $Nullable<UE.InputAction>) : void;
-        /*
-         *Unmap a key from an action within the mapping context.
-         */
-        UnmapKey(Action: $Nullable<UE.InputAction>, Key: UE.Key) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputMappingContext;
-        static Load(InName: string): InputMappingContext;
-    
-        __tid_InputMappingContext_0__: boolean;
-    }
-    
-    enum ETriggerEvent { None, Triggered, Started, Ongoing, Canceled, Completed, ETriggerEvent_MAX, __typeKeyDoNoAccess}
-    class InputActionInstance {
-        constructor();
-        constructor(SourceAction: UE.InputAction, TriggerEvent: UE.ETriggerEvent, LastTriggeredWorldTime: number, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, ElapsedProcessedTime: number, ElapsedTriggeredTime: number);
-        SourceAction: UE.InputAction;
-        TriggerEvent: UE.ETriggerEvent;
-        LastTriggeredWorldTime: number;
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        ElapsedProcessedTime: number;
-        ElapsedTriggeredTime: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InputActionInstance_0__: boolean;
-    }
-    
-    class InjectedInput {
-        constructor();
-        constructor(Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>);
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InjectedInput_0__: boolean;
-    }
-    
-    class InjectedInputArray {
-        constructor();
-        constructor(Injected: TArray<UE.InjectedInput>);
-        Injected: TArray<UE.InjectedInput>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InjectedInputArray_0__: boolean;
-    }
-    
-    class EnhancedPlayerInput extends UE.PlayerInput {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        KeyConsumptionData: TMap<UE.InputAction, UE.KeyConsumptionOptions>;
-        AppliedInputContexts: TMap<UE.InputMappingContext, number>;
-        EnhancedActionMappings: TArray<UE.EnhancedActionKeyMapping>;
-        ActionInstanceData: TMap<UE.InputAction, UE.InputActionInstance>;
-        KeysPressedThisTick: TMap<UE.Key, UE.Vector>;
-        InputsInjectedThisTick: TMap<UE.InputAction, UE.InjectedInputArray>;
-        LastInjectedActions: TSet<UE.InputAction>;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): EnhancedPlayerInput;
-        static Load(InName: string): EnhancedPlayerInput;
-    
-        __tid_EnhancedPlayerInput_0__: boolean;
-    }
-    
-    enum ETriggerState { None, Ongoing, Triggered, ETriggerState_MAX, __typeKeyDoNoAccess}
-    enum ETriggerType { Explicit, Implicit, Blocker, ETriggerType_MAX, __typeKeyDoNoAccess}
-    class InputTrigger extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ActuationThreshold: number;
-        bShouldAlwaysTick: boolean;
-        LastValue: UE.InputActionValue;
-        /*
-         *Changes the way this trigger affects an action with multiple triggers:
-         *        All implicit triggers must be triggering to trigger the action.
-         *        If there are any explicit triggers at least one must be triggering to trigger the action.
-         */
-        GetTriggerType() : UE.ETriggerType;
-        /*
-         ** Is the value passed in sufficiently large to be of interest to the trigger.
-         ** This is a helper function that implements the most obvious (>=) interpretation of the actuation threshold.
-         */
-        IsActuated(ForValue: UE.InputActionValue) : boolean;
-        /*
-         *This function checks if the requisite conditions have been met for the trigger to fire.
-         * Returns Trigger State None              - No trigger conditions have been met. Trigger is inactive.
-         *                 Trigger State Ongoing   - Some trigger conditions have been met. Trigger is processing but not yet active.
-         *                 Trigger State Triggered - All trigger conditions have been met to fire. Trigger is active.
-         */
-        UpdateState(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, ModifiedValue: UE.InputActionValue, DeltaTime: number) : UE.ETriggerState;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputTrigger;
-        static Load(InName: string): InputTrigger;
-    
-        __tid_InputTrigger_0__: boolean;
-    }
-    
-    class InputAction extends UE.DataAsset {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ActionDescription: string;
-        bTriggerWhenPaused: boolean;
-        bConsumeInput: boolean;
-        bConsumesActionAndAxisMappings: boolean;
-        bReserveAllMappings: boolean;
-        TriggerEventsThatConsumeLegacyKeys: number;
-        ValueType: UE.EInputActionValueType;
-        AccumulationBehavior: UE.EInputActionAccumulationBehavior;
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputAction;
-        static Load(InName: string): InputAction;
-    
-        __tid_InputAction_0__: boolean;
     }
     
     class BlueprintEnhancedInputActionBinding {
@@ -60431,33 +61375,6 @@ declare module "ue" {
         __tid_BoxToMeshDataflowNode_0__: boolean;
     }
     
-    class CurrsorCameraComponent extends UE.CameraComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bWasInCollision: boolean;
-        /*
-         *更新景深效果
-         *@param FocalDistance 焦距
-         *@param bIsCollision 是否处于碰撞状态
-         *@param TargetArmLength 目标臂长（弹簧臂的原始长度）
-         */
-        UpdateDOF(FocalDistance: number, bIsCollision: boolean, TargetArmLength: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorCameraComponent;
-        static Load(InName: string): CurrsorCameraComponent;
-    
-        __tid_CurrsorCameraComponent_0__: boolean;
-    }
-    
-    class CombatCharacter extends UE.PaperZDCharacter {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CameraComponent: UE.CurrsorCameraComponent;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CombatCharacter;
-        static Load(InName: string): CombatCharacter;
-    
-        __tid_CombatCharacter_0__: boolean;
-    }
-    
     class PointerToUberGraphFrame {
         constructor();
         /**
@@ -60468,188 +61385,69 @@ declare module "ue" {
         __tid_PointerToUberGraphFrame_0__: boolean;
     }
     
-    class CurrsorAreaManager extends UE.Actor {
+    enum ENavDataGatheringMode { Default, Instant, Lazy, ENavDataGatheringMode_MAX, __typeKeyDoNoAccess}
+    class StaticMeshActor extends UE.Actor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        BoxIDMap: TMap<number, UE.AreaCollisionBox>;
-        CreateAreaData() : void;
-        RemoveAreaData() : void;
+        StaticMeshComponent: UE.StaticMeshComponent;
+        bStaticMeshReplicateMovement: boolean;
+        StaticMeshPhysicsReplicationMode: UE.EPhysicsReplicationMode;
+        NavigationGeometryGatheringMode: UE.ENavDataGatheringMode;
+        /*
+         *Function to change mobility type
+         */
+        SetMobility(InMobility: UE.EComponentMobility) : void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorAreaManager;
-        static Load(InName: string): CurrsorAreaManager;
+        static Find(OrigInName: string, Outer?: Object): StaticMeshActor;
+        static Load(InName: string): StaticMeshActor;
     
-        __tid_CurrsorAreaManager_0__: boolean;
+        __tid_StaticMeshActor_0__: boolean;
     }
     
-    class SpringArmComponent extends UE.SceneComponent {
+    class DestructibleItem extends UE.StaticMeshActor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        TargetArmLength: number;
-        SocketOffset: UE.Vector;
-        TargetOffset: UE.Vector;
-        ProbeSize: number;
-        ProbeChannel: UE.ECollisionChannel;
-        bDoCollisionTest: boolean;
-        bUsePawnControlRotation: boolean;
-        bInheritPitch: boolean;
-        bInheritYaw: boolean;
-        bInheritRoll: boolean;
-        bEnableCameraLag: boolean;
-        bEnableCameraRotationLag: boolean;
-        bUseCameraLagSubstepping: boolean;
-        bDrawDebugLagMarkers: boolean;
-        CameraLagSpeed: number;
-        CameraRotationLagSpeed: number;
-        CameraLagMaxTimeStep: number;
-        CameraLagMaxDistance: number;
-        bClampToMaxPhysicsDeltaTime: boolean;
-        /*
-         *Get the target rotation we inherit, used as the base target for the boom rotation.
-         *This is derived from attachment to our parent and considering the UsePawnControlRotation and absolute rotation flags.
-         */
-        GetTargetRotation() : UE.Rotator;
-        /*
-         *Get the position where the camera should be without applying the Collision Test displacement
-         */
-        GetUnfixedCameraPosition() : UE.Vector;
-        /*
-         *Is the Collision Test displacement being applied?
-         */
-        IsCollisionFixApplied() : boolean;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SpringArmComponent;
-        static Load(InName: string): SpringArmComponent;
-    
-        __tid_SpringArmComponent_0__: boolean;
-    }
-    
-    class CurrsorActionComponent extends UE.ActorComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrsorPlayer: UE.CurrsorCharacter;
-        CurrsorPlayerState: UE.CurrsorPlayerState;
-        CurrsorPlayerController: UE.CurrsorPlayerController;
-        CurrentMovementVector: number;
-        MovementSpeed: number;
-        AttackCompleted() : void;
-        GetMovementSpeed() : number;
-        Move(Value: UE.InputActionValue) : void;
-        TryStartAttack() : boolean;
-        UpdateRotationBasedOnInput(DeltaTime: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorActionComponent;
-        static Load(InName: string): CurrsorActionComponent;
-    
-        __tid_CurrsorActionComponent_0__: boolean;
-    }
-    
-    class CurrsorPlayerController extends UE.PlayerController {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        InputMappingContext: UE.InputMappingContext;
-        CurrentMovementVector: number;
-        CurrsorPlayer: UE.CurrsorCharacter;
-        CurrsorPlayerState: UE.CurrsorPlayerState;
-        PlayerActionComponent: UE.CurrsorActionComponent;
-        PlayerStateComponent: UE.CurrsorPlayerState;
-        MoveAction: UE.InputAction;
-        JumpAction: UE.InputAction;
-        DashAction: UE.InputAction;
-        AttackAction: UE.InputAction;
+        OnItemDestroyed: $MulticastDelegate<(DestroyedItem: $Nullable<UE.DestructibleItem>) => void>;
+        HealthComponent: UE.HealthComponent;
+        bIsDestroyed: boolean;
+        DestructionEffect: UE.ParticleSystem;
+        DestructionSound: UE.SoundBase;
+        EffectScale: UE.Vector;
+        DropItemClasses: TArray<UE.Class>;
+        MinDropCount: number;
+        MaxDropCount: number;
+        DropRadius: number;
+        bDestroyActorOnDeath: boolean;
+        DestroyDelay: number;
         /*
          *对实现此接口的对象施加伤害 __ 伤害值
          *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
          *__ 可选的命中结果，包含碰撞位置、法线等详细信息
          */
         ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
-        AttackCanceled() : void;
-        AttackCompleted() : void;
         /*
-         *基础战斗状态
+         *手动触发破坏
          */
-        AttackEnd() : void;
-        AttackHitboxOff() : void;
-        AttackHitboxOn() : void;
-        AttackStarted() : void;
-        AttackTriggered() : void;
+        DestroyItem() : void;
         /*
-         *输入处理函数
+         *获取生命值组件
          */
-        Move(Value: UE.InputActionValue) : void;
-        MoveCompleted() : void;
-        MoveStarted() : void;
+        GetHealthComponent() : UE.HealthComponent;
+        HandleDestruction() : void;
+        /*
+         *检查是否已被破坏
+         */
+        IsDestroyed() : boolean;
+        /*
+         *事件函数
+         */
+        OnHealthDepleted(DeadActor: $Nullable<UE.Actor>) : void;
+        OnItemDestroyedBP() : void;
+        PlayDestructionEffects() : void;
+        SpawnLoot() : void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerController;
-        static Load(InName: string): CurrsorPlayerController;
+        static Find(OrigInName: string, Outer?: Object): DestructibleItem;
+        static Load(InName: string): DestructibleItem;
     
-        __tid_CurrsorPlayerController_0__: boolean;
-    }
-    
-    enum EPlayerState { Idle, Walk, Run, Jump, Fall, Attack, RunAttack, Dash, EPlayerState_MAX, __typeKeyDoNoAccess}
-    class CurrsorPlayerState extends UE.BaseState {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
-        CurrsorCharacter: TWeakObjectPtr<UE.CurrsorCharacter>;
-        CurrsorVelocity: UE.Vector;
-        CurrentState: UE.EPlayerState;
-        WalkThreshold: number;
-        RunThreshold: number;
-        RunAttackThreshold: number;
-        bIsDashing: boolean;
-        bIsAttacking: boolean;
-        bIsJumping: boolean;
-        bIsWalk: boolean;
-        bIsAttackKeyReleased: boolean;
-        AttackNum: number;
-        CanStartAttack() : boolean;
-        GetAttackKey() : boolean;
-        /*
-         *Attack
-         */
-        GetAttackNum() : number;
-        /*
-         *获取当前状态
-         */
-        GetCurrentState() : UE.EPlayerState;
-        IsAttacking() : boolean;
-        /*
-         *状态检测
-         */
-        IsDashing() : boolean;
-        IsFalling() : boolean;
-        IsGrounding() : boolean;
-        IsJumping() : boolean;
-        IsWalking() : boolean;
-        SetAttacking(bAttacking: boolean) : void;
-        SetAttackKey(bAttackKey: boolean) : void;
-        SetAttackNum(Num: number) : void;
-        /*
-         *状态设置
-         */
-        SetDashing(bDashing: boolean) : void;
-        SetJumping(bJumping: boolean) : void;
-        SetWalking(bWalking: boolean) : void;
-        ShouldMove() : boolean;
-        /*
-         *状态更新
-         */
-        UpdateState() : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerState;
-        static Load(InName: string): CurrsorPlayerState;
-    
-        __tid_CurrsorPlayerState_0__: boolean;
-    }
-    
-    class CurrsorCharacter extends UE.PaperZDCharacter {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        SpringArmComponent: UE.SpringArmComponent;
-        CameraComponent: UE.CurrsorCameraComponent;
-        AttackHitbox: UE.BoxComponent;
-        CurrsorPlayerState: UE.CurrsorPlayerState;
-        LastArmLength: number;
-        LastCollisionState: boolean;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
-        static Load(InName: string): CurrsorCharacter;
-    
-        __tid_CurrsorCharacter_0__: boolean;
+        __tid_DestructibleItem_0__: boolean;
     }
     
     class CurrsorGameInstance extends UE.GameInstance {
@@ -60737,57 +61535,6 @@ declare module "ue" {
         __tid_CurrsorGameMode_0__: boolean;
     }
     
-    class GameState extends UE.GameStateBase {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        MatchState: string;
-        PreviousMatchState: string;
-        ElapsedTime: number;
-        /*
-         *Gives clients the chance to do something when time gets updates
-         */
-        OnRep_ElapsedTime() : void;
-        /*
-         *Match state has changed
-         */
-        OnRep_MatchState() : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): GameState;
-        static Load(InName: string): GameState;
-    
-        __tid_GameState_0__: boolean;
-    }
-    
-    enum ECombatState { Default, Combat, Victory, Defeat, ECombatState_MAX, __typeKeyDoNoAccess}
-    class CurrsorGameState extends UE.GameState {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrentAreaID: number;
-        AreaManager: UE.CurrsorAreaManager;
-        CombatState: UE.ECombatState;
-        LastPlayerCombatPosition: UE.Vector;
-        CurrentPlayerHealth: number;
-        LastEnemyCombatPosition: UE.Vector;
-        CurrentEnemyHealth: number;
-        GetCombatState() : UE.ECombatState;
-        GetCurrentAreaID() : number;
-        GetCurrentEnemyHealth() : number;
-        GetCurrentPlayerHealth() : number;
-        GetLastEnemyCombatPosition() : UE.Vector;
-        GetLastPlayerCombatPosition() : UE.Vector;
-        GetNameFromID(InID: number) : string;
-        SetAreaManager(InAreaManager: $Nullable<UE.CurrsorAreaManager>) : void;
-        SetCombatState(InCombatState: UE.ECombatState) : void;
-        SetCurrentAreaID(InCurrentAreaID: number) : void;
-        SetCurrentEnemyHealth(InCurrentEnemyHealth: number) : void;
-        SetCurrentPlayerHealth(InCurrentPlayerHealth: number) : void;
-        SetLastEnemyCombatPosition(InLastEnemyCombatPosition: UE.Vector) : void;
-        SetLastPlayerCombatPosition(InLastPlayerCombatPosition: UE.Vector) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorGameState;
-        static Load(InName: string): CurrsorGameState;
-    
-        __tid_CurrsorGameState_0__: boolean;
-    }
-    
     class CurrsorPlayerCameraManager extends UE.PlayerCameraManager {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -60831,20 +61578,6 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_PaperZDAnimNode_Sink_0__: boolean;
-    }
-    
-    class PaperZDAnimNode_OverrideSlot extends UE.PaperZDAnimNode_Base {
-        constructor();
-        constructor(Animation: UE.PaperZDAnimDataLink, SlotName: string, GroupName: string);
-        Animation: UE.PaperZDAnimDataLink;
-        SlotName: string;
-        GroupName: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_PaperZDAnimNode_OverrideSlot_0__: boolean;
     }
     
     class PaperZDAnimNode_PlaySequence extends UE.PaperZDAnimNode_Base {
@@ -60896,6 +61629,20 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_PaperZDAnimNode_UseCachedAnimation_0__: boolean;
+    }
+    
+    class PaperZDAnimNode_OverrideSlot extends UE.PaperZDAnimNode_Base {
+        constructor();
+        constructor(Animation: UE.PaperZDAnimDataLink, SlotName: string, GroupName: string);
+        Animation: UE.PaperZDAnimDataLink;
+        SlotName: string;
+        GroupName: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_PaperZDAnimNode_OverrideSlot_0__: boolean;
     }
     
     enum EGraphType { GT_Function, GT_Ubergraph, GT_Macro, GT_Animation, GT_StateMachine, GT_MAX, __typeKeyDoNoAccess}
@@ -70169,6 +70916,16 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_ColumnVisibilitySetting_0__: boolean;
+    }
+    
+    class CombatCharacter extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CameraComponent: UE.CurrsorCameraComponent;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CombatCharacter;
+        static Load(InName: string): CombatCharacter;
+    
+        __tid_CombatCharacter_0__: boolean;
     }
     
     class CombatInterface extends UE.Interface {
@@ -82219,16 +82976,6 @@ declare module "ue" {
         __tid_DataTableCategoryHandle_0__: boolean;
     }
     
-    class TableRowBase {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TableRowBase_0__: boolean;
-    }
-    
     enum EEvaluateCurveTableResult { RowFound, RowNotFound, EEvaluateCurveTableResult_MAX, __typeKeyDoNoAccess}
     class DataTableFunctionLibrary extends UE.BlueprintFunctionLibrary {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -89164,24 +89911,6 @@ declare module "ue" {
         static Load(InName: string): EditorKeyboardShortcutSettings;
     
         __tid_EditorKeyboardShortcutSettings_0__: boolean;
-    }
-    
-    enum ENavDataGatheringMode { Default, Instant, Lazy, ENavDataGatheringMode_MAX, __typeKeyDoNoAccess}
-    class StaticMeshActor extends UE.Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        StaticMeshComponent: UE.StaticMeshComponent;
-        bStaticMeshReplicateMovement: boolean;
-        StaticMeshPhysicsReplicationMode: UE.EPhysicsReplicationMode;
-        NavigationGeometryGatheringMode: UE.ENavDataGatheringMode;
-        /*
-         *Function to change mobility type
-         */
-        SetMobility(InMobility: UE.EComponentMobility) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): StaticMeshActor;
-        static Load(InName: string): StaticMeshActor;
-    
-        __tid_StaticMeshActor_0__: boolean;
     }
     
     class MergeStaticMeshActorsOptions extends UE.JoinStaticMeshActorsOptions {
@@ -99792,15 +100521,6 @@ declare module "ue" {
         static Load(InName: string): GameEngine;
     
         __tid_GameEngine_0__: boolean;
-    }
-    
-    class GameInstanceSubsystem extends UE.Subsystem {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): GameInstanceSubsystem;
-        static Load(InName: string): GameInstanceSubsystem;
-    
-        __tid_GameInstanceSubsystem_0__: boolean;
     }
     
     class TemplateMapInfoOverride {
