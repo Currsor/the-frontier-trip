@@ -10780,7 +10780,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 700DA7B54AD2AF567D3A7CAB644034BB
+// __TYPE_DECL_START: 710814124EAEE4AAB37640BB8E7B69A9
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10789,24 +10789,6 @@ declare module "ue" {
             static Load(InName: string): BP_CurrsorGameInstance_C;
         
             __tid_BP_CurrsorGameInstance_C_0__: boolean;
-        }
-        
-    }
-
-// __TYPE_DECL_END
-// __TYPE_DECL_START: CFF6CBC14CC2D8BFA08F08ADF2906C41
-    namespace Game.Data.NewUserDefinedStruct {
-        class NewUserDefinedStruct {
-            constructor();
-            constructor(test_01: string, test_02: string);
-            test_01: string;
-            test_02: string;
-            /**
-             * @deprecated use StaticStruct instead.
-             */
-            static StaticClass(): ScriptStruct;
-            static StaticStruct(): ScriptStruct;
-            __tid_NewUserDefinedStruct_0__: boolean;
         }
         
     }
@@ -11047,29 +11029,12 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: BCB86E9D4847EC71CE9E78BC34BAF3AA
-    namespace Game.UI.Blueprints.Cards.Widget_Card {
-        class Widget_Card_C extends UE.UserWidget {
-            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            Classes_Text: UE.TextBlock;
-            Consume_Text: UE.TextBlock;
-            Image: UE.Image;
-            Introduction_Text: UE.TextBlock;
-            Name_Text: UE.TextBlock;
-            static StaticClass(): Class;
-            static Find(OrigInName: string, Outer?: Object): Widget_Card_C;
-            static Load(InName: string): Widget_Card_C;
-        
-            __tid_Widget_Card_C_0__: boolean;
-        }
-        
-    }
-
-// __TYPE_DECL_END
-// __TYPE_DECL_START: E797F1FD44AD7262F79DFB9FF3FB6F43
+// __TYPE_DECL_START: 81A7910742ECEC36416871ACFACE65FF
     namespace Game.UI.Blueprints.Cards.Panel_CardMainUI {
         class Panel_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            bp_test_add: UE.Game.UI.Blueprints.Common.Widget_Common_Button.Widget_Common_Button_C;
+            Construct() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Panel_CardMainUI_C;
             static Load(InName: string): Panel_CardMainUI_C;
@@ -11080,15 +11045,188 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 411F613348AB3EAAF836E4AAD3259EFC
+// __TYPE_DECL_START: E91C8FB3454B963579EA7BABF9589763
     namespace Game.UI.Blueprints.Cards.Widget_CardCell {
         class Widget_CardCell_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            CardImage: UE.Image;
+            CardName: UE.TextBlock;
+            FrameImage: UE.Image;
+            GemShadow: UE.Image;
+            GlowBorder: UE.Border;
+            Image_178: UE.Image;
+            ManaCost: UE.TextBlock;
+            ManaCrystal_1: UE.Image;
+            ManaCrystalFrame: UE.Image;
+            ManaCrystalOverlay: UE.Overlay;
+            RarityGem: UE.Image;
+            RichDescription: UE.RichTextBlock;
+            TypeBanner: UE.Image;
+            TypeText: UE.TextBlock;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardCell_C;
             static Load(InName: string): Widget_CardCell_C;
         
             __tid_Widget_CardCell_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 8188839045D80AB35FBD8D9DA3A0D79F
+    namespace Game.UI.Blueprints.Cards.Panel_Card {
+        class Panel_Card_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            Esc: UE.Button;
+            BndEvt__Panel_Card_Esc_K2Node_ComponentBoundEvent_0_OnButtonClickedEvent__DelegateSignature() : void;
+            ExecuteUbergraph_Panel_Card(EntryPoint: number) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Panel_Card_C;
+            static Load(InName: string): Panel_Card_C;
+        
+            __tid_Panel_Card_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Game.Maps.L_Test {
+        class L_Test_C extends UE.LevelScriptActor {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            ExecuteUbergraph_L_Test(EntryPoint: number) : void;
+            /*
+             *Event when play begins for this actor.
+             */
+            ReceiveBeginPlay() : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): L_Test_C;
+            static Load(InName: string): L_Test_C;
+        
+            __tid_L_Test_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 2933242C4FB271DB328B1E9B12A6CE15
+    namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
+        class Widget_CardMainUI_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_CardMainUI_C;
+            static Load(InName: string): Widget_CardMainUI_C;
+        
+            __tid_Widget_CardMainUI_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: C7657CCF46825CD93750F28BFB011D25
+    namespace Game.UI.Blueprints.Cards.Widget_CardListButton {
+        class Widget_CardListButton_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            AmountText: UE.TextBlock;
+            CardListButton: UE.Button;
+            DeckButtonBorder: UE.Border;
+            DeckIconImage: UE.Image;
+            Text: UE.TextBlock;
+            TextOverlay: UE.Overlay;
+            ButtonText: string;
+            DeckIcon: UE.Texture2D;
+            DeckTint: UE.LinearColor;
+            bFlip: boolean;
+            DefaultIconLeftPadding: number;
+            ExecuteUbergraph_Widget_CardListButton(EntryPoint: number) : void;
+            /*
+             *Called by both the game and the editor.  Allows users to run initial setup for their widgets to better preview
+             *the setup in the designer and since generally that same setup code is required at runtime, it's called there
+             *as well.
+             *
+             ***WARNING**
+             *This is intended purely for cosmetic updates using locally owned data, you can not safely access any game related
+             *state, if you call something that doesn't expect to be run at editor time, you may crash the editor.
+             *
+             *In the event you save the asset with blueprint code that causes a crash on evaluation.  You can turn off
+             *PreConstruct evaluation in the Widget Designer settings in the Editor Preferences.
+             */
+            PreConstruct(IsDesignTime: boolean) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_CardListButton_C;
+            static Load(InName: string): Widget_CardListButton_C;
+        
+            __tid_Widget_CardListButton_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 59B5F3E841D3607DF93F4AAC2978B566
+    namespace Game.UI.Blueprints.Cards.Widget_PlayerStatusIndicator {
+        class Widget_PlayerStatusIndicator_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            BackgroundImage: UE.Image;
+            ShadowImage: UE.Image;
+            StatText: UE.TextBlock;
+            ["In Font Info"]: UE.SlateFontInfo;
+            ["In Padding Bottom"]: number;
+            ExecuteUbergraph_Widget_PlayerStatusIndicator(EntryPoint: number) : void;
+            /*
+             *Called by both the game and the editor.  Allows users to run initial setup for their widgets to better preview
+             *the setup in the designer and since generally that same setup code is required at runtime, it's called there
+             *as well.
+             *
+             ***WARNING**
+             *This is intended purely for cosmetic updates using locally owned data, you can not safely access any game related
+             *state, if you call something that doesn't expect to be run at editor time, you may crash the editor.
+             *
+             *In the event you save the asset with blueprint code that causes a crash on evaluation.  You can turn off
+             *PreConstruct evaluation in the Widget Designer settings in the Editor Preferences.
+             */
+            PreConstruct(IsDesignTime: boolean) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_PlayerStatusIndicator_C;
+            static Load(InName: string): Widget_PlayerStatusIndicator_C;
+        
+            __tid_Widget_PlayerStatusIndicator_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 4E0F3B314F0A089F50146798E40203A0
+    namespace Game.UI.Blueprints.Common.Widget_Common_Button {
+        class Widget_Common_Button_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            bp_btn: UE.Button;
+            bp_text: UE.TextBlock;
+            Text: string;
+            ["Font Info"]: UE.SlateFontInfo;
+            ExecuteUbergraph_Widget_Common_Button(EntryPoint: number) : void;
+            /*
+             *Called by both the game and the editor.  Allows users to run initial setup for their widgets to better preview
+             *the setup in the designer and since generally that same setup code is required at runtime, it's called there
+             *as well.
+             *
+             ***WARNING**
+             *This is intended purely for cosmetic updates using locally owned data, you can not safely access any game related
+             *state, if you call something that doesn't expect to be run at editor time, you may crash the editor.
+             *
+             *In the event you save the asset with blueprint code that causes a crash on evaluation.  You can turn off
+             *PreConstruct evaluation in the Widget Designer settings in the Editor Preferences.
+             */
+            PreConstruct(IsDesignTime: boolean) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_Common_Button_C;
+            static Load(InName: string): Widget_Common_Button_C;
+        
+            __tid_Widget_Common_Button_C_0__: boolean;
         }
         
     }

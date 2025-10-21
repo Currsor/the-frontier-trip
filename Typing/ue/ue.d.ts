@@ -52514,6 +52514,7 @@ declare module "ue" {
     class CurrsorPlayerController extends UE.PlayerController {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         InputMappingContext: UE.InputMappingContext;
+        CombatInputMappingContext: UE.InputMappingContext;
         CurrentMovementVector: number;
         CurrsorPlayer: UE.CurrsorCharacter;
         CurrsorPlayerState: UE.CurrsorPlayerState;
@@ -52526,6 +52527,9 @@ declare module "ue" {
         JumpAction: UE.InputAction;
         DashAction: UE.InputAction;
         AttackAction: UE.InputAction;
+        bIsInCombatInputMode: boolean;
+        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
+        bEnableInputDebugLogging: boolean;
         /*
          *对实现此接口的对象施加伤害 __ 伤害值
          *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
@@ -52543,6 +52547,10 @@ declare module "ue" {
         AttackStarted() : void;
         AttackTriggered() : void;
         /*
+         *退出战斗区域
+         */
+        ExitBattleArea() : void;
+        /*
          *公共访问方法
          */
         GetPlayerActionComponent() : UE.CurrsorActionComponent;
@@ -52552,6 +52560,10 @@ declare module "ue" {
         Move(Value: UE.InputActionValue) : void;
         MoveCompleted() : void;
         MoveStarted() : void;
+        /*
+         *输入映射上下文切换
+         */
+        SwitchInputMappingContext(bUseCombatInput: boolean) : void;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): CurrsorPlayerController;
         static Load(InName: string): CurrsorPlayerController;
@@ -52778,8 +52790,14 @@ declare module "ue" {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         bEnableDebugLogging: boolean;
         TeleportDelay: number;
+        ExitBattleDelay: number;
         bUseSmoothCameraTransition: boolean;
         CameraTransitionDuration: number;
+        /*
+         *退出战斗区域
+         *@param Player 玩家角色
+         */
+        ExitBattleArea(Player: $Nullable<UE.CurrsorCharacter>) : void;
         /*
          *获取区域碰撞盒
          *@param AreaID 区域ID
@@ -52811,6 +52829,11 @@ declare module "ue" {
          *@param CameraBillboard 相机Billboard组件，用于查找子相机
          */
         SwitchToBattleCamera(Player: $Nullable<UE.CurrsorCharacter>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        /*
+         *切换回玩家相机
+         *@param Player 玩家角色
+         */
+        SwitchToPlayerCamera(Player: $Nullable<UE.CurrsorCharacter>) : void;
         /*
          *传送敌人到指定位置
          *@param Enemy 敌人角色
@@ -159906,6 +159929,105 @@ declare module "ue" {
         __tid_PakOrderFileSpec_0__: boolean;
     }
     
+    class TextBlock extends UE.TextLayoutWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Text: string;
+        TextDelegate: $Delegate<() => string>;
+        ColorAndOpacity: UE.SlateColor;
+        ColorAndOpacityDelegate: $Delegate<() => UE.SlateColor>;
+        Font: UE.SlateFontInfo;
+        StrikeBrush: UE.SlateBrush;
+        ShadowOffset: UE.Vector2D;
+        ShadowColorAndOpacity: UE.LinearColor;
+        ShadowColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
+        MinDesiredWidth: number;
+        bWrapWithInvalidationPanel: boolean;
+        TextTransformPolicy: UE.ETextTransformPolicy;
+        TextOverflowPolicy: UE.ETextOverflowPolicy;
+        bSimpleTextMode: boolean;
+        GetDynamicFontMaterial() : UE.MaterialInstanceDynamic;
+        GetDynamicOutlineMaterial() : UE.MaterialInstanceDynamic;
+        /*
+         *Gets the widget text
+         *@return The widget text
+         */
+        GetText() : string;
+        /*
+         *Set the auto wrap for this text block.
+         *
+         *@param InAutoTextWrap to turn wrap on or off.
+         */
+        SetAutoWrapText(InAutoTextWrap: boolean) : void;
+        /*
+         *Sets the color and opacity of the text in this text block
+         *
+         *@param InColorAndOpacity             The new text color and opacity
+         */
+        SetColorAndOpacity(InColorAndOpacity: UE.SlateColor) : void;
+        /*
+         *Dynamically set the font info for this text block
+         *
+         *@param InFontInfo The new font info
+         */
+        SetFont(InFontInfo: UE.SlateFontInfo) : void;
+        SetFontMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
+        SetFontOutlineMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
+        /*
+         *Set the minimum desired width for this text block
+         *
+         *@param InMinDesiredWidth new minimum desired width
+         */
+        SetMinDesiredWidth(InMinDesiredWidth: number) : void;
+        /*
+         *Sets the opacity of the text in this text block
+         *
+         *@param InOpacity              The new text opacity
+         */
+        SetOpacity(InOpacity: number) : void;
+        /*
+         *Sets the color and opacity of the text drop shadow
+         *Note: if opacity is zero no shadow will be drawn
+         *
+         *@param InShadowColorAndOpacity               The new drop shadow color and opacity
+         */
+        SetShadowColorAndOpacity(InShadowColorAndOpacity: UE.LinearColor) : void;
+        /*
+         *Sets the offset that the text drop shadow should be drawn at
+         *
+         *@param InShadowOffset                The new offset
+         */
+        SetShadowOffset(InShadowOffset: UE.Vector2D) : void;
+        /*
+         *Dynamically set the strike brush for this text block
+         *
+         *@param InStrikeBrush The new brush to use to strike through text
+         */
+        SetStrikeBrush(InStrikeBrush: UE.SlateBrush) : void;
+        /*
+         *Directly sets the widget text.
+         *Warning: This will wipe any binding created for the Text property!
+         *@param InText The text to assign to the widget
+         */
+        SetText(InText: string) : void;
+        /*
+         *Set the text overflow policy for this text block.
+         *
+         *@param InOverflowPolicy the new text overflow policy.
+         */
+        SetTextOverflowPolicy(InOverflowPolicy: UE.ETextOverflowPolicy) : void;
+        /*
+         *Set the text transformation policy for this text block.
+         *
+         *@param InTransformPolicy the new text transformation policy.
+         */
+        SetTextTransformPolicy(InTransformPolicy: UE.ETextTransformPolicy) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TextBlock;
+        static Load(InName: string): TextBlock;
+    
+        __tid_TextBlock_0__: boolean;
+    }
+    
     class PanelExtensionSubsystem extends UE.EditorSubsystem {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -197066,105 +197188,6 @@ declare module "ue" {
         static Load(InName: string): TextBinding;
     
         __tid_TextBinding_0__: boolean;
-    }
-    
-    class TextBlock extends UE.TextLayoutWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Text: string;
-        TextDelegate: $Delegate<() => string>;
-        ColorAndOpacity: UE.SlateColor;
-        ColorAndOpacityDelegate: $Delegate<() => UE.SlateColor>;
-        Font: UE.SlateFontInfo;
-        StrikeBrush: UE.SlateBrush;
-        ShadowOffset: UE.Vector2D;
-        ShadowColorAndOpacity: UE.LinearColor;
-        ShadowColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
-        MinDesiredWidth: number;
-        bWrapWithInvalidationPanel: boolean;
-        TextTransformPolicy: UE.ETextTransformPolicy;
-        TextOverflowPolicy: UE.ETextOverflowPolicy;
-        bSimpleTextMode: boolean;
-        GetDynamicFontMaterial() : UE.MaterialInstanceDynamic;
-        GetDynamicOutlineMaterial() : UE.MaterialInstanceDynamic;
-        /*
-         *Gets the widget text
-         *@return The widget text
-         */
-        GetText() : string;
-        /*
-         *Set the auto wrap for this text block.
-         *
-         *@param InAutoTextWrap to turn wrap on or off.
-         */
-        SetAutoWrapText(InAutoTextWrap: boolean) : void;
-        /*
-         *Sets the color and opacity of the text in this text block
-         *
-         *@param InColorAndOpacity             The new text color and opacity
-         */
-        SetColorAndOpacity(InColorAndOpacity: UE.SlateColor) : void;
-        /*
-         *Dynamically set the font info for this text block
-         *
-         *@param InFontInfo The new font info
-         */
-        SetFont(InFontInfo: UE.SlateFontInfo) : void;
-        SetFontMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
-        SetFontOutlineMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
-        /*
-         *Set the minimum desired width for this text block
-         *
-         *@param InMinDesiredWidth new minimum desired width
-         */
-        SetMinDesiredWidth(InMinDesiredWidth: number) : void;
-        /*
-         *Sets the opacity of the text in this text block
-         *
-         *@param InOpacity              The new text opacity
-         */
-        SetOpacity(InOpacity: number) : void;
-        /*
-         *Sets the color and opacity of the text drop shadow
-         *Note: if opacity is zero no shadow will be drawn
-         *
-         *@param InShadowColorAndOpacity               The new drop shadow color and opacity
-         */
-        SetShadowColorAndOpacity(InShadowColorAndOpacity: UE.LinearColor) : void;
-        /*
-         *Sets the offset that the text drop shadow should be drawn at
-         *
-         *@param InShadowOffset                The new offset
-         */
-        SetShadowOffset(InShadowOffset: UE.Vector2D) : void;
-        /*
-         *Dynamically set the strike brush for this text block
-         *
-         *@param InStrikeBrush The new brush to use to strike through text
-         */
-        SetStrikeBrush(InStrikeBrush: UE.SlateBrush) : void;
-        /*
-         *Directly sets the widget text.
-         *Warning: This will wipe any binding created for the Text property!
-         *@param InText The text to assign to the widget
-         */
-        SetText(InText: string) : void;
-        /*
-         *Set the text overflow policy for this text block.
-         *
-         *@param InOverflowPolicy the new text overflow policy.
-         */
-        SetTextOverflowPolicy(InOverflowPolicy: UE.ETextOverflowPolicy) : void;
-        /*
-         *Set the text transformation policy for this text block.
-         *
-         *@param InTransformPolicy the new text transformation policy.
-         */
-        SetTextTransformPolicy(InTransformPolicy: UE.ETextTransformPolicy) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TextBlock;
-        static Load(InName: string): TextBlock;
-    
-        __tid_TextBlock_0__: boolean;
     }
     
     class TextBlockWidgetStyle extends UE.SlateWidgetStyleContainerBase {
