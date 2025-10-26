@@ -39,6 +39,9 @@ void ACurrsorAreaManager::CreateAreaData()
 	int32 NewID = GetTypeHash(NewCollisionBox);
 	
 	NewCollisionBox->SetAreaID(NewID);
+	
+	NewCollisionBox->SetOwner(this);
+	
 	NewCollisionBox->AttachToActor(this, FAttachmentTransformRules::KeepWorldTransform);
 
 	// Add to map
@@ -48,7 +51,7 @@ void ACurrsorAreaManager::CreateAreaData()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Duplicate Box ID generated: %d"), NewID);
+		UE_LOG(LogTemp, Error, TEXT("生成了重复的盒子ID: %d"), NewID);
 	}
 }
 
@@ -59,6 +62,32 @@ void ACurrsorAreaManager::RemoveAreaData()
 		if (It->Value == nullptr)
 		{
 			It.RemoveCurrent();
+		}
+	}
+}
+
+void ACurrsorAreaManager::SpawnAllTestDummies()
+{
+	UE_LOG(LogTemp, Log, TEXT("AreaManager: 为所有区域生成测试假人"));
+	
+	for (auto& Pair : BoxIDMap)
+	{
+		if (Pair.Value && IsValid(Pair.Value))
+		{
+			Pair.Value->SpawnTestDummies();
+		}
+	}
+}
+
+void ACurrsorAreaManager::DestroyAllTestDummies()
+{
+	UE_LOG(LogTemp, Log, TEXT("AreaManager: 销毁所有区域的测试假人"));
+	
+	for (auto& Pair : BoxIDMap)
+	{
+		if (Pair.Value && IsValid(Pair.Value))
+		{
+			Pair.Value->DestroyTestDummies();
 		}
 	}
 }

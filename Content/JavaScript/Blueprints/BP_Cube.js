@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const UE = require("ue");
 const puerts_1 = require("puerts");
-const uclass = UE.Class.Load("/Game/Blueprints/BP_Cube.BP_Cube_C");
+const uclass = UE.Class.Load("/Game/Blueprints/Destructibleltem/BP_Cube.BP_Cube_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_Cube extends jsClass {
     /**

@@ -5,6 +5,11 @@
 #include "../CurrsorGameState.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
 #include "Currsor/System/CurrsorGameInstance.h"
+#include "Camera/CameraComponent.h"
+#include "Components/SceneComponent.h"
+#include "Engine/World.h"
+#include "CurrsorAreaManager.h"
+#include "GameFramework/Pawn.h"
 
 // 设置纹理路径常量
 const FSoftObjectPath MAIN_TEXTURE_PATH(TEXT("/Engine/EditorResources/S_ReflActorIcon.S_ReflActorIcon"));
@@ -45,7 +50,7 @@ AAreaCollisionBox::AAreaCollisionBox(const FObjectInitializer& ObjectInitializer
 
 void AAreaCollisionBox::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Overlap Begin: %s"), *OtherActor->GetName());
+	UE_LOG(LogTemp, Warning, TEXT("重叠开始: %s"), *OtherActor->GetName());
 	
 	if (OtherActor && !OtherActor->IsA<ACurrsorCharacter>()) return;
 	if (OtherComp && OtherComp->GetAttachParent() != nullptr) return;
@@ -112,7 +117,95 @@ void AAreaCollisionBox::SetupBillboards()
 	CameraArrow = CreateDefaultSubobject<UArrowComponent>(TEXT("CameraArrow"));
 	CameraArrow->SetupAttachment(CameraBillboard);
 	
-	// 添加事件绑定
+	// 创建战斗相机组件
+	BattleCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("BattleCameraComponent"));
+	BattleCameraComponent->SetupAttachment(CameraBillboard);
+	
 	PlayerBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);
 	EnemyBillboard->TransformUpdated.AddUObject(this, &AAreaCollisionBox::UpdateSymmetricBillboard);
+	
+	// 初始化假人指针
+	TestPlayerDummy = nullptr;
+	TestEnemyDummy = nullptr;
 }
+
+void AAreaCollisionBox::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	// 游戏开始时销毁假人
+	DestroyTestDummies();
+}
+
+void AAreaCollisionBox::SpawnTestDummies()
+{
+	// 先销毁已存在的假人
+	DestroyTestDummies();
+	
+	// 直接从Owner获取AreaManager
+	ACurrsorAreaManager* AreaManager = Cast<ACurrsorAreaManager>(GetOwner());
+	
+	if (!AreaManager)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AreaCollisionBox: 所有者不是 AreaManager，无法生成测试假人"));
+		return;
+	}
+	
+	// 生成玩家假人
+	if (AreaManager->TestPlayerDummyClass && PlayerBillboard)
+	{
+		FVector PlayerLocation = PlayerBillboard->GetComponentLocation();
+		FRotator PlayerRotation = PlayerArrow->GetComponentRotation();
+		
+		TestPlayerDummy = GetWorld()->SpawnActor<APawn>(
+			AreaManager->TestPlayerDummyClass,
+			PlayerLocation,
+			PlayerRotation
+		);
+		
+		if (TestPlayerDummy)
+		{
+			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 在 %s 生成测试玩家假人"), 
+				*PlayerLocation.ToString());
+		}
+	}
+	
+	// 生成敌人假人
+	if (AreaManager->TestEnemyDummyClass && EnemyBillboard)
+	{
+		FVector EnemyLocation = EnemyBillboard->GetComponentLocation();
+		FRotator EnemyRotation = EnemyArrow->GetComponentRotation();
+		
+		TestEnemyDummy = GetWorld()->SpawnActor<APawn>(
+			AreaManager->TestEnemyDummyClass,
+			EnemyLocation,
+			EnemyRotation
+		);
+		
+		if (TestEnemyDummy)
+		{
+			UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 在 %s 生成测试敌人假人"), 
+				*EnemyLocation.ToString());
+		}
+	}
+}
+
+void AAreaCollisionBox::DestroyTestDummies()
+{
+	// 销毁玩家假人
+	if (TestPlayerDummy && IsValid(TestPlayerDummy))
+	{
+		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 销毁测试玩家假人"));
+		TestPlayerDummy->Destroy();
+		TestPlayerDummy = nullptr;
+	}
+	
+	// 销毁敌人假人
+	if (TestEnemyDummy && IsValid(TestEnemyDummy))
+	{
+		UE_LOG(LogTemp, Log, TEXT("AreaCollisionBox: 销毁测试敌人假人"));
+		TestEnemyDummy->Destroy();
+		TestEnemyDummy = nullptr;
+	}
+}
+

@@ -1,15 +1,14 @@
 import * as UE from 'ue';
 import { $ref, blueprint } from 'puerts';
 import { gameSystemManager } from '../../GameSystemManager';
-import { AttackSystem } from '../../Systems/AttackSystem';
-import { StateManager } from '../../Managers/StateManager';
 import { EventSystem } from '../../Systems/EventSystem';
 import { GameLogicManager } from '../../Managers/GameLogicManager';
 import { UIManager } from '../../Managers/UIManager';
 import { LootSystem } from '../../Systems/LootSystem';
+import { AttackSystem } from '../../Systems/AttackSystem';
 
-const uclass = UE.Class.Load("/Game/UMG/Debug/W_Debug.W_Debug_C");
-const jsClass = blueprint.tojs<typeof UE.Game.UMG.Debug.W_Debug.W_Debug_C>(uclass);
+const uclass = UE.Class.Load("/Game/UI/Blueprints/Debug/W_Debug.W_Debug_C");
+const jsClass = blueprint.tojs<typeof UE.Game.UI.Blueprints.Debug.W_Debug.W_Debug_C>(uclass);
 
 class TS_Debug extends jsClass {
 
@@ -31,7 +30,7 @@ class TS_Debug extends jsClass {
     
     // 新架构系统引用
     private attackSystem!: AttackSystem;
-    private stateManager!: StateManager;
+
     private gameLogicManager!: GameLogicManager;
     private uiManager!: UIManager;
     private lootSystem!: LootSystem;
@@ -58,16 +57,16 @@ class TS_Debug extends jsClass {
 
             // 获取系统实例
             this.attackSystem = gameSystemManager.getSystem("AttackSystem");
-            this.stateManager = gameSystemManager.getSystem("StateManager");
+
             this.gameLogicManager = gameSystemManager.getSystem("GameLogicManager");
             this.uiManager = gameSystemManager.getSystem("UIManager");
             this.lootSystem = gameSystemManager.getSystem("LootSystem");
             
             this.isSystemsInitialized = true;
-            console.log("TS_Debug: New architecture systems initialized successfully");
+            console.log("TS_Debug: 新架构系统初始化成功");
 
         } catch (error) {
-            console.error("TS_Debug: Failed to initialize new architecture systems:", error);
+            console.error("TS_Debug: 初始化新架构系统失败:", error);
         }
     }
 
@@ -115,18 +114,14 @@ class TS_Debug extends jsClass {
     Get_State_Text(): string {
         let stateText = "";
         
-        // 新架构状态信息
-        if (this.isSystemsInitialized && this.stateManager) {
-            const currentState = this.stateManager.getCurrentState();
-            const stateDuration = this.stateManager.getStateDuration();
-            stateText += `TS: ${currentState} (${stateDuration}ms)`;
-        }
+        // 状态信息由C++层的StateManagerComponent管理
+        stateText += "TS: State managed by C++ StateManagerComponent";
         
         // 原有系统状态信息
         if (TS_Debug.PlayerState) {
             const stateNum = TS_Debug.PlayerState.GetCurrentState();
             const legacyState = TS_Debug.EPlayerStateMap[stateNum] ?? stateNum.toString();
-            stateText += stateText ? ` | C++: ${legacyState}` : `C++: ${legacyState}`;
+            stateText = `${legacyState}`;
         }
         
         return stateText || "Unknown";
@@ -158,26 +153,26 @@ class TS_Debug extends jsClass {
     // 获取攻击系统信息
     Get_Attack_System_Info(): string {
         if (!this.isSystemsInitialized || !this.attackSystem) {
-            return "Attack System: Not initialized";
+            return "攻击系统: 未初始化";
         }
         
         const attackStats = this.attackSystem.getAttackStats();
-        return `Attack: Combo=${attackStats.attackComboCount}, LastAttack=${attackStats.timeSinceLastAttack}ms ago`;
+        return `攻击: 连击=${attackStats.attackComboCount}, 上次攻击=${attackStats.timeSinceLastAttack}ms前`;
     }
 
     // 获取事件系统信息
     Get_Event_System_Info(): string {
         if (!this.isSystemsInitialized) {
-            return "Event System: Not initialized";
+            return "事件系统: 未初始化";
         }
         
         const registeredEvents = EventSystem.getRegisteredEvents();
         const recentEvents = EventSystem.getEventHistory(undefined, 3);
         
-        let info = `Events: ${registeredEvents.length} types`;
+        let info = `事件: ${registeredEvents.length}种类型`;
         if (recentEvents.length > 0) {
             const recentEventNames = recentEvents.map(e => e.event).join(", ");
-            info += ` | Recent: ${recentEventNames}`;
+            info += ` | 最近: ${recentEventNames}`;
         }
         
         return info;
@@ -186,64 +181,77 @@ class TS_Debug extends jsClass {
     // 获取掉落系统信息
     Get_Loot_System_Info(): string {
         if (!this.isSystemsInitialized || !this.lootSystem) {
-            return "Loot System: Not initialized";
+            return "掉落系统: 未初始化";
         }
         
         const dropStats = this.lootSystem.getDropStats();
-        return `Loot: ${dropStats.totalDrops} drops | Recent: ${dropStats.recentDrops.length}`;
+        return `掉落: ${dropStats.totalDrops}次掉落 | 最近: ${dropStats.recentDrops.length}`;
     }
 
     // 获取UI系统信息
     Get_UI_System_Info(): string {
         if (!this.isSystemsInitialized || !this.uiManager) {
-            return "UI System: Not initialized";
+            return "UI系统: 未初始化";
         }
         
         const uiStats = this.uiManager.getUIStats();
-        return `UI: ${uiStats.activeDamageNumbers} damage numbers, ${uiStats.activeNotifications} notifications`;
+        return `UI: ${uiStats.activeDamageNumbers}个伤害数字, ${uiStats.activeNotifications}个通知`;
     }
 
     // 获取系统架构概览
     Get_System_Architecture_Info(): string {
         if (!this.isSystemsInitialized) {
-            return "New Architecture: Not initialized";
+            return "新架构: 未初始化";
         }
         
         const systemStatus = gameSystemManager.getSystemStatus();
-        return `Architecture: ${systemStatus.systemCount} systems active, ${systemStatus.eventStats.registeredEvents} event types`;
+        return `架构: ${systemStatus.systemCount}个系统活跃, ${systemStatus.eventStats.registeredEvents}种事件类型`;
     }
 
     // 测试新架构功能的按钮事件
 
-    // 测试攻击系统
+    // 测试攻击系统 - 直接调用 C++ 攻击系统
     Test_Attack_System(): void {
-        console.log("Testing Attack System");
+        console.log("测试攻击系统 (C++ 直接调用)");
         
         if (this.isSystemsInitialized && TS_Debug.pawn) {
-            EventSystem.emit("onAttackInput", {
-                attacker: TS_Debug.pawn,
-                inputType: "debug_test",
-                timestamp: Date.now()
-            });
+            try {
+                // 直接调用 C++ 攻击系统
+                const gameSystemManager = (UE as any).GameSystemManager?.GetInstance?.();
+                if (gameSystemManager) {
+                    const attackComponent = gameSystemManager.GetAttackSystem();
+                    if (attackComponent) {
+                        attackComponent.ProcessAttackInput(TS_Debug.pawn);
+                        console.log("攻击系统测试: C++ 直接调用成功");
+                    } else {
+                        console.error("攻击系统测试: C++ AttackSystem 未找到");
+                    }
+                } else {
+                    console.error("攻击系统测试: GameSystemManager 不可用");
+                }
+            } catch (error) {
+                console.error("攻击系统测试: 调用C++系统时出错:", error);
+            }
         }
     }
 
     // 测试状态转换
     Test_State_Transition(): void {
-        console.log("Testing State Transition");
+        console.log("测试状态转换");
         
-        if (this.isSystemsInitialized && this.stateManager) {
-            const currentState = this.stateManager.getCurrentState();
-            const testState = currentState === StateManager.STATES.IDLE ? 
-                StateManager.STATES.ATTACK : StateManager.STATES.IDLE;
-            
-            this.stateManager.changeState(testState);
+        if (this.isSystemsInitialized && TS_Debug.pawn) {
+            // 通过事件系统请求C++层进行状态转换
+            EventSystem.emit("onRequestStateChange", {
+                actor: TS_Debug.pawn,
+                requestedState: "Attack",
+                source: "DebugUI"
+            });
         }
     }
 
     // 测试掉落系统
     Test_Loot_System(): void {
-        console.log("Testing Loot System");
+        console.log("测试掉落系统");
         
         if (this.isSystemsInitialized && this.lootSystem && TS_Debug.pawn) {
             this.lootSystem.generateLoot(TS_Debug.pawn, "DestructibleItem", 1.0);
@@ -252,7 +260,7 @@ class TS_Debug extends jsClass {
 
     // 测试伤害数字显示
     Test_Damage_Numbers(): void {
-        console.log("Testing Damage Numbers");
+        console.log("测试伤害数字显示");
         
         if (this.isSystemsInitialized && this.uiManager && TS_Debug.pawn) {
             const playerLocation = TS_Debug.pawn.K2_GetActorLocation();
@@ -265,26 +273,30 @@ class TS_Debug extends jsClass {
 
     // 重置所有系统
     Reset_All_Systems(): void {
-        console.log("Resetting All Systems");
+        console.log("重置所有系统");
         
         if (this.isSystemsInitialized) {
-            gameSystemManager.resetAllSystems();
+            // 通过事件系统请求C++层重置系统
+            EventSystem.emit("onRequestSystemReset", {
+                system: "All",
+                source: "DebugUI"
+            });
         }
     }
 
     // 打印系统详细信息到控制台
     Print_System_Details(): void {
-        console.log("=== System Details ===");
+        console.log("=== 系统详细信息 ===");
         
         if (this.isSystemsInitialized) {
             gameSystemManager.debugPrintStatus();
             
-            console.log("Attack System:", this.Get_Attack_System_Info());
-            console.log("Event System:", this.Get_Event_System_Info());
-            console.log("Loot System:", this.Get_Loot_System_Info());
-            console.log("UI System:", this.Get_UI_System_Info());
+            console.log("攻击系统:", this.Get_Attack_System_Info());
+            console.log("事件系统:", this.Get_Event_System_Info());
+            console.log("掉落系统:", this.Get_Loot_System_Info());
+            console.log("UI系统:", this.Get_UI_System_Info());
         } else {
-            console.log("New architecture systems not initialized");
+            console.log("新架构系统未初始化");
         }
         
         console.log("======================");
@@ -292,21 +304,21 @@ class TS_Debug extends jsClass {
 
     // 获取完整的调试信息字符串
     Get_Complete_Debug_Info(): string {
-        let debugInfo = "=== Complete Debug Info ===\n";
+        let debugInfo = "=== 完整调试信息 ===\\n";
         
         // 基础信息
-        debugInfo += `State: ${this.Get_State_Text()}\n`;
-        debugInfo += `Area ID: ${this.Get_ID_Text()}\n`;
+        debugInfo += `状态: ${this.Get_State_Text()}\\n`;
+        debugInfo += `区域ID: ${this.Get_ID_Text()}\\n`;
         
         // 新架构系统信息
         if (this.isSystemsInitialized) {
-            debugInfo += `Architecture: ${this.Get_System_Architecture_Info()}\n`;
-            debugInfo += `Attack: ${this.Get_Attack_System_Info()}\n`;
-            debugInfo += `Events: ${this.Get_Event_System_Info()}\n`;
-            debugInfo += `Loot: ${this.Get_Loot_System_Info()}\n`;
-            debugInfo += `UI: ${this.Get_UI_System_Info()}\n`;
+            debugInfo += `架构: ${this.Get_System_Architecture_Info()}\\n`;
+            debugInfo += `攻击: ${this.Get_Attack_System_Info()}\\n`;
+            debugInfo += `事件: ${this.Get_Event_System_Info()}\\n`;
+            debugInfo += `掉落: ${this.Get_Loot_System_Info()}\\n`;
+            debugInfo += `UI: ${this.Get_UI_System_Info()}\\n`;
         } else {
-            debugInfo += "New Architecture: Not initialized\n";
+            debugInfo += "新架构: 未初始化\\n";
         }
         
         debugInfo += "===========================";

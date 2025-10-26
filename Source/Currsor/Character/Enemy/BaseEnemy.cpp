@@ -4,6 +4,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Currsor/Character/Component/BaseState.h"
 #include "Currsor/Component/HealthComponent.h"
+#include "Currsor/System/Area/AreaCollisionBox.h"
 
 // Sets default values
 ABaseEnemy::ABaseEnemy()
@@ -34,6 +35,9 @@ void ABaseEnemy::BeginPlay()
 	{
 		HealthComponent->OnDeath.AddDynamic(this, &ABaseEnemy::OnHealthDepleted);
 	}
+
+	// 自动从选中的AreaCollisionBox读取AreaID
+	ReadAreaIDFromSelectedBox();
 }
 
 void ABaseEnemy::ApplyDamage_Implementation(float DamageAmount, AActor* DamageInstigator, const FHitResult& HitResult)
@@ -55,10 +59,10 @@ void ABaseEnemy::ApplyDamage_Implementation(float DamageAmount, AActor* DamageIn
 		OnTakeDamageBP(DamageAmount, DamageInstigator);
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("%s took %f damage from %s. Health: %f/%f"), 
+	UE_LOG(LogTemp, Log, TEXT("%s 受到来自 %s 的 %f 点伤害。生命值: %f/%f"), 
 		   *GetName(), 
+		   DamageInstigator ? *DamageInstigator->GetName() : TEXT("未知"),
 		   DamageAmount, 
-		   DamageInstigator ? *DamageInstigator->GetName() : TEXT("Unknown"),
 		   HealthComponent->GetCurrentHealth(),
 		   HealthComponent->GetMaxHealth());
 }
@@ -90,6 +94,30 @@ void ABaseEnemy::HandleDeath()
 		OnEnemyDeath.Broadcast(this);
 		OnDeathBP();
 
-		UE_LOG(LogTemp, Warning, TEXT("%s has died"), *GetName());
+		UE_LOG(LogTemp, Warning, TEXT("%s 已死亡"), *GetName());
+	}
+}
+
+void ABaseEnemy::ReadAreaIDFromSelectedBox()
+{
+	if (SelectedAreaBox)
+	{
+		// 从选中的AreaCollisionBox读取AreaID
+		int32 NewAreaID = SelectedAreaBox->GetAreaID();
+		if (NewAreaID != -1)
+		{
+			AreaID = NewAreaID;
+			UE_LOG(LogTemp, Log, TEXT("敌人 %s 自动从选定的 AreaCollisionBox %s 读取区域ID %d"), 
+				   *GetName(), *SelectedAreaBox->GetName(), AreaID);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("敌人 %s: 选定的 AreaCollisionBox %s 具有无效的区域ID (-1)"), 
+				   *GetName(), *SelectedAreaBox->GetName());
+		}
+	}
+	else if (AreaID == -1)
+	{
+		UE_LOG(LogTemp, Log, TEXT("敌人 %s: 未选择 AreaCollisionBox 且未设置手动区域ID"), *GetName());
 	}
 }

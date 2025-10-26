@@ -5,10 +5,16 @@
 
 #include "Component/CurrsorCameraComponent.h"
 #include "Components/BoxComponent.h"
+#include "Components/BillboardComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "GameFramework/PlayerController.h"
 #include "Currsor/Component/HealthComponent.h"
 #include "Currsor/System/GameSystemManager.h"
 #include "Currsor/System/Components/AttackSystemComponent.h"
+#include "Currsor/System/Components/BattleAreaTeleportComponent.h"
+#include "Currsor/System/CurrsorGameState.h"
+#include "CurrsorPlayerController.h"
+#include "Component/CurrsorActionComponent.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
 {
@@ -26,11 +32,14 @@ ACurrsorCharacter::ACurrsorCharacter()
 	AttackHitbox->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
 	AttackHitbox->SetRelativeLocation(FVector(60.0f, 0.0f, 0.0f)); // 在角色前方
 	
-	UE_LOG(LogTemp, Warning, TEXT("CurrsorCharacter AttackHitbox created and configured"));
+	UE_LOG(LogTemp, Warning, TEXT("CurrsorCharacter AttackHitbox 已创建并配置"));
 
 	// 创建生命值组件
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 	HealthComponent->SetMaxHealth(100.0f);
+
+	// 创建战斗区域传送组件
+	BattleAreaTeleportComponent = CreateDefaultSubobject<UBattleAreaTeleportComponent>(TEXT("Battle Area Teleport Component"));
 	
 	const FVector Start = SpringArmComponent->GetComponentLocation();
 	const FVector End = SpringArmComponent->GetSocketLocation(SpringArmComponent->SocketName);
@@ -59,6 +68,12 @@ void ACurrsorCharacter::BeginPlay()
 	if (GameSystemManager)
 	{
 		AttackSystem = GameSystemManager->GetAttackSystem();
+		
+		// 设置攻击系统的战斗区域传送组件
+		if (AttackSystem && BattleAreaTeleportComponent)
+		{
+			AttackSystem->SetBattleAreaTeleportComponent(BattleAreaTeleportComponent);
+		}
 	}
 }
 
@@ -94,7 +109,7 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 
 	if (!HealthComponent)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("HealthComponent is null!"));
+		UE_LOG(LogTemp, Warning, TEXT("HealthComponent 为空!"));
 		return;
 	}
 
@@ -104,13 +119,13 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 	if (HealthComponent->IsDead())
 	{
 		// 死亡逻辑
-		UE_LOG(LogTemp, Warning, TEXT("Player Die"));
+		UE_LOG(LogTemp, Warning, TEXT("玩家死亡"));
 		CurrsorPlayerState->ChangeState(ECharacterState::Dead);
 	}
 	else
 	{
 		// 受击逻辑
-		UE_LOG(LogTemp, Warning, TEXT("Player Take Damage: %f, Current Health: %f"), 
+		UE_LOG(LogTemp, Warning, TEXT("玩家受到伤害: %f, 当前生命值: %f"), 
 			DamageAmount, HealthComponent->GetCurrentHealth());
 		CurrsorPlayerState->ChangeState(ECharacterState::Hurt);
 	}
@@ -130,4 +145,80 @@ float ACurrsorCharacter::GetMaxHealth() const
 bool ACurrsorCharacter::IsDead() const
 {
 	return HealthComponent ? HealthComponent->IsDead() : false;
+}
+
+// ========== 区域ID相关方法实现 ==========
+
+int32 ACurrsorCharacter::GetCurrentAreaID() const
+{
+	if (const ACurrsorGameState* GameState = GetWorld()->GetGameState<ACurrsorGameState>())
+	{
+		return GameState->GetCurrentAreaID();
+	}
+	return 0;
+}
+
+void ACurrsorCharacter::SetCurrentAreaID(int32 NewAreaID)
+{
+	if (ACurrsorGameState* GameState = GetWorld()->GetGameState<ACurrsorGameState>())
+	{
+		GameState->SetCurrentAreaID(NewAreaID);
+	}
+}
+
+bool ACurrsorCharacter::HasValidAreaID() const
+{
+	return GetCurrentAreaID() > 0;
+}
+
+void ACurrsorCharacter::SetRotationAdjustmentEnabled(bool bEnabled)
+{
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			ActionComponent->SetRotationAdjustmentEnabled(bEnabled);
+		}
+	}
+}
+
+bool ACurrsorCharacter::IsRotationAdjustmentEnabled() const
+{
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			return ActionComponent->IsRotationAdjustmentEnabled();
+		}
+	}
+	return false;
+}
+
+void ACurrsorCharacter::ResetRotationAdjustment()
+{
+	if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(GetController()))
+	{
+		if (UCurrsorActionComponent* ActionComponent = PlayerController->GetPlayerActionComponent())
+		{
+			ActionComponent->ResetRotationAdjustment();
+		}
+	}
+}
+
+void ACurrsorCharacter::SwitchToPlayerCamera()
+{
+	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	{
+		// 切换回玩家角色作为视角目标
+		PlayerController->SetViewTarget(this);
+		UE_LOG(LogTemp, Log, TEXT("已切换回玩家摄像机"));
+	}
+}
+
+void ACurrsorCharacter::SwitchToBattleCamera(UBillboardComponent* CameraBillboard)
+{
+	if (BattleAreaTeleportComponent)
+	{
+		BattleAreaTeleportComponent->SwitchToBattleCamera(this, CameraBillboard);
+	}
 }

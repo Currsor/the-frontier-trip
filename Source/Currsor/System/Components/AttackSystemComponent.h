@@ -9,6 +9,9 @@
 
 class AActor;
 class IDamageable;
+class UBattleAreaTeleportComponent;
+class ACurrsorCharacter;
+class ABaseEnemy;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAttackHit, AActor*, Attacker, AActor*, Target, float, Damage);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAttackStarted, AActor*, Attacker, FString, AttackType);
@@ -61,11 +64,19 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Attack System")
     bool ProcessAttack(AActor* Attacker, AActor* Target, const FAttackData& AttackData = FAttackData());
 
+    // 处理攻击输入（仅攻击者，用于开始攻击）
+    UFUNCTION(BlueprintCallable, Category = "Attack System")
+    bool ProcessAttackInput(AActor* Attacker);
+
+    // 处理攻击命中（攻击者、目标、命中结果）
+    UFUNCTION(BlueprintCallable, Category = "Attack System")
+    bool ProcessAttackHit(AActor* Attacker, AActor* Target, const FHitResult& HitResult);
+
     UFUNCTION(BlueprintCallable, Category = "Attack System")
     float CalculateDamage(const FAttackData& AttackData, bool& bIsCritical);
 
     UFUNCTION(BlueprintCallable, Category = "Attack System")
-    bool CanAttack(AActor* Attacker) const;
+    bool CanAttack(AActor* Attacker, bool bAllowDuringAttack = false) const;
 
     UFUNCTION(BlueprintCallable, Category = "Attack System")
     void StartAttack(AActor* Attacker, const FString& AttackType = TEXT("Normal"));
@@ -87,6 +98,19 @@ public:
     UFUNCTION(BlueprintPure, Category = "Attack System")
     float GetGlobalDamageMultiplier() const { return GlobalDamageMultiplier; }
 
+    // 战斗区域传送功能
+    UFUNCTION(BlueprintCallable, Category = "Attack System|Battle Area")
+    void SetBattleAreaTeleportComponent(UBattleAreaTeleportComponent* TeleportComponent);
+
+    UFUNCTION(BlueprintPure, Category = "Attack System|Battle Area")
+    UBattleAreaTeleportComponent* GetBattleAreaTeleportComponent() const { return BattleAreaTeleportComponent; }
+
+    UFUNCTION(BlueprintCallable, Category = "Attack System|Battle Area")
+    void SetEnableBattleAreaTeleport(bool bEnable) { bEnableBattleAreaTeleport = bEnable; }
+
+    UFUNCTION(BlueprintPure, Category = "Attack System|Battle Area")
+    bool IsBattleAreaTeleportEnabled() const { return bEnableBattleAreaTeleport; }
+
     // 事件
     UPROPERTY(BlueprintAssignable, Category = "Attack System")
     FOnAttackHit OnAttackHit;
@@ -105,6 +129,9 @@ protected:
     // 内部处理函数
     bool ApplyDamageToTarget(AActor* Target, float Damage, AActor* Instigator);
     void BroadcastAttackHit(AActor* Attacker, AActor* Target, float Damage);
+    
+    // 战斗区域传送处理
+    void ProcessBattleAreaTeleportIfNeeded(AActor* Attacker, AActor* Target);
 
 private:
     // 攻击配置
@@ -130,4 +157,11 @@ private:
 
     UPROPERTY(VisibleAnywhere, Category = "Attack System")
     int32 TotalDamageDealt = 0;
+
+    // 战斗区域传送组件
+    UPROPERTY(VisibleAnywhere, Category = "Attack System|Battle Area")
+    UBattleAreaTeleportComponent* BattleAreaTeleportComponent = nullptr;
+
+    UPROPERTY(EditAnywhere, Category = "Attack System|Battle Area")
+    bool bEnableBattleAreaTeleport = true;
 };

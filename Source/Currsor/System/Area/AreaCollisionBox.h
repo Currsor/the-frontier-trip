@@ -5,6 +5,7 @@
 #include "Components/BoxComponent.h"
 #include "Components/BillboardComponent.h"
 #include "Components/ArrowComponent.h"
+#include "Camera/CameraComponent.h"
 #include "AreaCollisionBox.generated.h"
 
 UCLASS()
@@ -24,6 +25,9 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "Currsor|Area")
     void SetAreaID(int32 InAreaID) { AreaID = InAreaID; }
+
+    UFUNCTION(BlueprintPure, Category = "Currsor|Area")
+    int32 GetAreaID() const { return AreaID; }
     
     UFUNCTION()
     void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, 
@@ -33,6 +37,13 @@ public:
     void UpdateSymmetricBillboard(USceneComponent* UpdatedComponent, 
                                  EUpdateTransformFlags UpdateTransformFlags, 
                                  ETeleportType Teleport);
+
+    // ========== 测试假人管理 ==========
+    UFUNCTION(CallInEditor, Category = "Currsor | Battle Area", Meta = (DisplayPriority = "0"))
+    void SpawnTestDummies();
+
+    UFUNCTION(CallInEditor, Category = "Currsor | Battle Area", Meta = (DisplayPriority = "0"))
+    void DestroyTestDummies();
 
 private:
     UPROPERTY(VisibleAnywhere)
@@ -60,6 +71,17 @@ private:
     UPROPERTY(VisibleAnywhere, Category = "Components")
     UArrowComponent* CameraArrow;
 
+    // ========== 战斗相机组件 ==========
+    UPROPERTY(VisibleAnywhere, Category = "Components")
+    UCameraComponent* BattleCameraComponent;
+
+    // ========== 测试假人 ==========
+    UPROPERTY(VisibleAnywhere, Category = "Battle|Test Dummies")
+    APawn* TestPlayerDummy;
+    
+    UPROPERTY(VisibleAnywhere, Category = "Battle|Test Dummies")
+    APawn* TestEnemyDummy;
+
     // ========== 加载 ==========
     UPROPERTY(EditAnywhere, Category = "Currsor|Billboard")
     TSoftObjectPtr<UTexture2D> MainTexture;
@@ -75,4 +97,7 @@ private:
 
     UFUNCTION()
     void SetupBillboards();
+
+protected:
+    virtual void BeginPlay() override;
 };

@@ -72,6 +72,12 @@ void UCurrsorActionComponent::Move(const FInputActionValue& Value)
 
 void UCurrsorActionComponent::UpdateRotationBasedOnInput(float DeltaTime)
 {
+	// 检查旋转调整是否启用
+	if (!bRotationAdjustmentEnabled)
+	{
+		return;
+	}
+
 	if (this&& FMath::Abs(CurrentMovementVector) > KINDA_SMALL_NUMBER)
 	{
 		// 计算移动方向
@@ -92,11 +98,28 @@ void UCurrsorActionComponent::SetMovementSpeed(float NewSpeed)
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("CurrsorPlayer is null in UCurrsorActionComponent::SetMovementSpeed"));
+		UE_LOG(LogTemp, Warning, TEXT("UCurrsorActionComponent::SetMovementSpeed 中 CurrsorPlayer 为空"));
 	}
 }
 
 float UCurrsorActionComponent::GetMovementSpeed() const
 {
 	return MovementSpeed;
+}
+
+void UCurrsorActionComponent::SetRotationAdjustmentEnabled(bool bEnabled)
+{
+	bRotationAdjustmentEnabled = bEnabled;
+	UE_LOG(LogTemp, Log, TEXT("旋转调整 %s"), bEnabled ? TEXT("已启用") : TEXT("已禁用"));
+}
+
+bool UCurrsorActionComponent::IsRotationAdjustmentEnabled() const
+{
+	return bRotationAdjustmentEnabled;
+}
+
+void UCurrsorActionComponent::ResetRotationAdjustment()
+{
+	SetRotationAdjustmentEnabled(true);
+	UE_LOG(LogTemp, Log, TEXT("旋转调整已重置为启用状态"));
 }

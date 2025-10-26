@@ -16,6 +16,7 @@ class USpringArmComponent;
 class UHealthComponent;
 class UGameSystemManager;
 class UAttackSystemComponent;
+class UBattleAreaTeleportComponent;
 /**
  * 玩家角色类
  */
@@ -48,6 +49,33 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	bool IsDead() const;
 
+	// 区域ID相关方法（通过GameState管理）
+	UFUNCTION(BlueprintPure, Category = "BattleArea")
+	int32 GetCurrentAreaID() const;
+
+	UFUNCTION(BlueprintCallable, Category = "BattleArea")
+	void SetCurrentAreaID(int32 NewAreaID);
+
+	UFUNCTION(BlueprintPure, Category = "BattleArea")
+	bool HasValidAreaID() const;
+
+	// 旋转调整控制方法
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void SetRotationAdjustmentEnabled(bool bEnabled);
+
+	UFUNCTION(BlueprintPure, Category = "Movement")
+	bool IsRotationAdjustmentEnabled() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Movement")
+	void ResetRotationAdjustment();
+
+	// 相机切换方法
+	UFUNCTION(BlueprintCallable, Category = "Camera")
+	void SwitchToPlayerCamera();
+
+	UFUNCTION(BlueprintCallable, Category = "Camera")
+	void SwitchToBattleCamera(class UBillboardComponent* CameraBillboard);
+
 private:
 	// 弹簧臂组件
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera", meta = (AllowPrivateAccess = "true"))
@@ -74,6 +102,11 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Systems", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UAttackSystemComponent> AttackSystem;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Systems", meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UBattleAreaTeleportComponent> BattleAreaTeleportComponent;
+
+
 	
 	// 上一帧的弹簧臂长度
 	UPROPERTY(VisibleInstanceOnly)

@@ -21,10 +21,10 @@ void ACurrsorGameMode::HandleCombatStarted(const FString& CombatEventType)
 {
 	if (CombatEventType=="Encounter")
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Encounter"));
+	UE_LOG(LogTemp, Warning, TEXT("遇敵"));
 	}
 	else if (CombatEventType=="Ambushed")
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Ambushed"));
+	UE_LOG(LogTemp, Warning, TEXT("伏击"));
 	}
 }

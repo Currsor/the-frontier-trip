@@ -9,6 +9,7 @@
 
 class ABaseState;
 class UHealthComponent;
+class AAreaCollisionBox;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyDeath, ABaseEnemy*, DeadEnemy);
 
@@ -36,6 +37,31 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Enemy")
 	bool IsDead() const;
 
+	// 区域ID相关功能
+	UFUNCTION(BlueprintPure, Category = "Enemy|Area")
+	int32 GetAreaID() const { return AreaID; }
+
+	UFUNCTION(BlueprintCallable, Category = "Enemy|Area")
+	void SetAreaID(int32 InAreaID) { AreaID = InAreaID; }
+
+	UFUNCTION(BlueprintPure, Category = "Enemy|Area")
+	bool HasAreaID() const { return AreaID != -1; }
+
+	// AreaCollisionBox选择相关功能
+	UFUNCTION(BlueprintPure, Category = "Enemy|Area")
+	AAreaCollisionBox* GetSelectedAreaBox() const { return SelectedAreaBox; }
+
+	UFUNCTION(BlueprintCallable, Category = "Enemy|Area")
+	void SetSelectedAreaBox(AAreaCollisionBox* InAreaBox) { SelectedAreaBox = InAreaBox; }
+
+	// 从选中的AreaCollisionBox读取AreaID
+	UFUNCTION(BlueprintCallable, Category = "Enemy|Area")
+	void ReadAreaIDFromSelectedBox();
+
+	// 检查是否有选中的区域盒子
+	UFUNCTION(BlueprintPure, Category = "Enemy|Area")
+	bool HasSelectedAreaBox() const { return SelectedAreaBox != nullptr; }
+
 	// 事件委托
 	UPROPERTY(BlueprintAssignable, Category = "Enemy")
 	FOnEnemyDeath OnEnemyDeath;
@@ -49,6 +75,15 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	ABaseState* CurrentState;
+
+	// 可在蓝图编辑器中选择的区域碰撞盒
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy|Area", meta = (AllowPrivateAccess = "true"))
+	AAreaCollisionBox* SelectedAreaBox = nullptr;
+
+	// 区域ID，-1表示没有关联区域
+	// 注意：这个值会在BeginPlay时从SelectedAreaBox自动读取
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy|Area", meta = (AllowPrivateAccess = "true"))
+	int32 AreaID = -1;
 
 	// 死亡处理
 	UFUNCTION()
