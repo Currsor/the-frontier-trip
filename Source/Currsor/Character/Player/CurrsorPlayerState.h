@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Currsor/Character/Component/BaseState.h"
+#include "Engine/UserDefinedStruct.h"
 #include "CurrsorPlayerState.generated.h"
 
 class ACurrsorCharacter;
@@ -21,6 +22,17 @@ protected:
     virtual void Tick(float DeltaTime) override;
 
 public:
+
+    // 牌库属性（存储卡牌行名称）
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+    TArray<FName> DeckCardNames;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Config")
+    UDataTable* CardDataTable;
+    
+    template <class T>
+    UFUNCTION(BlueprintCallable)
+    T* FindRow(FName RowName, const TCHAR* ContextString, bool bWarnIfRowMissing = true);
 
     // 状态检测
     

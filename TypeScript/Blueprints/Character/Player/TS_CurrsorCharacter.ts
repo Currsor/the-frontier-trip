@@ -1,14 +1,16 @@
 import * as UE from 'ue';
-import { $ref, blueprint } from 'puerts';
+import { $Ref, $ref, $set, $unref, blueprint } from 'puerts';
 import { gameSystemManager } from '../../../GameSystemManager';
 import { AttackSystem } from '../../../Systems/AttackSystem';
 import { EventSystem } from '../../../Systems/EventSystem';
 import { GameLogicManager } from '../../../Managers/GameLogicManager';
 
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorCharacter.BP_CurrsorCharacter_C");
-const jsClass = blueprint.tojs<typeof UE.Game.Blueprints.Character.Player.BP_CurrsorCharacter.BP_CurrsorCharacter_C>(uclass);
+const jsClass = blueprint.tojs(uclass);
 
-class TS_CurrsorCharacter extends jsClass {
+export interface TS_CurrsorCharacter extends UE.Game.Blueprints.Character.Player.BP_CurrsorCharacter.BP_CurrsorCharacter_C {}
+
+export class TS_CurrsorCharacter implements TS_CurrsorCharacter {
     private attackSystem!: AttackSystem;
     private gameLogicManager!: GameLogicManager;
     private isSystemsInitialized: boolean = false;
@@ -64,8 +66,6 @@ class TS_CurrsorCharacter extends jsClass {
         }
     }
 
-
-
     // 状态变化处理 - 仅记录和广播，不处理攻击逻辑
     private onStateChanged(newState: string, oldState: string): void {
         console.log(`[TS Character] State changed: ${oldState} -> ${newState} (Logic handled in C++)`);
@@ -78,8 +78,6 @@ class TS_CurrsorCharacter extends jsClass {
             timestamp: Date.now()
         });
     }
-
-
 
     // 获取角色基本信息（供调试使用）
     public getCharacterInfo(): any {
@@ -98,6 +96,14 @@ class TS_CurrsorCharacter extends jsClass {
         } else {
             console.error("[TS Character] AttackSystem not available");
         }
+    }
+
+    public GetDataFromName(RowName: string): UE.Game.Data.Structs.S_CardInfo.S_CardInfo {
+        let cardInfo = {} as UE.Game.Data.Structs.S_CardInfo.S_CardInfo;
+
+        cardInfo = this.BP_GetDataFromName(RowName);
+
+        return cardInfo;
     }
 }
 

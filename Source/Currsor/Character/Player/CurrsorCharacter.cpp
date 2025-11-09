@@ -31,8 +31,6 @@ ACurrsorCharacter::ACurrsorCharacter()
 	// 设置攻击碰撞盒的大小和位置
 	AttackHitbox->SetBoxExtent(FVector(50.0f, 50.0f, 50.0f));
 	AttackHitbox->SetRelativeLocation(FVector(60.0f, 0.0f, 0.0f)); // 在角色前方
-	
-	UE_LOG(LogTemp, Warning, TEXT("CurrsorCharacter AttackHitbox 已创建并配置"));
 
 	// 创建生命值组件
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));

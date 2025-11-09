@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TS_CurrsorCharacter = void 0;
 const UE = require("ue");
 const puerts_1 = require("puerts");
 const GameSystemManager_1 = require("../../../GameSystemManager");
 const EventSystem_1 = require("../../../Systems/EventSystem");
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorCharacter.BP_CurrsorCharacter_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
-class TS_CurrsorCharacter extends jsClass {
+class TS_CurrsorCharacter {
     attackSystem;
     gameLogicManager;
     isSystemsInitialized = false;
@@ -81,6 +82,12 @@ class TS_CurrsorCharacter extends jsClass {
             console.error("[TS Character] AttackSystem not available");
         }
     }
+    GetDataFromName(RowName) {
+        let cardInfo = {};
+        cardInfo = this.BP_GetDataFromName(RowName);
+        return cardInfo;
+    }
 }
+exports.TS_CurrsorCharacter = TS_CurrsorCharacter;
 puerts_1.blueprint.mixin(jsClass, TS_CurrsorCharacter);
 //# sourceMappingURL=TS_CurrsorCharacter.js.map

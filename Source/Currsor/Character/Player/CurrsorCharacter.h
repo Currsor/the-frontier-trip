@@ -6,6 +6,8 @@
 #include "CurrsorPlayerState.h"
 #include "PaperZDCharacter.h"
 #include "Currsor/Interface/IDamageable.h"
+#include "Engine/DataTable.h"
+#include "Engine/UserDefinedStruct.h"
 #include "CurrsorCharacter.generated.h"
 
 class ACurrsorGameMode;

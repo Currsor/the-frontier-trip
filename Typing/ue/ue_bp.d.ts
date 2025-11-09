@@ -10675,12 +10675,13 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 0CEA3F074C72DD5371D2FE9FDEA32863
+// __TYPE_DECL_START: AD4F557C403D150CDD4C9CAA7725B0B7
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
             BndEvt__BP_CurrsorCharacter_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent: $Nullable<UE.PrimitiveComponent>, OtherActor: $Nullable<UE.Actor>, OtherComp: $Nullable<UE.PrimitiveComponent>, OtherBodyIndex: number, bFromSweep: boolean, SweepResult: UE.HitResult) : void;
+            BP_GetDataFromName(RowName: string) : UE.Game.Data.Structs.S_CardInfo.S_CardInfo;
             ExecuteUbergraph_BP_CurrsorCharacter(EntryPoint: number) : void;
             /*
              *Event when play begins for this actor.
@@ -10729,7 +10730,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 56139F4B4B0F868A46B4FE870F5060FD
+// __TYPE_DECL_START: 65C542AC4575DC939E2B2A82ED1A156A
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerState {
         class BP_CurrsorPlayerState_C extends UE.CurrsorPlayerState {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10780,7 +10781,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 710814124EAEE4AAB37640BB8E7B69A9
+// __TYPE_DECL_START: 705CACF74410AD9F1D1078A42AC9D889
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11029,11 +11030,12 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 81A7910742ECEC36416871ACFACE65FF
+// __TYPE_DECL_START: 36AB7EAA4C2298998A8AC485ECE2CAC8
     namespace Game.UI.Blueprints.Cards.Panel_CardMainUI {
         class Panel_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             bp_test_add: UE.Game.UI.Blueprints.Common.Widget_Common_Button.Widget_Common_Button_C;
+            Widget_CardMainUI: UE.Game.UI.Blueprints.Cards.Widget_CardMainUI.Widget_CardMainUI_C;
             Construct() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Panel_CardMainUI_C;
@@ -11045,7 +11047,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: E91C8FB3454B963579EA7BABF9589763
+// __TYPE_DECL_START: 7CE09395495D5463F868E48EC7D7B761
     namespace Game.UI.Blueprints.Cards.Widget_CardCell {
         class Widget_CardCell_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11111,10 +11113,17 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 2933242C4FB271DB328B1E9B12A6CE15
+// __TYPE_DECL_START: 07897D534411D53F169E4387BB0EB30D
     namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
         class Widget_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            Widget_CardListButton: UE.Game.UI.Blueprints.Cards.Widget_CardListButton.Widget_CardListButton_C;
+            Widget_CardListButton_0: UE.Game.UI.Blueprints.Cards.Widget_CardListButton.Widget_CardListButton_C;
+            Widget_EndTurn: UE.Game.UI.Blueprints.Common.Widget_Common_Button.Widget_Common_Button_C;
+            Widget_PlayerStatusIndicator: UE.Game.UI.Blueprints.Cards.Widget_PlayerStatusIndicator.Widget_PlayerStatusIndicator_C;
+            drawPile: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
+            discardPile: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
+            handCards: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardMainUI_C;
             static Load(InName: string): Widget_CardMainUI_C;
@@ -11227,6 +11236,27 @@ declare module "ue" {
             static Load(InName: string): Widget_Common_Button_C;
         
             __tid_Widget_Common_Button_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 3806B1164931772B70EA0BA5262D7A5F
+    namespace Game.Data.Structs.S_CardInfo {
+        class S_CardInfo {
+            constructor();
+            constructor(Name: string, CardImage: UE.Texture2D, FrameImage: UE.Texture2D, Type: string, Describe: string);
+            Name: string;
+            CardImage: UE.Texture2D;
+            FrameImage: UE.Texture2D;
+            Type: string;
+            Describe: string;
+            /**
+             * @deprecated use StaticStruct instead.
+             */
+            static StaticClass(): ScriptStruct;
+            static StaticStruct(): ScriptStruct;
+            __tid_S_CardInfo_0__: boolean;
         }
         
     }

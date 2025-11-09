@@ -36,6 +36,15 @@ bool ACurrsorPlayerState::ShouldMove()
     return true;
 }
 
+template <class T>
+T* ACurrsorPlayerState::FindRow(FName RowName, const TCHAR* ContextString, bool bWarnIfRowMissing)
+{
+    uint8* const* RowDataPtr = CardDataTable->GetRowMap().Find(RowName);
+    uint8* RowData = *RowDataPtr;
+
+    return reinterpret_cast<T*>(RowData);
+}
+
 bool ACurrsorPlayerState::IsGrounding() const
 {
     if (!Owner) return false;

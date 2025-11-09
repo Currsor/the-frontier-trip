@@ -16,7 +16,7 @@ class TS_Panel_CardMainUI extends jsClass {
         this.AddCard();
     }
     AddCard() {
-        // Add card logic here
+        this.Widget_CardMainUI.AddCard();
     }
 }
 puerts_1.blueprint.mixin(jsClass, TS_Panel_CardMainUI);
