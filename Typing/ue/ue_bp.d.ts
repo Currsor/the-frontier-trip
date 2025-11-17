@@ -10675,7 +10675,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: AD4F557C403D150CDD4C9CAA7725B0B7
+// __TYPE_DECL_START: 22AA38F84323FC095A477CAAB9126798
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10781,7 +10781,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 705CACF74410AD9F1D1078A42AC9D889
+// __TYPE_DECL_START: F34C8B3D42968A77DB4B8CBA540B48B1
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11030,7 +11030,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 36AB7EAA4C2298998A8AC485ECE2CAC8
+// __TYPE_DECL_START: F0DE29724A374FA5470B22B0A40D7B16
     namespace Game.UI.Blueprints.Cards.Panel_CardMainUI {
         class Panel_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11047,24 +11047,24 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 7CE09395495D5463F868E48EC7D7B761
+// __TYPE_DECL_START: 2DB5098E4F5094B337CFFEAC275F97D0
     namespace Game.UI.Blueprints.Cards.Widget_CardCell {
         class Widget_CardCell_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-            CardImage: UE.Image;
-            CardName: UE.TextBlock;
-            FrameImage: UE.Image;
+            bp_CardImage: UE.Image;
+            bp_CardName: UE.TextBlock;
+            bp_Description: UE.RichTextBlock;
+            bp_FrameImage: UE.Image;
+            bp_ManaCost: UE.TextBlock;
+            bp_Type: UE.TextBlock;
             GemShadow: UE.Image;
             GlowBorder: UE.Border;
             Image_178: UE.Image;
-            ManaCost: UE.TextBlock;
             ManaCrystal_1: UE.Image;
             ManaCrystalFrame: UE.Image;
             ManaCrystalOverlay: UE.Overlay;
             RarityGem: UE.Image;
-            RichDescription: UE.RichTextBlock;
             TypeBanner: UE.Image;
-            TypeText: UE.TextBlock;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardCell_C;
             static Load(InName: string): Widget_CardCell_C;
@@ -11113,7 +11113,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 07897D534411D53F169E4387BB0EB30D
+// __TYPE_DECL_START: B8B05B5147AF8E484DFD84B6B012EAF6
     namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
         class Widget_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11124,6 +11124,7 @@ declare module "ue" {
             drawPile: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             discardPile: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             handCards: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
+            handCardWidgets: TMap<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardMainUI_C;
             static Load(InName: string): Widget_CardMainUI_C;
@@ -11241,16 +11242,17 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 3806B1164931772B70EA0BA5262D7A5F
+// __TYPE_DECL_START: 677C9F154B78F362E5BD0E8199D84716
     namespace Game.Data.Structs.S_CardInfo {
         class S_CardInfo {
             constructor();
-            constructor(Name: string, CardImage: UE.Texture2D, FrameImage: UE.Texture2D, Type: string, Describe: string);
+            constructor(Name: string, Consumption: number, CardImage: UE.Texture2D, FrameImage: UE.Texture2D, Type: string, Description: string);
             Name: string;
+            Consumption: number;
             CardImage: UE.Texture2D;
             FrameImage: UE.Texture2D;
             Type: string;
-            Describe: string;
+            Description: string;
             /**
              * @deprecated use StaticStruct instead.
              */

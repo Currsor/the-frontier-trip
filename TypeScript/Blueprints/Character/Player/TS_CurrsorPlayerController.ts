@@ -103,50 +103,6 @@ class TS_CurrsorPlayerController extends jsClass {
         this.updateMovementState(inputVector);
     }
 
-    // 跳跃输入处理
-    public onJumpInput(): void {
-        if (!this.isSystemsInitialized) return;
-
-        console.log("TS: Jump input received");
-        
-        const playerActor = TS_CurrsorPlayerController.CurrsorPlayer;
-        if (playerActor && this.canJump()) {
-            EventSystem.emit("onJumpInput", {
-                player: playerActor,
-                timestamp: Date.now()
-            });
-
-            // 通过事件系统请求C++层进行状态转换
-            EventSystem.emit("onRequestStateChange", {
-                actor: playerActor,
-                requestedState: "Jump",
-                source: "PlayerController"
-            });
-        }
-    }
-
-    // 冲刺输入处理
-    public onDashInput(): void {
-        if (!this.isSystemsInitialized) return;
-
-        console.log("TS: Dash input received");
-        
-        const playerActor = TS_CurrsorPlayerController.CurrsorPlayer;
-        if (playerActor && this.canDash()) {
-            EventSystem.emit("onDashInput", {
-                player: playerActor,
-                timestamp: Date.now()
-            });
-
-            // 通过事件系统请求C++层进行状态转换
-            EventSystem.emit("onRequestStateChange", {
-                actor: playerActor,
-                requestedState: "Dash",
-                source: "PlayerController"
-            });
-        }
-    }
-
     // 更新移动状态
     private updateMovementState(inputVector: UE.Vector): void {
         if (!inputVector) return;
@@ -172,52 +128,6 @@ class TS_CurrsorPlayerController extends jsClass {
                 source: "PlayerController"
             });
         }
-    }
-
-    // 检查是否可以跳跃
-    private canJump(): boolean {
-        // 跳跃检查由C++层的StateManagerComponent处理
-        // 这里暂时返回true，具体逻辑由C++层决定
-        return true;
-    }
-
-    // 检查是否可以冲刺
-    private canDash(): boolean {
-        // 冲刺检查由C++层的StateManagerComponent处理
-        // 这里暂时返回true，具体逻辑由C++层决定
-        return true;
-    }
-
-    // 获取当前状态信息（供调试使用）
-    public getStateInfo(): any {
-        // 状态信息由C++层的StateManagerComponent提供
-        return { message: "State info now handled by C++ StateManagerComponent" };
-    }
-
-    // 获取攻击统计信息（供调试使用）
-    public getAttackInfo(): any {
-        if (!this.attackSystem) return null;
-        return this.attackSystem.getAttackStats();
-    }
-
-    // 获取系统状态（供调试使用）
-    public getSystemStatus(): any {
-        return gameSystemManager.getSystemStatus();
-    }
-
-    // 重置控制器状态
-    public resetController(): void {
-        if (this.attackSystem) {
-            this.attackSystem.reset();
-        }
-        
-        // 通过事件系统请求C++层重置状态
-        EventSystem.emit("onRequestSystemReset", {
-            system: "StateManager",
-            source: "PlayerController"
-        });
-        
-        console.log("TS_CurrsorPlayerController reset");
     }
 }
 

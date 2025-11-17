@@ -87,6 +87,21 @@ class GameConfig {
         PARTICLE_POOL_SIZE: 50,
         SOUND_POOL_SIZE: 20
     };
+    // 卡牌系统配置
+    static CARD_CONFIG = {
+        // Widget Pool配置
+        WIDGET_POOL_SIZE: 10, // Widget池初始大小
+        MAX_HAND_CARDS: 10, // 最大手牌数量
+        INITIAL_DRAW_COUNT: 5, // 初始抽牌数量
+        // 卡牌布局配置
+        CARD_SPACING: 120, // 卡牌间距
+        CARD_SCALE: 1.0, // 卡牌缩放
+        HAND_CURVE_HEIGHT: 50, // 手牌弧度高度
+        // 卡牌动画配置
+        CARD_DRAW_DURATION: 0.3, // 抽牌动画时长
+        CARD_DISCARD_DURATION: 0.2, // 弃牌动画时长
+        CARD_HOVER_SCALE: 1.1, // 悬停时缩放
+    };
     /**
      * 获取状态优先级
      * @param state 状态名称
