@@ -139,20 +139,38 @@ export class TS_CardMainUI implements TS_CardMainUI {
         // 记录映射关系（键为Widget，值为CardInfo）
         this.handCardWidgets.Add(cardWidget, cardInfo);
         
-        // 启动出场动画
-        this.StartCardEntranceAnimation(cardWidget);
+        // 计算新卡牌的目标位置（此时handCardWidgets已包含新卡牌）
+        const targetPositions = this.CalculateCardTargetPositions();
+        const target = targetPositions.get(cardWidget);
+        
+        if (!target) {
+            console.warn('无法计算卡牌目标位置');
+            return;
+        }
+        
+        // 启动出场动画，使用计算好的目标位置
+        this.StartCardEntranceAnimation(cardWidget, target.pos, target.rotation, target.scale);
     }
     
     /**
      * 启动卡牌出场动画
+     * @param cardWidget 卡牌Widget
+     * @param targetPos 目标位置
+     * @param targetRotation 目标旋转
+     * @param targetScale 目标缩放
      */
-    private StartCardEntranceAnimation(cardWidget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    private StartCardEntranceAnimation(
+        cardWidget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
+        targetPos: UE.Vector2D,
+        targetRotation: number,
+        targetScale: UE.Vector2D
+    ): void {
         if (!this.animationSystem) return;
         
-        // 获取startHook（抽牌堆按钮）
-        const startHook = (this as any).Widget_CardListButton as UE.Widget;
+        // 获取startHook（抽牌堆起始位置）
+        const startHook = (this as any).bp_StartHook as UE.Widget;
         if (!startHook) {
-            console.warn('未找到Widget_CardListButton，无法播放出场动画');
+            console.warn('未找到bp_StartHook，无法播放出场动画');
             return;
         }
         
@@ -167,22 +185,13 @@ export class TS_CardMainUI implements TS_CardMainUI {
             slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
         }
         
-        // 计算目标位置
-        const targetPositions = this.CalculateCardTargetPositions();
-        const target = targetPositions.get(cardWidget);
-        
-        if (!target) {
-            console.warn('无法计算卡牌目标位置');
-            return;
-        }
-        
         // 启动动画
         this.animationSystem.StartCardAnimation(
             cardWidget,
             startHook,
-            target.pos,
-            target.rotation,
-            target.scale,
+            targetPos,
+            targetRotation,
+            targetScale,
             GameConfig.CARD_CONFIG.CARD_DRAW_DURATION
         );
     }
@@ -194,6 +203,11 @@ export class TS_CardMainUI implements TS_CardMainUI {
         widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
         cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo
     ): void {
+        // 设置动画系统引用
+        if (this.animationSystem) {
+            (widget as any).animationSystem = this.animationSystem;
+        }
+        
         // 设置卡牌名称
         if (widget.bp_CardName) {
             widget.bp_CardName.SetText(cardInfo.Name);

@@ -10675,7 +10675,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 22AA38F84323FC095A477CAAB9126798
+// __TYPE_DECL_START: F48F75C94E16E30C13B7B4B9986570F7
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10781,7 +10781,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: ADA389594FD807A983CBE39062A73E78
+// __TYPE_DECL_START: 1EE52F494EB652562491F19E0880A029
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11047,10 +11047,11 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 2DB5098E4F5094B337CFFEAC275F97D0
+// __TYPE_DECL_START: 0E8DF1C946AC9927949FA391B7B798C8
     namespace Game.UI.Blueprints.Cards.Widget_CardCell {
         class Widget_CardCell_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
             bp_CardImage: UE.Image;
             bp_CardName: UE.TextBlock;
             bp_Description: UE.RichTextBlock;
@@ -11065,6 +11066,20 @@ declare module "ue" {
             ManaCrystalOverlay: UE.Overlay;
             RarityGem: UE.Image;
             TypeBanner: UE.Image;
+            ExecuteUbergraph_Widget_CardCell(EntryPoint: number) : void;
+            /*
+             *The system will use this event to notify a widget that the cursor has entered it. This event is NOT bubbled.
+             *
+             *@param MyGeometry The Geometry of the widget receiving the event
+             *@param MouseEvent Information about the input event
+             */
+            OnMouseEnter(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) : void;
+            /*
+             *The system will use this event to notify a widget that the cursor has left it. This event is NOT bubbled.
+             *
+             *@param MouseEvent Information about the input event
+             */
+            OnMouseLeave(MouseEvent: UE.PointerEvent) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardCell_C;
             static Load(InName: string): Widget_CardCell_C;
@@ -11113,7 +11128,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 4BA4EB3A43380F12456B18A08E2F79A2
+// __TYPE_DECL_START: 1E5150E64FED161411703EA65F72881A
     namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
         class Widget_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11126,6 +11141,8 @@ declare module "ue" {
             discardPile: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             handCards: TArray<UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             handCardWidgets: TMap<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
+            Construct() : void;
+            Destruct() : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardMainUI_C;
             static Load(InName: string): Widget_CardMainUI_C;

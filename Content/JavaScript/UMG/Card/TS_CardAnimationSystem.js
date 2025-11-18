@@ -9,8 +9,14 @@ const GameConfig_1 = require("../../Config/GameConfig");
  */
 class CardAnimationSystem {
     animatingCards = new Map();
+    hoverStates = new Map();
     owningWidget;
     updateHandle = null;
+    // 悬浮效果配置
+    HOVER_SCALE = GameConfig_1.GameConfig.CARD_CONFIG.CARD_HOVER_SCALE; // 1.1倍放大
+    HOVER_OFFSET_Y = -80; // 向上偏移80像素
+    HOVER_Z_ORDER = 1000; // 最高层级
+    HOVER_DURATION = 0.2; // 悬浮动画时长（秒）
     constructor(owningWidget) {
         this.owningWidget = owningWidget;
     }
@@ -75,20 +81,30 @@ class CardAnimationSystem {
      * @param duration 动画时长（秒）
      */
     StartRepositionAnimation(widget, targetPos, targetRotation, targetScale, duration = 0.3) {
-        const currentPos = this.GetWidgetPosition(widget);
-        const currentRotation = widget.GetRenderTransformAngle();
-        // 尝试从现有动画数据中获取当前缩放
-        let currentScale = targetScale;
+        // 检查是否已经在动画中
         const existingAnim = this.animatingCards.get(widget);
-        if (existingAnim) {
-            currentScale = existingAnim.targetScale;
+        let startPos;
+        let startRotation;
+        let startScale;
+        if (existingAnim && existingAnim.isAnimating) {
+            // 如果正在动画中，从当前的目标位置作为新的起点
+            // 这样可以避免瞬移，实现平滑过渡
+            startPos = existingAnim.targetPos;
+            startRotation = existingAnim.targetRotation;
+            startScale = existingAnim.targetScale;
+        }
+        else {
+            // 如果不在动画中，从当前实际位置作为起点
+            startPos = this.GetWidgetPosition(widget);
+            startRotation = widget.GetRenderTransformAngle();
+            startScale = targetScale; // 使用目标缩放作为起始缩放
         }
         // 创建动画数据
         const animData = {
             widget: widget,
-            startPos: currentPos,
-            startRotation: currentRotation,
-            startScale: currentScale,
+            startPos: startPos,
+            startRotation: startRotation,
+            startScale: startScale,
             targetPos: targetPos,
             targetRotation: targetRotation,
             targetScale: targetScale,
@@ -237,10 +253,108 @@ class CardAnimationSystem {
         this.animatingCards.clear();
     }
     /**
+     * 开始卡牌悬浮动画
+     * @param widget 卡牌Widget
+     */
+    StartHoverAnimation(widget) {
+        // 检查是否已经悬浮
+        const hoverState = this.hoverStates.get(widget);
+        if (hoverState && hoverState.isHovered)
+            return;
+        // 保存原始状态
+        const slot = widget.Slot;
+        if (!slot)
+            return;
+        const originalPos = slot.GetPosition();
+        const originalRotation = widget.GetRenderTransformAngle();
+        // 获取当前缩放：如果卡牌正在动画中，使用动画目标缩放；否则使用默认缩放
+        let originalScale;
+        const animData = this.animatingCards.get(widget);
+        if (animData && animData.isAnimating) {
+            originalScale = animData.targetScale;
+        }
+        else {
+            originalScale = new UE.Vector2D(1.0, 1.0);
+        }
+        const originalZOrder = slot.GetZOrder();
+        // 保存悬浮状态
+        this.hoverStates.set(widget, {
+            widget: widget,
+            originalPosition: originalPos,
+            originalRotation: originalRotation,
+            originalScale: originalScale,
+            originalZOrder: originalZOrder,
+            isHovered: true
+        });
+        // 计算目标状态
+        const targetPos = new UE.Vector2D(originalPos.X, originalPos.Y + this.HOVER_OFFSET_Y);
+        const targetRotation = 0; // 摆正
+        const targetScale = new UE.Vector2D(this.HOVER_SCALE, this.HOVER_SCALE);
+        // 立即设置最高层级
+        slot.SetZOrder(this.HOVER_Z_ORDER);
+        // 启动插值动画
+        this.StartRepositionAnimation(widget, targetPos, targetRotation, targetScale, this.HOVER_DURATION);
+    }
+    /**
+     * 结束卡牌悬浮动画
+     * @param widget 卡牌Widget
+     */
+    EndHoverAnimation(widget) {
+        // 获取悬浮状态
+        const hoverState = this.hoverStates.get(widget);
+        if (!hoverState || !hoverState.isHovered)
+            return;
+        // 标记为非悬浮
+        hoverState.isHovered = false;
+        // 恢复原始层级
+        const slot = widget.Slot;
+        if (slot) {
+            slot.SetZOrder(hoverState.originalZOrder);
+        }
+        // 启动恢复动画
+        this.StartRepositionAnimation(widget, hoverState.originalPosition, hoverState.originalRotation, hoverState.originalScale, this.HOVER_DURATION);
+        // 清理悬浮状态
+        this.hoverStates.delete(widget);
+    }
+    /**
+     * 检查卡牌是否处于悬浮状态
+     * @param widget 卡牌Widget
+     */
+    IsHovered(widget) {
+        const hoverState = this.hoverStates.get(widget);
+        return hoverState ? hoverState.isHovered : false;
+    }
+    /**
+     * 更新悬浮卡牌的原始状态（当布局改变时调用）
+     * @param widget 卡牌Widget
+     * @param newPosition 新的原始位置
+     * @param newRotation 新的原始旋转
+     * @param newScale 新的原始缩放
+     */
+    UpdateHoverOriginalState(widget, newPosition, newRotation, newScale) {
+        const hoverState = this.hoverStates.get(widget);
+        if (hoverState && hoverState.isHovered) {
+            // 更新原始状态，但保持悬浮效果
+            hoverState.originalPosition = newPosition;
+            hoverState.originalRotation = newRotation;
+            hoverState.originalScale = newScale;
+            // 更新悬浮目标位置
+            const targetPos = new UE.Vector2D(newPosition.X, newPosition.Y + this.HOVER_OFFSET_Y);
+            // 更新动画目标
+            const animData = this.animatingCards.get(widget);
+            if (animData && animData.isAnimating) {
+                animData.targetPos = targetPos;
+                animData.targetRotation = 0;
+                animData.targetScale = new UE.Vector2D(this.HOVER_SCALE, this.HOVER_SCALE);
+            }
+        }
+    }
+    /**
      * 清理资源
      */
     Cleanup() {
         this.StopAllAnimations();
+        this.hoverStates.clear();
     }
 }
 exports.CardAnimationSystem = CardAnimationSystem;
