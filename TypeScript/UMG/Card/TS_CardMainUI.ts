@@ -1,6 +1,7 @@
 import * as UE from 'ue';
 import { $ref, blueprint } from 'puerts';
 import { CardWidgetPool } from './TS_CardWidgetPool';
+import { CardAnimationSystem } from './TS_CardAnimationSystem';
 import { GameConfig } from '../../Config/GameConfig';
 
 const uclass = UE.Class.Load("/Game/UI/Blueprints/Cards/Widget_CardMainUI.Widget_CardMainUI_C");
@@ -16,6 +17,9 @@ export class TS_CardMainUI implements TS_CardMainUI {
     // Widget Pool管理器
     private widgetPool: CardWidgetPool | null = null;
     
+    // 卡牌动画系统
+    private animationSystem: CardAnimationSystem | null = null;
+    
     Construct() {
         TS_CardMainUI.pawn = this.GetOwningPlayerPawn() as UE.CurrsorCharacter;
         TS_CardMainUI.PlayerState = TS_CardMainUI.pawn.PlayerState as UE.CurrsorPlayerState;
@@ -29,10 +33,19 @@ export class TS_CardMainUI implements TS_CardMainUI {
             return;
         }
         
+        // 初始化动画系统
+        this.animationSystem = new CardAnimationSystem(this);
+        
         this.InitCard();
     }
     
     Destruct() {
+        // 清理动画系统
+        if (this.animationSystem) {
+            this.animationSystem.Cleanup();
+            this.animationSystem = null;
+        }
+        
         // 清理Widget Pool
         if (this.widgetPool) {
             this.widgetPool.Clear();
@@ -95,7 +108,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
         
         // 更新UI
         this.UpdateDrawPileUI();
-        this.UpdateHandCardsLayout();
+        this.UpdateHandCardsLayoutWithAnimation();
     }
     
     /**
@@ -117,13 +130,61 @@ export class TS_CardMainUI implements TS_CardMainUI {
         // 设置卡牌数据
         this.SetupCardWidget(cardWidget, cardInfo);
         
-        // 添加到父容器（这里需要根据实际的UI结构调整）
-        // 假设有一个HandCardsContainer来容纳手牌
-        // this.HandCardsContainer.AddChild(cardWidget);
-        cardWidget.AddToViewport(0);
+        // 添加到手牌容器
+        if ((this as any).HandCardsContainer) {
+            const container = (this as any).HandCardsContainer;
+            container.AddChildToCanvas(cardWidget);
+        }
         
         // 记录映射关系（键为Widget，值为CardInfo）
         this.handCardWidgets.Add(cardWidget, cardInfo);
+        
+        // 启动出场动画
+        this.StartCardEntranceAnimation(cardWidget);
+    }
+    
+    /**
+     * 启动卡牌出场动画
+     */
+    private StartCardEntranceAnimation(cardWidget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+        if (!this.animationSystem) return;
+        
+        // 获取startHook（抽牌堆按钮）
+        const startHook = (this as any).Widget_CardListButton as UE.Widget;
+        if (!startHook) {
+            console.warn('未找到Widget_CardListButton，无法播放出场动画');
+            return;
+        }
+        
+        // 确保卡牌大小正确设置
+        const slot = cardWidget.Slot as UE.CanvasPanelSlot;
+        if (slot) {
+            slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
+            slot.SetSize(new UE.Vector2D(
+                GameConfig.CARD_CONFIG.CARD_WIDTH,
+                GameConfig.CARD_CONFIG.CARD_HEIGHT
+            ));
+            slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+        }
+        
+        // 计算目标位置
+        const targetPositions = this.CalculateCardTargetPositions();
+        const target = targetPositions.get(cardWidget);
+        
+        if (!target) {
+            console.warn('无法计算卡牌目标位置');
+            return;
+        }
+        
+        // 启动动画
+        this.animationSystem.StartCardAnimation(
+            cardWidget,
+            startHook,
+            target.pos,
+            target.rotation,
+            target.scale,
+            GameConfig.CARD_CONFIG.CARD_DRAW_DURATION
+        );
     }
     
     /**
@@ -159,14 +220,187 @@ export class TS_CardMainUI implements TS_CardMainUI {
     /**
      * 更新手牌布局
      */
+    private UpdateHandCardsLayoutWithAnimation(): void {
+        const handSize = this.handCards.Num();
+        if (handSize === 0) return;
+        
+        const container = (this as any).HandCardsContainer;
+        if (!container) return;
+        
+        // 计算所有卡牌的目标位置
+        const targetPositions = this.CalculateCardTargetPositions();
+        
+        // 更新正在动画的卡牌的目标位置
+        if (this.animationSystem) {
+            this.animationSystem.UpdateAllTargetPositions(targetPositions);
+        }
+        
+        // 对于不在动画中的卡牌，直接设置位置
+        this.UpdateCanvasLayoutDirect(targetPositions);
+    }
+    
+    /**
+     * 更新手牌布局（不带动画，直接设置）
+     */
     private UpdateHandCardsLayout(): void {
-        // 这里实现手牌的排列逻辑
-        // 可以根据手牌数量动态调整位置和间距
+        const handSize = this.handCards.Num();
+        if (handSize === 0) return;
+        
+        const container = (this as any).HandCardsContainer;
+        if (!container) return;
+        
+        this.UpdateCanvasLayout();
+    }
+    
+    /**
+     * 计算所有卡牌的目标位置
+     */
+    private CalculateCardTargetPositions(): Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+        pos: UE.Vector2D,
+        rotation: number,
+        scale: UE.Vector2D
+    }> {
+        const targetMap = new Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+            pos: UE.Vector2D,
+            rotation: number,
+            scale: UE.Vector2D
+        }>();
+        
         const handSize = this.handCards.Num();
         const spacing = GameConfig.CARD_CONFIG.CARD_SPACING;
+        const curveHeight = GameConfig.CARD_CONFIG.HAND_CURVE_HEIGHT;
+        const cardScale = GameConfig.CARD_CONFIG.CARD_SCALE;
         
-        // TODO: 实现具体的布局逻辑
-        // 例如：将卡牌排列成弧形，居中显示等
+        const totalWidth = (handSize - 1) * spacing;
+        const startX = -totalWidth / 2;
+        
+        let index = 0;
+        for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
+            if (!this.handCardWidgets.IsValidIndex(i)) continue;
+            
+            const widget = this.handCardWidgets.GetKey(i);
+            if (!widget) continue;
+            
+            // 计算 X 位置
+            const x = startX + index * spacing;
+            
+            // 计算 Y 位置（弧形效果）
+            const normalizedX = (index - (handSize - 1) / 2) / Math.max(handSize - 1, 1);
+            const y = -Math.abs(normalizedX) * curveHeight;
+            
+            // 计算旋转角度
+            const rotation = normalizedX * 5; // 最大旋转 5 度
+            
+            targetMap.set(widget, {
+                pos: new UE.Vector2D(x, y),
+                rotation: rotation,
+                scale: new UE.Vector2D(cardScale, cardScale)
+            });
+            
+            index++;
+        }
+        
+        return targetMap;
+    }
+    
+    /**
+     * 直接更新Canvas布局（对于不在动画中的卡牌，启动插值动画）
+     */
+    private UpdateCanvasLayoutDirect(
+        targetPositions: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+            pos: UE.Vector2D,
+            rotation: number,
+            scale: UE.Vector2D
+        }>
+    ): void {
+        const cardWidth = GameConfig.CARD_CONFIG.CARD_WIDTH;
+        const cardHeight = GameConfig.CARD_CONFIG.CARD_HEIGHT;
+        
+        for (const [widget, target] of targetPositions) {
+            // 确保卡牌大小正确设置
+            const slot = widget.Slot as UE.CanvasPanelSlot;
+            if (slot) {
+                slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
+                slot.SetSize(new UE.Vector2D(cardWidth, cardHeight));
+                slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+            }
+            
+            // 如果卡牌正在动画中，跳过（已经在UpdateAllTargetPositions中更新了目标）
+            if (this.animationSystem && this.animationSystem.IsAnimating(widget)) {
+                continue;
+            }
+            
+            // 对于不在动画的卡牌，启动插值动画到新位置
+            if (this.animationSystem) {
+                this.animationSystem.StartRepositionAnimation(
+                    widget,
+                    target.pos,
+                    target.rotation,
+                    target.scale,
+                    0.3 // 重新定位动画时长
+                );
+            }
+        }
+    }
+    
+    /**
+     * 更新 Canvas Panel 中的卡牌布局（弧形排列）
+     */
+    private UpdateCanvasLayout(): void {
+        const container = (this as any).HandCardsContainer as UE.CanvasPanel;
+        if (!container) return;
+        
+        const handSize = this.handCards.Num();
+        const spacing = GameConfig.CARD_CONFIG.CARD_SPACING;
+        const curveHeight = GameConfig.CARD_CONFIG.HAND_CURVE_HEIGHT;
+        const cardScale = GameConfig.CARD_CONFIG.CARD_SCALE;
+        const cardWidth = GameConfig.CARD_CONFIG.CARD_WIDTH;
+        const cardHeight = GameConfig.CARD_CONFIG.CARD_HEIGHT;
+        
+        // 计算总宽度和起始位置
+        const totalWidth = (handSize - 1) * spacing;
+        const startX = -totalWidth / 2;
+        
+        // 遍历所有手牌 Widget 并设置位置
+        let index = 0;
+        for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
+            if (!this.handCardWidgets.IsValidIndex(i)) continue;
+            
+            const widget = this.handCardWidgets.GetKey(i);
+            if (!widget) continue;
+            
+            // 计算 X 位置
+            const x = startX + index * spacing;
+            
+            // 计算 Y 位置（弧形效果）
+            const normalizedX = (index - (handSize - 1) / 2) / Math.max(handSize - 1, 1);
+            const y = -Math.abs(normalizedX) * curveHeight;
+            
+            // 计算旋转角度
+            const rotation = normalizedX * 5; // 最大旋转 5 度
+            
+            // 获取 Widget 的 Slot 并设置属性
+            const slot = widget.Slot as UE.CanvasPanelSlot;
+            if (slot) {
+                // 设置位置
+                slot.SetPosition(new UE.Vector2D(x, y));
+                
+                // 设置对齐方式（0.5, 0.5 表示中心对齐）
+                slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
+                
+                // **关键：设置卡牌大小**
+                slot.SetSize(new UE.Vector2D(cardWidth, cardHeight));
+                
+                // 设置锚点（可选，使用中心锚点）
+                slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+            }
+            
+            // 设置缩放和旋转
+            widget.SetRenderScale(new UE.Vector2D(cardScale, cardScale));
+            widget.SetRenderTransformAngle(rotation);
+            
+            index++;
+        }
     }
     
     /**

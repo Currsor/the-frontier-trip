@@ -16,6 +16,8 @@ require("./Systems/LootSystem");
 require("./UMG/Card/TS_Card");
 require("./UMG/Card/TS_CardListButton");
 require("./UMG/Card/TS_CardMainUI");
+require("./UMG/Card/TS_CardWidgetPool");
+require("./UMG/Card/TS_Panel_Card");
 require("./UMG/Card/TS_Panel_CardMainUI");
 require("./UMG/Debug/TS_Debug");
 console.log("CursorGame initialized");

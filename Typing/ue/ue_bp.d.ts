@@ -10781,7 +10781,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F34C8B3D42968A77DB4B8CBA540B48B1
+// __TYPE_DECL_START: ADA389594FD807A983CBE39062A73E78
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11030,7 +11030,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F0DE29724A374FA5470B22B0A40D7B16
+// __TYPE_DECL_START: DA2E80984558E210E230159D7F1EA205
     namespace Game.UI.Blueprints.Cards.Panel_CardMainUI {
         class Panel_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11113,10 +11113,11 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: B8B05B5147AF8E484DFD84B6B012EAF6
+// __TYPE_DECL_START: 4BA4EB3A43380F12456B18A08E2F79A2
     namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
         class Widget_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            HandCardsContainer: UE.CanvasPanel;
             Widget_CardListButton: UE.Game.UI.Blueprints.Cards.Widget_CardListButton.Widget_CardListButton_C;
             Widget_CardListButton_0: UE.Game.UI.Blueprints.Cards.Widget_CardListButton.Widget_CardListButton_C;
             Widget_EndTurn: UE.Game.UI.Blueprints.Common.Widget_Common_Button.Widget_Common_Button_C;

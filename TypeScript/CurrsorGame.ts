@@ -14,9 +14,9 @@ import "./Systems/LootSystem";
 import "./UMG/Card/TS_Card";
 import "./UMG/Card/TS_CardListButton";
 import "./UMG/Card/TS_CardMainUI";
+import "./UMG/Card/TS_CardWidgetPool";
+import "./UMG/Card/TS_Panel_Card";
 import "./UMG/Card/TS_Panel_CardMainUI";
 import "./UMG/Debug/TS_Debug";
-
-
 
 console.log("CursorGame initialized");
