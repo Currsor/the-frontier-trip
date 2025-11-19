@@ -69,6 +69,11 @@ class CardAnimationSystem {
                 animData.targetPos = newTarget.pos;
                 animData.targetRotation = newTarget.rotation;
                 animData.targetScale = newTarget.scale;
+                // 立即设置层级（不需要插值）
+                const slot = widget.Slot;
+                if (slot) {
+                    slot.SetZOrder(newTarget.zOrder);
+                }
             }
         }
     }
@@ -181,8 +186,13 @@ class CardAnimationSystem {
      * 动画完成回调
      */
     OnAnimationComplete(widget) {
-        // 可以在这里添加完成回调
-        console.log('卡牌动画完成');
+        // 清理已结束的悬浮状态
+        const hoverState = this.hoverStates.get(widget);
+        if (hoverState && !hoverState.isHovered) {
+            // 如果悬浮状态已标记为非悬浮，且动画已完成，则清理状态
+            this.hoverStates.delete(widget);
+        }
+        // console.log('卡牌动画完成');
     }
     /**
      * 清理已完成的动画
@@ -258,25 +268,39 @@ class CardAnimationSystem {
      */
     StartHoverAnimation(widget) {
         // 检查是否已经悬浮
-        const hoverState = this.hoverStates.get(widget);
-        if (hoverState && hoverState.isHovered)
+        const existingHoverState = this.hoverStates.get(widget);
+        if (existingHoverState && existingHoverState.isHovered)
             return;
         // 保存原始状态
         const slot = widget.Slot;
         if (!slot)
             return;
-        const originalPos = slot.GetPosition();
-        const originalRotation = widget.GetRenderTransformAngle();
-        // 获取当前缩放：如果卡牌正在动画中，使用动画目标缩放；否则使用默认缩放
+        let originalPos;
+        let originalRotation;
         let originalScale;
-        const animData = this.animatingCards.get(widget);
-        if (animData && animData.isAnimating) {
-            originalScale = animData.targetScale;
+        let originalZOrder;
+        // 如果之前有悬浮状态（正在恢复动画中），复用之前保存的原始位置
+        // 这样可以避免快速划过时位置累积
+        if (existingHoverState) {
+            originalPos = existingHoverState.originalPosition;
+            originalRotation = existingHoverState.originalRotation;
+            originalScale = existingHoverState.originalScale;
+            originalZOrder = existingHoverState.originalZOrder;
         }
         else {
-            originalScale = new UE.Vector2D(1.0, 1.0);
+            // 首次悬浮，保存当前状态
+            originalPos = slot.GetPosition();
+            originalRotation = widget.GetRenderTransformAngle();
+            originalZOrder = slot.GetZOrder();
+            // 获取当前缩放：如果卡牌正在动画中，使用动画目标缩放；否则使用默认缩放
+            const animData = this.animatingCards.get(widget);
+            if (animData && animData.isAnimating) {
+                originalScale = animData.targetScale;
+            }
+            else {
+                originalScale = new UE.Vector2D(1.0, 1.0);
+            }
         }
-        const originalZOrder = slot.GetZOrder();
         // 保存悬浮状态
         this.hoverStates.set(widget, {
             widget: widget,
@@ -304,7 +328,7 @@ class CardAnimationSystem {
         const hoverState = this.hoverStates.get(widget);
         if (!hoverState || !hoverState.isHovered)
             return;
-        // 标记为非悬浮
+        // 标记为非悬浮（但保留状态，以便快速重新悬浮时使用）
         hoverState.isHovered = false;
         // 恢复原始层级
         const slot = widget.Slot;
@@ -313,8 +337,8 @@ class CardAnimationSystem {
         }
         // 启动恢复动画
         this.StartRepositionAnimation(widget, hoverState.originalPosition, hoverState.originalRotation, hoverState.originalScale, this.HOVER_DURATION);
-        // 清理悬浮状态
-        this.hoverStates.delete(widget);
+        // 注意：不立即删除悬浮状态，保留它以便快速重新悬浮时使用
+        // 状态会在一段时间后自动清理，或在下次布局更新时清理
     }
     /**
      * 检查卡牌是否处于悬浮状态

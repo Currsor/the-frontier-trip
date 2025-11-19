@@ -106,7 +106,8 @@ export class CardAnimationSystem {
         newTargets: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
             pos: UE.Vector2D,
             rotation: number,
-            scale: UE.Vector2D
+            scale: UE.Vector2D,
+            zOrder: number
         }>
     ): void {
         for (const [widget, animData] of this.animatingCards) {
@@ -116,6 +117,12 @@ export class CardAnimationSystem {
                 animData.targetPos = newTarget.pos;
                 animData.targetRotation = newTarget.rotation;
                 animData.targetScale = newTarget.scale;
+                
+                // 立即设置层级（不需要插值）
+                const slot = widget.Slot as UE.CanvasPanelSlot;
+                if (slot) {
+                    slot.SetZOrder(newTarget.zOrder);
+                }
             }
         }
     }
@@ -252,8 +259,14 @@ export class CardAnimationSystem {
      * 动画完成回调
      */
     private OnAnimationComplete(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
-        // 可以在这里添加完成回调
-        console.log('卡牌动画完成');
+        // 清理已结束的悬浮状态
+        const hoverState = this.hoverStates.get(widget);
+        if (hoverState && !hoverState.isHovered) {
+            // 如果悬浮状态已标记为非悬浮，且动画已完成，则清理状态
+            this.hoverStates.delete(widget);
+        }
+        
+        // console.log('卡牌动画完成');
     }
     
     /**
@@ -343,26 +356,39 @@ export class CardAnimationSystem {
      */
     public StartHoverAnimation(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
         // 检查是否已经悬浮
-        const hoverState = this.hoverStates.get(widget);
-        if (hoverState && hoverState.isHovered) return;
+        const existingHoverState = this.hoverStates.get(widget);
+        if (existingHoverState && existingHoverState.isHovered) return;
         
         // 保存原始状态
         const slot = widget.Slot as UE.CanvasPanelSlot;
         if (!slot) return;
         
-        const originalPos = slot.GetPosition();
-        const originalRotation = widget.GetRenderTransformAngle();
-        
-        // 获取当前缩放：如果卡牌正在动画中，使用动画目标缩放；否则使用默认缩放
+        let originalPos: UE.Vector2D;
+        let originalRotation: number;
         let originalScale: UE.Vector2D;
-        const animData = this.animatingCards.get(widget);
-        if (animData && animData.isAnimating) {
-            originalScale = animData.targetScale;
-        } else {
-            originalScale = new UE.Vector2D(1.0, 1.0);
-        }
+        let originalZOrder: number;
         
-        const originalZOrder = slot.GetZOrder();
+        // 如果之前有悬浮状态（正在恢复动画中），复用之前保存的原始位置
+        // 这样可以避免快速划过时位置累积
+        if (existingHoverState) {
+            originalPos = existingHoverState.originalPosition;
+            originalRotation = existingHoverState.originalRotation;
+            originalScale = existingHoverState.originalScale;
+            originalZOrder = existingHoverState.originalZOrder;
+        } else {
+            // 首次悬浮，保存当前状态
+            originalPos = slot.GetPosition();
+            originalRotation = widget.GetRenderTransformAngle();
+            originalZOrder = slot.GetZOrder();
+            
+            // 获取当前缩放：如果卡牌正在动画中，使用动画目标缩放；否则使用默认缩放
+            const animData = this.animatingCards.get(widget);
+            if (animData && animData.isAnimating) {
+                originalScale = animData.targetScale;
+            } else {
+                originalScale = new UE.Vector2D(1.0, 1.0);
+            }
+        }
         
         // 保存悬浮状态
         this.hoverStates.set(widget, {
@@ -404,7 +430,7 @@ export class CardAnimationSystem {
         const hoverState = this.hoverStates.get(widget);
         if (!hoverState || !hoverState.isHovered) return;
         
-        // 标记为非悬浮
+        // 标记为非悬浮（但保留状态，以便快速重新悬浮时使用）
         hoverState.isHovered = false;
         
         // 恢复原始层级
@@ -422,8 +448,8 @@ export class CardAnimationSystem {
             this.HOVER_DURATION
         );
         
-        // 清理悬浮状态
-        this.hoverStates.delete(widget);
+        // 注意：不立即删除悬浮状态，保留它以便快速重新悬浮时使用
+        // 状态会在一段时间后自动清理，或在下次布局更新时清理
     }
     
     /**

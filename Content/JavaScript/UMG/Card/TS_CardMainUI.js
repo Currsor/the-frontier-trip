@@ -113,8 +113,8 @@ class TS_CardMainUI {
             console.warn('无法计算卡牌目标位置');
             return;
         }
-        // 启动出场动画，使用计算好的目标位置
-        this.StartCardEntranceAnimation(cardWidget, target.pos, target.rotation, target.scale);
+        // 启动出场动画，使用计算好的目标位置和层级
+        this.StartCardEntranceAnimation(cardWidget, target.pos, target.rotation, target.scale, target.zOrder);
     }
     /**
      * 启动卡牌出场动画
@@ -122,8 +122,9 @@ class TS_CardMainUI {
      * @param targetPos 目标位置
      * @param targetRotation 目标旋转
      * @param targetScale 目标缩放
+     * @param targetZOrder 目标层级
      */
-    StartCardEntranceAnimation(cardWidget, targetPos, targetRotation, targetScale) {
+    StartCardEntranceAnimation(cardWidget, targetPos, targetRotation, targetScale, targetZOrder) {
         if (!this.animationSystem)
             return;
         // 获取startHook（抽牌堆起始位置）
@@ -132,12 +133,14 @@ class TS_CardMainUI {
             console.warn('未找到bp_StartHook，无法播放出场动画');
             return;
         }
-        // 确保卡牌大小正确设置
+        // 确保卡牌大小和层级正确设置
         const slot = cardWidget.Slot;
         if (slot) {
             slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
             slot.SetSize(new UE.Vector2D(GameConfig_1.GameConfig.CARD_CONFIG.CARD_WIDTH, GameConfig_1.GameConfig.CARD_CONFIG.CARD_HEIGHT));
             slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+            // 设置目标层级
+            slot.SetZOrder(targetZOrder);
         }
         // 启动动画
         this.animationSystem.StartCardAnimation(cardWidget, startHook, targetPos, targetRotation, targetScale, GameConfig_1.GameConfig.CARD_CONFIG.CARD_DRAW_DURATION);
@@ -224,10 +227,13 @@ class TS_CardMainUI {
             const y = -Math.abs(normalizedX) * curveHeight;
             // 计算旋转角度
             const rotation = normalizedX * 5; // 最大旋转 5 度
+            // 计算层级：左边的卡牌层级低，右边的卡牌层级高
+            const zOrder = index;
             targetMap.set(widget, {
                 pos: new UE.Vector2D(x, y),
                 rotation: rotation,
-                scale: new UE.Vector2D(cardScale, cardScale)
+                scale: new UE.Vector2D(cardScale, cardScale),
+                zOrder: zOrder
             });
             index++;
         }
@@ -240,12 +246,14 @@ class TS_CardMainUI {
         const cardWidth = GameConfig_1.GameConfig.CARD_CONFIG.CARD_WIDTH;
         const cardHeight = GameConfig_1.GameConfig.CARD_CONFIG.CARD_HEIGHT;
         for (const [widget, target] of targetPositions) {
-            // 确保卡牌大小正确设置
+            // 确保卡牌大小和层级正确设置
             const slot = widget.Slot;
             if (slot) {
                 slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
                 slot.SetSize(new UE.Vector2D(cardWidth, cardHeight));
                 slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+                // 设置层级：左边卡牌层级低，右边卡牌层级高
+                slot.SetZOrder(target.zOrder);
             }
             // 如果卡牌正在动画中，跳过（已经在UpdateAllTargetPositions中更新了目标）
             if (this.animationSystem && this.animationSystem.IsAnimating(widget)) {

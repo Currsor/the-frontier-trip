@@ -148,8 +148,8 @@ export class TS_CardMainUI implements TS_CardMainUI {
             return;
         }
         
-        // 启动出场动画，使用计算好的目标位置
-        this.StartCardEntranceAnimation(cardWidget, target.pos, target.rotation, target.scale);
+        // 启动出场动画，使用计算好的目标位置和层级
+        this.StartCardEntranceAnimation(cardWidget, target.pos, target.rotation, target.scale, target.zOrder);
     }
     
     /**
@@ -158,12 +158,14 @@ export class TS_CardMainUI implements TS_CardMainUI {
      * @param targetPos 目标位置
      * @param targetRotation 目标旋转
      * @param targetScale 目标缩放
+     * @param targetZOrder 目标层级
      */
     private StartCardEntranceAnimation(
         cardWidget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
         targetPos: UE.Vector2D,
         targetRotation: number,
-        targetScale: UE.Vector2D
+        targetScale: UE.Vector2D,
+        targetZOrder: number
     ): void {
         if (!this.animationSystem) return;
         
@@ -174,16 +176,15 @@ export class TS_CardMainUI implements TS_CardMainUI {
             return;
         }
         
-        // 确保卡牌大小正确设置
+        // 确保卡牌大小和层级正确设置
         const slot = cardWidget.Slot as UE.CanvasPanelSlot;
         if (slot) {
             slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
-            slot.SetSize(new UE.Vector2D(
-                GameConfig.CARD_CONFIG.CARD_WIDTH,
-                GameConfig.CARD_CONFIG.CARD_HEIGHT
-            ));
+            slot.SetSize(new UE.Vector2D(GameConfig.CARD_CONFIG.CARD_WIDTH, GameConfig.CARD_CONFIG.CARD_HEIGHT));
             slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
-        }
+            // 设置目标层级
+            slot.SetZOrder(targetZOrder);
+        }        
         
         // 启动动画
         this.animationSystem.StartCardAnimation(
@@ -272,12 +273,14 @@ export class TS_CardMainUI implements TS_CardMainUI {
     private CalculateCardTargetPositions(): Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
         pos: UE.Vector2D,
         rotation: number,
-        scale: UE.Vector2D
+        scale: UE.Vector2D,
+        zOrder: number
     }> {
         const targetMap = new Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
             pos: UE.Vector2D,
             rotation: number,
-            scale: UE.Vector2D
+            scale: UE.Vector2D,
+            zOrder: number
         }>();
         
         const handSize = this.handCards.Num();
@@ -305,10 +308,14 @@ export class TS_CardMainUI implements TS_CardMainUI {
             // 计算旋转角度
             const rotation = normalizedX * 5; // 最大旋转 5 度
             
+            // 计算层级：左边的卡牌层级低，右边的卡牌层级高
+            const zOrder = index;
+            
             targetMap.set(widget, {
                 pos: new UE.Vector2D(x, y),
                 rotation: rotation,
-                scale: new UE.Vector2D(cardScale, cardScale)
+                scale: new UE.Vector2D(cardScale, cardScale),
+                zOrder: zOrder
             });
             
             index++;
@@ -324,19 +331,22 @@ export class TS_CardMainUI implements TS_CardMainUI {
         targetPositions: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
             pos: UE.Vector2D,
             rotation: number,
-            scale: UE.Vector2D
+            scale: UE.Vector2D,
+            zOrder: number
         }>
     ): void {
         const cardWidth = GameConfig.CARD_CONFIG.CARD_WIDTH;
         const cardHeight = GameConfig.CARD_CONFIG.CARD_HEIGHT;
         
         for (const [widget, target] of targetPositions) {
-            // 确保卡牌大小正确设置
+            // 确保卡牌大小和层级正确设置
             const slot = widget.Slot as UE.CanvasPanelSlot;
             if (slot) {
                 slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
                 slot.SetSize(new UE.Vector2D(cardWidth, cardHeight));
                 slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+                // 设置层级：左边卡牌层级低，右边卡牌层级高
+                slot.SetZOrder(target.zOrder);
             }
             
             // 如果卡牌正在动画中，跳过（已经在UpdateAllTargetPositions中更新了目标）
