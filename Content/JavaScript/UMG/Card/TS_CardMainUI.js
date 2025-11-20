@@ -13,8 +13,10 @@ class TS_CardMainUI {
     static PlayerState;
     // Widget Pool管理器
     widgetPool = null;
-    // 卡牌动画系统
+    // 卡牌动画系统（从管理器获取）
     animationSystem = null;
+    // UI唯一标识符
+    UI_ID = 'CardMainUI';
     Construct() {
         TS_CardMainUI.pawn = this.GetOwningPlayerPawn();
         TS_CardMainUI.PlayerState = TS_CardMainUI.pawn.PlayerState;
@@ -25,16 +27,15 @@ class TS_CardMainUI {
             console.error('TS_CardMainUI: Widget Pool初始化失败');
             return;
         }
-        // 初始化动画系统
-        this.animationSystem = new TS_CardAnimationSystem_1.CardAnimationSystem(this);
+        // 从管理器获取或创建动画系统（持久化）
+        this.animationSystem = TS_CardAnimationSystem_1.CardAnimationManager.getInstance().getOrCreateAnimationSystem(this.UI_ID, this);
         this.InitCard();
     }
     Destruct() {
-        // 清理动画系统
-        if (this.animationSystem) {
-            this.animationSystem.Cleanup();
-            this.animationSystem = null;
-        }
+        // 注意：不清理动画系统，保持持久化
+        // 只清除引用，动画系统由CardAnimationManager管理
+        this.animationSystem = null;
+        console.log('[TS_CardMainUI] 动画系统引用已清除（系统保持持久化）');
         // 清理Widget Pool
         if (this.widgetPool) {
             this.widgetPool.Clear();
@@ -55,8 +56,12 @@ class TS_CardMainUI {
     // 抽取手牌
     AddCard(numCards = 1) {
         if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
-            console.error('AddCard: Widget Pool未初始化');
-            return;
+            console.warn('AddCard: Widget Pool未初始化，尝试创建...');
+            this.widgetPool = new TS_CardWidgetPool_1.CardWidgetPool(this);
+            if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
+                console.error('AddCard: Widget Pool创建失败');
+                return;
+            }
         }
         if (this.drawPile.Num() === 0)
             return;
@@ -88,8 +93,12 @@ class TS_CardMainUI {
      */
     CreateHandCardWidget(cardInfo) {
         if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
-            console.error('CreateHandCardWidget: Widget Pool未初始化');
-            return;
+            console.warn('CreateHandCardWidget: Widget Pool未初始化，尝试创建...');
+            this.widgetPool = new TS_CardWidgetPool_1.CardWidgetPool(this);
+            if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
+                console.error('CreateHandCardWidget: Widget Pool创建失败');
+                return;
+            }
         }
         // 从对象池获取Widget
         const cardWidget = this.widgetPool.Acquire();
@@ -153,23 +162,7 @@ class TS_CardMainUI {
         if (this.animationSystem) {
             widget.animationSystem = this.animationSystem;
         }
-        // 设置卡牌名称
-        if (widget.bp_CardName) {
-            widget.bp_CardName.SetText(cardInfo.Name);
-        }
-        // 设置法力消耗
-        if (widget.bp_ManaCost) {
-            widget.bp_ManaCost.SetText(cardInfo.Consumption.toString());
-        }
-        // 设置描述
-        if (widget.bp_Description) {
-            widget.bp_Description.SetText(cardInfo.Description);
-        }
-        // 设置类型
-        if (widget.bp_Type) {
-            widget.bp_Type.SetText(cardInfo.Type);
-        }
-        // 可以在这里设置更多的卡牌数据，如图片、稀有度等
+        widget.SetData(cardInfo);
     }
     /**
      * 更新手牌布局
@@ -384,8 +377,12 @@ class TS_CardMainUI {
      */
     RemoveHandCardWidget(cardInfo) {
         if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
-            console.warn('RemoveHandCardWidget: Widget Pool未初始化');
-            return;
+            console.warn('RemoveHandCardWidget: Widget Pool未初始化，尝试创建...');
+            this.widgetPool = new TS_CardWidgetPool_1.CardWidgetPool(this);
+            if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
+                console.error('RemoveHandCardWidget: Widget Pool创建失败');
+                return;
+            }
         }
         // 通过CardInfo查找对应的Widget
         const widget = this.FindWidgetByCardInfo(cardInfo);

@@ -8,7 +8,7 @@
 class ACurrsorCharacter;
 class ACurrsorPlayerController;
 
-UCLASS()
+UCLASS(BlueprintType)
 class CURRSOR_API ACurrsorPlayerState : public ABaseState
 {
     GENERATED_BODY()

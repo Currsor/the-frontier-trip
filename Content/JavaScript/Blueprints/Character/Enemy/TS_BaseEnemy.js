@@ -1,100 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TS_CurrsorCharacter = void 0;
+exports.TS_BaseEnemy = void 0;
 const UE = require("ue");
 const puerts_1 = require("puerts");
-const GameSystemManager_1 = require("../../../GameSystemManager");
 const EventSystem_1 = require("../../../Systems/EventSystem");
-const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorCharacter.BP_CurrsorCharacter_C");
+const uclass = UE.Class.Load("/Game/Blueprints/Character/Enemy/Base/BP_BaseEnemy.BP_BaseEnemy_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
-class TS_CurrsorCharacter {
-    attackSystem;
+class TS_BaseEnemy extends jsClass {
     hpBarWidget = null;
     currentHPPercent = 1.0; // 当前血量百分比
     ReceiveBeginPlay() {
-        // 初始化游戏系统
-        this.initializeGameSystems();
-        // 订阅防御广播
-        this.subscribeToDefenseEvent();
         // 初始化血条UI
         this.initializeHealthBar();
-    }
-    initializeGameSystems() {
-        try {
-            // 确保游戏系统管理器已初始化
-            if (!GameSystemManager_1.gameSystemManager.isSystemInitialized("AttackSystem")) {
-                GameSystemManager_1.gameSystemManager.initialize();
-            }
-            this.attackSystem = GameSystemManager_1.gameSystemManager.getSystem("AttackSystem");
-        }
-        catch (error) {
-            console.error("[TS Character] 游戏系统初始化失败：", error);
-        }
-    }
-    BndEvt__BP_CurrsorCharacter_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult) {
-        console.log(`[TS Character] 攻击判定框重叠 ${OtherActor.GetName()}`);
-        // 直接转发到 C++ 攻击系统处理
-        if (this.attackSystem) {
-            this.attackSystem.processAttackHit(this, OtherActor, SweepResult);
-        }
-        else {
-            console.error("[TS Character] 攻击系统不可用");
-        }
-    }
-    // 订阅防御事件
-    subscribeToDefenseEvent() {
-        EventSystem_1.EventSystem.subscribe("onCardDefense", this.onDefenseTriggered.bind(this));
-        console.log("[TS Character] 已订阅防御广播事件");
-        console.log(`[TS Character] 订阅后监听器数量: ${EventSystem_1.EventSystem.getListenerCount("onCardDefense")}`);
-    }
-    // 处理防御事件
-    onDefenseTriggered(data) {
-        console.log("[TS Character] ========== 收到防御广播 ==========");
-        if (!data || !data.cardInfo) {
-            console.error("[TS Character] 防御事件数据无效");
-            return;
-        }
-        const cardInfo = data.cardInfo;
-        console.log(`[TS Character] 防御卡牌名称: ${cardInfo.Name}`);
-        console.log(`[TS Character] 防御卡牌描述: ${cardInfo.Description}`);
-        // 从卡牌描述中解析防御值
-        // 假设描述格式为 "获得X点护盾" 或 "Gain X Defense"
-        const defenseValue = this.parseDefenseValue(cardInfo.Description);
-        if (defenseValue > 0) {
-            // 获取当前防御值
-            const currentDefense = this.HealthComponent ? this.HealthComponent.GetDefense() : 0;
-            const newDefense = currentDefense + defenseValue;
-            console.log(`[TS Character] 当前护盾: ${currentDefense}, 增加: ${defenseValue}, 新护盾: ${newDefense}`);
-            // 更新防御值
-            this.UpdateDefense(newDefense);
-        }
-        else {
-            console.warn(`[TS Character] 无法从卡牌描述中解析防御值: ${cardInfo.Description}`);
-        }
-    }
-    /**
-     * 从卡牌描述中解析防御值
-     * @param description 卡牌描述文本
-     * @returns 解析出的防御值，如果解析失败返回0
-     */
-    parseDefenseValue(description) {
-        if (!description) {
-            return 0;
-        }
-        // 匹配XML标签格式：<Defense>5</> 或 <Defense>5</Defense>
-        const xmlMatch = description.match(/<Defense>(\d+)<\/?(?:Defense)?>/i);
-        if (xmlMatch && xmlMatch[1]) {
-            const value = parseInt(xmlMatch[1], 10);
-            console.log(`[TS Character] 从XML标签中提取到防御值: ${value}`);
-            return value;
-        }
-        return 0;
-    }
-    // 获取卡牌数据
-    GetDataFromName(RowName) {
-        let cardInfo = {};
-        cardInfo = this.BP_GetDataFromName(RowName);
-        return cardInfo;
+        // 订阅攻击广播
+        this.subscribeToAttackEvent();
     }
     /**
      * 初始化血条UI
@@ -103,33 +22,32 @@ class TS_CurrsorCharacter {
         try {
             // 检查bp_HPBar组件是否存在
             if (!this.bp_HPBar) {
-                console.error("[TS Character] bp_HPBar 组件不存在！");
+                console.error("[TS Enemy] bp_HPBar 组件不存在！");
                 return;
             }
             // 从WidgetComponent获取Widget实例
             const widget = this.bp_HPBar.GetWidget();
             if (!widget) {
-                console.error("[TS Character] 无法从 bp_HPBar 获取 Widget 实例！");
+                console.error("[TS Enemy] 无法从 bp_HPBar 获取 Widget 实例！");
                 return;
             }
-            console.log(`[TS Character] Widget 类型：${widget.GetClass().GetName()}`);
-            console.log(`[TS Character] Widget 可用方法：`, Object.getOwnPropertyNames(widget));
+            console.log(`[TS Enemy] Widget 类型：${widget.GetClass().GetName()}`);
             // 获取HealthComponent
             const healthComp = this.HealthComponent;
             if (!healthComp) {
-                console.error("[TS Character] HealthComponent 不存在！");
+                console.error("[TS Enemy] HealthComponent 不存在！");
                 return;
             }
             // 获取初始数据
             const currentHP = healthComp.GetCurrentHealth();
             const maxHP = healthComp.GetMaxHealth();
             const defense = healthComp.GetDefense();
-            console.log(`[TS Character] 血量数据 - HP: ${currentHP}/${maxHP}, Defense: ${defense}`);
+            console.log(`[TS Enemy] 血量数据 - HP: ${currentHP}/${maxHP}, Defense: ${defense}`);
             // 直接设置防御力文本和血量进度条
             const widgetInstance = widget;
             if (widgetInstance.bp_DefenseNum) {
                 widgetInstance.bp_DefenseNum.SetText(defense.toString());
-                console.log(`[TS Character] 防御力文本已设置：${defense}`);
+                console.log(`[TS Enemy] 防御力文本已设置：${defense}`);
             }
             // 设置初始血量（立即设置，不播放动画）
             const hpPercent = maxHP > 0 ? currentHP / maxHP : 0;
@@ -143,24 +61,24 @@ class TS_CurrsorCharacter {
             if (widgetInstance.bp_progHPBack) {
                 widgetInstance.bp_progHPBack.SetPercent(hpPercent);
             }
-            console.log(`[TS Character] 血量进度条已设置：${hpPercent * 100}%`);
+            console.log(`[TS Enemy] 血量进度条已设置：${hpPercent * 100}%`);
             // 订阅HealthComponent的OnHealthChanged委托
             healthComp.OnHealthChanged.Add((currentHealth, maxHealth, damageAmount) => {
                 this.onHealthChanged(currentHealth, maxHealth, damageAmount);
             });
             // 保存widget引用用于后续更新
             this.hpBarWidget = widget;
-            console.log(`[TS Character] 血条UI初始化成功！`);
+            console.log(`[TS Enemy] 血条UI初始化成功！`);
         }
         catch (error) {
-            console.error("[TS Character] 血条初始化失败：", error);
+            console.error("[TS Enemy] 血条初始化失败：", error);
         }
     }
     /**
      * 当血量变化时触发
      */
     onHealthChanged(currentHealth, maxHealth, damageAmount) {
-        console.log(`[TS Character] 血量变化 - 当前: ${currentHealth}/${maxHealth}, 伤害: ${damageAmount}`);
+        console.log(`[TS Enemy] 血量变化 - 当前: ${currentHealth}/${maxHealth}, 伤害: ${damageAmount}`);
         if (!this.HealthComponent || !this.hpBarWidget) {
             return;
         }
@@ -173,13 +91,14 @@ class TS_CurrsorCharacter {
         }
         // 更新血量进度条（带动画）
         this.updateHealthBarWithAnimation(widgetInstance, hpPercent, damageAmount);
-        console.log(`[TS Character] UI已更新 - HP: ${hpPercent * 100}%, Defense: ${defense}`);
+        console.log(`[TS Enemy] UI已更新 - HP: ${hpPercent * 100}%, Defense: ${defense}`);
     }
     /**
      * 更新防御力（当防御力变化时调用）
      */
     UpdateDefense(newDefense) {
         if (!this.HealthComponent) {
+            console.warn("[TS Enemy] HealthComponent 不存在，无法更新防御力");
             return;
         }
         this.HealthComponent.SetDefense(newDefense);
@@ -190,7 +109,66 @@ class TS_CurrsorCharacter {
                 widgetInstance.bp_DefenseNum.SetText(newDefense.toString());
             }
         }
-        console.log(`[TS Character] 防御力更新为: ${newDefense}`);
+        console.log(`[TS Enemy] 防御力更新为: ${newDefense}`);
+    }
+    /**
+     * 订阅攻击事件
+     */
+    subscribeToAttackEvent() {
+        EventSystem_1.EventSystem.subscribe("onCardAttack", this.onAttackTriggered.bind(this));
+        console.log("[TS Enemy] 已订阅攻击广播事件");
+        console.log(`[TS Enemy] 订阅后监听器数量: ${EventSystem_1.EventSystem.getListenerCount("onCardAttack")}`);
+    }
+    /**
+     * 处理攻击事件
+     */
+    onAttackTriggered(data) {
+        console.log("[TS Enemy] ========== 收到攻击广播 ==========");
+        if (!data || !data.cardInfo) {
+            console.error("[TS Enemy] 攻击事件数据无效");
+            return;
+        }
+        const cardInfo = data.cardInfo;
+        console.log(`[TS Enemy] 攻击卡牌名称: ${cardInfo.Name}`);
+        console.log(`[TS Enemy] 攻击卡牌描述: ${cardInfo.Description}`);
+        // 从卡牌描述中解析伤害值
+        const damageValue = this.parseDamageValue(cardInfo.Description);
+        if (damageValue > 0) {
+            console.log(`[TS Enemy] 解析到伤害值: ${damageValue}`);
+            // 对敌人造成伤害
+            this.TakeDamage(damageValue);
+        }
+        else {
+            console.warn(`[TS Enemy] 无法从卡牌描述中解析伤害值: ${cardInfo.Description}`);
+        }
+    }
+    /**
+     * 从卡牌描述中解析伤害值
+     * @param description 卡牌描述文本
+     * @returns 解析出的伤害值，如果解析失败返回0
+     */
+    parseDamageValue(description) {
+        if (!description) {
+            return 0;
+        }
+        // 匹配XML标签格式：<Damage>5</> 或 <Damage>5</Damage>
+        const xmlMatch = description.match(/<Damage>(\d+)<\/?(?:Damage)?>/i);
+        if (xmlMatch && xmlMatch[1]) {
+            const value = parseInt(xmlMatch[1], 10);
+            console.log(`[TS Enemy] 从XML标签中提取到伤害值: ${value}`);
+            return value;
+        }
+        return 0;
+    }
+    /**
+     * 受到伤害时调用（可选，用于外部调用）
+     */
+    TakeDamage(damageAmount, damageInstigator) {
+        if (!this.HealthComponent) {
+            return;
+        }
+        this.HealthComponent.TakeDamage(damageAmount, damageInstigator);
+        console.log(`[TS Enemy] 受到伤害: ${damageAmount}`);
     }
     /**
      * 更新血量进度条（带动画效果）
@@ -266,6 +244,6 @@ class TS_CurrsorCharacter {
         return 1 - Math.pow(1 - t, 3);
     }
 }
-exports.TS_CurrsorCharacter = TS_CurrsorCharacter;
-puerts_1.blueprint.mixin(jsClass, TS_CurrsorCharacter);
-//# sourceMappingURL=TS_CurrsorCharacter.js.map
+exports.TS_BaseEnemy = TS_BaseEnemy;
+puerts_1.blueprint.mixin(jsClass, TS_BaseEnemy);
+//# sourceMappingURL=TS_BaseEnemy.js.map

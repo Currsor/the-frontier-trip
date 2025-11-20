@@ -33,6 +33,16 @@ public:
     UFUNCTION(BlueprintPure, Category = "|Health")
     bool IsDead() const { return CurrentHealth <= 0.0f; }
 
+    // 防御值管理（护盾机制：受到伤害时优先扣除防御值）
+    UFUNCTION(BlueprintCallable, Category = "|Health")
+    void SetDefense(float NewDefense);
+
+    UFUNCTION(BlueprintPure, Category = "|Health")
+    float GetDefense() const { return Defense; }
+
+    UFUNCTION(BlueprintPure, Category = "|Health")
+    float CalculateDamageReduction(float IncomingDamage) const;
+
     UFUNCTION(BlueprintPure, Category = "|Health")
     bool IsFullHealth() const { return CurrentHealth >= MaxHealth; }
 
@@ -61,6 +71,9 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "|Health")
     float CurrentHealth;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "|Health", meta = (ClampMin = "0.0"))
+    float Defense = 0.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "|Health")
     bool bCanTakeDamage = true;

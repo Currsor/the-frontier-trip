@@ -1,13 +1,14 @@
 import * as UE from 'ue';
 import { GameConfig } from '../../Config/GameConfig';
+import { TS_Card } from './TS_Card';
 
 /**
  * 卡牌Widget对象池
  * 用于管理卡牌Widget的创建、回收和复用，提高性能
  */
 export class CardWidgetPool {
-    private pool: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C[] = [];
-    private activeWidgets: Set<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C> = new Set();
+    private pool: TS_Card[] = [];
+    private activeWidgets: Set<TS_Card> = new Set();
     private widgetClass: UE.Class | null = null;
     private owningWidget: UE.UserWidget;
     private isInitialized: boolean = false;
@@ -57,7 +58,7 @@ export class CardWidgetPool {
     /**
      * 创建新的Widget实例
      */
-    private CreateNewWidget(): UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C | null {
+    private CreateNewWidget(): TS_Card | null {
         if (!this.widgetClass) {
             console.error('CardWidgetPool: Widget类未加载');
             return null;
@@ -68,7 +69,7 @@ export class CardWidgetPool {
                 this.owningWidget,
                 this.widgetClass,
                 this.owningWidget.GetOwningPlayer()
-            ) as UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C;
+            ) as TS_Card;
             
             return widget || null;
         } catch (error) {
@@ -81,7 +82,7 @@ export class CardWidgetPool {
      * 从对象池获取一个Widget
      * @returns 卡牌Widget实例
      */
-    public Acquire(): UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C | null {
+    public Acquire(): TS_Card | null {
         if (!this.isInitialized) {
             console.warn('CardWidgetPool: 对象池未初始化，尝试重新初始化');
             this.Initialize();
@@ -91,7 +92,7 @@ export class CardWidgetPool {
             }
         }
         
-        let widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C | null = null;
+        let widget: TS_Card | null = null;
 
         // 从池中获取
         if (this.pool.length > 0) {
@@ -114,7 +115,7 @@ export class CardWidgetPool {
      * 将Widget归还到对象池
      * @param widget 要归还的Widget
      */
-    public Release(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    public Release(widget: TS_Card): void {
         if (!widget) return;
 
         // 从激活列表中移除
@@ -135,7 +136,7 @@ export class CardWidgetPool {
      * 重置Widget状态
      * @param widget 要重置的Widget
      */
-    private ResetWidget(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    private ResetWidget(widget: TS_Card): void {
         // 重置可见性
         widget.SetVisibility(UE.ESlateVisibility.Visible);
         

@@ -25,7 +25,7 @@ enum class ECharacterState : uint8
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class CURRSOR_API ABaseState : public APlayerState
 {
 	GENERATED_BODY()

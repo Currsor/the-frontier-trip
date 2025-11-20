@@ -1,8 +1,9 @@
 import * as UE from 'ue';
 import { $ref, blueprint } from 'puerts';
 import { CardWidgetPool } from './TS_CardWidgetPool';
-import { CardAnimationSystem } from './TS_CardAnimationSystem';
+import { CardAnimationSystem, CardAnimationManager } from './TS_CardAnimationSystem';
 import { GameConfig } from '../../Config/GameConfig';
+import { TS_Card } from './TS_Card';
 
 const uclass = UE.Class.Load("/Game/UI/Blueprints/Cards/Widget_CardMainUI.Widget_CardMainUI_C");
 const jsClass = blueprint.tojs(uclass);
@@ -17,8 +18,11 @@ export class TS_CardMainUI implements TS_CardMainUI {
     // Widget Pool管理器
     private widgetPool: CardWidgetPool | null = null;
     
-    // 卡牌动画系统
+    // 卡牌动画系统（从管理器获取）
     private animationSystem: CardAnimationSystem | null = null;
+    
+    // UI唯一标识符
+    private readonly UI_ID = 'CardMainUI';
     
     Construct() {
         TS_CardMainUI.pawn = this.GetOwningPlayerPawn() as UE.CurrsorCharacter;
@@ -33,18 +37,17 @@ export class TS_CardMainUI implements TS_CardMainUI {
             return;
         }
         
-        // 初始化动画系统
-        this.animationSystem = new CardAnimationSystem(this);
+        // 从管理器获取或创建动画系统（持久化）
+        this.animationSystem = CardAnimationManager.getInstance().getOrCreateAnimationSystem(this.UI_ID, this);
         
         this.InitCard();
     }
     
     Destruct() {
-        // 清理动画系统
-        if (this.animationSystem) {
-            this.animationSystem.Cleanup();
-            this.animationSystem = null;
-        }
+        // 注意：不清理动画系统，保持持久化
+        // 只清除引用，动画系统由CardAnimationManager管理
+        this.animationSystem = null;
+        console.log('[TS_CardMainUI] 动画系统引用已清除（系统保持持久化）');
         
         // 清理Widget Pool
         if (this.widgetPool) {
@@ -72,8 +75,12 @@ export class TS_CardMainUI implements TS_CardMainUI {
     // 抽取手牌
     public AddCard(numCards: number = 1): void {
         if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
-            console.error('AddCard: Widget Pool未初始化');
-            return;
+            console.warn('AddCard: Widget Pool未初始化，尝试创建...');
+            this.widgetPool = new CardWidgetPool(this);
+            if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
+                console.error('AddCard: Widget Pool创建失败');
+                return;
+            }
         }
         
         if (this.drawPile.Num() === 0) return;
@@ -116,8 +123,12 @@ export class TS_CardMainUI implements TS_CardMainUI {
      */
     private CreateHandCardWidget(cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo): void {
         if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
-            console.error('CreateHandCardWidget: Widget Pool未初始化');
-            return;
+            console.warn('CreateHandCardWidget: Widget Pool未初始化，尝试创建...');
+            this.widgetPool = new CardWidgetPool(this);
+            if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
+                console.error('CreateHandCardWidget: Widget Pool创建失败');
+                return;
+            }
         }
         
         // 从对象池获取Widget
@@ -161,7 +172,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
      * @param targetZOrder 目标层级
      */
     private StartCardEntranceAnimation(
-        cardWidget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
+        cardWidget: TS_Card,
         targetPos: UE.Vector2D,
         targetRotation: number,
         targetScale: UE.Vector2D,
@@ -201,7 +212,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
      * 设置卡牌Widget的数据
      */
     private SetupCardWidget(
-        widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
+        widget: TS_Card,
         cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo
     ): void {
         // 设置动画系统引用
@@ -209,27 +220,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
             (widget as any).animationSystem = this.animationSystem;
         }
         
-        // 设置卡牌名称
-        if (widget.bp_CardName) {
-            widget.bp_CardName.SetText(cardInfo.Name);
-        }
-        
-        // 设置法力消耗
-        if (widget.bp_ManaCost) {
-            widget.bp_ManaCost.SetText(cardInfo.Consumption.toString());
-        }
-        
-        // 设置描述
-        if (widget.bp_Description) {
-            widget.bp_Description.SetText(cardInfo.Description);
-        }
-        
-        // 设置类型
-        if (widget.bp_Type) {
-            widget.bp_Type.SetText(cardInfo.Type);
-        }
-        
-        // 可以在这里设置更多的卡牌数据，如图片、稀有度等
+        widget.SetData(cardInfo);
     }
     
     /**
@@ -270,13 +261,13 @@ export class TS_CardMainUI implements TS_CardMainUI {
     /**
      * 计算所有卡牌的目标位置
      */
-    private CalculateCardTargetPositions(): Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+    private CalculateCardTargetPositions(): Map<TS_Card, {
         pos: UE.Vector2D,
         rotation: number,
         scale: UE.Vector2D,
         zOrder: number
     }> {
-        const targetMap = new Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+        const targetMap = new Map<TS_Card, {
             pos: UE.Vector2D,
             rotation: number,
             scale: UE.Vector2D,
@@ -295,7 +286,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
         for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
             if (!this.handCardWidgets.IsValidIndex(i)) continue;
             
-            const widget = this.handCardWidgets.GetKey(i);
+            const widget = this.handCardWidgets.GetKey(i) as TS_Card;
             if (!widget) continue;
             
             // 计算 X 位置
@@ -328,7 +319,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
      * 直接更新Canvas布局（对于不在动画中的卡牌，启动插值动画）
      */
     private UpdateCanvasLayoutDirect(
-        targetPositions: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+        targetPositions: Map<TS_Card, {
             pos: UE.Vector2D,
             rotation: number,
             scale: UE.Vector2D,
@@ -390,7 +381,7 @@ export class TS_CardMainUI implements TS_CardMainUI {
         for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
             if (!this.handCardWidgets.IsValidIndex(i)) continue;
             
-            const widget = this.handCardWidgets.GetKey(i);
+            const widget = this.handCardWidgets.GetKey(i) as TS_Card;
             if (!widget) continue;
             
             // 计算 X 位置
@@ -480,18 +471,18 @@ export class TS_CardMainUI implements TS_CardMainUI {
     /**
      * 通过Widget查找对应的CardInfo
      */
-    private FindCardInfoByWidget(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): UE.Game.Data.Structs.S_CardInfo.S_CardInfo | undefined {
+    private FindCardInfoByWidget(widget: TS_Card): UE.Game.Data.Structs.S_CardInfo.S_CardInfo | undefined {
         return this.handCardWidgets.Get(widget);
     }
     
     /**
      * 通过CardInfo查找对应的Widget
      */
-    private FindWidgetByCardInfo(cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo): UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C | undefined {
+    private FindWidgetByCardInfo(cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo): TS_Card | undefined {
         // 遍历TMap查找对应的Widget
         for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
             if (this.handCardWidgets.IsValidIndex(i)) {
-                const widget = this.handCardWidgets.GetKey(i);
+                const widget = this.handCardWidgets.GetKey(i) as TS_Card;
                 const info = this.handCardWidgets.Get(widget);
                 if (info === cardInfo) {
                     return widget;
@@ -506,8 +497,12 @@ export class TS_CardMainUI implements TS_CardMainUI {
      */
     private RemoveHandCardWidget(cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo): void {
         if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
-            console.warn('RemoveHandCardWidget: Widget Pool未初始化');
-            return;
+            console.warn('RemoveHandCardWidget: Widget Pool未初始化，尝试创建...');
+            this.widgetPool = new CardWidgetPool(this);
+            if (!this.widgetPool || !this.widgetPool.IsInitialized()) {
+                console.error('RemoveHandCardWidget: Widget Pool创建失败');
+                return;
+            }
         }
         
         // 通过CardInfo查找对应的Widget

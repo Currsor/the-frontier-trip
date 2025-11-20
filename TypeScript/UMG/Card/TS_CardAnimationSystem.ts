@@ -1,11 +1,98 @@
 import * as UE from 'ue';
 import { GameConfig } from '../../Config/GameConfig';
+import { TS_Card } from './TS_Card';
+
+/**
+ * 卡牌动画管理器（单例）
+ * 负责持久化管理所有CardAnimationSystem实例
+ * 避免UI卸载时动画系统被销毁
+ */
+export class CardAnimationManager {
+    private static instance: CardAnimationManager;
+    private animationSystems: Map<string, CardAnimationSystem> = new Map();
+    
+    private constructor() {
+        console.log("[CardAnimationManager] 动画管理器已创建");
+    }
+    
+    public static getInstance(): CardAnimationManager {
+        if (!CardAnimationManager.instance) {
+            CardAnimationManager.instance = new CardAnimationManager();
+        }
+        return CardAnimationManager.instance;
+    }
+    
+    /**
+     * 获取或创建指定UI的动画系统
+     * @param uiId UI的唯一标识符
+     * @param owningWidget 拥有该动画系统的Widget
+     */
+    public getOrCreateAnimationSystem(uiId: string, owningWidget: UE.UserWidget): CardAnimationSystem {
+        let system = this.animationSystems.get(uiId);
+        
+        if (!system) {
+            system = new CardAnimationSystem(owningWidget);
+            this.animationSystems.set(uiId, system);
+            console.log(`[CardAnimationManager] 为UI "${uiId}" 创建新的动画系统`);
+        } else {
+            // 更新owningWidget引用（UI可能被重新创建）
+            system.updateOwningWidget(owningWidget);
+            console.log(`[CardAnimationManager] 复用UI "${uiId}" 的动画系统`);
+        }
+        
+        return system;
+    }
+    
+    /**
+     * 获取指定UI的动画系统
+     */
+    public getAnimationSystem(uiId: string): CardAnimationSystem | undefined {
+        return this.animationSystems.get(uiId);
+    }
+    
+    /**
+     * 移除指定UI的动画系统
+     * @param uiId UI的唯一标识符
+     * @param cleanup 是否清理动画系统资源
+     */
+    public removeAnimationSystem(uiId: string, cleanup: boolean = false): void {
+        const system = this.animationSystems.get(uiId);
+        if (system) {
+            if (cleanup) {
+                system.Cleanup();
+            }
+            this.animationSystems.delete(uiId);
+            console.log(`[CardAnimationManager] 移除UI "${uiId}" 的动画系统`);
+        }
+    }
+    
+    /**
+     * 清理所有动画系统
+     */
+    public cleanupAll(): void {
+        console.log("[CardAnimationManager] 清理所有动画系统");
+        for (const [uiId, system] of this.animationSystems) {
+            system.Cleanup();
+        }
+        this.animationSystems.clear();
+    }
+    
+    /**
+     * 获取统计信息
+     */
+    public getStats(): any {
+        return {
+            totalSystems: this.animationSystems.size,
+            systems: Array.from(this.animationSystems.keys())
+        };
+    }
+}
 
 /**
  * 卡牌动画数据
  */
 interface CardAnimationData {
-    widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C;
+    widget: TS_Card;
     startPos: UE.Vector2D;
     startRotation: number;
     startScale: UE.Vector2D;
@@ -21,7 +108,7 @@ interface CardAnimationData {
  * 卡牌悬浮状态数据
  */
 interface CardHoverState {
-    widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C;
+    widget: TS_Card;
     originalPosition: UE.Vector2D;
     originalRotation: number;
     originalScale: UE.Vector2D;
@@ -34,8 +121,8 @@ interface CardHoverState {
  * 负责管理卡牌从startHook位置到目标位置的动画
  */
 export class CardAnimationSystem {
-    private animatingCards: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, CardAnimationData> = new Map();
-    private hoverStates: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, CardHoverState> = new Map();
+    private animatingCards: Map<TS_Card, CardAnimationData> = new Map();
+    private hoverStates: Map<TS_Card, CardHoverState> = new Map();
     private owningWidget: UE.UserWidget;
     private updateHandle: any = null;
     
@@ -50,6 +137,14 @@ export class CardAnimationSystem {
     }
     
     /**
+     * 更新owningWidget引用（当UI重新创建时）
+     */
+    public updateOwningWidget(owningWidget: UE.UserWidget): void {
+        this.owningWidget = owningWidget;
+        console.log("[CardAnimationSystem] owningWidget引用已更新");
+    }
+    
+    /**
      * 开始卡牌出场动画
      * @param widget 卡牌Widget
      * @param startHookWidget 起始位置的Widget（通常是抽牌堆按钮）
@@ -59,7 +154,7 @@ export class CardAnimationSystem {
      * @param duration 动画时长（秒）
      */
     public StartCardAnimation(
-        widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
+        widget: TS_Card,
         startHookWidget: UE.Widget,
         targetPos: UE.Vector2D,
         targetRotation: number,
@@ -103,7 +198,7 @@ export class CardAnimationSystem {
      * @param newTargets 新的目标位置映射 (widget -> targetPos)
      */
     public UpdateAllTargetPositions(
-        newTargets: Map<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, {
+        newTargets: Map<TS_Card, {
             pos: UE.Vector2D,
             rotation: number,
             scale: UE.Vector2D,
@@ -136,7 +231,7 @@ export class CardAnimationSystem {
      * @param duration 动画时长（秒）
      */
     public StartRepositionAnimation(
-        widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
+        widget: TS_Card,
         targetPos: UE.Vector2D,
         targetRotation: number,
         targetScale: UE.Vector2D,
@@ -258,7 +353,7 @@ export class CardAnimationSystem {
     /**
      * 动画完成回调
      */
-    private OnAnimationComplete(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    private OnAnimationComplete(widget: TS_Card): void {
         // 清理已结束的悬浮状态
         const hoverState = this.hoverStates.get(widget);
         if (hoverState && !hoverState.isHovered) {
@@ -273,7 +368,7 @@ export class CardAnimationSystem {
      * 清理已完成的动画
      */
     private CleanupCompletedAnimations(): void {
-        const toRemove: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C[] = [];
+        const toRemove: TS_Card[] = [];
         
         for (const [widget, animData] of this.animatingCards) {
             if (!animData.isAnimating) {
@@ -324,7 +419,7 @@ export class CardAnimationSystem {
     /**
      * 检查Widget是否正在动画
      */
-    public IsAnimating(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): boolean {
+    public IsAnimating(widget: TS_Card): boolean {
         const animData = this.animatingCards.get(widget);
         return animData ? animData.isAnimating : false;
     }
@@ -332,7 +427,7 @@ export class CardAnimationSystem {
     /**
      * 停止指定Widget的动画
      */
-    public StopAnimation(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    public StopAnimation(widget: TS_Card): void {
         const animData = this.animatingCards.get(widget);
         if (animData) {
             animData.isAnimating = false;
@@ -354,7 +449,7 @@ export class CardAnimationSystem {
      * 开始卡牌悬浮动画
      * @param widget 卡牌Widget
      */
-    public StartHoverAnimation(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    public StartHoverAnimation(widget: TS_Card): void {
         // 检查是否已经悬浮
         const existingHoverState = this.hoverStates.get(widget);
         if (existingHoverState && existingHoverState.isHovered) return;
@@ -425,7 +520,7 @@ export class CardAnimationSystem {
      * 结束卡牌悬浮动画
      * @param widget 卡牌Widget
      */
-    public EndHoverAnimation(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): void {
+    public EndHoverAnimation(widget: TS_Card): void {
         // 获取悬浮状态
         const hoverState = this.hoverStates.get(widget);
         if (!hoverState || !hoverState.isHovered) return;
@@ -456,7 +551,7 @@ export class CardAnimationSystem {
      * 检查卡牌是否处于悬浮状态
      * @param widget 卡牌Widget
      */
-    public IsHovered(widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C): boolean {
+    public IsHovered(widget: TS_Card): boolean {
         const hoverState = this.hoverStates.get(widget);
         return hoverState ? hoverState.isHovered : false;
     }
@@ -469,7 +564,7 @@ export class CardAnimationSystem {
      * @param newScale 新的原始缩放
      */
     public UpdateHoverOriginalState(
-        widget: UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C,
+        widget: TS_Card,
         newPosition: UE.Vector2D,
         newRotation: number,
         newScale: UE.Vector2D

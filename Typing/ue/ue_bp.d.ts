@@ -10675,11 +10675,12 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F48F75C94E16E30C13B7B4B9986570F7
+// __TYPE_DECL_START: CD6E04C44C7114AA145A8BA5F0B54791
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
+            bp_HPBar: UE.WidgetComponent;
             BndEvt__BP_CurrsorCharacter_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent: $Nullable<UE.PrimitiveComponent>, OtherActor: $Nullable<UE.Actor>, OtherComp: $Nullable<UE.PrimitiveComponent>, OtherBodyIndex: number, bFromSweep: boolean, SweepResult: UE.HitResult) : void;
             BP_GetDataFromName(RowName: string) : UE.Game.Data.Structs.S_CardInfo.S_CardInfo;
             ExecuteUbergraph_BP_CurrsorCharacter(EntryPoint: number) : void;
@@ -10781,7 +10782,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 1EE52F494EB652562491F19E0880A029
+// __TYPE_DECL_START: 9B6CF1A64D93804371DFEE8E1E64CB71
     namespace Game.Blueprints.System.BP_CurrsorGameInstance {
         class BP_CurrsorGameInstance_C extends UE.CurrsorGameInstance {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10893,12 +10894,14 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: F54EE75640D371805287E4A4F6F741FC
+// __TYPE_DECL_START: D93F3C534E0657D4EB0F848FA33DCCDA
     namespace Game.Blueprints.Character.Enemy.Base.BP_BaseEnemy {
         class BP_BaseEnemy_C extends UE.BaseEnemy {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
+            bp_HPBar: UE.WidgetComponent;
             ExecuteUbergraph_BP_BaseEnemy(EntryPoint: number) : void;
+            ReceiveBeginPlay() : void;
             /*
              *Event called every frame, if ticking is enabled
              */
@@ -11030,7 +11033,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: DA2E80984558E210E230159D7F1EA205
+// __TYPE_DECL_START: 7F5912584ECCAFA5A1415A9BF08D2126
     namespace Game.UI.Blueprints.Cards.Panel_CardMainUI {
         class Panel_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11047,7 +11050,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 0E8DF1C946AC9927949FA391B7B798C8
+// __TYPE_DECL_START: C8CE749C401BB46CF031A1A47543C125
     namespace Game.UI.Blueprints.Cards.Widget_CardCell {
         class Widget_CardCell_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11066,7 +11069,56 @@ declare module "ue" {
             ManaCrystalOverlay: UE.Overlay;
             RarityGem: UE.Image;
             TypeBanner: UE.Image;
+            ["Default Drag Visual"]: UE.Widget;
+            DragOffset: UE.Vector2D;
             ExecuteUbergraph_Widget_CardCell(EntryPoint: number) : void;
+            /*
+             *Called when the user cancels the drag operation, typically when they simply release the mouse button after
+             *beginning a drag operation, but failing to complete the drag.
+             *
+             *@param  PointerEvent  Last mouse event from when the drag was canceled.
+             *@param  Operation     The drag operation that was canceled.
+             */
+            OnDragCancelled(PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *Called when Slate detects that a widget started to be dragged.
+             *
+             *@param  InMyGeometry  Widget geometry
+             *@param  PointerEvent  MouseMove that triggered the drag
+             *@param  Operation     The drag operation that was detected.
+             */
+            OnDragDetected(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Ref<UE.DragDropOperation>) : void;
+            /*
+             *Called during drag and drop when the drag enters the widget.
+             *
+             *@param MyGeometry     The geometry of the widget receiving the event.
+             *@param PointerEvent   The mouse event from when the drag entered the widget.
+             *@param Operation      The drag operation that entered the widget.
+             */
+            OnDragEnter(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *Called during drag and drop when the drag leaves the widget.
+             *
+             *@param PointerEvent   The mouse event from when the drag left the widget.
+             *@param Operation      The drag operation that entered the widget.
+             */
+            OnDragLeave(PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *The system calls this method to notify the widget that a mouse button was pressed within it. This event is bubbled.
+             *
+             *@param MyGeometry The Geometry of the widget receiving the event
+             *@param MouseEvent Information about the input event
+             *@return Whether the event was handled along with possible requests for the system to take action.
+             */
+            OnMouseButtonDown(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) : UE.EventReply;
+            /*
+             *The system calls this method to notify the widget that a mouse button was release within it. This event is bubbled.
+             *
+             *@param MyGeometry The Geometry of the widget receiving the event
+             *@param MouseEvent Information about the input event
+             *@return Whether the event was handled along with possible requests for the system to take action.
+             */
+            OnMouseButtonUp(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) : UE.EventReply;
             /*
              *The system will use this event to notify a widget that the cursor has entered it. This event is NOT bubbled.
              *
@@ -11128,10 +11180,11 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 1E5150E64FED161411703EA65F72881A
+// __TYPE_DECL_START: DA34F14F477506254A0F59A739205139
     namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
         class Widget_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
             HandCardsContainer: UE.CanvasPanel;
             Widget_CardListButton: UE.Game.UI.Blueprints.Cards.Widget_CardListButton.Widget_CardListButton_C;
             Widget_CardListButton_0: UE.Game.UI.Blueprints.Cards.Widget_CardListButton.Widget_CardListButton_C;
@@ -11143,6 +11196,14 @@ declare module "ue" {
             handCardWidgets: TMap<UE.Game.UI.Blueprints.Cards.Widget_CardCell.Widget_CardCell_C, UE.Game.Data.Structs.S_CardInfo.S_CardInfo>;
             Construct() : void;
             Destruct() : void;
+            ExecuteUbergraph_Widget_CardMainUI(EntryPoint: number) : void;
+            /*
+             *Ticks this widget.  Override in derived classes, but always call the parent implementation.
+             *
+             *@param  MyGeometry The space allotted for this widget
+             *@param  InDeltaTime  Real time passed since last tick
+             */
+            Tick(MyGeometry: UE.Geometry, InDeltaTime: number) : void;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): Widget_CardMainUI_C;
             static Load(InName: string): Widget_CardMainUI_C;
@@ -11277,6 +11338,148 @@ declare module "ue" {
             static StaticClass(): ScriptStruct;
             static StaticStruct(): ScriptStruct;
             __tid_S_CardInfo_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 4E37A7F0419CA8306B7CC69309EE370C
+    namespace Game.UI.Blueprints.Cards.Widget_DragCardCell {
+        class Widget_DragCardCell_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            bp_CardImage: UE.Image;
+            bp_CardName: UE.TextBlock;
+            bp_Description: UE.RichTextBlock;
+            bp_FrameImage: UE.Image;
+            bp_ManaCost: UE.TextBlock;
+            bp_Type: UE.TextBlock;
+            GemShadow: UE.Image;
+            GlowBorder: UE.Border;
+            Image_178: UE.Image;
+            ManaCrystal_1: UE.Image;
+            ManaCrystalFrame: UE.Image;
+            ManaCrystalOverlay: UE.Overlay;
+            RarityGem: UE.Image;
+            TypeBanner: UE.Image;
+            ExecuteUbergraph_Widget_DragCardCell(EntryPoint: number) : void;
+            /*
+             *Called when the user cancels the drag operation, typically when they simply release the mouse button after
+             *beginning a drag operation, but failing to complete the drag.
+             *
+             *@param  PointerEvent  Last mouse event from when the drag was canceled.
+             *@param  Operation     The drag operation that was canceled.
+             */
+            OnDragCancelled(PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *Called when Slate detects that a widget started to be dragged.
+             *
+             *@param  InMyGeometry  Widget geometry
+             *@param  PointerEvent  MouseMove that triggered the drag
+             *@param  Operation     The drag operation that was detected.
+             */
+            OnDragDetected(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Ref<UE.DragDropOperation>) : void;
+            /*
+             *Called during drag and drop when the drag enters the widget.
+             *
+             *@param MyGeometry     The geometry of the widget receiving the event.
+             *@param PointerEvent   The mouse event from when the drag entered the widget.
+             *@param Operation      The drag operation that entered the widget.
+             */
+            OnDragEnter(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *Called during drag and drop when the drag leaves the widget.
+             *
+             *@param PointerEvent   The mouse event from when the drag left the widget.
+             *@param Operation      The drag operation that entered the widget.
+             */
+            OnDragLeave(PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *The system calls this method to notify the widget that a mouse button was pressed within it. This event is bubbled.
+             *
+             *@param MyGeometry The Geometry of the widget receiving the event
+             *@param MouseEvent Information about the input event
+             *@return Whether the event was handled along with possible requests for the system to take action.
+             */
+            OnMouseButtonDown(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) : UE.EventReply;
+            /*
+             *The system will use this event to notify a widget that the cursor has entered it. This event is NOT bubbled.
+             *
+             *@param MyGeometry The Geometry of the widget receiving the event
+             *@param MouseEvent Information about the input event
+             */
+            OnMouseEnter(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) : void;
+            /*
+             *The system will use this event to notify a widget that the cursor has left it. This event is NOT bubbled.
+             *
+             *@param MouseEvent Information about the input event
+             */
+            OnMouseLeave(MouseEvent: UE.PointerEvent) : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_DragCardCell_C;
+            static Load(InName: string): Widget_DragCardCell_C;
+        
+            __tid_Widget_DragCardCell_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 47EABF614667CFFDCEC703A6D5E19125
+    namespace Game.UI.Blueprints.Cards.Widget_PlayingCardArea {
+        class Widget_PlayingCardArea_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            UberGraphFrame: UE.PointerToUberGraphFrame;
+            ExecuteUbergraph_Widget_PlayingCardArea(EntryPoint: number) : void;
+            /*
+             *Called during drag and drop when the drag enters the widget.
+             *
+             *@param MyGeometry     The geometry of the widget receiving the event.
+             *@param PointerEvent   The mouse event from when the drag entered the widget.
+             *@param Operation      The drag operation that entered the widget.
+             */
+            OnDragEnter(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *Called during drag and drop when the drag leaves the widget.
+             *
+             *@param PointerEvent   The mouse event from when the drag left the widget.
+             *@param Operation      The drag operation that entered the widget.
+             */
+            OnDragLeave(PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : void;
+            /*
+             *Called when the user is dropping something onto a widget.  Ends the drag and drop operation, even if no widget handles this.
+             *
+             *@param MyGeometry     The geometry of the widget receiving the event.
+             *@param PointerEvent   The mouse event from when the drag occurred over the widget.
+             *@param Operation      The drag operation over the widget.
+             *
+             *@return 'true' to indicate you handled the drop operation.
+             */
+            OnDrop(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>) : boolean;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_PlayingCardArea_C;
+            static Load(InName: string): Widget_PlayingCardArea_C;
+        
+            __tid_Widget_PlayingCardArea_C_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 9344B3F8460D996EF225318D33B573FB
+    namespace Game.UI.Blueprints.Common.Widget_Common_HPBar {
+        class Widget_Common_HPBar_C extends UE.UserWidget {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            bp_DefenseNum: UE.TextBlock;
+            bp_progHP: UE.ProgressBar;
+            bp_progHPBack: UE.ProgressBar;
+            bp_progHPLost: UE.ProgressBar;
+            Destruct() : void;
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): Widget_Common_HPBar_C;
+            static Load(InName: string): Widget_Common_HPBar_C;
+        
+            __tid_Widget_Common_HPBar_C_0__: boolean;
         }
         
     }

@@ -29021,6 +29021,93 @@ declare module "ue" {
         __tid_AddConePrimitiveTool_0__: boolean;
     }
     
+    class ManagedArrayCollection {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ManagedArrayCollection_0__: boolean;
+    }
+    
+    enum EStandardGroupNameEnum { Dataflow_EStandardGroupNameEnum_Transform, Dataflow_EStandardGroupNameEnum_Geometry, Dataflow_EStandardGroupNameEnum_Faces, Dataflow_EStandardGroupNameEnum_Vertices, Dataflow_EStandardGroupNameEnum_Material, Dataflow_EStandardGroupNameEnum_Breaking, Dataflow_EStandardGroupNameEnum_Custom, Dataflow_Max, Dataflow_MAX, __typeKeyDoNoAccess}
+    enum ECustomAttributeTypeEnum { Dataflow_CustomAttributeType_UInt8, Dataflow_CustomAttributeType_Int32, Dataflow_CustomAttributeType_Float, Dataflow_CustomAttributeType_Double, Dataflow_CustomAttributeType_Bool, Dataflow_CustomAttributeType_String, Dataflow_CustomAttributeType_Vector2f, Dataflow_CustomAttributeType_Vector3f, Dataflow_CustomAttributeType_Vector3d, Dataflow_CustomAttributeType_Vector4f, Dataflow_CustomAttributeType_LinearColor, Dataflow_CustomAttributeType_Transform, Dataflow_CustomAttributeType_Quat4f, Dataflow_CustomAttributeType_Box, Dataflow_CustomAttributeType_Guid, Dataflow_CustomAttributeType_Int32Set, Dataflow_CustomAttributeType_Int32Array, Dataflow_CustomAttributeType_IntVector, Dataflow_CustomAttributeType_IntVector2, Dataflow_CustomAttributeType_IntVector4, Dataflow_CustomAttributeType_IntVector2Array, Dataflow_CustomAttributeType_FloatArray, Dataflow_CustomAttributeType_Vector2fArray, Dataflow_CustomAttributeType_FVector3fArray, Dataflow_Max, Dataflow_MAX, __typeKeyDoNoAccess}
+    class AddCustomCollectionAttributeDataflowNode extends UE.DataflowNode {
+        constructor();
+        constructor(Collection: UE.ManagedArrayCollection, GroupName: UE.EStandardGroupNameEnum, CustomGroupName: string, AttrName: string, CustomAttributeType: UE.ECustomAttributeTypeEnum, NumElements: number);
+        Collection: UE.ManagedArrayCollection;
+        GroupName: UE.EStandardGroupNameEnum;
+        CustomGroupName: string;
+        AttrName: string;
+        CustomAttributeType: UE.ECustomAttributeTypeEnum;
+        NumElements: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AddCustomCollectionAttributeDataflowNode_0__: boolean;
+    }
+    
+    class AddCylinderPrimitiveTool extends UE.AddPrimitiveTool {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): AddCylinderPrimitiveTool;
+        static Load(InName: string): AddCylinderPrimitiveTool;
+    
+        __tid_AddCylinderPrimitiveTool_0__: boolean;
+    }
+    
+    class AddDataflowNode extends UE.DataflowNode {
+        constructor();
+        constructor(FloatA: number, FloatB: number, ReturnValue: number);
+        FloatA: number;
+        FloatB: number;
+        ReturnValue: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AddDataflowNode_0__: boolean;
+    }
+    
+    class AddDiscPrimitiveTool extends UE.AddPrimitiveTool {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): AddDiscPrimitiveTool;
+        static Load(InName: string): AddDiscPrimitiveTool;
+    
+        __tid_AddDiscPrimitiveTool_0__: boolean;
+    }
+    
+    class AddedPinData {
+        constructor();
+        constructor(PinType: UE.EdGraphPinType, PinName: string);
+        PinType: UE.EdGraphPinType;
+        PinName: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AddedPinData_0__: boolean;
+    }
+    
+    class AdditionalBlueprintCategory {
+        constructor();
+        constructor(Name: string, ClassFilter: UE.SoftClassPath);
+        Name: string;
+        ClassFilter: UE.SoftClassPath;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AdditionalBlueprintCategory_0__: boolean;
+    }
+    
     class RigVMRuntimeSettings {
         constructor();
         constructor(MaximumArraySize: number, bEnableProfiling: boolean);
@@ -31617,176 +31704,6 @@ declare module "ue" {
         __tid_ControlRig_0__: boolean;
     }
     
-    class RigUnit_HierarchyAddControl_Settings {
-        constructor();
-        constructor(DisplayName: string);
-        DisplayName: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_RigUnit_HierarchyAddControl_Settings_0__: boolean;
-    }
-    
-    enum ERigVMTransformSpace { LocalSpace, GlobalSpace, Max, ERigVMTransformSpace_MAX, __typeKeyDoNoAccess}
-    class RigUnit_HierarchyAddControlTransform_LimitSettings {
-        constructor();
-        constructor(LimitTranslationX: UE.RigControlLimitEnabled, LimitTranslationY: UE.RigControlLimitEnabled, LimitTranslationZ: UE.RigControlLimitEnabled, LimitPitch: UE.RigControlLimitEnabled, LimitYaw: UE.RigControlLimitEnabled, LimitRoll: UE.RigControlLimitEnabled, LimitScaleX: UE.RigControlLimitEnabled, LimitScaleY: UE.RigControlLimitEnabled, LimitScaleZ: UE.RigControlLimitEnabled, MinValue: UE.EulerTransform, MaxValue: UE.EulerTransform, bDrawLimits: boolean);
-        LimitTranslationX: UE.RigControlLimitEnabled;
-        LimitTranslationY: UE.RigControlLimitEnabled;
-        LimitTranslationZ: UE.RigControlLimitEnabled;
-        LimitPitch: UE.RigControlLimitEnabled;
-        LimitYaw: UE.RigControlLimitEnabled;
-        LimitRoll: UE.RigControlLimitEnabled;
-        LimitScaleX: UE.RigControlLimitEnabled;
-        LimitScaleY: UE.RigControlLimitEnabled;
-        LimitScaleZ: UE.RigControlLimitEnabled;
-        MinValue: UE.EulerTransform;
-        MaxValue: UE.EulerTransform;
-        bDrawLimits: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_RigUnit_HierarchyAddControlTransform_LimitSettings_0__: boolean;
-    }
-    
-    class RigUnit_HierarchyAddControl_ShapeSettings {
-        constructor();
-        constructor(bVisible: boolean, Name: string, Color: UE.LinearColor, Transform: UE.Transform);
-        bVisible: boolean;
-        Name: string;
-        Color: UE.LinearColor;
-        Transform: UE.Transform;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_RigUnit_HierarchyAddControl_ShapeSettings_0__: boolean;
-    }
-    
-    class RigUnit_HierarchyAddControl_ProxySettings {
-        constructor();
-        constructor(bIsProxy: boolean, DrivenControls: TArray<UE.RigElementKey>, ShapeVisibility: UE.ERigControlVisibility);
-        bIsProxy: boolean;
-        DrivenControls: TArray<UE.RigElementKey>;
-        ShapeVisibility: UE.ERigControlVisibility;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_RigUnit_HierarchyAddControl_ProxySettings_0__: boolean;
-    }
-    
-    class RigUnit_HierarchyAddControlTransform_Settings extends UE.RigUnit_HierarchyAddControl_Settings {
-        constructor();
-        constructor(InitialSpace: UE.ERigVMTransformSpace, bUsePreferredRotationOrder: boolean, PreferredRotationOrder: UE.EEulerRotationOrder, Limits: UE.RigUnit_HierarchyAddControlTransform_LimitSettings, Shape: UE.RigUnit_HierarchyAddControl_ShapeSettings, Proxy: UE.RigUnit_HierarchyAddControl_ProxySettings, FilteredChannels: TArray<UE.ERigControlTransformChannel>);
-        InitialSpace: UE.ERigVMTransformSpace;
-        bUsePreferredRotationOrder: boolean;
-        PreferredRotationOrder: UE.EEulerRotationOrder;
-        Limits: UE.RigUnit_HierarchyAddControlTransform_LimitSettings;
-        Shape: UE.RigUnit_HierarchyAddControl_ShapeSettings;
-        Proxy: UE.RigUnit_HierarchyAddControl_ProxySettings;
-        FilteredChannels: TArray<UE.ERigControlTransformChannel>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_RigUnit_HierarchyAddControlTransform_Settings_0__: boolean;
-    }
-    
-    class ManagedArrayCollection {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ManagedArrayCollection_0__: boolean;
-    }
-    
-    enum EStandardGroupNameEnum { Dataflow_EStandardGroupNameEnum_Transform, Dataflow_EStandardGroupNameEnum_Geometry, Dataflow_EStandardGroupNameEnum_Faces, Dataflow_EStandardGroupNameEnum_Vertices, Dataflow_EStandardGroupNameEnum_Material, Dataflow_EStandardGroupNameEnum_Breaking, Dataflow_EStandardGroupNameEnum_Custom, Dataflow_Max, Dataflow_MAX, __typeKeyDoNoAccess}
-    enum ECustomAttributeTypeEnum { Dataflow_CustomAttributeType_UInt8, Dataflow_CustomAttributeType_Int32, Dataflow_CustomAttributeType_Float, Dataflow_CustomAttributeType_Double, Dataflow_CustomAttributeType_Bool, Dataflow_CustomAttributeType_String, Dataflow_CustomAttributeType_Vector2f, Dataflow_CustomAttributeType_Vector3f, Dataflow_CustomAttributeType_Vector3d, Dataflow_CustomAttributeType_Vector4f, Dataflow_CustomAttributeType_LinearColor, Dataflow_CustomAttributeType_Transform, Dataflow_CustomAttributeType_Quat4f, Dataflow_CustomAttributeType_Box, Dataflow_CustomAttributeType_Guid, Dataflow_CustomAttributeType_Int32Set, Dataflow_CustomAttributeType_Int32Array, Dataflow_CustomAttributeType_IntVector, Dataflow_CustomAttributeType_IntVector2, Dataflow_CustomAttributeType_IntVector4, Dataflow_CustomAttributeType_IntVector2Array, Dataflow_CustomAttributeType_FloatArray, Dataflow_CustomAttributeType_Vector2fArray, Dataflow_CustomAttributeType_FVector3fArray, Dataflow_Max, Dataflow_MAX, __typeKeyDoNoAccess}
-    class AddCustomCollectionAttributeDataflowNode extends UE.DataflowNode {
-        constructor();
-        constructor(Collection: UE.ManagedArrayCollection, GroupName: UE.EStandardGroupNameEnum, CustomGroupName: string, AttrName: string, CustomAttributeType: UE.ECustomAttributeTypeEnum, NumElements: number);
-        Collection: UE.ManagedArrayCollection;
-        GroupName: UE.EStandardGroupNameEnum;
-        CustomGroupName: string;
-        AttrName: string;
-        CustomAttributeType: UE.ECustomAttributeTypeEnum;
-        NumElements: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AddCustomCollectionAttributeDataflowNode_0__: boolean;
-    }
-    
-    class AddCylinderPrimitiveTool extends UE.AddPrimitiveTool {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): AddCylinderPrimitiveTool;
-        static Load(InName: string): AddCylinderPrimitiveTool;
-    
-        __tid_AddCylinderPrimitiveTool_0__: boolean;
-    }
-    
-    class AddDataflowNode extends UE.DataflowNode {
-        constructor();
-        constructor(FloatA: number, FloatB: number, ReturnValue: number);
-        FloatA: number;
-        FloatB: number;
-        ReturnValue: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AddDataflowNode_0__: boolean;
-    }
-    
-    class AddDiscPrimitiveTool extends UE.AddPrimitiveTool {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): AddDiscPrimitiveTool;
-        static Load(InName: string): AddDiscPrimitiveTool;
-    
-        __tid_AddDiscPrimitiveTool_0__: boolean;
-    }
-    
-    class AddedPinData {
-        constructor();
-        constructor(PinType: UE.EdGraphPinType, PinName: string);
-        PinType: UE.EdGraphPinType;
-        PinName: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AddedPinData_0__: boolean;
-    }
-    
-    class AdditionalBlueprintCategory {
-        constructor();
-        constructor(Name: string, ClassFilter: UE.SoftClassPath);
-        Name: string;
-        ClassFilter: UE.SoftClassPath;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AdditionalBlueprintCategory_0__: boolean;
-    }
-    
     class AdditiveControlRig extends UE.ControlRig {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -34240,544 +34157,6 @@ declare module "ue" {
         __tid_AITask_RunEQS_0__: boolean;
     }
     
-    class PointerToUberGraphFrame {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_PointerToUberGraphFrame_0__: boolean;
-    }
-    
-    class BoxComponent extends UE.ShapeComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        BoxExtent: UE.Vector;
-        /*
-         *@return the box extent, scaled by the component scale.
-         */
-        GetScaledBoxExtent() : UE.Vector;
-        /*
-         *@return the box extent, ignoring component scale.
-         */
-        GetUnscaledBoxExtent() : UE.Vector;
-        /*
-         *Change the box extent size. This is the unscaled size, before component scale is applied.
-         *@param       InBoxExtent: new extent (radius) for the box.
-         *@param       bUpdateOverlaps: if true and this shape is registered and collides, updates touching array for owner actor.
-         */
-        SetBoxExtent(InBoxExtent: UE.Vector, bUpdateOverlaps?: boolean /* = true */) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BoxComponent;
-        static Load(InName: string): BoxComponent;
-    
-        __tid_BoxComponent_0__: boolean;
-    }
-    
-    enum EFunctionalTestLogHandling { ProjectDefault, OutputIsError, OutputIgnored, EFunctionalTestLogHandling_MAX, __typeKeyDoNoAccess}
-    class RandomStream {
-        constructor();
-        constructor(InitialSeed: number, Seed: number);
-        InitialSeed: number;
-        Seed: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_RandomStream_0__: boolean;
-    }
-    
-    enum EFunctionalTestResult { Default, Invalid, Error, Running, Failed, Succeeded, EFunctionalTestResult_MAX, __typeKeyDoNoAccess}
-    class FuncTestRenderingComponent extends UE.PrimitiveComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): FuncTestRenderingComponent;
-        static Load(InName: string): FuncTestRenderingComponent;
-    
-        __tid_FuncTestRenderingComponent_0__: boolean;
-    }
-    
-    enum EHorizTextAligment { EHTA_Left, EHTA_Center, EHTA_Right, EHTA_MAX, __typeKeyDoNoAccess}
-    enum EVerticalTextAligment { EVRTA_TextTop, EVRTA_TextCenter, EVRTA_TextBottom, EVRTA_QuadTop, EVRTA_MAX, __typeKeyDoNoAccess}
-    class TextRenderComponent extends UE.PrimitiveComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Text: string;
-        TextMaterial: UE.MaterialInterface;
-        Font: UE.Font;
-        HorizontalAlignment: UE.EHorizTextAligment;
-        VerticalAlignment: UE.EVerticalTextAligment;
-        TextRenderColor: UE.Color;
-        XScale: number;
-        YScale: number;
-        WorldSize: number;
-        InvDefaultSize: number;
-        HorizSpacingAdjust: number;
-        VertSpacingAdjust: number;
-        bAlwaysRenderAsText: boolean;
-        /*
-         *Get local size of text
-         */
-        GetTextLocalSize() : UE.Vector;
-        /*
-         *Get world space size of text
-         */
-        GetTextWorldSize() : UE.Vector;
-        /*
-         *Change the text value and signal the primitives to be rebuilt
-         */
-        K2_SetText(Value: string) : void;
-        /*
-         *Change the font and signal the primitives to be rebuilt
-         */
-        SetFont(Value: $Nullable<UE.Font>) : void;
-        /*
-         *Change the horizontal alignment and signal the primitives to be rebuilt
-         */
-        SetHorizontalAlignment(Value: UE.EHorizTextAligment) : void;
-        /*
-         *Change the text horizontal spacing adjustment and signal the primitives to be rebuilt
-         */
-        SetHorizSpacingAdjust(Value: number) : void;
-        /*
-         *Change the text value and signal the primitives to be rebuilt
-         */
-        SetText(Value: string) : void;
-        /*
-         *Change the text material and signal the primitives to be rebuilt
-         */
-        SetTextMaterial(Material: $Nullable<UE.MaterialInterface>) : void;
-        /*
-         *Change the text render color and signal the primitives to be rebuilt
-         */
-        SetTextRenderColor(Value: UE.Color) : void;
-        /*
-         *Change the vertical alignment and signal the primitives to be rebuilt
-         */
-        SetVerticalAlignment(Value: UE.EVerticalTextAligment) : void;
-        /*
-         *Change the text vertical spacing adjustment and signal the primitives to be rebuilt
-         */
-        SetVertSpacingAdjust(Value: number) : void;
-        /*
-         *Change the world size of the text and signal the primitives to be rebuilt
-         */
-        SetWorldSize(Value: number) : void;
-        /*
-         *Change the text X scale and signal the primitives to be rebuilt
-         */
-        SetXScale(Value: number) : void;
-        /*
-         *Change the text Y scale and signal the primitives to be rebuilt
-         */
-        SetYScale(Value: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TextRenderComponent;
-        static Load(InName: string): TextRenderComponent;
-    
-        __tid_TextRenderComponent_0__: boolean;
-    }
-    
-    enum EComparisonMethod { Equal_To, Not_Equal_To, Greater_Than_Or_Equal_To, Less_Than_Or_Equal_To, Greater_Than, Less_Than, EComparisonMethod_MAX, __typeKeyDoNoAccess}
-    class DateTime {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_DateTime_0__: boolean;
-    }
-    
-    class Box2D {
-        constructor();
-        constructor(p0: number);
-        constructor(p0: Vector2D, p1: Vector2D);
-        constructor(p0: Vector2D, p1: number);
-        constructor(p0: UE.TArray<UE.Vector2D>);
-        Min: UE.Vector2D;
-        Max: UE.Vector2D;
-        bIsValid: boolean;
-        ComputeSquaredDistanceToPoint(p0: Vector2D) : number;
-        ExpandBy(p0: number) : Box2D;
-        GetArea() : number;
-        GetCenter() : Vector2D;
-        GetCenterAndExtents(p0: $Ref<Vector2D>, p1: $Ref<Vector2D>) : void;
-        GetClosestPointTo(p0: Vector2D) : Vector2D;
-        GetExtent() : Vector2D;
-        GetSize() : Vector2D;
-        Init() : void;
-        Intersect(p0: Box2D) : boolean;
-        IsInside(p0: Vector2D) : boolean;
-        IsInside(p0: Box2D) : boolean;
-        op_Addition(p0: Vector2D) : Box2D;
-        op_Addition(p0: Box2D) : Box2D;
-        op_Equality(p0: Box2D) : boolean;
-        op_Inequality(p0: Box2D) : boolean;
-        set_Item(p0: number) : Vector2D;
-        ShiftBy(p0: Vector2D) : Box2D;
-        ToString() : string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_Box2D_0__: boolean;
-    }
-    
-    class TraceQueryTestNames {
-        constructor();
-        constructor(ComponentName: string, PhysicalMaterialName: string, ActorName: string);
-        ComponentName: string;
-        PhysicalMaterialName: string;
-        ActorName: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TraceQueryTestNames_0__: boolean;
-    }
-    
-    class TraceQueryTestResultsInnerMost {
-        constructor();
-        constructor(SingleHit: UE.HitResult, SingleNames: UE.TraceQueryTestNames, bSingleResult: boolean, MultiHits: TArray<UE.HitResult>, MultiNames: TArray<UE.TraceQueryTestNames>, bMultiResult: boolean);
-        SingleHit: UE.HitResult;
-        SingleNames: UE.TraceQueryTestNames;
-        bSingleResult: boolean;
-        MultiHits: TArray<UE.HitResult>;
-        MultiNames: TArray<UE.TraceQueryTestNames>;
-        bMultiResult: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TraceQueryTestResultsInnerMost_0__: boolean;
-    }
-    
-    class TraceQueryTestResultsInner {
-        constructor();
-        constructor(LineResults: UE.TraceQueryTestResultsInnerMost, SphereResults: UE.TraceQueryTestResultsInnerMost, CapsuleResults: UE.TraceQueryTestResultsInnerMost, BoxResults: UE.TraceQueryTestResultsInnerMost);
-        LineResults: UE.TraceQueryTestResultsInnerMost;
-        SphereResults: UE.TraceQueryTestResultsInnerMost;
-        CapsuleResults: UE.TraceQueryTestResultsInnerMost;
-        BoxResults: UE.TraceQueryTestResultsInnerMost;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TraceQueryTestResultsInner_0__: boolean;
-    }
-    
-    class TraceChannelTestBatchOptions {
-        constructor();
-        constructor(bLineTrace: boolean, bSphereTrace: boolean, bCapsuleTrace: boolean, bBoxTrace: boolean, bChannelTrace: boolean, bObjectsTrace: boolean, bProfileTrace: boolean);
-        bLineTrace: boolean;
-        bSphereTrace: boolean;
-        bCapsuleTrace: boolean;
-        bBoxTrace: boolean;
-        bChannelTrace: boolean;
-        bObjectsTrace: boolean;
-        bProfileTrace: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TraceChannelTestBatchOptions_0__: boolean;
-    }
-    
-    class TraceQueryTestResults extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ChannelResults: UE.TraceQueryTestResultsInner;
-        ObjectResults: UE.TraceQueryTestResultsInner;
-        ProfileResults: UE.TraceQueryTestResultsInner;
-        BatchOptions: UE.TraceChannelTestBatchOptions;
-        /*
-         *Output string value
-         */
-        ToString() : string;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TraceQueryTestResults;
-        static Load(InName: string): TraceQueryTestResults;
-    
-        __tid_TraceQueryTestResults_0__: boolean;
-    }
-    
-    class FunctionalTest extends UE.Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        TestLabel: string;
-        Author: string;
-        Description: string;
-        SpriteComponent: UE.BillboardComponent;
-        bIsEnabled: boolean;
-        LogErrorHandling: UE.EFunctionalTestLogHandling;
-        LogWarningHandling: UE.EFunctionalTestLogHandling;
-        ObservationPoint: UE.Actor;
-        bShouldDelayGarbageCollection: boolean;
-        RandomNumbersStream: UE.RandomStream;
-        Result: UE.EFunctionalTestResult;
-        PreparationTimeLimit: number;
-        TimeLimit: number;
-        TimesUpMessage: string;
-        TimesUpResult: UE.EFunctionalTestResult;
-        OnTestPrepare: $MulticastDelegate<() => void>;
-        OnTestStart: $MulticastDelegate<() => void>;
-        OnTestFinished: $MulticastDelegate<() => void>;
-        AutoDestroyActors: TArray<UE.Actor>;
-        RenderComp_EditorOnly: UE.FuncTestRenderingComponent;
-        TestName_EditorOnly: UE.TextRenderComponent;
-        bIsRunning: boolean;
-        TotalTime: number;
-        AddError(Message: string) : void;
-        AddInfo(Message: string) : void;
-        /*
-         *Causes the test to be rerun for a specific named reason.
-         */
-        AddRerun(Reason: string) : void;
-        AddWarning(Message: string) : void;
-        /*
-         *Assert that two bools are equal
-         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
-         */
-        AssertEqual_Bool(Actual: boolean, Expected: boolean, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two two-component boxes are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Box2D(Actual: UE.Box2D, Expected: UE.Box2D, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two double are equal within tolerance between two doubles.
-         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} within Tolerance for context '')
-         */
-        AssertEqual_Double(Actual: number, Expected: number, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two floats are equal within tolerance between two floats.
-         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} within Tolerance for context '')
-         */
-        AssertEqual_Float(Actual: number, Expected: number, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two ints are equal
-         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
-         */
-        AssertEqual_Int(Actual: number, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two 4x4 matrices are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Matrix(Actual: UE.Matrix, Expected: UE.Matrix, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two FNames are equal
-         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
-         */
-        AssertEqual_Name(Actual: string, Expected: string, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two Objects are equal
-         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
-         */
-        AssertEqual_Object(Actual: $Nullable<UE.Object>, Expected: $Nullable<UE.Object>, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two planes are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Plane(Actual: UE.Plane, Expected: UE.Plane, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two quats are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Quat(Actual: UE.Quat, Expected: UE.Quat, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that the component angles of two rotators are all equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Rotator(Actual: UE.Rotator, Expected: UE.Rotator, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that the orientation of two rotators is the same within a small tolerance. Robust to quaternion singularities where angles can differ despite having an identical orientation.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_RotatorOrientation(Actual: UE.Rotator, Expected: UE.Rotator, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two Strings are equal.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_String(Actual: string, Expected: string, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two TraceQueryResults are equal.
-         *@param What   A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_TraceQueryResults(Actual: $Nullable<UE.TraceQueryTestResults>, Expected: $Nullable<UE.TraceQueryTestResults>, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two transforms are (components memberwise - translation, rotation, scale) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Transform(Actual: UE.Transform, Expected: UE.Transform, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two vectors are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Vector(Actual: UE.Vector, Expected: UE.Vector, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two two-component vectors are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Vector2D(Actual: UE.Vector2D, Expected: UE.Vector2D, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two four-component vectors are (memberwise) equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertEqual_Vector4(Actual: UE.Vector4, Expected: UE.Vector4, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that a boolean value is false.
-         *@param Message       The message to display if the assert fails ("Assertion Failed: 'Message' for context ''")
-         */
-        AssertFalse(Condition: boolean, Message: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that a UObject is valid
-         *@param Message       The message to display if the object is invalid ("Invalid object: 'Message' for context ''")
-         */
-        AssertIsValid(Object: $Nullable<UE.Object>, Message: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two two-component boxes are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Box2D(Actual: UE.Box2D, NotExpected: UE.Box2D, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two 4x4 matrices are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Matrix(Actual: UE.Matrix, NotExpected: UE.Matrix, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two planes are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Plane(Actual: UE.Plane, NotExpected: UE.Plane, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two quats are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Quat(Actual: UE.Quat, NotExpected: UE.Quat, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that the component angles of two rotators are all not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Rotator(Actual: UE.Rotator, NotExpected: UE.Rotator, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two Strings are not equal.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_String(Actual: string, NotExpected: string, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two transforms are (components memberwise - translation, rotation, scale) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Transform(Actual: UE.Transform, NotExpected: UE.Transform, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two vectors are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Vector(Actual: UE.Vector, NotExpected: UE.Vector, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two two-component vectors are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Vector2D(Actual: UE.Vector2D, NotExpected: UE.Vector2D, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that two four-component vectors are (memberwise) not equal within a small tolerance.
-         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
-         */
-        AssertNotEqual_Vector4(Actual: UE.Vector4, NotExpected: UE.Vector4, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert that a boolean value is true.
-         *@param Message       The message to display if the assert fails ("Assertion Failed: 'Message' for context ''")
-         */
-        AssertTrue(Condition: boolean, Message: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert on a relationship between two DateTimes.
-         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
-         */
-        AssertValue_DateTime(Actual: UE.DateTime, ShouldBe: UE.EComparisonMethod, Expected: UE.DateTime, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert on a relationship between two doubles.
-         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
-         */
-        AssertValue_Double(Actual: number, ShouldBe: UE.EComparisonMethod, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert on a relationship between two floats.
-         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
-         */
-        AssertValue_Float(Actual: number, ShouldBe: UE.EComparisonMethod, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Assert on a relationship between two integers.
-         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
-         */
-        AssertValue_Int(Actual: number, ShouldBe: UE.EComparisonMethod, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
-        /*
-         *Used by debug drawing to gather actors this test is using and point at them on the level to better understand test's setup
-         */
-        DebugGatherRelevantActors() : TArray<UE.Actor>;
-        FinishTest(TestResult: UE.EFunctionalTestResult, Message: string) : void;
-        /*
-         *Returns the current re-run reason if we're in a named re-run.
-         */
-        GetCurrentRerunReason() : string;
-        IsEnabled() : boolean;
-        /*
-         *IsReady() is called once per frame after a test is run, until it returns true.  You should use this function to
-         *delay Start being called on the test until preconditions are met.
-         */
-        IsReady() : boolean;
-        /*
-         *AActor interface end
-         */
-        IsRunning() : boolean;
-        LogMessage(Message: string) : void;
-        OnAdditionalTestFinishedMessageRequest(TestResult: UE.EFunctionalTestResult) : string;
-        /*
-         *retrieves information whether test wants to have another run just after finishing
-         */
-        OnWantsReRunCheck() : boolean;
-        /*
-         *Prepare Test is fired once the test starts up, before the test IsReady() and thus before Start Test is called.
-         *So if there's some initial conditions or setup that you might need for your IsReady() check, you might want
-         *to do that here.
-         */
-        ReceivePrepareTest() : void;
-        /*
-         *Called once the IsReady() check for the test returns true.  After that happens the test has Officially started,
-         *and it will begin receiving Ticks in the blueprint.
-         */
-        ReceiveStartTest() : void;
-        /*
-         *Actors registered this way will be automatically destroyed (by limiting their lifespan)
-         *    on test finish
-         */
-        RegisterAutoDestroyActor(ActorToAutoDestroy: $Nullable<UE.Actor>) : void;
-        /*
-         *Sets the CVar from the given input. Variable gets reset after the test.
-         */
-        SetConsoleVariable(Name: string, InValue: string) : void;
-        /*
-         *Sets the CVar from the given input. Variable gets reset after the test.
-         */
-        SetConsoleVariableFromBoolean(Name: string, InValue: boolean) : void;
-        /*
-         *Sets the CVar from the given input. Variable gets reset after the test.
-         */
-        SetConsoleVariableFromFloat(Name: string, InValue: number) : void;
-        /*
-         *Sets the CVar from the given input. Variable gets reset after the test.
-         */
-        SetConsoleVariableFromInteger(Name: string, InValue: number) : void;
-        SetTimeLimit(NewTimeLimit: number, ResultWhenTimeRunsOut: UE.EFunctionalTestResult) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): FunctionalTest;
-        static Load(InName: string): FunctionalTest;
-    
-        __tid_FunctionalTest_0__: boolean;
-    }
-    
     class AITestSpawnInfoBase {
         constructor();
         constructor(SpawnLocation: UE.Actor, NumberToSpawn: number, SpawnDelay: number, PreSpawnDelay: number);
@@ -37140,606 +36519,6 @@ declare module "ue" {
         __tid_AnimationRecordingParameters_0__: boolean;
     }
     
-    class EditorUtilityWidget extends UE.UserWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        TabDisplayName: string;
-        HelpText: string;
-        bAlwaysReregisterWithWindowsMenu: boolean;
-        bAutoRunDefaultAction: boolean;
-        /*
-         *The default action called when the widget is invoked if bAutoRunDefaultAction=true (it is never called otherwise)
-         */
-        Run_EditorOnly() : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): EditorUtilityWidget;
-        static Load(InName: string): EditorUtilityWidget;
-    
-        __tid_EditorUtilityWidget_0__: boolean;
-    }
-    
-    enum ESlateSizeRule { Automatic, Fill, ESlateSizeRule_MAX, __typeKeyDoNoAccess}
-    class SlateChildSize {
-        constructor();
-        constructor(Value: number, SizeRule: UE.ESlateSizeRule);
-        Value: number;
-        SizeRule: UE.ESlateSizeRule;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_SlateChildSize_0__: boolean;
-    }
-    
-    enum EHorizontalAlignment { HAlign_Fill, HAlign_Left, HAlign_Center, HAlign_Right, HAlign_MAX, __typeKeyDoNoAccess}
-    enum EVerticalAlignment { VAlign_Fill, VAlign_Top, VAlign_Center, VAlign_Bottom, VAlign_MAX, __typeKeyDoNoAccess}
-    class HorizontalBoxSlot extends UE.PanelSlot {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Size: UE.SlateChildSize;
-        Padding: UE.Margin;
-        HorizontalAlignment: UE.EHorizontalAlignment;
-        VerticalAlignment: UE.EVerticalAlignment;
-        SetHorizontalAlignment(InHorizontalAlignment: UE.EHorizontalAlignment) : void;
-        SetPadding(InPadding: UE.Margin) : void;
-        SetSize(InSize: UE.SlateChildSize) : void;
-        SetVerticalAlignment(InVerticalAlignment: UE.EVerticalAlignment) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): HorizontalBoxSlot;
-        static Load(InName: string): HorizontalBoxSlot;
-    
-        __tid_HorizontalBoxSlot_0__: boolean;
-    }
-    
-    class HorizontalBox extends UE.PanelWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        AddChildToHorizontalBox(Content: $Nullable<UE.Widget>) : UE.HorizontalBoxSlot;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): HorizontalBox;
-        static Load(InName: string): HorizontalBox;
-    
-        __tid_HorizontalBox_0__: boolean;
-    }
-    
-    class SlateWidgetStyle {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_SlateWidgetStyle_0__: boolean;
-    }
-    
-    class SlateSound {
-        constructor();
-        constructor(ResourceObject: UE.Object);
-        ResourceObject: UE.Object;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_SlateSound_0__: boolean;
-    }
-    
-    class ButtonStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(Normal: UE.SlateBrush, Hovered: UE.SlateBrush, Pressed: UE.SlateBrush, Disabled: UE.SlateBrush, NormalForeground: UE.SlateColor, HoveredForeground: UE.SlateColor, PressedForeground: UE.SlateColor, DisabledForeground: UE.SlateColor, NormalPadding: UE.Margin, PressedPadding: UE.Margin, PressedSlateSound: UE.SlateSound, HoveredSlateSound: UE.SlateSound, PressedSound: string, HoveredSound: string);
-        Normal: UE.SlateBrush;
-        Hovered: UE.SlateBrush;
-        Pressed: UE.SlateBrush;
-        Disabled: UE.SlateBrush;
-        NormalForeground: UE.SlateColor;
-        HoveredForeground: UE.SlateColor;
-        PressedForeground: UE.SlateColor;
-        DisabledForeground: UE.SlateColor;
-        NormalPadding: UE.Margin;
-        PressedPadding: UE.Margin;
-        PressedSlateSound: UE.SlateSound;
-        HoveredSlateSound: UE.SlateSound;
-        PressedSound: string;
-        HoveredSound: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ButtonStyle_0__: boolean;
-    }
-    
-    class ComboButtonStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(ButtonStyle: UE.ButtonStyle, DownArrowImage: UE.SlateBrush, ShadowOffset: UE.DeprecateSlateVector2D, ShadowColorAndOpacity: UE.LinearColor, MenuBorderBrush: UE.SlateBrush, MenuBorderPadding: UE.Margin, ContentPadding: UE.Margin, DownArrowPadding: UE.Margin, DownArrowAlign: UE.EVerticalAlignment);
-        ButtonStyle: UE.ButtonStyle;
-        DownArrowImage: UE.SlateBrush;
-        ShadowOffset: UE.DeprecateSlateVector2D;
-        ShadowColorAndOpacity: UE.LinearColor;
-        MenuBorderBrush: UE.SlateBrush;
-        MenuBorderPadding: UE.Margin;
-        ContentPadding: UE.Margin;
-        DownArrowPadding: UE.Margin;
-        DownArrowAlign: UE.EVerticalAlignment;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ComboButtonStyle_0__: boolean;
-    }
-    
-    class ComboBoxStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(ComboButtonStyle: UE.ComboButtonStyle, PressedSlateSound: UE.SlateSound, SelectionChangeSlateSound: UE.SlateSound, ContentPadding: UE.Margin, MenuRowPadding: UE.Margin, PressedSound: string, SelectionChangeSound: string);
-        ComboButtonStyle: UE.ComboButtonStyle;
-        PressedSlateSound: UE.SlateSound;
-        SelectionChangeSlateSound: UE.SlateSound;
-        ContentPadding: UE.Margin;
-        MenuRowPadding: UE.Margin;
-        PressedSound: string;
-        SelectionChangeSound: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ComboBoxStyle_0__: boolean;
-    }
-    
-    class TableRowStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(SelectorFocusedBrush: UE.SlateBrush, ActiveHoveredBrush: UE.SlateBrush, ActiveBrush: UE.SlateBrush, InactiveHoveredBrush: UE.SlateBrush, InactiveBrush: UE.SlateBrush, bUseParentRowBrush: boolean, ParentRowBackgroundBrush: UE.SlateBrush, ParentRowBackgroundHoveredBrush: UE.SlateBrush, EvenRowBackgroundHoveredBrush: UE.SlateBrush, EvenRowBackgroundBrush: UE.SlateBrush, OddRowBackgroundHoveredBrush: UE.SlateBrush, OddRowBackgroundBrush: UE.SlateBrush, TextColor: UE.SlateColor, SelectedTextColor: UE.SlateColor, DropIndicator_Above: UE.SlateBrush, DropIndicator_Onto: UE.SlateBrush, DropIndicator_Below: UE.SlateBrush, ActiveHighlightedBrush: UE.SlateBrush, InactiveHighlightedBrush: UE.SlateBrush);
-        SelectorFocusedBrush: UE.SlateBrush;
-        ActiveHoveredBrush: UE.SlateBrush;
-        ActiveBrush: UE.SlateBrush;
-        InactiveHoveredBrush: UE.SlateBrush;
-        InactiveBrush: UE.SlateBrush;
-        bUseParentRowBrush: boolean;
-        ParentRowBackgroundBrush: UE.SlateBrush;
-        ParentRowBackgroundHoveredBrush: UE.SlateBrush;
-        EvenRowBackgroundHoveredBrush: UE.SlateBrush;
-        EvenRowBackgroundBrush: UE.SlateBrush;
-        OddRowBackgroundHoveredBrush: UE.SlateBrush;
-        OddRowBackgroundBrush: UE.SlateBrush;
-        TextColor: UE.SlateColor;
-        SelectedTextColor: UE.SlateColor;
-        DropIndicator_Above: UE.SlateBrush;
-        DropIndicator_Onto: UE.SlateBrush;
-        DropIndicator_Below: UE.SlateBrush;
-        ActiveHighlightedBrush: UE.SlateBrush;
-        InactiveHighlightedBrush: UE.SlateBrush;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TableRowStyle_0__: boolean;
-    }
-    
-    class ScrollBarStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(HorizontalBackgroundImage: UE.SlateBrush, VerticalBackgroundImage: UE.SlateBrush, VerticalTopSlotImage: UE.SlateBrush, HorizontalTopSlotImage: UE.SlateBrush, VerticalBottomSlotImage: UE.SlateBrush, HorizontalBottomSlotImage: UE.SlateBrush, NormalThumbImage: UE.SlateBrush, HoveredThumbImage: UE.SlateBrush, DraggedThumbImage: UE.SlateBrush, Thickness: number);
-        HorizontalBackgroundImage: UE.SlateBrush;
-        VerticalBackgroundImage: UE.SlateBrush;
-        VerticalTopSlotImage: UE.SlateBrush;
-        HorizontalTopSlotImage: UE.SlateBrush;
-        VerticalBottomSlotImage: UE.SlateBrush;
-        HorizontalBottomSlotImage: UE.SlateBrush;
-        NormalThumbImage: UE.SlateBrush;
-        HoveredThumbImage: UE.SlateBrush;
-        DraggedThumbImage: UE.SlateBrush;
-        Thickness: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ScrollBarStyle_0__: boolean;
-    }
-    
-    class FontOutlineSettings {
-        constructor();
-        constructor(OutlineSize: number, bMiteredCorners: boolean, bSeparateFillAlpha: boolean, bApplyOutlineToDropShadows: boolean, OutlineMaterial: UE.Object, OutlineColor: UE.LinearColor);
-        OutlineSize: number;
-        bMiteredCorners: boolean;
-        bSeparateFillAlpha: boolean;
-        bApplyOutlineToDropShadows: boolean;
-        OutlineMaterial: UE.Object;
-        OutlineColor: UE.LinearColor;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_FontOutlineSettings_0__: boolean;
-    }
-    
-    class SlateFontInfo {
-        constructor();
-        constructor(FontObject: UE.Object, FontMaterial: UE.Object, OutlineSettings: UE.FontOutlineSettings, TypefaceFontName: string, Size: number, LetterSpacing: number, SkewAmount: number, bForceMonospaced: boolean, MonospacedWidth: number, FontName: string, Hinting: UE.EFontHinting);
-        FontObject: UE.Object;
-        FontMaterial: UE.Object;
-        OutlineSettings: UE.FontOutlineSettings;
-        TypefaceFontName: string;
-        Size: number;
-        LetterSpacing: number;
-        SkewAmount: number;
-        bForceMonospaced: boolean;
-        MonospacedWidth: number;
-        FontName: string;
-        Hinting: UE.EFontHinting;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_SlateFontInfo_0__: boolean;
-    }
-    
-    enum ESelectInfo { OnKeyPress, OnNavigation, OnMouseClick, Direct, ESelectInfo_MAX, __typeKeyDoNoAccess}
-    class ComboBoxString extends UE.Widget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        DefaultOptions: TArray<string>;
-        SelectedOption: string;
-        WidgetStyle: UE.ComboBoxStyle;
-        ItemStyle: UE.TableRowStyle;
-        ScrollBarStyle: UE.ScrollBarStyle;
-        ContentPadding: UE.Margin;
-        MaxListHeight: number;
-        HasDownArrow: boolean;
-        EnableGamepadNavigationMode: boolean;
-        Font: UE.SlateFontInfo;
-        ForegroundColor: UE.SlateColor;
-        bIsFocusable: boolean;
-        OnGenerateWidgetEvent: $Delegate<(Item: string) => UE.Widget>;
-        OnSelectionChanged: $MulticastDelegate<(SelectedItem: string, SelectionType: UE.ESelectInfo) => void>;
-        OnOpening: $MulticastDelegate<() => void>;
-        AddOption(Option: string) : void;
-        ClearOptions() : void;
-        ClearSelection() : void;
-        FindOptionIndex(Option: string) : number;
-        GetOptionAtIndex(Index: number) : string;
-        /*
-         *Returns the number of options
-         */
-        GetOptionCount() : number;
-        GetSelectedIndex() : number;
-        GetSelectedOption() : string;
-        IsOpen() : boolean;
-        OnOpeningEvent__DelegateSignature() : void;
-        OnSelectionChangedEvent__DelegateSignature(SelectedItem: string, SelectionType: UE.ESelectInfo) : void;
-        /*
-         *Refreshes the list of options.  If you added new ones, and want to update the list even if it's
-         *currently being displayed use this.
-         */
-        RefreshOptions() : void;
-        RemoveOption(Option: string) : boolean;
-        SetSelectedIndex(Index: number) : void;
-        SetSelectedOption(Option: string) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): ComboBoxString;
-        static Load(InName: string): ComboBoxString;
-    
-        __tid_ComboBoxString_0__: boolean;
-    }
-    
-    class ContentWidget extends UE.PanelWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        GetContent() : UE.Widget;
-        GetContentSlot() : UE.PanelSlot;
-        SetContent(Content: $Nullable<UE.Widget>) : UE.PanelSlot;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): ContentWidget;
-        static Load(InName: string): ContentWidget;
-    
-        __tid_ContentWidget_0__: boolean;
-    }
-    
-    enum EButtonClickMethod { DownAndUp, MouseDown, MouseUp, PreciseClick, EButtonClickMethod_MAX, __typeKeyDoNoAccess}
-    enum EButtonTouchMethod { DownAndUp, Down, PreciseTap, EButtonTouchMethod_MAX, __typeKeyDoNoAccess}
-    enum EButtonPressMethod { DownAndUp, ButtonPress, ButtonRelease, EButtonPressMethod_MAX, __typeKeyDoNoAccess}
-    class Button extends UE.ContentWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        WidgetStyle: UE.ButtonStyle;
-        ColorAndOpacity: UE.LinearColor;
-        BackgroundColor: UE.LinearColor;
-        ClickMethod: UE.EButtonClickMethod;
-        TouchMethod: UE.EButtonTouchMethod;
-        PressMethod: UE.EButtonPressMethod;
-        IsFocusable: boolean;
-        OnClicked: $MulticastDelegate<() => void>;
-        OnPressed: $MulticastDelegate<() => void>;
-        OnReleased: $MulticastDelegate<() => void>;
-        OnHovered: $MulticastDelegate<() => void>;
-        OnUnhovered: $MulticastDelegate<() => void>;
-        /*
-         *Returns true if the user is actively pressing the button.  Do not use this for detecting 'Clicks', use the OnClicked event instead.
-         *
-         *@return true if the user is actively pressing the button otherwise false.
-         */
-        IsPressed() : boolean;
-        /*
-         *Sets the color multiplier for the button background
-         */
-        SetBackgroundColor(InBackgroundColor: UE.LinearColor) : void;
-        SetClickMethod(InClickMethod: UE.EButtonClickMethod) : void;
-        /*
-         *Sets the color multiplier for the button content
-         */
-        SetColorAndOpacity(InColorAndOpacity: UE.LinearColor) : void;
-        SetPressMethod(InPressMethod: UE.EButtonPressMethod) : void;
-        /*
-         *Sets the color multiplier for the button background
-         */
-        SetStyle(InStyle: UE.ButtonStyle) : void;
-        SetTouchMethod(InTouchMethod: UE.EButtonTouchMethod) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Button;
-        static Load(InName: string): Button;
-    
-        __tid_Button_0__: boolean;
-    }
-    
-    class LevelSequencePlayer extends UE.MovieSceneSequencePlayer {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnCameraCut: $MulticastDelegate<(CameraComponent: $Nullable<UE.CameraComponent>) => void>;
-        /*
-         *Get the active camera cut camera
-         */
-        GetActiveCameraComponent() : UE.CameraComponent;
-        /*
-         *Create a new level sequence player.
-         *
-         *@param WorldContextObject Context object from which to retrieve a UWorld.
-         *@param LevelSequence The level sequence to play.
-         *@param Settings The desired playback settings
-         *@param OutActor The level sequence actor created to play this sequence.
-         */
-        static CreateLevelSequencePlayer(WorldContextObject: $Nullable<UE.Object>, LevelSequence: $Nullable<UE.LevelSequence>, Settings: UE.MovieSceneSequencePlaybackSettings, OutActor: $Ref<UE.LevelSequenceActor>) : UE.LevelSequencePlayer;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LevelSequencePlayer;
-        static Load(InName: string): LevelSequencePlayer;
-    
-        __tid_LevelSequencePlayer_0__: boolean;
-    }
-    
-    class LevelSequenceCameraSettings {
-        constructor();
-        constructor(bOverrideAspectRatioAxisConstraint: boolean, AspectRatioAxisConstraint: UE.EAspectRatioAxisConstraint);
-        bOverrideAspectRatioAxisConstraint: boolean;
-        AspectRatioAxisConstraint: UE.EAspectRatioAxisConstraint;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_LevelSequenceCameraSettings_0__: boolean;
-    }
-    
-    class LevelSequenceBurnInInitSettings extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LevelSequenceBurnInInitSettings;
-        static Load(InName: string): LevelSequenceBurnInInitSettings;
-    
-        __tid_LevelSequenceBurnInInitSettings_0__: boolean;
-    }
-    
-    class LevelSequenceBurnInOptions extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bUseBurnIn: boolean;
-        BurnInClass: UE.SoftClassPath;
-        Settings: UE.LevelSequenceBurnInInitSettings;
-        /*
-         *Loads the specified class path and initializes an instance, then stores it in Settings.
-         */
-        SetBurnIn(InBurnInClass: UE.SoftClassPath) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LevelSequenceBurnInOptions;
-        static Load(InName: string): LevelSequenceBurnInOptions;
-    
-        __tid_LevelSequenceBurnInOptions_0__: boolean;
-    }
-    
-    class MovieSceneBindingOverrideData {
-        constructor();
-        constructor(ObjectBindingId: UE.MovieSceneObjectBindingID, Object: TSoftObjectPtr<UE.Object>, bOverridesDefault: boolean);
-        ObjectBindingId: UE.MovieSceneObjectBindingID;
-        Object: TSoftObjectPtr<UE.Object>;
-        bOverridesDefault: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_MovieSceneBindingOverrideData_0__: boolean;
-    }
-    
-    class MovieSceneBindingOverrides extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        BindingData: TArray<UE.MovieSceneBindingOverrideData>;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): MovieSceneBindingOverrides;
-        static Load(InName: string): MovieSceneBindingOverrides;
-    
-        __tid_MovieSceneBindingOverrides_0__: boolean;
-    }
-    
-    class LevelSequencePlayerSnapshot {
-        constructor();
-        constructor(RootName: string, RootTime: UE.QualifiedFrameTime, SourceTime: UE.QualifiedFrameTime, CurrentShotName: string, CurrentShotLocalTime: UE.QualifiedFrameTime, CurrentShotSourceTime: UE.QualifiedFrameTime, SourceTimecode: string, CameraComponent: TSoftObjectPtr<UE.CameraComponent>, ActiveShot: UE.LevelSequence, ShotID: UE.MovieSceneSequenceID, MasterName: string, MasterTime: UE.QualifiedFrameTime);
-        RootName: string;
-        RootTime: UE.QualifiedFrameTime;
-        SourceTime: UE.QualifiedFrameTime;
-        CurrentShotName: string;
-        CurrentShotLocalTime: UE.QualifiedFrameTime;
-        CurrentShotSourceTime: UE.QualifiedFrameTime;
-        SourceTimecode: string;
-        CameraComponent: TSoftObjectPtr<UE.CameraComponent>;
-        ActiveShot: UE.LevelSequence;
-        ShotID: UE.MovieSceneSequenceID;
-        MasterName: string;
-        MasterTime: UE.QualifiedFrameTime;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_LevelSequencePlayerSnapshot_0__: boolean;
-    }
-    
-    class LevelSequenceBurnIn extends UE.UserWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        FrameInformation: UE.LevelSequencePlayerSnapshot;
-        LevelSequenceActor: UE.LevelSequenceActor;
-        /*
-         *Get the settings class to use for this burn in
-         */
-        GetSettingsClass() : UE.Class;
-        /*
-         *Called when this burn in is receiving its settings
-         */
-        SetSettings(InSettings: $Nullable<UE.Object>) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LevelSequenceBurnIn;
-        static Load(InName: string): LevelSequenceBurnIn;
-    
-        __tid_LevelSequenceBurnIn_0__: boolean;
-    }
-    
-    class WorldPartitionResolveData {
-        constructor();
-        constructor(ContainerID: UE.ActorContainerID, SourceWorldAssetPath: UE.TopLevelAssetPath);
-        ContainerID: UE.ActorContainerID;
-        SourceWorldAssetPath: UE.TopLevelAssetPath;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_WorldPartitionResolveData_0__: boolean;
-    }
-    
-    class LevelSequenceActor extends UE.Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        PlaybackSettings: UE.MovieSceneSequencePlaybackSettings;
-        SequencePlayer: UE.LevelSequencePlayer;
-        LevelSequenceAsset: UE.LevelSequence;
-        LevelSequence_EditorOnly: UE.SoftObjectPath;
-        CameraSettings: UE.LevelSequenceCameraSettings;
-        BurnInOptions: UE.LevelSequenceBurnInOptions;
-        BindingOverrides: UE.MovieSceneBindingOverrides;
-        bAutoPlay: boolean;
-        bOverrideInstanceData: boolean;
-        bReplicatePlayback: boolean;
-        DefaultInstanceData: UE.Object;
-        BurnInInstance: UE.LevelSequenceBurnIn;
-        bShowBurnin: boolean;
-        WorldPartitionResolveData: UE.WorldPartitionResolveData;
-        /*
-         *Adds the specified actor to the overridden bindings for the specified binding ID, optionally still allowing the bindings defined in the Level Sequence asset
-         *
-         *@param Binding Binding to modify
-         *@param Actor Actor to bind
-         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
-         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
-         *                                                               set in Sequencer UI. This function will not modify the original asset.
-         */
-        AddBinding(Binding: UE.MovieSceneObjectBindingID, Actor: $Nullable<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
-        /*
-         *Binds an actor to all the bindings tagged with the specified name in this sequence. Does not remove any exising bindings that have been set up through this API. Object Bindings can be tagged within the sequence UI by RMB -> Tags... on the object binding in the tree.
-         *
-         *@param BindingTag   The unique tag name to lookup bindings with
-         *@param Actor        The actor to assign to all the tagged bindings
-         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
-         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
-         *                                                               set in Sequencer UI. This function will not modify the original asset.
-         */
-        AddBindingByTag(BindingTag: string, Actor: $Nullable<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
-        /*
-         *Retrieve the first object binding that has been tagged with the specified name
-         */
-        FindNamedBinding(Tag: string) : UE.MovieSceneObjectBindingID;
-        /*
-         *Retrieve all the bindings that have been tagged with the specified name
-         *
-         *@param Tag  The unique tag name to lookup bindings with. Object Bindings can be tagged within the sequence UI by RMB -> Tags... on the object binding in the tree.
-         *@return An array containing all the bindings that are tagged with this name, potentially empty.
-         */
-        FindNamedBindings(Tag: string) : TArray<UE.MovieSceneObjectBindingID>;
-        /*
-         *Get the level sequence being played by this actor.
-         *
-         *@return Level sequence, or nullptr if not assigned or if it cannot be loaded.
-         *@see SetSequence
-         */
-        GetSequence() : UE.LevelSequence;
-        /*
-         *Access this actor's sequence player, or None if it is not yet initialized
-         */
-        GetSequencePlayer() : UE.LevelSequencePlayer;
-        /*
-         *Hide burnin
-         */
-        HideBurnin() : void;
-        OnLevelSequenceLoaded__DelegateSignature() : void;
-        /*
-         *Removes the specified actor from the specified binding's actor array
-         */
-        RemoveBinding(Binding: UE.MovieSceneObjectBindingID, Actor: $Nullable<UE.Actor>) : void;
-        /*
-         *Removes the specified actor from the specified binding's actor array
-         */
-        RemoveBindingByTag(Tag: string, Actor: $Nullable<UE.Actor>) : void;
-        /*
-         *Resets the specified binding back to the defaults defined by the Level Sequence asset
-         */
-        ResetBinding(Binding: UE.MovieSceneObjectBindingID) : void;
-        /*
-         *Resets all overridden bindings back to the defaults defined by the Level Sequence asset
-         */
-        ResetBindings() : void;
-        /*
-         *Overrides the specified binding with the specified actors, optionally still allowing the bindings defined in the Level Sequence asset
-         *
-         *@param Binding Binding to modify
-         *@param Actors Actors to bind
-         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
-         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
-         *                                                               set in Sequencer UI. This function will not modify the original asset.
-         */
-        SetBinding(Binding: UE.MovieSceneObjectBindingID, Actors: TArray<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
-        /*
-         *Assigns an set of actors to all the bindings tagged with the specified name in this sequence. Object Bindings can be tagged within the sequence UI by RMB -> Tags... on the object binding in the tree.
-         *
-         *@param BindingTag   The unique tag name to lookup bindings with
-         *@param Actors       The actors to assign to all the tagged bindings
-         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
-         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
-         *                                                               set in Sequencer UI. This function will not modify the original asset.
-         */
-        SetBindingByTag(BindingTag: string, Actors: TArray<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
-        /*
-         *Set whether or not to replicate playback for this actor
-         */
-        SetReplicatePlayback(ReplicatePlayback: boolean) : void;
-        /*
-         *Set the level sequence being played by this actor.
-         *
-         *@param InSequence The sequence object to set.
-         *@see GetSequence
-         */
-        SetSequence(InSequence: $Nullable<UE.LevelSequence>) : void;
-        /*
-         *Show burnin
-         */
-        ShowBurnin() : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LevelSequenceActor;
-        static Load(InName: string): LevelSequenceActor;
-    
-        __tid_LevelSequenceActor_0__: boolean;
-    }
-    
     class AnimationSequenceBrowserContextMenuContext extends UE.Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         SelectedObjects: TArray<TWeakObjectPtr<UE.Object>>;
@@ -38690,54 +37469,13 @@ declare module "ue" {
         __tid_AnimBlueprintFunctionPinInfo_0__: boolean;
     }
     
-    class AnimNodeExposedValueHandler {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AnimNodeExposedValueHandler_0__: boolean;
-    }
+    class AnimBlueprintGeneratedStruct extends UE.ScriptStruct {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): AnimBlueprintGeneratedStruct;
+        static Load(InName: string): AnimBlueprintGeneratedStruct;
     
-    class AnimNodeExposedValueHandler_Base extends UE.AnimNodeExposedValueHandler {
-        constructor();
-        constructor(Function: UE.Function, BoundFunction: string);
-        Function: UE.Function;
-        BoundFunction: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AnimNodeExposedValueHandler_Base_0__: boolean;
-    }
-    
-    enum EPostCopyOperation { None, LogicalNegateBool, EPostCopyOperation_MAX, __typeKeyDoNoAccess}
-    class ExposedValueCopyRecord {
-        constructor();
-        constructor(CopyIndex: number, PostCopyOperation: UE.EPostCopyOperation, bOnlyUpdateWhenActive: boolean);
-        CopyIndex: number;
-        PostCopyOperation: UE.EPostCopyOperation;
-        bOnlyUpdateWhenActive: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ExposedValueCopyRecord_0__: boolean;
-    }
-    
-    class AnimNodeExposedValueHandler_PropertyAccess extends UE.AnimNodeExposedValueHandler_Base {
-        constructor();
-        constructor(CopyRecords: TArray<UE.ExposedValueCopyRecord>);
-        CopyRecords: TArray<UE.ExposedValueCopyRecord>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_AnimNodeExposedValueHandler_PropertyAccess_0__: boolean;
+        __tid_AnimBlueprintGeneratedStruct_0__: boolean;
     }
     
     class AnimBlueprintMutableData {
@@ -38748,15 +37486,6 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_AnimBlueprintMutableData_0__: boolean;
-    }
-    
-    class AnimBlueprintGeneratedStruct extends UE.ScriptStruct {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): AnimBlueprintGeneratedStruct;
-        static Load(InName: string): AnimBlueprintGeneratedStruct;
-    
-        __tid_AnimBlueprintGeneratedStruct_0__: boolean;
     }
     
     class AnimBlueprintPostCompileValidation extends UE.Object {
@@ -43536,6 +42265,56 @@ declare module "ue" {
         __tid_AnimNodeControlRigLibrary_0__: boolean;
     }
     
+    class AnimNodeExposedValueHandler {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AnimNodeExposedValueHandler_0__: boolean;
+    }
+    
+    class AnimNodeExposedValueHandler_Base extends UE.AnimNodeExposedValueHandler {
+        constructor();
+        constructor(Function: UE.Function, BoundFunction: string);
+        Function: UE.Function;
+        BoundFunction: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AnimNodeExposedValueHandler_Base_0__: boolean;
+    }
+    
+    enum EPostCopyOperation { None, LogicalNegateBool, EPostCopyOperation_MAX, __typeKeyDoNoAccess}
+    class ExposedValueCopyRecord {
+        constructor();
+        constructor(CopyIndex: number, PostCopyOperation: UE.EPostCopyOperation, bOnlyUpdateWhenActive: boolean);
+        CopyIndex: number;
+        PostCopyOperation: UE.EPostCopyOperation;
+        bOnlyUpdateWhenActive: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ExposedValueCopyRecord_0__: boolean;
+    }
+    
+    class AnimNodeExposedValueHandler_PropertyAccess extends UE.AnimNodeExposedValueHandler_Base {
+        constructor();
+        constructor(CopyRecords: TArray<UE.ExposedValueCopyRecord>);
+        CopyRecords: TArray<UE.ExposedValueCopyRecord>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_AnimNodeExposedValueHandler_PropertyAccess_0__: boolean;
+    }
+    
     class RigidBodyAnimNodeReference extends UE.AnimNodeReference {
         constructor();
         /**
@@ -45349,6 +44128,86 @@ declare module "ue" {
         static Load(InName: string): NiagaraValidationRuleSet;
     
         __tid_NiagaraValidationRuleSet_0__: boolean;
+    }
+    
+    enum EHorizTextAligment { EHTA_Left, EHTA_Center, EHTA_Right, EHTA_MAX, __typeKeyDoNoAccess}
+    enum EVerticalTextAligment { EVRTA_TextTop, EVRTA_TextCenter, EVRTA_TextBottom, EVRTA_QuadTop, EVRTA_MAX, __typeKeyDoNoAccess}
+    class TextRenderComponent extends UE.PrimitiveComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Text: string;
+        TextMaterial: UE.MaterialInterface;
+        Font: UE.Font;
+        HorizontalAlignment: UE.EHorizTextAligment;
+        VerticalAlignment: UE.EVerticalTextAligment;
+        TextRenderColor: UE.Color;
+        XScale: number;
+        YScale: number;
+        WorldSize: number;
+        InvDefaultSize: number;
+        HorizSpacingAdjust: number;
+        VertSpacingAdjust: number;
+        bAlwaysRenderAsText: boolean;
+        /*
+         *Get local size of text
+         */
+        GetTextLocalSize() : UE.Vector;
+        /*
+         *Get world space size of text
+         */
+        GetTextWorldSize() : UE.Vector;
+        /*
+         *Change the text value and signal the primitives to be rebuilt
+         */
+        K2_SetText(Value: string) : void;
+        /*
+         *Change the font and signal the primitives to be rebuilt
+         */
+        SetFont(Value: $Nullable<UE.Font>) : void;
+        /*
+         *Change the horizontal alignment and signal the primitives to be rebuilt
+         */
+        SetHorizontalAlignment(Value: UE.EHorizTextAligment) : void;
+        /*
+         *Change the text horizontal spacing adjustment and signal the primitives to be rebuilt
+         */
+        SetHorizSpacingAdjust(Value: number) : void;
+        /*
+         *Change the text value and signal the primitives to be rebuilt
+         */
+        SetText(Value: string) : void;
+        /*
+         *Change the text material and signal the primitives to be rebuilt
+         */
+        SetTextMaterial(Material: $Nullable<UE.MaterialInterface>) : void;
+        /*
+         *Change the text render color and signal the primitives to be rebuilt
+         */
+        SetTextRenderColor(Value: UE.Color) : void;
+        /*
+         *Change the vertical alignment and signal the primitives to be rebuilt
+         */
+        SetVerticalAlignment(Value: UE.EVerticalTextAligment) : void;
+        /*
+         *Change the text vertical spacing adjustment and signal the primitives to be rebuilt
+         */
+        SetVertSpacingAdjust(Value: number) : void;
+        /*
+         *Change the world size of the text and signal the primitives to be rebuilt
+         */
+        SetWorldSize(Value: number) : void;
+        /*
+         *Change the text X scale and signal the primitives to be rebuilt
+         */
+        SetXScale(Value: number) : void;
+        /*
+         *Change the text Y scale and signal the primitives to be rebuilt
+         */
+        SetYScale(Value: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TextRenderComponent;
+        static Load(InName: string): TextRenderComponent;
+    
+        __tid_TextRenderComponent_0__: boolean;
     }
     
     class NiagaraPerfBaselineActor extends UE.Actor {
@@ -47840,6 +46699,30 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_ArcTanDataflowNode_0__: boolean;
+    }
+    
+    class BoxComponent extends UE.ShapeComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        BoxExtent: UE.Vector;
+        /*
+         *@return the box extent, scaled by the component scale.
+         */
+        GetScaledBoxExtent() : UE.Vector;
+        /*
+         *@return the box extent, ignoring component scale.
+         */
+        GetUnscaledBoxExtent() : UE.Vector;
+        /*
+         *Change the box extent size. This is the unscaled size, before component scale is applied.
+         *@param       InBoxExtent: new extent (radius) for the box.
+         *@param       bUpdateOverlaps: if true and this shape is registered and collides, updates touching array for owner actor.
+         */
+        SetBoxExtent(InBoxExtent: UE.Vector, bUpdateOverlaps?: boolean /* = true */) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BoxComponent;
+        static Load(InName: string): BoxComponent;
+    
+        __tid_BoxComponent_0__: boolean;
     }
     
     class AreaCollisionBox extends UE.Actor {
@@ -50875,6 +49758,16 @@ declare module "ue" {
         __tid_MigrationOptions_0__: boolean;
     }
     
+    class DateTime {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_DateTime_0__: boolean;
+    }
+    
     class RevisionInfo {
         constructor();
         constructor(Revision: string, Changelist: number, Date: UE.DateTime);
@@ -51724,6 +50617,23 @@ declare module "ue" {
         static Load(InName: string): WidgetBlueprintGeneratedClass;
     
         __tid_WidgetBlueprintGeneratedClass_0__: boolean;
+    }
+    
+    class EditorUtilityWidget extends UE.UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        TabDisplayName: string;
+        HelpText: string;
+        bAlwaysReregisterWithWindowsMenu: boolean;
+        bAutoRunDefaultAction: boolean;
+        /*
+         *The default action called when the widget is invoked if bAutoRunDefaultAction=true (it is never called otherwise)
+         */
+        Run_EditorOnly() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): EditorUtilityWidget;
+        static Load(InName: string): EditorUtilityWidget;
+    
+        __tid_EditorUtilityWidget_0__: boolean;
     }
     
     class UserWidgetBlueprint extends UE.Blueprint {
@@ -53026,80 +51936,29 @@ declare module "ue" {
         __tid_BaseSystemComponent_0__: boolean;
     }
     
-    class SpringArmComponent extends UE.SceneComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        TargetArmLength: number;
-        SocketOffset: UE.Vector;
-        TargetOffset: UE.Vector;
-        ProbeSize: number;
-        ProbeChannel: UE.ECollisionChannel;
-        bDoCollisionTest: boolean;
-        bUsePawnControlRotation: boolean;
-        bInheritPitch: boolean;
-        bInheritYaw: boolean;
-        bInheritRoll: boolean;
-        bEnableCameraLag: boolean;
-        bEnableCameraRotationLag: boolean;
-        bUseCameraLagSubstepping: boolean;
-        bDrawDebugLagMarkers: boolean;
-        CameraLagSpeed: number;
-        CameraRotationLagSpeed: number;
-        CameraLagMaxTimeStep: number;
-        CameraLagMaxDistance: number;
-        bClampToMaxPhysicsDeltaTime: boolean;
-        /*
-         *Get the target rotation we inherit, used as the base target for the boom rotation.
-         *This is derived from attachment to our parent and considering the UsePawnControlRotation and absolute rotation flags.
-         */
-        GetTargetRotation() : UE.Rotator;
-        /*
-         *Get the position where the camera should be without applying the Collision Test displacement
-         */
-        GetUnfixedCameraPosition() : UE.Vector;
-        /*
-         *Is the Collision Test displacement being applied?
-         */
-        IsCollisionFixApplied() : boolean;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SpringArmComponent;
-        static Load(InName: string): SpringArmComponent;
-    
-        __tid_SpringArmComponent_0__: boolean;
-    }
-    
-    class CurrsorCameraComponent extends UE.CameraComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bWasInCollision: boolean;
-        /*
-         *更新景深效果
-         *@param FocalDistance 焦距
-         *@param bIsCollision 是否处于碰撞状态
-         *@param TargetArmLength 目标臂长（弹簧臂的原始长度）
-         */
-        UpdateDOF(FocalDistance: number, bIsCollision: boolean, TargetArmLength: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorCameraComponent;
-        static Load(InName: string): CurrsorCameraComponent;
-    
-        __tid_CurrsorCameraComponent_0__: boolean;
-    }
-    
     class HealthComponent extends UE.ActorComponent {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         OnHealthChanged: $MulticastDelegate<(CurrentHealth: number, MaxHealth: number, DamageAmount: number) => void>;
         OnDeath: $MulticastDelegate<(DeadActor: $Nullable<UE.Actor>) => void>;
         MaxHealth: number;
         CurrentHealth: number;
+        Defense: number;
         bCanTakeDamage: boolean;
         bAutoRespawn: boolean;
         RespawnDelay: number;
+        CalculateDamageReduction(IncomingDamage: number) : number;
         GetCurrentHealth() : number;
+        GetDefense() : number;
         GetHealthPercentage() : number;
         GetMaxHealth() : number;
         Heal(HealAmount: number) : void;
         IsDead() : boolean;
         IsFullHealth() : boolean;
         SetCurrentHealth(NewHealth: number) : void;
+        /*
+         *防御值管理（护盾机制：受到伤害时优先扣除防御值）
+         */
+        SetDefense(NewDefense: number) : void;
         /*
          *生命值管理
          */
@@ -53145,605 +52004,6 @@ declare module "ue" {
         static Load(InName: string): BaseState;
     
         __tid_BaseState_0__: boolean;
-    }
-    
-    class PlayerMappableKeyOptions {
-        constructor();
-        constructor(Metadata: UE.Object, Name: string, DisplayName: string, DisplayCategory: string);
-        Metadata: UE.Object;
-        Name: string;
-        DisplayName: string;
-        DisplayCategory: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_PlayerMappableKeyOptions_0__: boolean;
-    }
-    
-    class InputActionValue {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InputActionValue_0__: boolean;
-    }
-    
-    enum EInputActionValueType { Boolean, Axis1D, Axis2D, Axis3D, EInputActionValueType_MAX, __typeKeyDoNoAccess}
-    enum EInputActionAccumulationBehavior { TakeHighestAbsoluteValue, Cumulative, EInputActionAccumulationBehavior_MAX, __typeKeyDoNoAccess}
-    class InputModifier extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        /*
-         *Helper to allow debug visualization of the modifier.
-         *@param SampleValue - The base input action value pre-modification (ranging -1 -> 1 across all applicable axes).
-         *@param FinalValue - The post-modification input action value for the provided SampleValue.
-         */
-        GetVisualizationColor(SampleValue: UE.InputActionValue, FinalValue: UE.InputActionValue) : UE.LinearColor;
-        /*
-         *ModifyRaw
-         *Will be called by each modifier in the modifier chain
-         *@param CurrentValue - The modified value returned by the previous modifier in the chain, or the base raw value if this is the first modifier in the chain.
-         */
-        ModifyRaw(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, CurrentValue: UE.InputActionValue, DeltaTime: number) : UE.InputActionValue;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputModifier;
-        static Load(InName: string): InputModifier;
-    
-        __tid_InputModifier_0__: boolean;
-    }
-    
-    class GameplayTagContainer {
-        constructor();
-        constructor(GameplayTags: TArray<UE.GameplayTag>, ParentTags: TArray<UE.GameplayTag>);
-        GameplayTags: TArray<UE.GameplayTag>;
-        ParentTags: TArray<UE.GameplayTag>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_GameplayTagContainer_0__: boolean;
-    }
-    
-    class PlayerMappableKeySettings extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Metadata: UE.Object;
-        Name: string;
-        DisplayName: string;
-        DisplayCategory: string;
-        SupportedKeyProfiles: UE.GameplayTagContainer;
-        /*
-         *Get the known mapping names that are current in use. This is a helper function if you want to use a "GetOptions" metadata on a UPROPERTY.
-         *For example, the following will display a little drop down menu to select from all current mapping names:
-         *
-         * UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(GetOptions="EnhancedInput.PlayerMappableKeySettings.GetKnownMappingNames"))
-         * FName MappingName;
-         */
-        static GetKnownMappingNames_EditorOnly() : TArray<string>;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): PlayerMappableKeySettings;
-        static Load(InName: string): PlayerMappableKeySettings;
-    
-        __tid_PlayerMappableKeySettings_0__: boolean;
-    }
-    
-    class InputAction extends UE.DataAsset {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ActionDescription: string;
-        bTriggerWhenPaused: boolean;
-        bConsumeInput: boolean;
-        bConsumesActionAndAxisMappings: boolean;
-        bReserveAllMappings: boolean;
-        TriggerEventsThatConsumeLegacyKeys: number;
-        ValueType: UE.EInputActionValueType;
-        AccumulationBehavior: UE.EInputActionAccumulationBehavior;
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputAction;
-        static Load(InName: string): InputAction;
-    
-        __tid_InputAction_0__: boolean;
-    }
-    
-    class KeyConsumptionOptions {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_KeyConsumptionOptions_0__: boolean;
-    }
-    
-    enum ETriggerEvent { None, Triggered, Started, Ongoing, Canceled, Completed, ETriggerEvent_MAX, __typeKeyDoNoAccess}
-    class InputActionInstance {
-        constructor();
-        constructor(SourceAction: UE.InputAction, TriggerEvent: UE.ETriggerEvent, LastTriggeredWorldTime: number, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, ElapsedProcessedTime: number, ElapsedTriggeredTime: number);
-        SourceAction: UE.InputAction;
-        TriggerEvent: UE.ETriggerEvent;
-        LastTriggeredWorldTime: number;
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        ElapsedProcessedTime: number;
-        ElapsedTriggeredTime: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InputActionInstance_0__: boolean;
-    }
-    
-    class InjectedInput {
-        constructor();
-        constructor(Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>);
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InjectedInput_0__: boolean;
-    }
-    
-    class InjectedInputArray {
-        constructor();
-        constructor(Injected: TArray<UE.InjectedInput>);
-        Injected: TArray<UE.InjectedInput>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_InjectedInputArray_0__: boolean;
-    }
-    
-    class EnhancedPlayerInput extends UE.PlayerInput {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        KeyConsumptionData: TMap<UE.InputAction, UE.KeyConsumptionOptions>;
-        AppliedInputContexts: TMap<UE.InputMappingContext, number>;
-        EnhancedActionMappings: TArray<UE.EnhancedActionKeyMapping>;
-        ActionInstanceData: TMap<UE.InputAction, UE.InputActionInstance>;
-        KeysPressedThisTick: TMap<UE.Key, UE.Vector>;
-        InputsInjectedThisTick: TMap<UE.InputAction, UE.InjectedInputArray>;
-        LastInjectedActions: TSet<UE.InputAction>;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): EnhancedPlayerInput;
-        static Load(InName: string): EnhancedPlayerInput;
-    
-        __tid_EnhancedPlayerInput_0__: boolean;
-    }
-    
-    enum ETriggerState { None, Ongoing, Triggered, ETriggerState_MAX, __typeKeyDoNoAccess}
-    enum ETriggerType { Explicit, Implicit, Blocker, ETriggerType_MAX, __typeKeyDoNoAccess}
-    class InputTrigger extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ActuationThreshold: number;
-        bShouldAlwaysTick: boolean;
-        LastValue: UE.InputActionValue;
-        /*
-         *Changes the way this trigger affects an action with multiple triggers:
-         *        All implicit triggers must be triggering to trigger the action.
-         *        If there are any explicit triggers at least one must be triggering to trigger the action.
-         */
-        GetTriggerType() : UE.ETriggerType;
-        /*
-         ** Is the value passed in sufficiently large to be of interest to the trigger.
-         ** This is a helper function that implements the most obvious (>=) interpretation of the actuation threshold.
-         */
-        IsActuated(ForValue: UE.InputActionValue) : boolean;
-        /*
-         *This function checks if the requisite conditions have been met for the trigger to fire.
-         * Returns Trigger State None              - No trigger conditions have been met. Trigger is inactive.
-         *                 Trigger State Ongoing   - Some trigger conditions have been met. Trigger is processing but not yet active.
-         *                 Trigger State Triggered - All trigger conditions have been met to fire. Trigger is active.
-         */
-        UpdateState(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, ModifiedValue: UE.InputActionValue, DeltaTime: number) : UE.ETriggerState;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputTrigger;
-        static Load(InName: string): InputTrigger;
-    
-        __tid_InputTrigger_0__: boolean;
-    }
-    
-    enum EPlayerMappableKeySettingBehaviors { InheritSettingsFromAction, OverrideSettings, IgnoreSettings, EPlayerMappableKeySettingBehaviors_MAX, __typeKeyDoNoAccess}
-    class EnhancedActionKeyMapping {
-        constructor();
-        constructor(PlayerMappableOptions: UE.PlayerMappableKeyOptions, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, Action: UE.InputAction, Key: UE.Key, bShouldBeIgnored: boolean, bIsPlayerMappable: boolean, SettingBehavior: UE.EPlayerMappableKeySettingBehaviors, PlayerMappableKeySettings: UE.PlayerMappableKeySettings);
-        PlayerMappableOptions: UE.PlayerMappableKeyOptions;
-        Triggers: TArray<UE.InputTrigger>;
-        Modifiers: TArray<UE.InputModifier>;
-        Action: UE.InputAction;
-        Key: UE.Key;
-        bShouldBeIgnored: boolean;
-        bIsPlayerMappable: boolean;
-        SettingBehavior: UE.EPlayerMappableKeySettingBehaviors;
-        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_EnhancedActionKeyMapping_0__: boolean;
-    }
-    
-    class InputMappingContext extends UE.DataAsset {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Mappings: TArray<UE.EnhancedActionKeyMapping>;
-        ContextDescription: string;
-        /*
-         *Map a key to an action within the mapping context.
-         */
-        MapKey(Action: $Nullable<UE.InputAction>, ToKey: UE.Key) : UE.EnhancedActionKeyMapping;
-        UnmapAction(Action: $Nullable<UE.InputAction>) : void;
-        /*
-         *Unmap everything within the mapping context.
-         */
-        UnmapAll() : void;
-        /*
-         *Unmap all key maps to an action within the mapping context.
-         */
-        UnmapAllKeysFromAction(Action: $Nullable<UE.InputAction>) : void;
-        /*
-         *Unmap a key from an action within the mapping context.
-         */
-        UnmapKey(Action: $Nullable<UE.InputAction>, Key: UE.Key) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): InputMappingContext;
-        static Load(InName: string): InputMappingContext;
-    
-        __tid_InputMappingContext_0__: boolean;
-    }
-    
-    class CurrsorActionComponent extends UE.ActorComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrsorPlayer: UE.CurrsorCharacter;
-        CurrsorPlayerState: UE.CurrsorPlayerState;
-        CurrsorPlayerController: UE.CurrsorPlayerController;
-        CurrentMovementVector: number;
-        MovementSpeed: number;
-        bRotationAdjustmentEnabled: boolean;
-        AttackCompleted() : void;
-        GetMovementSpeed() : number;
-        IsRotationAdjustmentEnabled() : boolean;
-        Move(Value: UE.InputActionValue) : void;
-        /*
-         *重置旋转调整为默认启用状态（便捷方法）
-         */
-        ResetRotationAdjustment() : void;
-        /*
-         *旋转调整控制方法
-         */
-        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
-        TryStartAttack() : boolean;
-        UpdateRotationBasedOnInput(DeltaTime: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorActionComponent;
-        static Load(InName: string): CurrsorActionComponent;
-    
-        __tid_CurrsorActionComponent_0__: boolean;
-    }
-    
-    class StateTransitionRule {
-        constructor();
-        constructor(FromState: UE.ECharacterState, ToState: UE.ECharacterState, bIsAllowed: boolean, MinDuration: number);
-        FromState: UE.ECharacterState;
-        ToState: UE.ECharacterState;
-        bIsAllowed: boolean;
-        MinDuration: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_StateTransitionRule_0__: boolean;
-    }
-    
-    class StateManagerComponent extends UE.BaseSystemComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnStateChanged: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, OldState: UE.ECharacterState) => void>;
-        OnStateTransitionFailed: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, AttemptedState: UE.ECharacterState) => void>;
-        ActorStates: TMap<TWeakObjectPtr<UE.Actor>, UE.ActorStateData>;
-        StatePriorities: TMap<UE.ECharacterState, number>;
-        TransitionRules: TArray<UE.StateTransitionRule>;
-        bEnableDebugLogging: boolean;
-        bEnableStateTicking: boolean;
-        DefaultMinStateDuration: number;
-        /*
-         *转换规则
-         */
-        AddTransitionRule(Rule: UE.StateTransitionRule) : void;
-        CanTransitionTo(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState) : boolean;
-        /*
-         *状态管理
-         */
-        ChangeState(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, bForceChange?: boolean /* = false */) : boolean;
-        ClearTransitionRules() : void;
-        GetCurrentState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
-        GetManagedActorCount() : number;
-        GetPreviousState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
-        /*
-         *状态持续时间
-         */
-        GetStateElapsedTime(Actor: $Nullable<UE.Actor>) : number;
-        /*
-         *状态优先级
-         */
-        GetStatePriority(State: UE.ECharacterState) : number;
-        HasStateMinDurationPassed(Actor: $Nullable<UE.Actor>) : boolean;
-        IsInAnyState(Actor: $Nullable<UE.Actor>, States: TArray<UE.ECharacterState>) : boolean;
-        /*
-         *状态查询
-         */
-        IsInState(Actor: $Nullable<UE.Actor>, State: UE.ECharacterState) : boolean;
-        RemoveTransitionRule(FromState: UE.ECharacterState, ToState: UE.ECharacterState) : void;
-        SetStatePriority(State: UE.ECharacterState, Priority: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): StateManagerComponent;
-        static Load(InName: string): StateManagerComponent;
-    
-        __tid_StateManagerComponent_0__: boolean;
-    }
-    
-    class TableRowBase {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TableRowBase_0__: boolean;
-    }
-    
-    class LootItem extends UE.TableRowBase {
-        constructor();
-        constructor(ItemName: string, ItemID: number, DropChance: number, MinQuantity: number, MaxQuantity: number, Rarity: string);
-        ItemName: string;
-        ItemID: number;
-        DropChance: number;
-        MinQuantity: number;
-        MaxQuantity: number;
-        Rarity: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_LootItem_0__: boolean;
-    }
-    
-    class LootSystemComponent extends UE.BaseSystemComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnLootGenerated: $MulticastDelegate<(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) => void>;
-        LootTableIndices: TMap<string, number>;
-        AllLootItems: TArray<UE.LootItem>;
-        LootTableStartIndices: TArray<number>;
-        LootTableLengths: TArray<number>;
-        GlobalDropRateMultiplier: number;
-        bEnableDebugLogging: boolean;
-        TotalDropsGenerated: number;
-        RecentDropHistory: TArray<string>;
-        AddLootTable(TableName: string, Items: TArray<UE.LootItem>) : boolean;
-        ClearDropHistory() : void;
-        /*
-         *掉落处理
-         */
-        GenerateLoot(Source: $Nullable<UE.Actor>, LootTableName?: string /* = "Default" */) : TArray<UE.LootItem>;
-        GetGlobalDropRateMultiplier() : number;
-        /*
-         *配置
-         */
-        SetGlobalDropRateMultiplier(Multiplier: number) : void;
-        SpawnLoot(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LootSystemComponent;
-        static Load(InName: string): LootSystemComponent;
-    
-        __tid_LootSystemComponent_0__: boolean;
-    }
-    
-    class GameLogicManagerComponent extends UE.BaseSystemComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bEnableDebugLogging: boolean;
-        /*
-         *游戏逻辑处理
-         */
-        ProcessGameEvent(EventType: string, EventData: TMap<string, string>) : boolean;
-        UpdateGameState(DeltaTime: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): GameLogicManagerComponent;
-        static Load(InName: string): GameLogicManagerComponent;
-    
-        __tid_GameLogicManagerComponent_0__: boolean;
-    }
-    
-    class GameSystemManager extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnGameSystemsInitialized: $MulticastDelegate<(Timestamp: number) => void>;
-        bIsInitialized: boolean;
-        World: TWeakObjectPtr<UE.World>;
-        AttackSystem: UE.AttackSystemComponent;
-        StateManager: UE.StateManagerComponent;
-        LootSystem: UE.LootSystemComponent;
-        GameLogicManager: UE.GameLogicManagerComponent;
-        DebugPrintStatus() : void;
-        /*
-         *系统访问
-         */
-        GetAttackSystem() : UE.AttackSystemComponent;
-        GetGameLogicManager() : UE.GameLogicManagerComponent;
-        GetLootSystem() : UE.LootSystemComponent;
-        GetStateManager() : UE.StateManagerComponent;
-        /*
-         *系统生命周期管理
-         */
-        Initialize(InWorld: $Nullable<UE.World>) : void;
-        /*
-         *状态查询
-         */
-        IsInitialized() : boolean;
-        ResetAllSystems() : void;
-        Shutdown() : void;
-        /*
-         *单例访问
-         */
-        static GetInstance(World?: UE.World /* = None */) : UE.GameSystemManager;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): GameSystemManager;
-        static Load(InName: string): GameSystemManager;
-    
-        __tid_GameSystemManager_0__: boolean;
-    }
-    
-    class CurrsorPlayerController extends UE.PlayerController {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        InputMappingContext: UE.InputMappingContext;
-        CombatInputMappingContext: UE.InputMappingContext;
-        CurrentMovementVector: number;
-        CurrsorPlayer: UE.CurrsorCharacter;
-        CurrsorPlayerState: UE.CurrsorPlayerState;
-        PlayerActionComponent: UE.CurrsorActionComponent;
-        PlayerStateComponent: UE.CurrsorPlayerState;
-        GameSystemManager: UE.GameSystemManager;
-        AttackSystem: UE.AttackSystemComponent;
-        StateManager: UE.StateManagerComponent;
-        MoveAction: UE.InputAction;
-        JumpAction: UE.InputAction;
-        DashAction: UE.InputAction;
-        AttackAction: UE.InputAction;
-        bIsInCombatInputMode: boolean;
-        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
-        bEnableInputDebugLogging: boolean;
-        /*
-         *对实现此接口的对象施加伤害 __ 伤害值
-         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
-         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
-         */
-        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
-        AttackCanceled() : void;
-        AttackCompleted() : void;
-        /*
-         *基础战斗状态
-         */
-        AttackEnd() : void;
-        AttackHitboxOff() : void;
-        AttackHitboxOn() : void;
-        AttackStarted() : void;
-        AttackTriggered() : void;
-        /*
-         *退出战斗区域
-         */
-        ExitBattleArea() : void;
-        /*
-         *公共访问方法
-         */
-        GetPlayerActionComponent() : UE.CurrsorActionComponent;
-        /*
-         *输入处理函数
-         */
-        Move(Value: UE.InputActionValue) : void;
-        MoveCompleted() : void;
-        MoveStarted() : void;
-        /*
-         *输入映射上下文切换
-         */
-        SwitchInputMappingContext(bUseCombatInput: boolean) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerController;
-        static Load(InName: string): CurrsorPlayerController;
-    
-        __tid_CurrsorPlayerController_0__: boolean;
-    }
-    
-    class CurrsorPlayerState extends UE.BaseState {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        DeckCardNames: TArray<string>;
-        CardDataTable: UE.DataTable;
-        CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
-        CurrsorCharacter: TWeakObjectPtr<UE.CurrsorCharacter>;
-        CurrsorVelocity: UE.Vector;
-        bIsAttackKeyReleased: boolean;
-        AttackNum: number;
-        CanStartAttack() : boolean;
-        GetAttackKey() : boolean;
-        /*
-         *Attack
-         */
-        GetAttackNum() : number;
-        /*
-         *状态检测
-         */
-        IsGrounding() : boolean;
-        IsWalking() : boolean;
-        SetAttacking(bAttacking: boolean) : void;
-        SetAttackKey(bAttackKey: boolean) : void;
-        SetAttackNum(Num: number) : void;
-        /*
-         *状态设置
-         */
-        SetDashing(bDashing: boolean) : void;
-        SetJumping(bJumping: boolean) : void;
-        SetWalking(bWalking: boolean) : void;
-        ShouldMove() : boolean;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerState;
-        static Load(InName: string): CurrsorPlayerState;
-    
-        __tid_CurrsorPlayerState_0__: boolean;
-    }
-    
-    class CurrsorCharacter extends UE.PaperZDCharacter {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        SpringArmComponent: UE.SpringArmComponent;
-        CameraComponent: UE.CurrsorCameraComponent;
-        AttackHitbox: UE.BoxComponent;
-        HealthComponent: UE.HealthComponent;
-        CurrsorPlayerState: UE.CurrsorPlayerState;
-        GameSystemManager: UE.GameSystemManager;
-        AttackSystem: UE.AttackSystemComponent;
-        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
-        LastArmLength: number;
-        LastCollisionState: boolean;
-        /*
-         *对实现此接口的对象施加伤害 __ 伤害值
-         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
-         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
-         */
-        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
-        /*
-         *区域ID相关方法（通过GameState管理）
-         */
-        GetCurrentAreaID() : number;
-        /*
-         *生命值相关方法
-         */
-        GetHealth() : number;
-        GetMaxHealth() : number;
-        HasValidAreaID() : boolean;
-        IsDead() : boolean;
-        IsRotationAdjustmentEnabled() : boolean;
-        ResetRotationAdjustment() : void;
-        SetCurrentAreaID(NewAreaID: number) : void;
-        /*
-         *旋转调整控制方法
-         */
-        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
-        SwitchToBattleCamera(CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
-        /*
-         *相机切换方法
-         */
-        SwitchToPlayerCamera() : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
-        static Load(InName: string): CurrsorCharacter;
-    
-        __tid_CurrsorCharacter_0__: boolean;
     }
     
     class BaseEnemy extends UE.PaperZDCharacter {
@@ -53889,7 +52149,7 @@ declare module "ue" {
          *退出战斗区域
          *@param Player 玩家角色
          */
-        ExitBattleArea(Player: $Nullable<UE.CurrsorCharacter>) : void;
+        ExitBattleArea(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : void;
         /*
          *获取区域碰撞盒
          *@param AreaID 区域ID
@@ -53907,25 +52167,25 @@ declare module "ue" {
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        MoveCameraToPosition(Player: $Nullable<UE.CurrsorCharacter>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        MoveCameraToPosition(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *处理战斗区域传送
          *@param Player 玩家角色
          *@param Enemy 被攻击的敌人
          *@return 是否成功执行传送
          */
-        ProcessBattleAreaTeleport(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        ProcessBattleAreaTeleport(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
         /*
          *切换到战斗区域相机
          *@param Player 玩家角色
          *@param CameraBillboard 相机Billboard组件，用于查找子相机
          */
-        SwitchToBattleCamera(Player: $Nullable<UE.CurrsorCharacter>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        SwitchToBattleCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
         /*
          *切换回玩家相机
          *@param Player 玩家角色
          */
-        SwitchToPlayerCamera(Player: $Nullable<UE.CurrsorCharacter>) : void;
+        SwitchToPlayerCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : void;
         /*
          *传送敌人到指定位置
          *@param Enemy 敌人角色
@@ -53939,14 +52199,14 @@ declare module "ue" {
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        TeleportPlayer(Player: $Nullable<UE.CurrsorCharacter>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        TeleportPlayer(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *验证传送条件
          *@param Player 玩家角色
          *@param Enemy 敌人角色
          *@return 是否满足传送条件
          */
-        ValidateTeleportConditions(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        ValidateTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaTeleportComponent;
         static Load(InName: string): BattleAreaTeleportComponent;
@@ -54292,319 +52552,6 @@ declare module "ue" {
         __tid_AudioBusSubsystem_0__: boolean;
     }
     
-    enum ETextShapingMethod { Auto, KerningOnly, FullShaping, ETextShapingMethod_MAX, __typeKeyDoNoAccess}
-    enum ETextFlowDirection { Auto, LeftToRight, RightToLeft, Culture, ETextFlowDirection_MAX, __typeKeyDoNoAccess}
-    class ShapedTextOptions {
-        constructor();
-        constructor(bOverride_TextShapingMethod: boolean, bOverride_TextFlowDirection: boolean, TextShapingMethod: UE.ETextShapingMethod, TextFlowDirection: UE.ETextFlowDirection);
-        bOverride_TextShapingMethod: boolean;
-        bOverride_TextFlowDirection: boolean;
-        TextShapingMethod: UE.ETextShapingMethod;
-        TextFlowDirection: UE.ETextFlowDirection;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_ShapedTextOptions_0__: boolean;
-    }
-    
-    enum ETextJustify { Left, Center, Right, InvariantLeft, InvariantRight, ETextJustify_MAX, __typeKeyDoNoAccess}
-    enum ETextWrappingPolicy { DefaultWrapping, AllowPerCharacterWrapping, ETextWrappingPolicy_MAX, __typeKeyDoNoAccess}
-    class TextLayoutWidget extends UE.Widget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ShapedTextOptions: UE.ShapedTextOptions;
-        Justification: UE.ETextJustify;
-        WrappingPolicy: UE.ETextWrappingPolicy;
-        AutoWrapText: boolean;
-        WrapTextAt: number;
-        Margin: UE.Margin;
-        LineHeightPercentage: number;
-        ApplyLineHeightToBottomLine: boolean;
-        SetJustification(InJustification: UE.ETextJustify) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TextLayoutWidget;
-        static Load(InName: string): TextLayoutWidget;
-    
-        __tid_TextLayoutWidget_0__: boolean;
-    }
-    
-    enum ETextTransformPolicy { None, ToLower, ToUpper, ETextTransformPolicy_MAX, __typeKeyDoNoAccess}
-    enum ETextOverflowPolicy { Clip, Ellipsis, MultilineEllipsis, ETextOverflowPolicy_MAX, __typeKeyDoNoAccess}
-    class TextBlock extends UE.TextLayoutWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Text: string;
-        TextDelegate: $Delegate<() => string>;
-        ColorAndOpacity: UE.SlateColor;
-        ColorAndOpacityDelegate: $Delegate<() => UE.SlateColor>;
-        Font: UE.SlateFontInfo;
-        StrikeBrush: UE.SlateBrush;
-        ShadowOffset: UE.Vector2D;
-        ShadowColorAndOpacity: UE.LinearColor;
-        ShadowColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
-        MinDesiredWidth: number;
-        bWrapWithInvalidationPanel: boolean;
-        TextTransformPolicy: UE.ETextTransformPolicy;
-        TextOverflowPolicy: UE.ETextOverflowPolicy;
-        bSimpleTextMode: boolean;
-        GetDynamicFontMaterial() : UE.MaterialInstanceDynamic;
-        GetDynamicOutlineMaterial() : UE.MaterialInstanceDynamic;
-        /*
-         *Gets the widget text
-         *@return The widget text
-         */
-        GetText() : string;
-        /*
-         *Set the auto wrap for this text block.
-         *
-         *@param InAutoTextWrap to turn wrap on or off.
-         */
-        SetAutoWrapText(InAutoTextWrap: boolean) : void;
-        /*
-         *Sets the color and opacity of the text in this text block
-         *
-         *@param InColorAndOpacity             The new text color and opacity
-         */
-        SetColorAndOpacity(InColorAndOpacity: UE.SlateColor) : void;
-        /*
-         *Dynamically set the font info for this text block
-         *
-         *@param InFontInfo The new font info
-         */
-        SetFont(InFontInfo: UE.SlateFontInfo) : void;
-        SetFontMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
-        SetFontOutlineMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
-        /*
-         *Set the minimum desired width for this text block
-         *
-         *@param InMinDesiredWidth new minimum desired width
-         */
-        SetMinDesiredWidth(InMinDesiredWidth: number) : void;
-        /*
-         *Sets the opacity of the text in this text block
-         *
-         *@param InOpacity              The new text opacity
-         */
-        SetOpacity(InOpacity: number) : void;
-        /*
-         *Sets the color and opacity of the text drop shadow
-         *Note: if opacity is zero no shadow will be drawn
-         *
-         *@param InShadowColorAndOpacity               The new drop shadow color and opacity
-         */
-        SetShadowColorAndOpacity(InShadowColorAndOpacity: UE.LinearColor) : void;
-        /*
-         *Sets the offset that the text drop shadow should be drawn at
-         *
-         *@param InShadowOffset                The new offset
-         */
-        SetShadowOffset(InShadowOffset: UE.Vector2D) : void;
-        /*
-         *Dynamically set the strike brush for this text block
-         *
-         *@param InStrikeBrush The new brush to use to strike through text
-         */
-        SetStrikeBrush(InStrikeBrush: UE.SlateBrush) : void;
-        /*
-         *Directly sets the widget text.
-         *Warning: This will wipe any binding created for the Text property!
-         *@param InText The text to assign to the widget
-         */
-        SetText(InText: string) : void;
-        /*
-         *Set the text overflow policy for this text block.
-         *
-         *@param InOverflowPolicy the new text overflow policy.
-         */
-        SetTextOverflowPolicy(InOverflowPolicy: UE.ETextOverflowPolicy) : void;
-        /*
-         *Set the text transformation policy for this text block.
-         *
-         *@param InTransformPolicy the new text transformation policy.
-         */
-        SetTextTransformPolicy(InTransformPolicy: UE.ETextTransformPolicy) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TextBlock;
-        static Load(InName: string): TextBlock;
-    
-        __tid_TextBlock_0__: boolean;
-    }
-    
-    class SlateTextureAtlasInterface extends UE.Interface {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SlateTextureAtlasInterface;
-        static Load(InName: string): SlateTextureAtlasInterface;
-    
-        __tid_SlateTextureAtlasInterface_0__: boolean;
-    }
-    
-    class SlateBrushAsset extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Brush: UE.SlateBrush;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SlateBrushAsset;
-        static Load(InName: string): SlateBrushAsset;
-    
-        __tid_SlateBrushAsset_0__: boolean;
-    }
-    
-    class Image extends UE.Widget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Brush: UE.SlateBrush;
-        BrushDelegate: $Delegate<() => UE.SlateBrush>;
-        ColorAndOpacity: UE.LinearColor;
-        ColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
-        bFlipForRightToLeftFlowDirection: boolean;
-        OnMouseButtonDownEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
-        GetDynamicMaterial() : UE.MaterialInstanceDynamic;
-        SetBrush(InBrush: UE.SlateBrush) : void;
-        SetBrushFromAsset(Asset: $Nullable<UE.SlateBrushAsset>) : void;
-        /*
-         *Sets the Brush to the specified Atlas Region.
-         *
-         *  @param AtlasRegion Region of the Atlas to use to set on Brush.
-         *      @param bMatchSize If true, image will change its size to atlas region size. If false, atlas region will be stretched to image size.
-         */
-        SetBrushFromAtlasInterface(AtlasRegion: UE.SlateTextureAtlasInterface, bMatchSize?: boolean /* = false */) : void;
-        SetBrushFromMaterial(Material: $Nullable<UE.MaterialInterface>) : void;
-        SetBrushFromSoftMaterial(SoftMaterial: TSoftObjectPtr<UE.MaterialInterface>) : void;
-        /*
-         *Sets the Brush to the specified Soft Texture.
-         *
-         *  @param SoftTexture Soft Texture to use to set on Brush.
-         *      @param bMatchSize If true, image will change its size to texture size. If false, texture will be stretched to image size.
-         */
-        SetBrushFromSoftTexture(SoftTexture: TSoftObjectPtr<UE.Texture2D>, bMatchSize?: boolean /* = false */) : void;
-        /*
-         *Sets the Brush to the specified Texture.
-         *
-         *  @param Texture Texture to use to set on Brush.
-         *      @param bMatchSize If true, image will change its size to texture size. If false, texture will be stretched to image size.
-         */
-        SetBrushFromTexture(Texture: $Nullable<UE.Texture2D>, bMatchSize?: boolean /* = false */) : void;
-        /*
-         *Sets the Brush to the specified Dynamic Texture.
-         *
-         *  @param Texture Dynamic Texture to use to set on Brush.
-         *      @param bMatchSize If true, image will change its size to texture size. If false, texture will be stretched to image size.
-         */
-        SetBrushFromTextureDynamic(Texture: $Nullable<UE.Texture2DDynamic>, bMatchSize?: boolean /* = false */) : void;
-        SetBrushResourceObject(ResourceObject: $Nullable<UE.Object>) : void;
-        SetBrushTintColor(TintColor: UE.SlateColor) : void;
-        SetColorAndOpacity(InColorAndOpacity: UE.LinearColor) : void;
-        SetDesiredSizeOverride(DesiredSize: UE.Vector2D) : void;
-        SetOpacity(InOpacity: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Image;
-        static Load(InName: string): Image;
-    
-        __tid_Image_0__: boolean;
-    }
-    
-    class Border extends UE.ContentWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        HorizontalAlignment: UE.EHorizontalAlignment;
-        VerticalAlignment: UE.EVerticalAlignment;
-        bShowEffectWhenDisabled: boolean;
-        ContentColorAndOpacity: UE.LinearColor;
-        ContentColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
-        Padding: UE.Margin;
-        Background: UE.SlateBrush;
-        BackgroundDelegate: $Delegate<() => UE.SlateBrush>;
-        BrushColor: UE.LinearColor;
-        BrushColorDelegate: $Delegate<() => UE.LinearColor>;
-        DesiredSizeScale: UE.Vector2D;
-        bFlipForRightToLeftFlowDirection: boolean;
-        OnMouseButtonDownEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
-        OnMouseButtonUpEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
-        OnMouseMoveEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
-        OnMouseDoubleClickEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
-        GetDynamicMaterial() : UE.MaterialInstanceDynamic;
-        SetBrush(InBrush: UE.SlateBrush) : void;
-        SetBrushColor(InBrushColor: UE.LinearColor) : void;
-        SetBrushFromAsset(Asset: $Nullable<UE.SlateBrushAsset>) : void;
-        SetBrushFromMaterial(Material: $Nullable<UE.MaterialInterface>) : void;
-        SetBrushFromTexture(Texture: $Nullable<UE.Texture2D>) : void;
-        SetContentColorAndOpacity(InContentColorAndOpacity: UE.LinearColor) : void;
-        /*
-         *Sets the DesiredSizeScale of this border.
-         *
-         *@param InScale    The X and Y multipliers for the desired size
-         */
-        SetDesiredSizeScale(InScale: UE.Vector2D) : void;
-        SetHorizontalAlignment(InHorizontalAlignment: UE.EHorizontalAlignment) : void;
-        SetPadding(InPadding: UE.Margin) : void;
-        SetShowEffectWhenDisabled(bInShowEffectWhenDisabled: boolean) : void;
-        SetVerticalAlignment(InVerticalAlignment: UE.EVerticalAlignment) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Border;
-        static Load(InName: string): Border;
-    
-        __tid_Border_0__: boolean;
-    }
-    
-    class WidgetSwitcher extends UE.PanelWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ActiveWidgetIndex: number;
-        /*
-         *Get the reference of the currently active widget
-         */
-        GetActiveWidget() : UE.Widget;
-        /*
-         *Gets the slot index of the currently active widget
-         */
-        GetActiveWidgetIndex() : number;
-        /*
-         *Gets the number of widgets that this switcher manages.
-         */
-        GetNumWidgets() : number;
-        /*
-         *Get a widget at the provided index
-         */
-        GetWidgetAtIndex(Index: number) : UE.Widget;
-        /*
-         *Activates the widget and makes it the active index.
-         */
-        SetActiveWidget(Widget: $Nullable<UE.Widget>) : void;
-        /*
-         *Activates the widget at the specified index.
-         */
-        SetActiveWidgetIndex(Index: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): WidgetSwitcher;
-        static Load(InName: string): WidgetSwitcher;
-    
-        __tid_WidgetSwitcher_0__: boolean;
-    }
-    
-    class VerticalBoxSlot extends UE.PanelSlot {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Size: UE.SlateChildSize;
-        Padding: UE.Margin;
-        HorizontalAlignment: UE.EHorizontalAlignment;
-        VerticalAlignment: UE.EVerticalAlignment;
-        SetHorizontalAlignment(InHorizontalAlignment: UE.EHorizontalAlignment) : void;
-        SetPadding(InPadding: UE.Margin) : void;
-        SetSize(InSize: UE.SlateChildSize) : void;
-        SetVerticalAlignment(InVerticalAlignment: UE.EVerticalAlignment) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): VerticalBoxSlot;
-        static Load(InName: string): VerticalBoxSlot;
-    
-        __tid_VerticalBoxSlot_0__: boolean;
-    }
-    
-    class VerticalBox extends UE.PanelWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        AddChildToVerticalBox(Content: $Nullable<UE.Widget>) : UE.VerticalBoxSlot;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): VerticalBox;
-        static Load(InName: string): VerticalBox;
-    
-        __tid_VerticalBox_0__: boolean;
-    }
-    
     class AudioGenerator extends UE.Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -54925,190 +52872,6 @@ declare module "ue" {
         __tid_AudioEndpointSettingsBase_0__: boolean;
     }
     
-    class EditableTextStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(Font: UE.SlateFontInfo, ColorAndOpacity: UE.SlateColor, BackgroundImageSelected: UE.SlateBrush, BackgroundImageComposing: UE.SlateBrush, CaretImage: UE.SlateBrush);
-        Font: UE.SlateFontInfo;
-        ColorAndOpacity: UE.SlateColor;
-        BackgroundImageSelected: UE.SlateBrush;
-        BackgroundImageComposing: UE.SlateBrush;
-        CaretImage: UE.SlateBrush;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_EditableTextStyle_0__: boolean;
-    }
-    
-    enum EVirtualKeyboardType { Default, Number, Web, Email, Password, AlphaNumeric, EVirtualKeyboardType_MAX, __typeKeyDoNoAccess}
-    class VirtualKeyboardOptions {
-        constructor();
-        constructor(bEnableAutocorrect: boolean);
-        bEnableAutocorrect: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_VirtualKeyboardOptions_0__: boolean;
-    }
-    
-    enum EVirtualKeyboardTrigger { OnFocusByPointer, OnAllFocusEvents, EVirtualKeyboardTrigger_MAX, __typeKeyDoNoAccess}
-    enum EVirtualKeyboardDismissAction { TextChangeOnDismiss, TextCommitOnAccept, TextCommitOnDismiss, EVirtualKeyboardDismissAction_MAX, __typeKeyDoNoAccess}
-    enum ETextCommit { Default, OnEnter, OnUserMovedFocus, OnCleared, ETextCommit_MAX, __typeKeyDoNoAccess}
-    class EditableText extends UE.Widget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Text: string;
-        TextDelegate: $Delegate<() => string>;
-        HintText: string;
-        HintTextDelegate: $Delegate<() => string>;
-        WidgetStyle: UE.EditableTextStyle;
-        IsReadOnly: boolean;
-        IsPassword: boolean;
-        MinimumDesiredWidth: number;
-        IsCaretMovedWhenGainFocus: boolean;
-        SelectAllTextWhenFocused: boolean;
-        RevertTextOnEscape: boolean;
-        ClearKeyboardFocusOnCommit: boolean;
-        SelectAllTextOnCommit: boolean;
-        AllowContextMenu: boolean;
-        KeyboardType: UE.EVirtualKeyboardType;
-        VirtualKeyboardOptions: UE.VirtualKeyboardOptions;
-        VirtualKeyboardTrigger: UE.EVirtualKeyboardTrigger;
-        VirtualKeyboardDismissAction: UE.EVirtualKeyboardDismissAction;
-        Justification: UE.ETextJustify;
-        OverflowPolicy: UE.ETextOverflowPolicy;
-        ShapedTextOptions: UE.ShapedTextOptions;
-        OnTextChanged: $MulticastDelegate<(Text: string) => void>;
-        OnTextCommitted: $MulticastDelegate<(Text: string, CommitMethod: UE.ETextCommit) => void>;
-        GetFont() : UE.SlateFontInfo;
-        /*
-         *Gets the Hint text that appears when there is no text in the text box
-         */
-        GetHintText() : string;
-        GetJustification() : UE.ETextJustify;
-        /*
-         *Gets the widget text
-         *@return The widget text
-         */
-        GetText() : string;
-        OnEditableTextChangedEvent__DelegateSignature(Text: string) : void;
-        OnEditableTextCommittedEvent__DelegateSignature(Text: string, CommitMethod: UE.ETextCommit) : void;
-        SetFont(InFontInfo: UE.SlateFontInfo) : void;
-        SetFontMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
-        SetFontOutlineMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
-        SetHintText(InHintText: string) : void;
-        SetIsPassword(InbIsPassword: boolean) : void;
-        SetIsReadOnly(InbIsReadyOnly: boolean) : void;
-        SetJustification(InJustification: UE.ETextJustify) : void;
-        /*
-         *Set the minimum desired width for this text box
-         *
-         *@param InMinDesiredWidth new minimum desired width
-         */
-        SetMinimumDesiredWidth(InMinDesiredWidth: number) : void;
-        /*
-         *Directly sets the widget text.
-         *Warning: This will wipe any binding created for the Text property!
-         *@param InText The text to assign to the widget
-         */
-        SetText(InText: string) : void;
-        SetTextOverflowPolicy(InOverflowPolicy: UE.ETextOverflowPolicy) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): EditableText;
-        static Load(InName: string): EditableText;
-    
-        __tid_EditableText_0__: boolean;
-    }
-    
-    class SliderStyle extends UE.SlateWidgetStyle {
-        constructor();
-        constructor(NormalBarImage: UE.SlateBrush, HoveredBarImage: UE.SlateBrush, DisabledBarImage: UE.SlateBrush, NormalThumbImage: UE.SlateBrush, HoveredThumbImage: UE.SlateBrush, DisabledThumbImage: UE.SlateBrush, BarThickness: number);
-        NormalBarImage: UE.SlateBrush;
-        HoveredBarImage: UE.SlateBrush;
-        DisabledBarImage: UE.SlateBrush;
-        NormalThumbImage: UE.SlateBrush;
-        HoveredThumbImage: UE.SlateBrush;
-        DisabledThumbImage: UE.SlateBrush;
-        BarThickness: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_SliderStyle_0__: boolean;
-    }
-    
-    enum EOrientation { Orient_Horizontal, Orient_Vertical, Orient_MAX, __typeKeyDoNoAccess}
-    class Slider extends UE.Widget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Value: number;
-        ValueDelegate: $Delegate<() => number>;
-        MinValue: number;
-        MaxValue: number;
-        WidgetStyle: UE.SliderStyle;
-        Orientation: UE.EOrientation;
-        SliderBarColor: UE.LinearColor;
-        SliderHandleColor: UE.LinearColor;
-        IndentHandle: boolean;
-        Locked: boolean;
-        MouseUsesStep: boolean;
-        RequiresControllerLock: boolean;
-        StepSize: number;
-        IsFocusable: boolean;
-        OnMouseCaptureBegin: $MulticastDelegate<() => void>;
-        OnMouseCaptureEnd: $MulticastDelegate<() => void>;
-        OnControllerCaptureBegin: $MulticastDelegate<() => void>;
-        OnControllerCaptureEnd: $MulticastDelegate<() => void>;
-        OnValueChanged: $MulticastDelegate<(Value: number) => void>;
-        /*
-         *Get the current value scaled from 0 to 1
-         */
-        GetNormalizedValue() : number;
-        /*
-         *Gets the current value of the slider.
-         */
-        GetValue() : number;
-        /*
-         *Sets if the slidable area should be indented to fit the handle.
-         */
-        SetIndentHandle(InValue: boolean) : void;
-        /*
-         *Sets the handle to be interactive or fixed.
-         */
-        SetLocked(InValue: boolean) : void;
-        /*
-         *Sets the maximum value of the slider.
-         */
-        SetMaxValue(InValue: number) : void;
-        /*
-         *Sets the minimum value of the slider.
-         */
-        SetMinValue(InValue: number) : void;
-        /*
-         *Sets the color of the slider bar.
-         */
-        SetSliderBarColor(InValue: UE.LinearColor) : void;
-        /*
-         *Sets the color of the handle bar
-         */
-        SetSliderHandleColor(InValue: UE.LinearColor) : void;
-        /*
-         *Sets the amount to adjust the value by, when using a controller or keyboard.
-         */
-        SetStepSize(InValue: number) : void;
-        /*
-         *Sets the current value of the slider.
-         */
-        SetValue(InValue: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Slider;
-        static Load(InName: string): Slider;
-    
-        __tid_Slider_0__: boolean;
-    }
-    
     enum EAudioRadialSliderLayout { Layout_LabelTop, Layout_LabelCenter, Layout_LabelBottom, Layout_MAX, __typeKeyDoNoAccess}
     class AudioRadialSlider extends UE.Widget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -55204,6 +52967,7 @@ declare module "ue" {
         __tid_AudioFrequencyRadialSlider_0__: boolean;
     }
     
+    enum EOrientation { Orient_Horizontal, Orient_Vertical, Orient_MAX, __typeKeyDoNoAccess}
     class AudioSliderBase extends UE.Widget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Value: number;
@@ -55362,123 +53126,6 @@ declare module "ue" {
         __tid_AudioInputDeviceProperty_0__: boolean;
     }
     
-    class RadialSlider extends UE.Widget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Value: number;
-        ValueDelegate: $Delegate<() => number>;
-        bUseCustomDefaultValue: boolean;
-        CustomDefaultValue: number;
-        SliderRange: UE.RuntimeFloatCurve;
-        ValueTags: TArray<number>;
-        SliderHandleStartAngle: number;
-        SliderHandleEndAngle: number;
-        AngularOffset: number;
-        HandStartEndRatio: UE.Vector2D;
-        WidgetStyle: UE.SliderStyle;
-        SliderBarColor: UE.LinearColor;
-        SliderProgressColor: UE.LinearColor;
-        SliderHandleColor: UE.LinearColor;
-        CenterBackgroundColor: UE.LinearColor;
-        Locked: boolean;
-        MouseUsesStep: boolean;
-        RequiresControllerLock: boolean;
-        StepSize: number;
-        IsFocusable: boolean;
-        UseVerticalDrag: boolean;
-        ShowSliderHandle: boolean;
-        ShowSliderHand: boolean;
-        OnMouseCaptureBegin: $MulticastDelegate<() => void>;
-        OnMouseCaptureEnd: $MulticastDelegate<() => void>;
-        OnControllerCaptureBegin: $MulticastDelegate<() => void>;
-        OnControllerCaptureEnd: $MulticastDelegate<() => void>;
-        OnValueChanged: $MulticastDelegate<(Value: number) => void>;
-        /*
-         *Gets the current custom default value of the slider.
-         */
-        GetCustomDefaultValue() : number;
-        /*
-         *Get the current raw slider alpha from 0 to 1
-         */
-        GetNormalizedSliderHandlePosition() : number;
-        /*
-         *Gets the current value of the slider.
-         */
-        GetValue() : number;
-        /*
-         *Sets the Angular Offset for the slider.
-         */
-        SetAngularOffset(InValue: number) : void;
-        /*
-         *Sets the color of the slider bar
-         */
-        SetCenterBackgroundColor(InValue: UE.LinearColor) : void;
-        /*
-         *Sets the current custom default value of the slider.
-         */
-        SetCustomDefaultValue(InValue: number) : void;
-        /*
-         *Sets the start and end of the hand as a ratio to the slider radius (so 0.0 to 1.0 is from the slider center to the handle).
-         */
-        SetHandStartEndRatio(InValue: UE.Vector2D) : void;
-        /*
-         *Sets the handle to be interactive or fixed
-         */
-        SetLocked(InValue: boolean) : void;
-        /*
-         *Whether to show the slider hand.
-         */
-        SetShowSliderHand(InShowSliderHand: boolean) : void;
-        /*
-         *Whether to show the slider handle (thumb).
-         */
-        SetShowSliderHandle(InShowSliderHandle: boolean) : void;
-        /*
-         *Sets the color of the slider bar
-         */
-        SetSliderBarColor(InValue: UE.LinearColor) : void;
-        /*
-         *Sets the color of the handle bar
-         */
-        SetSliderHandleColor(InValue: UE.LinearColor) : void;
-        /*
-         *Sets the maximum angle of the slider.
-         */
-        SetSliderHandleEndAngle(InValue: number) : void;
-        /*
-         *Sets the minimum angle of the slider.
-         */
-        SetSliderHandleStartAngle(InValue: number) : void;
-        /*
-         *Sets the progress color of the slider bar
-         */
-        SetSliderProgressColor(InValue: UE.LinearColor) : void;
-        /*
-         *Sets the curve for the slider range
-         */
-        SetSliderRange(InSliderRange: UE.RuntimeFloatCurve) : void;
-        /*
-         *Sets the amount to adjust the value by, when using a controller or keyboard
-         */
-        SetStepSize(InValue: number) : void;
-        /*
-         *Set whether the value is changed when dragging vertically as opposed to along the radial curve.
-         */
-        SetUseVerticalDrag(InUseVerticalDrag: boolean) : void;
-        /*
-         *Sets the current value of the slider.
-         */
-        SetValue(InValue: number) : void;
-        /*
-         *Adds value tags to the slider.
-         */
-        SetValueTags(InValueTags: TArray<number>) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RadialSlider;
-        static Load(InName: string): RadialSlider;
-    
-        __tid_RadialSlider_0__: boolean;
-    }
-    
     class AudioLinkBlueprintInterface extends UE.Interface {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         IsLinkPlaying() : boolean;
@@ -55507,6 +53154,55 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_MeterChannelInfo_0__: boolean;
+    }
+    
+    class SlateWidgetStyle {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_SlateWidgetStyle_0__: boolean;
+    }
+    
+    class FontOutlineSettings {
+        constructor();
+        constructor(OutlineSize: number, bMiteredCorners: boolean, bSeparateFillAlpha: boolean, bApplyOutlineToDropShadows: boolean, OutlineMaterial: UE.Object, OutlineColor: UE.LinearColor);
+        OutlineSize: number;
+        bMiteredCorners: boolean;
+        bSeparateFillAlpha: boolean;
+        bApplyOutlineToDropShadows: boolean;
+        OutlineMaterial: UE.Object;
+        OutlineColor: UE.LinearColor;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_FontOutlineSettings_0__: boolean;
+    }
+    
+    class SlateFontInfo {
+        constructor();
+        constructor(FontObject: UE.Object, FontMaterial: UE.Object, OutlineSettings: UE.FontOutlineSettings, TypefaceFontName: string, Size: number, LetterSpacing: number, SkewAmount: number, bForceMonospaced: boolean, MonospacedWidth: number, FontName: string, Hinting: UE.EFontHinting);
+        FontObject: UE.Object;
+        FontMaterial: UE.Object;
+        OutlineSettings: UE.FontOutlineSettings;
+        TypefaceFontName: string;
+        Size: number;
+        LetterSpacing: number;
+        SkewAmount: number;
+        bForceMonospaced: boolean;
+        MonospacedWidth: number;
+        FontName: string;
+        Hinting: UE.EFontHinting;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_SlateFontInfo_0__: boolean;
     }
     
     class AudioMeterStyle extends UE.SlateWidgetStyle {
@@ -56211,6 +53907,24 @@ declare module "ue" {
         __tid_AudioSlider_0__: boolean;
     }
     
+    class SliderStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(NormalBarImage: UE.SlateBrush, HoveredBarImage: UE.SlateBrush, DisabledBarImage: UE.SlateBrush, NormalThumbImage: UE.SlateBrush, HoveredThumbImage: UE.SlateBrush, DisabledThumbImage: UE.SlateBrush, BarThickness: number);
+        NormalBarImage: UE.SlateBrush;
+        HoveredBarImage: UE.SlateBrush;
+        DisabledBarImage: UE.SlateBrush;
+        NormalThumbImage: UE.SlateBrush;
+        HoveredThumbImage: UE.SlateBrush;
+        DisabledThumbImage: UE.SlateBrush;
+        BarThickness: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_SliderStyle_0__: boolean;
+    }
+    
     class AudioSliderStyle extends UE.SlateWidgetStyle {
         constructor();
         constructor(SliderStyle: UE.SliderStyle, TextBoxStyle: UE.AudioTextBoxStyle, WidgetBackgroundImage: UE.SlateBrush, SliderBackgroundColor: UE.SlateColor, SliderBackgroundSize: UE.Vector2D, LabelPadding: number, SliderBarColor: UE.SlateColor, SliderThumbColor: UE.SlateColor, WidgetBackgroundColor: UE.SlateColor);
@@ -56636,6 +54350,267 @@ declare module "ue" {
         static Load(InName: string): MovieSceneCapture;
     
         __tid_MovieSceneCapture_0__: boolean;
+    }
+    
+    class LevelSequenceBurnInInitSettings extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LevelSequenceBurnInInitSettings;
+        static Load(InName: string): LevelSequenceBurnInInitSettings;
+    
+        __tid_LevelSequenceBurnInInitSettings_0__: boolean;
+    }
+    
+    class LevelSequenceBurnInOptions extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bUseBurnIn: boolean;
+        BurnInClass: UE.SoftClassPath;
+        Settings: UE.LevelSequenceBurnInInitSettings;
+        /*
+         *Loads the specified class path and initializes an instance, then stores it in Settings.
+         */
+        SetBurnIn(InBurnInClass: UE.SoftClassPath) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LevelSequenceBurnInOptions;
+        static Load(InName: string): LevelSequenceBurnInOptions;
+    
+        __tid_LevelSequenceBurnInOptions_0__: boolean;
+    }
+    
+    class LevelSequencePlayer extends UE.MovieSceneSequencePlayer {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnCameraCut: $MulticastDelegate<(CameraComponent: $Nullable<UE.CameraComponent>) => void>;
+        /*
+         *Get the active camera cut camera
+         */
+        GetActiveCameraComponent() : UE.CameraComponent;
+        /*
+         *Create a new level sequence player.
+         *
+         *@param WorldContextObject Context object from which to retrieve a UWorld.
+         *@param LevelSequence The level sequence to play.
+         *@param Settings The desired playback settings
+         *@param OutActor The level sequence actor created to play this sequence.
+         */
+        static CreateLevelSequencePlayer(WorldContextObject: $Nullable<UE.Object>, LevelSequence: $Nullable<UE.LevelSequence>, Settings: UE.MovieSceneSequencePlaybackSettings, OutActor: $Ref<UE.LevelSequenceActor>) : UE.LevelSequencePlayer;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LevelSequencePlayer;
+        static Load(InName: string): LevelSequencePlayer;
+    
+        __tid_LevelSequencePlayer_0__: boolean;
+    }
+    
+    class LevelSequenceCameraSettings {
+        constructor();
+        constructor(bOverrideAspectRatioAxisConstraint: boolean, AspectRatioAxisConstraint: UE.EAspectRatioAxisConstraint);
+        bOverrideAspectRatioAxisConstraint: boolean;
+        AspectRatioAxisConstraint: UE.EAspectRatioAxisConstraint;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_LevelSequenceCameraSettings_0__: boolean;
+    }
+    
+    class MovieSceneBindingOverrideData {
+        constructor();
+        constructor(ObjectBindingId: UE.MovieSceneObjectBindingID, Object: TSoftObjectPtr<UE.Object>, bOverridesDefault: boolean);
+        ObjectBindingId: UE.MovieSceneObjectBindingID;
+        Object: TSoftObjectPtr<UE.Object>;
+        bOverridesDefault: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_MovieSceneBindingOverrideData_0__: boolean;
+    }
+    
+    class MovieSceneBindingOverrides extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        BindingData: TArray<UE.MovieSceneBindingOverrideData>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): MovieSceneBindingOverrides;
+        static Load(InName: string): MovieSceneBindingOverrides;
+    
+        __tid_MovieSceneBindingOverrides_0__: boolean;
+    }
+    
+    class LevelSequencePlayerSnapshot {
+        constructor();
+        constructor(RootName: string, RootTime: UE.QualifiedFrameTime, SourceTime: UE.QualifiedFrameTime, CurrentShotName: string, CurrentShotLocalTime: UE.QualifiedFrameTime, CurrentShotSourceTime: UE.QualifiedFrameTime, SourceTimecode: string, CameraComponent: TSoftObjectPtr<UE.CameraComponent>, ActiveShot: UE.LevelSequence, ShotID: UE.MovieSceneSequenceID, MasterName: string, MasterTime: UE.QualifiedFrameTime);
+        RootName: string;
+        RootTime: UE.QualifiedFrameTime;
+        SourceTime: UE.QualifiedFrameTime;
+        CurrentShotName: string;
+        CurrentShotLocalTime: UE.QualifiedFrameTime;
+        CurrentShotSourceTime: UE.QualifiedFrameTime;
+        SourceTimecode: string;
+        CameraComponent: TSoftObjectPtr<UE.CameraComponent>;
+        ActiveShot: UE.LevelSequence;
+        ShotID: UE.MovieSceneSequenceID;
+        MasterName: string;
+        MasterTime: UE.QualifiedFrameTime;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_LevelSequencePlayerSnapshot_0__: boolean;
+    }
+    
+    class LevelSequenceBurnIn extends UE.UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        FrameInformation: UE.LevelSequencePlayerSnapshot;
+        LevelSequenceActor: UE.LevelSequenceActor;
+        /*
+         *Get the settings class to use for this burn in
+         */
+        GetSettingsClass() : UE.Class;
+        /*
+         *Called when this burn in is receiving its settings
+         */
+        SetSettings(InSettings: $Nullable<UE.Object>) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LevelSequenceBurnIn;
+        static Load(InName: string): LevelSequenceBurnIn;
+    
+        __tid_LevelSequenceBurnIn_0__: boolean;
+    }
+    
+    class WorldPartitionResolveData {
+        constructor();
+        constructor(ContainerID: UE.ActorContainerID, SourceWorldAssetPath: UE.TopLevelAssetPath);
+        ContainerID: UE.ActorContainerID;
+        SourceWorldAssetPath: UE.TopLevelAssetPath;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_WorldPartitionResolveData_0__: boolean;
+    }
+    
+    class LevelSequenceActor extends UE.Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        PlaybackSettings: UE.MovieSceneSequencePlaybackSettings;
+        SequencePlayer: UE.LevelSequencePlayer;
+        LevelSequenceAsset: UE.LevelSequence;
+        LevelSequence_EditorOnly: UE.SoftObjectPath;
+        CameraSettings: UE.LevelSequenceCameraSettings;
+        BurnInOptions: UE.LevelSequenceBurnInOptions;
+        BindingOverrides: UE.MovieSceneBindingOverrides;
+        bAutoPlay: boolean;
+        bOverrideInstanceData: boolean;
+        bReplicatePlayback: boolean;
+        DefaultInstanceData: UE.Object;
+        BurnInInstance: UE.LevelSequenceBurnIn;
+        bShowBurnin: boolean;
+        WorldPartitionResolveData: UE.WorldPartitionResolveData;
+        /*
+         *Adds the specified actor to the overridden bindings for the specified binding ID, optionally still allowing the bindings defined in the Level Sequence asset
+         *
+         *@param Binding Binding to modify
+         *@param Actor Actor to bind
+         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
+         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
+         *                                                               set in Sequencer UI. This function will not modify the original asset.
+         */
+        AddBinding(Binding: UE.MovieSceneObjectBindingID, Actor: $Nullable<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
+        /*
+         *Binds an actor to all the bindings tagged with the specified name in this sequence. Does not remove any exising bindings that have been set up through this API. Object Bindings can be tagged within the sequence UI by RMB -> Tags... on the object binding in the tree.
+         *
+         *@param BindingTag   The unique tag name to lookup bindings with
+         *@param Actor        The actor to assign to all the tagged bindings
+         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
+         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
+         *                                                               set in Sequencer UI. This function will not modify the original asset.
+         */
+        AddBindingByTag(BindingTag: string, Actor: $Nullable<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
+        /*
+         *Retrieve the first object binding that has been tagged with the specified name
+         */
+        FindNamedBinding(Tag: string) : UE.MovieSceneObjectBindingID;
+        /*
+         *Retrieve all the bindings that have been tagged with the specified name
+         *
+         *@param Tag  The unique tag name to lookup bindings with. Object Bindings can be tagged within the sequence UI by RMB -> Tags... on the object binding in the tree.
+         *@return An array containing all the bindings that are tagged with this name, potentially empty.
+         */
+        FindNamedBindings(Tag: string) : TArray<UE.MovieSceneObjectBindingID>;
+        /*
+         *Get the level sequence being played by this actor.
+         *
+         *@return Level sequence, or nullptr if not assigned or if it cannot be loaded.
+         *@see SetSequence
+         */
+        GetSequence() : UE.LevelSequence;
+        /*
+         *Access this actor's sequence player, or None if it is not yet initialized
+         */
+        GetSequencePlayer() : UE.LevelSequencePlayer;
+        /*
+         *Hide burnin
+         */
+        HideBurnin() : void;
+        OnLevelSequenceLoaded__DelegateSignature() : void;
+        /*
+         *Removes the specified actor from the specified binding's actor array
+         */
+        RemoveBinding(Binding: UE.MovieSceneObjectBindingID, Actor: $Nullable<UE.Actor>) : void;
+        /*
+         *Removes the specified actor from the specified binding's actor array
+         */
+        RemoveBindingByTag(Tag: string, Actor: $Nullable<UE.Actor>) : void;
+        /*
+         *Resets the specified binding back to the defaults defined by the Level Sequence asset
+         */
+        ResetBinding(Binding: UE.MovieSceneObjectBindingID) : void;
+        /*
+         *Resets all overridden bindings back to the defaults defined by the Level Sequence asset
+         */
+        ResetBindings() : void;
+        /*
+         *Overrides the specified binding with the specified actors, optionally still allowing the bindings defined in the Level Sequence asset
+         *
+         *@param Binding Binding to modify
+         *@param Actors Actors to bind
+         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
+         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
+         *                                                               set in Sequencer UI. This function will not modify the original asset.
+         */
+        SetBinding(Binding: UE.MovieSceneObjectBindingID, Actors: TArray<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
+        /*
+         *Assigns an set of actors to all the bindings tagged with the specified name in this sequence. Object Bindings can be tagged within the sequence UI by RMB -> Tags... on the object binding in the tree.
+         *
+         *@param BindingTag   The unique tag name to lookup bindings with
+         *@param Actors       The actors to assign to all the tagged bindings
+         *@param bAllowBindingsFromAsset If false the new bindings being supplied here will replace the bindings set in the level sequence asset, meaning the original object animated by
+         *                                                               Sequencer will no longer be animated. Bindings set to spawnables will not spawn if false. If true, new bindings will be in addition to ones set
+         *                                                               set in Sequencer UI. This function will not modify the original asset.
+         */
+        SetBindingByTag(BindingTag: string, Actors: TArray<UE.Actor>, bAllowBindingsFromAsset?: boolean /* = false */) : void;
+        /*
+         *Set whether or not to replicate playback for this actor
+         */
+        SetReplicatePlayback(ReplicatePlayback: boolean) : void;
+        /*
+         *Set the level sequence being played by this actor.
+         *
+         *@param InSequence The sequence object to set.
+         *@see GetSequence
+         */
+        SetSequence(InSequence: $Nullable<UE.LevelSequence>) : void;
+        /*
+         *Show burnin
+         */
+        ShowBurnin() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LevelSequenceActor;
+        static Load(InName: string): LevelSequenceActor;
+    
+        __tid_LevelSequenceActor_0__: boolean;
     }
     
     class AutomatedLevelSequenceCapture extends UE.MovieSceneCapture {
@@ -58036,6 +56011,20 @@ declare module "ue" {
         __tid_AxisPositionGizmoBuilder_0__: boolean;
     }
     
+    class ContentWidget extends UE.PanelWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        GetContent() : UE.Widget;
+        GetContentSlot() : UE.PanelSlot;
+        SetContent(Content: $Nullable<UE.Widget>) : UE.PanelSlot;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): ContentWidget;
+        static Load(InName: string): ContentWidget;
+    
+        __tid_ContentWidget_0__: boolean;
+    }
+    
+    enum EHorizontalAlignment { HAlign_Fill, HAlign_Left, HAlign_Center, HAlign_Right, HAlign_MAX, __typeKeyDoNoAccess}
+    enum EVerticalAlignment { VAlign_Fill, VAlign_Top, VAlign_Center, VAlign_Bottom, VAlign_MAX, __typeKeyDoNoAccess}
     class BackgroundBlur extends UE.ContentWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Padding: UE.Margin;
@@ -59463,7 +57452,7 @@ declare module "ue" {
          *清除玩家的区域ID
          *@param Player 玩家角色
          */
-        static ClearPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>) : void;
+        static ClearPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : void;
         /*
          *销毁所有区域的测试假人
          *@param WorldContext 世界上下文
@@ -59491,7 +57480,7 @@ declare module "ue" {
          *@param Player 玩家角色
          *@return 是否有有效的区域ID
          */
-        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.CurrsorCharacter>) : boolean;
+        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : boolean;
         /*
          *获取区域碰撞盒的位置信息
          *@param AreaBox 区域碰撞盒
@@ -59515,7 +57504,7 @@ declare module "ue" {
          *@param OutIsFromPlayer 是否来自玩家
          *@return 是否找到有效的区域ID
          */
-        static GetEffectiveAreaID(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
+        static GetEffectiveAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
         /*
          *获取指定区域的所有敌人
          *@param WorldContext 世界上下文
@@ -59540,7 +57529,7 @@ declare module "ue" {
          *@param Player 玩家角色
          *@return 区域ID
          */
-        static GetPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>) : number;
+        static GetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : number;
         /*
          *从选中的区域碰撞盒读取AreaID
          *@param Enemy 敌人角色
@@ -59563,7 +57552,7 @@ declare module "ue" {
          *@param Player 玩家角色
          *@param AreaID 区域ID
          */
-        static SetPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>, AreaID: number) : void;
+        static SetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, AreaID: number) : void;
         /*
          *为所有区域生成测试假人
          *@param WorldContext 世界上下文
@@ -59580,7 +57569,7 @@ declare module "ue" {
          *@param Enemy 敌人角色
          *@return 是否满足传送条件
          */
-        static ValidateBattleTeleportConditions(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static ValidateBattleTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaBlueprintLibrary;
         static Load(InName: string): BattleAreaBlueprintLibrary;
@@ -60630,6 +58619,260 @@ declare module "ue" {
         static Load(InName: string): BlueprintEditorToolMenuContext;
     
         __tid_BlueprintEditorToolMenuContext_0__: boolean;
+    }
+    
+    enum EInputActionValueType { Boolean, Axis1D, Axis2D, Axis3D, EInputActionValueType_MAX, __typeKeyDoNoAccess}
+    enum EInputActionAccumulationBehavior { TakeHighestAbsoluteValue, Cumulative, EInputActionAccumulationBehavior_MAX, __typeKeyDoNoAccess}
+    class InputActionValue {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InputActionValue_0__: boolean;
+    }
+    
+    class KeyConsumptionOptions {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_KeyConsumptionOptions_0__: boolean;
+    }
+    
+    class PlayerMappableKeyOptions {
+        constructor();
+        constructor(Metadata: UE.Object, Name: string, DisplayName: string, DisplayCategory: string);
+        Metadata: UE.Object;
+        Name: string;
+        DisplayName: string;
+        DisplayCategory: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_PlayerMappableKeyOptions_0__: boolean;
+    }
+    
+    class InputModifier extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        /*
+         *Helper to allow debug visualization of the modifier.
+         *@param SampleValue - The base input action value pre-modification (ranging -1 -> 1 across all applicable axes).
+         *@param FinalValue - The post-modification input action value for the provided SampleValue.
+         */
+        GetVisualizationColor(SampleValue: UE.InputActionValue, FinalValue: UE.InputActionValue) : UE.LinearColor;
+        /*
+         *ModifyRaw
+         *Will be called by each modifier in the modifier chain
+         *@param CurrentValue - The modified value returned by the previous modifier in the chain, or the base raw value if this is the first modifier in the chain.
+         */
+        ModifyRaw(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, CurrentValue: UE.InputActionValue, DeltaTime: number) : UE.InputActionValue;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputModifier;
+        static Load(InName: string): InputModifier;
+    
+        __tid_InputModifier_0__: boolean;
+    }
+    
+    enum EPlayerMappableKeySettingBehaviors { InheritSettingsFromAction, OverrideSettings, IgnoreSettings, EPlayerMappableKeySettingBehaviors_MAX, __typeKeyDoNoAccess}
+    class GameplayTagContainer {
+        constructor();
+        constructor(GameplayTags: TArray<UE.GameplayTag>, ParentTags: TArray<UE.GameplayTag>);
+        GameplayTags: TArray<UE.GameplayTag>;
+        ParentTags: TArray<UE.GameplayTag>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_GameplayTagContainer_0__: boolean;
+    }
+    
+    class PlayerMappableKeySettings extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Metadata: UE.Object;
+        Name: string;
+        DisplayName: string;
+        DisplayCategory: string;
+        SupportedKeyProfiles: UE.GameplayTagContainer;
+        /*
+         *Get the known mapping names that are current in use. This is a helper function if you want to use a "GetOptions" metadata on a UPROPERTY.
+         *For example, the following will display a little drop down menu to select from all current mapping names:
+         *
+         * UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(GetOptions="EnhancedInput.PlayerMappableKeySettings.GetKnownMappingNames"))
+         * FName MappingName;
+         */
+        static GetKnownMappingNames_EditorOnly() : TArray<string>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): PlayerMappableKeySettings;
+        static Load(InName: string): PlayerMappableKeySettings;
+    
+        __tid_PlayerMappableKeySettings_0__: boolean;
+    }
+    
+    class EnhancedActionKeyMapping {
+        constructor();
+        constructor(PlayerMappableOptions: UE.PlayerMappableKeyOptions, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, Action: UE.InputAction, Key: UE.Key, bShouldBeIgnored: boolean, bIsPlayerMappable: boolean, SettingBehavior: UE.EPlayerMappableKeySettingBehaviors, PlayerMappableKeySettings: UE.PlayerMappableKeySettings);
+        PlayerMappableOptions: UE.PlayerMappableKeyOptions;
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        Action: UE.InputAction;
+        Key: UE.Key;
+        bShouldBeIgnored: boolean;
+        bIsPlayerMappable: boolean;
+        SettingBehavior: UE.EPlayerMappableKeySettingBehaviors;
+        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_EnhancedActionKeyMapping_0__: boolean;
+    }
+    
+    class InputMappingContext extends UE.DataAsset {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Mappings: TArray<UE.EnhancedActionKeyMapping>;
+        ContextDescription: string;
+        /*
+         *Map a key to an action within the mapping context.
+         */
+        MapKey(Action: $Nullable<UE.InputAction>, ToKey: UE.Key) : UE.EnhancedActionKeyMapping;
+        UnmapAction(Action: $Nullable<UE.InputAction>) : void;
+        /*
+         *Unmap everything within the mapping context.
+         */
+        UnmapAll() : void;
+        /*
+         *Unmap all key maps to an action within the mapping context.
+         */
+        UnmapAllKeysFromAction(Action: $Nullable<UE.InputAction>) : void;
+        /*
+         *Unmap a key from an action within the mapping context.
+         */
+        UnmapKey(Action: $Nullable<UE.InputAction>, Key: UE.Key) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputMappingContext;
+        static Load(InName: string): InputMappingContext;
+    
+        __tid_InputMappingContext_0__: boolean;
+    }
+    
+    enum ETriggerEvent { None, Triggered, Started, Ongoing, Canceled, Completed, ETriggerEvent_MAX, __typeKeyDoNoAccess}
+    class InputActionInstance {
+        constructor();
+        constructor(SourceAction: UE.InputAction, TriggerEvent: UE.ETriggerEvent, LastTriggeredWorldTime: number, Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>, ElapsedProcessedTime: number, ElapsedTriggeredTime: number);
+        SourceAction: UE.InputAction;
+        TriggerEvent: UE.ETriggerEvent;
+        LastTriggeredWorldTime: number;
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        ElapsedProcessedTime: number;
+        ElapsedTriggeredTime: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InputActionInstance_0__: boolean;
+    }
+    
+    class InjectedInput {
+        constructor();
+        constructor(Triggers: TArray<UE.InputTrigger>, Modifiers: TArray<UE.InputModifier>);
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InjectedInput_0__: boolean;
+    }
+    
+    class InjectedInputArray {
+        constructor();
+        constructor(Injected: TArray<UE.InjectedInput>);
+        Injected: TArray<UE.InjectedInput>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_InjectedInputArray_0__: boolean;
+    }
+    
+    class EnhancedPlayerInput extends UE.PlayerInput {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        KeyConsumptionData: TMap<UE.InputAction, UE.KeyConsumptionOptions>;
+        AppliedInputContexts: TMap<UE.InputMappingContext, number>;
+        EnhancedActionMappings: TArray<UE.EnhancedActionKeyMapping>;
+        ActionInstanceData: TMap<UE.InputAction, UE.InputActionInstance>;
+        KeysPressedThisTick: TMap<UE.Key, UE.Vector>;
+        InputsInjectedThisTick: TMap<UE.InputAction, UE.InjectedInputArray>;
+        LastInjectedActions: TSet<UE.InputAction>;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): EnhancedPlayerInput;
+        static Load(InName: string): EnhancedPlayerInput;
+    
+        __tid_EnhancedPlayerInput_0__: boolean;
+    }
+    
+    enum ETriggerState { None, Ongoing, Triggered, ETriggerState_MAX, __typeKeyDoNoAccess}
+    enum ETriggerType { Explicit, Implicit, Blocker, ETriggerType_MAX, __typeKeyDoNoAccess}
+    class InputTrigger extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ActuationThreshold: number;
+        bShouldAlwaysTick: boolean;
+        LastValue: UE.InputActionValue;
+        /*
+         *Changes the way this trigger affects an action with multiple triggers:
+         *        All implicit triggers must be triggering to trigger the action.
+         *        If there are any explicit triggers at least one must be triggering to trigger the action.
+         */
+        GetTriggerType() : UE.ETriggerType;
+        /*
+         ** Is the value passed in sufficiently large to be of interest to the trigger.
+         ** This is a helper function that implements the most obvious (>=) interpretation of the actuation threshold.
+         */
+        IsActuated(ForValue: UE.InputActionValue) : boolean;
+        /*
+         *This function checks if the requisite conditions have been met for the trigger to fire.
+         * Returns Trigger State None              - No trigger conditions have been met. Trigger is inactive.
+         *                 Trigger State Ongoing   - Some trigger conditions have been met. Trigger is processing but not yet active.
+         *                 Trigger State Triggered - All trigger conditions have been met to fire. Trigger is active.
+         */
+        UpdateState(PlayerInput: $Nullable<UE.EnhancedPlayerInput>, ModifiedValue: UE.InputActionValue, DeltaTime: number) : UE.ETriggerState;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputTrigger;
+        static Load(InName: string): InputTrigger;
+    
+        __tid_InputTrigger_0__: boolean;
+    }
+    
+    class InputAction extends UE.DataAsset {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ActionDescription: string;
+        bTriggerWhenPaused: boolean;
+        bConsumeInput: boolean;
+        bConsumesActionAndAxisMappings: boolean;
+        bReserveAllMappings: boolean;
+        TriggerEventsThatConsumeLegacyKeys: number;
+        ValueType: UE.EInputActionValueType;
+        AccumulationBehavior: UE.EInputActionAccumulationBehavior;
+        Triggers: TArray<UE.InputTrigger>;
+        Modifiers: TArray<UE.InputModifier>;
+        PlayerMappableKeySettings: UE.PlayerMappableKeySettings;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): InputAction;
+        static Load(InName: string): InputAction;
+    
+        __tid_InputAction_0__: boolean;
     }
     
     class BlueprintEnhancedInputActionBinding {
@@ -62291,6 +60534,58 @@ declare module "ue" {
         __tid_BoolToStringDataflowNode_0__: boolean;
     }
     
+    class SlateBrushAsset extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Brush: UE.SlateBrush;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SlateBrushAsset;
+        static Load(InName: string): SlateBrushAsset;
+    
+        __tid_SlateBrushAsset_0__: boolean;
+    }
+    
+    class Border extends UE.ContentWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        HorizontalAlignment: UE.EHorizontalAlignment;
+        VerticalAlignment: UE.EVerticalAlignment;
+        bShowEffectWhenDisabled: boolean;
+        ContentColorAndOpacity: UE.LinearColor;
+        ContentColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
+        Padding: UE.Margin;
+        Background: UE.SlateBrush;
+        BackgroundDelegate: $Delegate<() => UE.SlateBrush>;
+        BrushColor: UE.LinearColor;
+        BrushColorDelegate: $Delegate<() => UE.LinearColor>;
+        DesiredSizeScale: UE.Vector2D;
+        bFlipForRightToLeftFlowDirection: boolean;
+        OnMouseButtonDownEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
+        OnMouseButtonUpEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
+        OnMouseMoveEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
+        OnMouseDoubleClickEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
+        GetDynamicMaterial() : UE.MaterialInstanceDynamic;
+        SetBrush(InBrush: UE.SlateBrush) : void;
+        SetBrushColor(InBrushColor: UE.LinearColor) : void;
+        SetBrushFromAsset(Asset: $Nullable<UE.SlateBrushAsset>) : void;
+        SetBrushFromMaterial(Material: $Nullable<UE.MaterialInterface>) : void;
+        SetBrushFromTexture(Texture: $Nullable<UE.Texture2D>) : void;
+        SetContentColorAndOpacity(InContentColorAndOpacity: UE.LinearColor) : void;
+        /*
+         *Sets the DesiredSizeScale of this border.
+         *
+         *@param InScale    The X and Y multipliers for the desired size
+         */
+        SetDesiredSizeScale(InScale: UE.Vector2D) : void;
+        SetHorizontalAlignment(InHorizontalAlignment: UE.EHorizontalAlignment) : void;
+        SetPadding(InPadding: UE.Margin) : void;
+        SetShowEffectWhenDisabled(bInShowEffectWhenDisabled: boolean) : void;
+        SetVerticalAlignment(InVerticalAlignment: UE.EVerticalAlignment) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): Border;
+        static Load(InName: string): Border;
+    
+        __tid_Border_0__: boolean;
+    }
+    
     class BorderSlot extends UE.PanelSlot {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Padding: UE.Margin;
@@ -62472,6 +60767,42 @@ declare module "ue" {
         static Load(InName: string): BoundsCopyComponent;
     
         __tid_BoundsCopyComponent_0__: boolean;
+    }
+    
+    class Box2D {
+        constructor();
+        constructor(p0: number);
+        constructor(p0: Vector2D, p1: Vector2D);
+        constructor(p0: Vector2D, p1: number);
+        constructor(p0: UE.TArray<UE.Vector2D>);
+        Min: UE.Vector2D;
+        Max: UE.Vector2D;
+        bIsValid: boolean;
+        ComputeSquaredDistanceToPoint(p0: Vector2D) : number;
+        ExpandBy(p0: number) : Box2D;
+        GetArea() : number;
+        GetCenter() : Vector2D;
+        GetCenterAndExtents(p0: $Ref<Vector2D>, p1: $Ref<Vector2D>) : void;
+        GetClosestPointTo(p0: Vector2D) : Vector2D;
+        GetExtent() : Vector2D;
+        GetSize() : Vector2D;
+        Init() : void;
+        Intersect(p0: Box2D) : boolean;
+        IsInside(p0: Vector2D) : boolean;
+        IsInside(p0: Box2D) : boolean;
+        op_Addition(p0: Vector2D) : Box2D;
+        op_Addition(p0: Box2D) : Box2D;
+        op_Equality(p0: Box2D) : boolean;
+        op_Inequality(p0: Box2D) : boolean;
+        set_Item(p0: number) : Vector2D;
+        ShiftBy(p0: Vector2D) : Box2D;
+        ToString() : string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_Box2D_0__: boolean;
     }
     
     class Box3d {
@@ -62673,14 +61004,199 @@ declare module "ue" {
         __tid_BoxToMeshDataflowNode_0__: boolean;
     }
     
-    class CombatCharacter extends UE.PaperZDCharacter {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CameraComponent: UE.CurrsorCameraComponent;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CombatCharacter;
-        static Load(InName: string): CombatCharacter;
+    class PointerToUberGraphFrame {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_PointerToUberGraphFrame_0__: boolean;
+    }
     
-        __tid_CombatCharacter_0__: boolean;
+    enum EWidgetSpace { World, Screen, EWidgetSpace_MAX, __typeKeyDoNoAccess}
+    enum EWidgetTimingPolicy { RealTime, GameTime, EWidgetTimingPolicy_MAX, __typeKeyDoNoAccess}
+    enum EWindowVisibility { Visible, SelfHitTestInvisible, EWindowVisibility_MAX, __typeKeyDoNoAccess}
+    enum EWidgetBlendMode { Opaque, Masked, Transparent, EWidgetBlendMode_MAX, __typeKeyDoNoAccess}
+    enum EWidgetGeometryMode { Plane, Cylinder, EWidgetGeometryMode_MAX, __typeKeyDoNoAccess}
+    enum ETickMode { Disabled, Enabled, Automatic, ETickMode_MAX, __typeKeyDoNoAccess}
+    class WidgetComponent extends UE.MeshComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Space: UE.EWidgetSpace;
+        TimingPolicy: UE.EWidgetTimingPolicy;
+        WidgetClass: UE.Class;
+        DrawSize: UE.IntPoint;
+        bManuallyRedraw: boolean;
+        bRedrawRequested: boolean;
+        RedrawTime: number;
+        CurrentDrawSize: UE.IntPoint;
+        bUseInvalidationInWorldSpace: boolean;
+        bDrawAtDesiredSize: boolean;
+        Pivot: UE.Vector2D;
+        bReceiveHardwareInput: boolean;
+        bWindowFocusable: boolean;
+        WindowVisibility: UE.EWindowVisibility;
+        bApplyGammaCorrection: boolean;
+        OwnerPlayer: UE.LocalPlayer;
+        BackgroundColor: UE.LinearColor;
+        TintColorAndOpacity: UE.LinearColor;
+        OpacityFromTexture: number;
+        BlendMode: UE.EWidgetBlendMode;
+        bIsTwoSided: boolean;
+        TickWhenOffscreen: boolean;
+        BodySetup: UE.BodySetup;
+        TranslucentMaterial: UE.MaterialInterface;
+        TranslucentMaterial_OneSided: UE.MaterialInterface;
+        OpaqueMaterial: UE.MaterialInterface;
+        OpaqueMaterial_OneSided: UE.MaterialInterface;
+        MaskedMaterial: UE.MaterialInterface;
+        MaskedMaterial_OneSided: UE.MaterialInterface;
+        RenderTarget: UE.TextureRenderTarget2D;
+        MaterialInstance: UE.MaterialInstanceDynamic;
+        bAddedToScreen: boolean;
+        bEditTimeUsable: boolean;
+        SharedLayerName: string;
+        LayerZOrder: number;
+        GeometryMode: UE.EWidgetGeometryMode;
+        CylinderArcAngle: number;
+        TickMode: UE.ETickMode;
+        Widget: UE.UserWidget;
+        /*
+         *Returns the "actual" draw size of the quad in the world
+         */
+        GetCurrentDrawSize() : UE.Vector2D;
+        /*
+         *Defines the curvature of the widget component when using EWidgetGeometryMode::Cylinder; ignored otherwise.
+         */
+        GetCylinderArcAngle() : number;
+        GetDrawAtDesiredSize() : boolean;
+        /*
+         *Returns the "specified" draw size of the quad in the world
+         */
+        GetDrawSize() : UE.Vector2D;
+        /*
+         *@see EWidgetGeometryMode, @see GetCylinderArcAngle()
+         */
+        GetGeometryMode() : UE.EWidgetGeometryMode;
+        /*
+         *@see bManuallyRedraw
+         */
+        GetManuallyRedraw() : boolean;
+        /*
+         *Returns the dynamic material instance used to render the user widget
+         */
+        GetMaterialInstance() : UE.MaterialInstanceDynamic;
+        /*
+         *Gets the local player that owns this widget component.
+         */
+        GetOwnerPlayer() : UE.LocalPlayer;
+        /*
+         *Returns the pivot point where the UI is rendered about the origin.
+         */
+        GetPivot() : UE.Vector2D;
+        GetRedrawTime() : number;
+        /*
+         *Returns the render target to which the user widget is rendered
+         */
+        GetRenderTarget() : UE.TextureRenderTarget2D;
+        /*
+         *Gets whether the widget ticks when offscreen or not
+         */
+        GetTickWhenOffscreen() : boolean;
+        /*
+         *Gets whether the widget is two-sided or not
+         */
+        GetTwoSided() : boolean;
+        /*
+         *Returns the user widget object displayed by this component
+         */
+        GetUserWidgetObject() : UE.UserWidget;
+        /*
+         *Gets the widget that is used by this Widget Component. It will be null if a Slate Widget was set using SetSlateWidget function.
+         */
+        GetWidget() : UE.UserWidget;
+        GetWidgetSpace() : UE.EWidgetSpace;
+        /*
+         *@see bWindowFocusable
+         */
+        GetWindowFocusable() : boolean;
+        /*
+         *Gets the visibility of the virtual window created to host the widget focusable.
+         */
+        GetWindowVisiblility() : UE.EWindowVisibility;
+        /*
+         *Returns true if the the Slate window is visible and that the widget is also visible, false otherwise.
+         */
+        IsWidgetVisible() : boolean;
+        /*
+         *Requests that the widget be redrawn.
+         */
+        RequestRedraw() : void;
+        /*
+         *Requests that the widget have it's render target updated, if TickMode is disabled, this will force a tick to happen to update the render target.
+         */
+        RequestRenderUpdate() : void;
+        /*
+         *Sets the background color and opacityscale for this widget
+         */
+        SetBackgroundColor(NewBackgroundColor: UE.LinearColor) : void;
+        /*
+         *Defines the curvature of the widget component when using EWidgetGeometryMode::Cylinder; ignored otherwise.
+         */
+        SetCylinderArcAngle(InCylinderArcAngle: number) : void;
+        SetDrawAtDesiredSize(bInDrawAtDesiredSize: boolean) : void;
+        /*
+         *Sets the draw size of the quad in the world
+         */
+        SetDrawSize(Size: UE.Vector2D) : void;
+        SetGeometryMode(InGeometryMode: UE.EWidgetGeometryMode) : void;
+        /*
+         *@see bManuallyRedraw
+         */
+        SetManuallyRedraw(bUseManualRedraw: boolean) : void;
+        /*
+         *Sets the local player that owns this widget component.  Setting the owning player controls
+         *which player's viewport the widget appears on in a split screen scenario.  Additionally it
+         *forwards the owning player to the actual UserWidget that is spawned.
+         */
+        SetOwnerPlayer(LocalPlayer: $Nullable<UE.LocalPlayer>) : void;
+        SetPivot(InPivot: UE.Vector2D) : void;
+        SetRedrawTime(InRedrawTime: number) : void;
+        /*
+         *Sets the Tick mode of the Widget Component.
+         */
+        SetTickMode(InTickMode: UE.ETickMode) : void;
+        /*
+         *Sets whether the widget ticks when offscreen or not
+         */
+        SetTickWhenOffscreen(bWantTickWhenOffscreen: boolean) : void;
+        /*
+         *Sets the tint color and opacity scale for this widget
+         */
+        SetTintColorAndOpacity(NewTintColorAndOpacity: UE.LinearColor) : void;
+        /*
+         *Sets whether the widget is two-sided or not
+         */
+        SetTwoSided(bWantTwoSided: boolean) : void;
+        /*
+         *Sets the widget to use directly. This function will keep track of the widget till the next time it's called
+         *    with either a newer widget or a nullptr
+         */
+        SetWidget(Widget: $Nullable<UE.UserWidget>) : void;
+        SetWidgetSpace(NewSpace: UE.EWidgetSpace) : void;
+        /*
+         *@see bWindowFocusable
+         */
+        SetWindowFocusable(bInWindowFocusable: boolean) : void;
+        /*
+         *Sets the visibility of the virtual window created to host the widget focusable.
+         */
+        SetWindowVisibility(InVisibility: UE.EWindowVisibility) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WidgetComponent;
+        static Load(InName: string): WidgetComponent;
+    
+        __tid_WidgetComponent_0__: boolean;
     }
     
     enum ENavDataGatheringMode { Default, Instant, Lazy, ENavDataGatheringMode_MAX, __typeKeyDoNoAccess}
@@ -62746,6 +61262,286 @@ declare module "ue" {
         static Load(InName: string): DestructibleItem;
     
         __tid_DestructibleItem_0__: boolean;
+    }
+    
+    class SpringArmComponent extends UE.SceneComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        TargetArmLength: number;
+        SocketOffset: UE.Vector;
+        TargetOffset: UE.Vector;
+        ProbeSize: number;
+        ProbeChannel: UE.ECollisionChannel;
+        bDoCollisionTest: boolean;
+        bUsePawnControlRotation: boolean;
+        bInheritPitch: boolean;
+        bInheritYaw: boolean;
+        bInheritRoll: boolean;
+        bEnableCameraLag: boolean;
+        bEnableCameraRotationLag: boolean;
+        bUseCameraLagSubstepping: boolean;
+        bDrawDebugLagMarkers: boolean;
+        CameraLagSpeed: number;
+        CameraRotationLagSpeed: number;
+        CameraLagMaxTimeStep: number;
+        CameraLagMaxDistance: number;
+        bClampToMaxPhysicsDeltaTime: boolean;
+        /*
+         *Get the target rotation we inherit, used as the base target for the boom rotation.
+         *This is derived from attachment to our parent and considering the UsePawnControlRotation and absolute rotation flags.
+         */
+        GetTargetRotation() : UE.Rotator;
+        /*
+         *Get the position where the camera should be without applying the Collision Test displacement
+         */
+        GetUnfixedCameraPosition() : UE.Vector;
+        /*
+         *Is the Collision Test displacement being applied?
+         */
+        IsCollisionFixApplied() : boolean;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SpringArmComponent;
+        static Load(InName: string): SpringArmComponent;
+    
+        __tid_SpringArmComponent_0__: boolean;
+    }
+    
+    class CurrsorCameraComponent extends UE.CameraComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bWasInCollision: boolean;
+        /*
+         *更新景深效果
+         *@param FocalDistance 焦距
+         *@param bIsCollision 是否处于碰撞状态
+         *@param TargetArmLength 目标臂长（弹簧臂的原始长度）
+         */
+        UpdateDOF(FocalDistance: number, bIsCollision: boolean, TargetArmLength: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorCameraComponent;
+        static Load(InName: string): CurrsorCameraComponent;
+    
+        __tid_CurrsorCameraComponent_0__: boolean;
+    }
+    
+    class StateTransitionRule {
+        constructor();
+        constructor(FromState: UE.ECharacterState, ToState: UE.ECharacterState, bIsAllowed: boolean, MinDuration: number);
+        FromState: UE.ECharacterState;
+        ToState: UE.ECharacterState;
+        bIsAllowed: boolean;
+        MinDuration: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_StateTransitionRule_0__: boolean;
+    }
+    
+    class StateManagerComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnStateChanged: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, OldState: UE.ECharacterState) => void>;
+        OnStateTransitionFailed: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, AttemptedState: UE.ECharacterState) => void>;
+        ActorStates: TMap<TWeakObjectPtr<UE.Actor>, UE.ActorStateData>;
+        StatePriorities: TMap<UE.ECharacterState, number>;
+        TransitionRules: TArray<UE.StateTransitionRule>;
+        bEnableDebugLogging: boolean;
+        bEnableStateTicking: boolean;
+        DefaultMinStateDuration: number;
+        /*
+         *转换规则
+         */
+        AddTransitionRule(Rule: UE.StateTransitionRule) : void;
+        CanTransitionTo(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState) : boolean;
+        /*
+         *状态管理
+         */
+        ChangeState(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, bForceChange?: boolean /* = false */) : boolean;
+        ClearTransitionRules() : void;
+        GetCurrentState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
+        GetManagedActorCount() : number;
+        GetPreviousState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
+        /*
+         *状态持续时间
+         */
+        GetStateElapsedTime(Actor: $Nullable<UE.Actor>) : number;
+        /*
+         *状态优先级
+         */
+        GetStatePriority(State: UE.ECharacterState) : number;
+        HasStateMinDurationPassed(Actor: $Nullable<UE.Actor>) : boolean;
+        IsInAnyState(Actor: $Nullable<UE.Actor>, States: TArray<UE.ECharacterState>) : boolean;
+        /*
+         *状态查询
+         */
+        IsInState(Actor: $Nullable<UE.Actor>, State: UE.ECharacterState) : boolean;
+        RemoveTransitionRule(FromState: UE.ECharacterState, ToState: UE.ECharacterState) : void;
+        SetStatePriority(State: UE.ECharacterState, Priority: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): StateManagerComponent;
+        static Load(InName: string): StateManagerComponent;
+    
+        __tid_StateManagerComponent_0__: boolean;
+    }
+    
+    class TableRowBase {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TableRowBase_0__: boolean;
+    }
+    
+    class LootItem extends UE.TableRowBase {
+        constructor();
+        constructor(ItemName: string, ItemID: number, DropChance: number, MinQuantity: number, MaxQuantity: number, Rarity: string);
+        ItemName: string;
+        ItemID: number;
+        DropChance: number;
+        MinQuantity: number;
+        MaxQuantity: number;
+        Rarity: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_LootItem_0__: boolean;
+    }
+    
+    class LootSystemComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnLootGenerated: $MulticastDelegate<(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) => void>;
+        LootTableIndices: TMap<string, number>;
+        AllLootItems: TArray<UE.LootItem>;
+        LootTableStartIndices: TArray<number>;
+        LootTableLengths: TArray<number>;
+        GlobalDropRateMultiplier: number;
+        bEnableDebugLogging: boolean;
+        TotalDropsGenerated: number;
+        RecentDropHistory: TArray<string>;
+        AddLootTable(TableName: string, Items: TArray<UE.LootItem>) : boolean;
+        ClearDropHistory() : void;
+        /*
+         *掉落处理
+         */
+        GenerateLoot(Source: $Nullable<UE.Actor>, LootTableName?: string /* = "Default" */) : TArray<UE.LootItem>;
+        GetGlobalDropRateMultiplier() : number;
+        /*
+         *配置
+         */
+        SetGlobalDropRateMultiplier(Multiplier: number) : void;
+        SpawnLoot(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LootSystemComponent;
+        static Load(InName: string): LootSystemComponent;
+    
+        __tid_LootSystemComponent_0__: boolean;
+    }
+    
+    class GameLogicManagerComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bEnableDebugLogging: boolean;
+        /*
+         *游戏逻辑处理
+         */
+        ProcessGameEvent(EventType: string, EventData: TMap<string, string>) : boolean;
+        UpdateGameState(DeltaTime: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameLogicManagerComponent;
+        static Load(InName: string): GameLogicManagerComponent;
+    
+        __tid_GameLogicManagerComponent_0__: boolean;
+    }
+    
+    class GameSystemManager extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnGameSystemsInitialized: $MulticastDelegate<(Timestamp: number) => void>;
+        bIsInitialized: boolean;
+        World: TWeakObjectPtr<UE.World>;
+        AttackSystem: UE.AttackSystemComponent;
+        StateManager: UE.StateManagerComponent;
+        LootSystem: UE.LootSystemComponent;
+        GameLogicManager: UE.GameLogicManagerComponent;
+        DebugPrintStatus() : void;
+        /*
+         *系统访问
+         */
+        GetAttackSystem() : UE.AttackSystemComponent;
+        GetGameLogicManager() : UE.GameLogicManagerComponent;
+        GetLootSystem() : UE.LootSystemComponent;
+        GetStateManager() : UE.StateManagerComponent;
+        /*
+         *系统生命周期管理
+         */
+        Initialize(InWorld: $Nullable<UE.World>) : void;
+        /*
+         *状态查询
+         */
+        IsInitialized() : boolean;
+        ResetAllSystems() : void;
+        Shutdown() : void;
+        /*
+         *单例访问
+         */
+        static GetInstance(World?: UE.World /* = None */) : UE.GameSystemManager;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameSystemManager;
+        static Load(InName: string): GameSystemManager;
+    
+        __tid_GameSystemManager_0__: boolean;
+    }
+    
+    class CurrsorCharacter extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        SpringArmComponent: UE.SpringArmComponent;
+        CameraComponent: UE.CurrsorCameraComponent;
+        AttackHitbox: UE.BoxComponent;
+        HealthComponent: UE.HealthComponent;
+        GameSystemManager: UE.GameSystemManager;
+        AttackSystem: UE.AttackSystemComponent;
+        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
+        LastArmLength: number;
+        LastCollisionState: boolean;
+        /*
+         *对实现此接口的对象施加伤害 __ 伤害值
+         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
+         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
+         */
+        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
+        /*
+         *区域ID相关方法（通过GameState管理）
+         */
+        GetCurrentAreaID() : number;
+        /*
+         *PlayerState相关方法
+         */
+        GetCurrsorPlayerState() : UE.LIVECODING_CurrsorPlayerState_1;
+        /*
+         *生命值相关方法
+         */
+        GetHealth() : number;
+        GetMaxHealth() : number;
+        HasValidAreaID() : boolean;
+        IsDead() : boolean;
+        IsRotationAdjustmentEnabled() : boolean;
+        ResetRotationAdjustment() : void;
+        SetCurrentAreaID(NewAreaID: number) : void;
+        /*
+         *旋转调整控制方法
+         */
+        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
+        SwitchToBattleCamera(CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        /*
+         *相机切换方法
+         */
+        SwitchToPlayerCamera() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
+        static Load(InName: string): CurrsorCharacter;
+    
+        __tid_CurrsorCharacter_0__: boolean;
     }
     
     class CurrsorGameInstance extends UE.GameInstance {
@@ -62842,103 +61638,130 @@ declare module "ue" {
         __tid_CurrsorPlayerCameraManager_0__: boolean;
     }
     
-    class Light extends UE.Actor {
+    class CurrsorActionComponent extends UE.ActorComponent {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        LightComponent: UE.LightComponent;
-        bEnabled: boolean;
-        GetBrightness() : number;
-        GetLightColor() : UE.LinearColor;
-        IsEnabled() : boolean;
+        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_0;
+        CurrsorPlayerState: UE.LIVECODING_CurrsorPlayerState_1;
+        CurrsorPlayerController: UE.CurrsorPlayerController;
+        CurrentMovementVector: number;
+        MovementSpeed: number;
+        bRotationAdjustmentEnabled: boolean;
+        AttackCompleted() : void;
+        GetMovementSpeed() : number;
+        IsRotationAdjustmentEnabled() : boolean;
+        Move(Value: UE.InputActionValue) : void;
         /*
-         *Replication Notification Callbacks
+         *重置旋转调整为默认启用状态（便捷方法）
          */
-        OnRep_bEnabled() : void;
-        SetAffectTranslucentLighting(bNewValue: boolean) : void;
-        SetBrightness(NewBrightness: number) : void;
-        SetCastShadows(bNewValue: boolean) : void;
+        ResetRotationAdjustment() : void;
         /*
-         *BEGIN DEPRECATED (use component functions now in level script)
+         *旋转调整控制方法
          */
-        SetEnabled(bSetEnabled: boolean) : void;
-        SetLightColor(NewLightColor: UE.LinearColor) : void;
-        SetLightFunctionFadeDistance(NewLightFunctionFadeDistance: number) : void;
-        SetLightFunctionMaterial(NewLightFunctionMaterial: $Nullable<UE.MaterialInterface>) : void;
-        SetLightFunctionScale(NewLightFunctionScale: UE.Vector) : void;
-        ToggleEnabled() : void;
+        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
+        TryStartAttack() : boolean;
+        UpdateRotationBasedOnInput(DeltaTime: number) : void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): Light;
-        static Load(InName: string): Light;
+        static Find(OrigInName: string, Outer?: Object): CurrsorActionComponent;
+        static Load(InName: string): CurrsorActionComponent;
     
-        __tid_Light_0__: boolean;
+        __tid_CurrsorActionComponent_0__: boolean;
     }
     
-    class DirectionalLight extends UE.Light {
+    class CurrsorPlayerController extends UE.PlayerController {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        ArrowComponent_EditorOnly: UE.ArrowComponent;
-        DirectionalLightComponent_EditorOnly: UE.DirectionalLightComponent;
+        InputMappingContext: UE.InputMappingContext;
+        CombatInputMappingContext: UE.InputMappingContext;
+        CurrentMovementVector: number;
+        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_0;
+        CurrsorPlayerState: UE.LIVECODING_CurrsorPlayerState_1;
+        PlayerActionComponent: UE.CurrsorActionComponent;
+        PlayerStateComponent: UE.LIVECODING_CurrsorPlayerState_1;
+        GameSystemManager: UE.GameSystemManager;
+        AttackSystem: UE.AttackSystemComponent;
+        StateManager: UE.StateManagerComponent;
+        MoveAction: UE.InputAction;
+        JumpAction: UE.InputAction;
+        DashAction: UE.InputAction;
+        AttackAction: UE.InputAction;
+        bIsInCombatInputMode: boolean;
+        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
+        bEnableInputDebugLogging: boolean;
+        /*
+         *对实现此接口的对象施加伤害 __ 伤害值
+         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
+         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
+         */
+        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
+        AttackCanceled() : void;
+        AttackCompleted() : void;
+        /*
+         *基础战斗状态
+         */
+        AttackEnd() : void;
+        AttackHitboxOff() : void;
+        AttackHitboxOn() : void;
+        AttackStarted() : void;
+        AttackTriggered() : void;
+        /*
+         *退出战斗区域
+         */
+        ExitBattleArea() : void;
+        /*
+         *公共访问方法
+         */
+        GetPlayerActionComponent() : UE.CurrsorActionComponent;
+        /*
+         *输入处理函数
+         */
+        Move(Value: UE.InputActionValue) : void;
+        MoveCompleted() : void;
+        MoveStarted() : void;
+        /*
+         *输入映射上下文切换
+         */
+        SwitchInputMappingContext(bUseCombatInput: boolean) : void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): DirectionalLight;
-        static Load(InName: string): DirectionalLight;
+        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerController;
+        static Load(InName: string): CurrsorPlayerController;
     
-        __tid_DirectionalLight_0__: boolean;
+        __tid_CurrsorPlayerController_0__: boolean;
     }
     
-    class DecalComponent extends UE.SceneComponent {
+    class CurrsorPlayerState extends UE.BaseState {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        DecalMaterial: UE.MaterialInterface;
-        SortOrder: number;
-        FadeScreenSize: number;
-        FadeStartDelay: number;
-        FadeDuration: number;
-        FadeInDuration: number;
-        FadeInStartDelay: number;
-        bDestroyOwnerAfterFade: boolean;
-        DecalSize: UE.Vector;
-        DecalColor: UE.LinearColor;
+        DeckCardNames: TArray<string>;
+        CardDataTable: UE.DataTable;
+        CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
+        CurrsorCharacter: TWeakObjectPtr<UE.CurrsorCharacter>;
+        CurrsorVelocity: UE.Vector;
+        bIsAttackKeyReleased: boolean;
+        AttackNum: number;
+        CanStartAttack() : boolean;
+        GetAttackKey() : boolean;
         /*
-         *Utility to allocate a new Dynamic Material Instance, set its parent to the currently applied material, and assign it
+         *Attack
          */
-        CreateDynamicMaterialInstance() : UE.MaterialInstanceDynamic;
+        GetAttackNum() : number;
         /*
-         *Accessor for decal material
+         *状态检测
          */
-        GetDecalMaterial() : UE.MaterialInterface;
-        GetFadeDuration() : number;
-        GetFadeInDuration() : number;
-        GetFadeInStartDelay() : number;
-        GetFadeStartDelay() : number;
+        IsGrounding() : boolean;
+        IsWalking() : boolean;
+        SetAttacking(bAttacking: boolean) : void;
+        SetAttackKey(bAttackKey: boolean) : void;
+        SetAttackNum(Num: number) : void;
         /*
-         *Sets the decal color.
+         *状态设置
          */
-        SetDecalColor(Color: UE.LinearColor) : void;
-        /*
-         *setting decal material on decal component. This will force the decal to reattach
-         */
-        SetDecalMaterial(NewDecalMaterial: $Nullable<UE.MaterialInterface>) : void;
-        SetFadeIn(StartDelay: number, Duration: number) : void;
-        /*
-         *Sets the decal's fade start time, duration and if the owning actor should be destroyed after the decal is fully faded out.
-         *The default value of 0 for FadeStartDelay and FadeDuration makes the decal persistent. See DecalLifetimeOpacity material
-         *node to control the look of "fading out."
-         *
-         *@param StartDelay - Time in seconds to wait before beginning to fade out the decal.
-         *@param Duration - Time in second for the decal to fade out.
-         *@param DestroyOwnerAfterFade - Should the owning actor automatically be destroyed after it is completely faded out.
-         */
-        SetFadeOut(StartDelay: number, Duration: number, DestroyOwnerAfterFade?: boolean /* = true */) : void;
-        /*
-         *Set the FadeScreenSize for this decal component
-         */
-        SetFadeScreenSize(NewFadeScreenSize: number) : void;
-        /*
-         *Sets the sort order for the decal component. Higher values draw later (on top). This will force the decal to reattach
-         */
-        SetSortOrder(Value: number) : void;
+        SetDashing(bDashing: boolean) : void;
+        SetJumping(bJumping: boolean) : void;
+        SetWalking(bWalking: boolean) : void;
+        ShouldMove() : boolean;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): DecalComponent;
-        static Load(InName: string): DecalComponent;
+        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerState;
+        static Load(InName: string): CurrsorPlayerState;
     
-        __tid_DecalComponent_0__: boolean;
+        __tid_CurrsorPlayerState_0__: boolean;
     }
     
     class PaperZDAnimNode_Base {
@@ -64342,6 +63165,88 @@ declare module "ue" {
         static Load(InName: string): BuiltInDynamicBindingResolverLibrary;
     
         __tid_BuiltInDynamicBindingResolverLibrary_0__: boolean;
+    }
+    
+    class SlateSound {
+        constructor();
+        constructor(ResourceObject: UE.Object);
+        ResourceObject: UE.Object;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_SlateSound_0__: boolean;
+    }
+    
+    class ButtonStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(Normal: UE.SlateBrush, Hovered: UE.SlateBrush, Pressed: UE.SlateBrush, Disabled: UE.SlateBrush, NormalForeground: UE.SlateColor, HoveredForeground: UE.SlateColor, PressedForeground: UE.SlateColor, DisabledForeground: UE.SlateColor, NormalPadding: UE.Margin, PressedPadding: UE.Margin, PressedSlateSound: UE.SlateSound, HoveredSlateSound: UE.SlateSound, PressedSound: string, HoveredSound: string);
+        Normal: UE.SlateBrush;
+        Hovered: UE.SlateBrush;
+        Pressed: UE.SlateBrush;
+        Disabled: UE.SlateBrush;
+        NormalForeground: UE.SlateColor;
+        HoveredForeground: UE.SlateColor;
+        PressedForeground: UE.SlateColor;
+        DisabledForeground: UE.SlateColor;
+        NormalPadding: UE.Margin;
+        PressedPadding: UE.Margin;
+        PressedSlateSound: UE.SlateSound;
+        HoveredSlateSound: UE.SlateSound;
+        PressedSound: string;
+        HoveredSound: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ButtonStyle_0__: boolean;
+    }
+    
+    enum EButtonClickMethod { DownAndUp, MouseDown, MouseUp, PreciseClick, EButtonClickMethod_MAX, __typeKeyDoNoAccess}
+    enum EButtonTouchMethod { DownAndUp, Down, PreciseTap, EButtonTouchMethod_MAX, __typeKeyDoNoAccess}
+    enum EButtonPressMethod { DownAndUp, ButtonPress, ButtonRelease, EButtonPressMethod_MAX, __typeKeyDoNoAccess}
+    class Button extends UE.ContentWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        WidgetStyle: UE.ButtonStyle;
+        ColorAndOpacity: UE.LinearColor;
+        BackgroundColor: UE.LinearColor;
+        ClickMethod: UE.EButtonClickMethod;
+        TouchMethod: UE.EButtonTouchMethod;
+        PressMethod: UE.EButtonPressMethod;
+        IsFocusable: boolean;
+        OnClicked: $MulticastDelegate<() => void>;
+        OnPressed: $MulticastDelegate<() => void>;
+        OnReleased: $MulticastDelegate<() => void>;
+        OnHovered: $MulticastDelegate<() => void>;
+        OnUnhovered: $MulticastDelegate<() => void>;
+        /*
+         *Returns true if the user is actively pressing the button.  Do not use this for detecting 'Clicks', use the OnClicked event instead.
+         *
+         *@return true if the user is actively pressing the button otherwise false.
+         */
+        IsPressed() : boolean;
+        /*
+         *Sets the color multiplier for the button background
+         */
+        SetBackgroundColor(InBackgroundColor: UE.LinearColor) : void;
+        SetClickMethod(InClickMethod: UE.EButtonClickMethod) : void;
+        /*
+         *Sets the color multiplier for the button content
+         */
+        SetColorAndOpacity(InColorAndOpacity: UE.LinearColor) : void;
+        SetPressMethod(InPressMethod: UE.EButtonPressMethod) : void;
+        /*
+         *Sets the color multiplier for the button background
+         */
+        SetStyle(InStyle: UE.ButtonStyle) : void;
+        SetTouchMethod(InTouchMethod: UE.EButtonTouchMethod) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): Button;
+        static Load(InName: string): Button;
+    
+        __tid_Button_0__: boolean;
     }
     
     class ButtonSlot extends UE.PanelSlot {
@@ -66319,7 +65224,6 @@ declare module "ue" {
         __tid_CeilDataflowNode_0__: boolean;
     }
     
-    enum ESplineType { BSpline, Hermite, Max, ESplineType_MAX, __typeKeyDoNoAccess}
     class ChannelMapInfo {
         constructor();
         constructor(ControlIndex: number, TotalChannelIndex: number, ChannelIndex: number, ParentControlIndex: number, ChannelTypeName: string, bDoesHaveSpace: boolean, SpaceChannelIndex: number, MaskIndex: number, CategoryIndex: number, ConstraintsIndex: TArray<number>);
@@ -69512,6 +68416,47 @@ declare module "ue" {
         __tid_ChaosVDSceneQueryDataContainer_0__: boolean;
     }
     
+    class Light extends UE.Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        LightComponent: UE.LightComponent;
+        bEnabled: boolean;
+        GetBrightness() : number;
+        GetLightColor() : UE.LinearColor;
+        IsEnabled() : boolean;
+        /*
+         *Replication Notification Callbacks
+         */
+        OnRep_bEnabled() : void;
+        SetAffectTranslucentLighting(bNewValue: boolean) : void;
+        SetBrightness(NewBrightness: number) : void;
+        SetCastShadows(bNewValue: boolean) : void;
+        /*
+         *BEGIN DEPRECATED (use component functions now in level script)
+         */
+        SetEnabled(bSetEnabled: boolean) : void;
+        SetLightColor(NewLightColor: UE.LinearColor) : void;
+        SetLightFunctionFadeDistance(NewLightFunctionFadeDistance: number) : void;
+        SetLightFunctionMaterial(NewLightFunctionMaterial: $Nullable<UE.MaterialInterface>) : void;
+        SetLightFunctionScale(NewLightFunctionScale: UE.Vector) : void;
+        ToggleEnabled() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): Light;
+        static Load(InName: string): Light;
+    
+        __tid_Light_0__: boolean;
+    }
+    
+    class DirectionalLight extends UE.Light {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ArrowComponent_EditorOnly: UE.ArrowComponent;
+        DirectionalLightComponent_EditorOnly: UE.DirectionalLightComponent;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): DirectionalLight;
+        static Load(InName: string): DirectionalLight;
+    
+        __tid_DirectionalLight_0__: boolean;
+    }
+    
     class ChaosVDSkySphereInterface extends UE.Interface {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Refresh_EditorOnly() : void;
@@ -72193,6 +71138,16 @@ declare module "ue" {
         __tid_ColumnVisibilitySetting_0__: boolean;
     }
     
+    class CombatCharacter extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        CameraComponent: UE.CurrsorCameraComponent;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CombatCharacter;
+        static Load(InName: string): CombatCharacter;
+    
+        __tid_CombatCharacter_0__: boolean;
+    }
+    
     class CombatInterface extends UE.Interface {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         /*
@@ -72295,6 +71250,27 @@ declare module "ue" {
         __tid_CombineMeshesToolBuilder_0__: boolean;
     }
     
+    class ScrollBarStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(HorizontalBackgroundImage: UE.SlateBrush, VerticalBackgroundImage: UE.SlateBrush, VerticalTopSlotImage: UE.SlateBrush, HorizontalTopSlotImage: UE.SlateBrush, VerticalBottomSlotImage: UE.SlateBrush, HorizontalBottomSlotImage: UE.SlateBrush, NormalThumbImage: UE.SlateBrush, HoveredThumbImage: UE.SlateBrush, DraggedThumbImage: UE.SlateBrush, Thickness: number);
+        HorizontalBackgroundImage: UE.SlateBrush;
+        VerticalBackgroundImage: UE.SlateBrush;
+        VerticalTopSlotImage: UE.SlateBrush;
+        HorizontalTopSlotImage: UE.SlateBrush;
+        VerticalBottomSlotImage: UE.SlateBrush;
+        HorizontalBottomSlotImage: UE.SlateBrush;
+        NormalThumbImage: UE.SlateBrush;
+        HoveredThumbImage: UE.SlateBrush;
+        DraggedThumbImage: UE.SlateBrush;
+        Thickness: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ScrollBarStyle_0__: boolean;
+    }
+    
     class ComboBox extends UE.Widget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         ScrollBarStyle: UE.ScrollBarStyle;
@@ -72308,6 +71284,75 @@ declare module "ue" {
         __tid_ComboBox_0__: boolean;
     }
     
+    class ComboButtonStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(ButtonStyle: UE.ButtonStyle, DownArrowImage: UE.SlateBrush, ShadowOffset: UE.DeprecateSlateVector2D, ShadowColorAndOpacity: UE.LinearColor, MenuBorderBrush: UE.SlateBrush, MenuBorderPadding: UE.Margin, ContentPadding: UE.Margin, DownArrowPadding: UE.Margin, DownArrowAlign: UE.EVerticalAlignment);
+        ButtonStyle: UE.ButtonStyle;
+        DownArrowImage: UE.SlateBrush;
+        ShadowOffset: UE.DeprecateSlateVector2D;
+        ShadowColorAndOpacity: UE.LinearColor;
+        MenuBorderBrush: UE.SlateBrush;
+        MenuBorderPadding: UE.Margin;
+        ContentPadding: UE.Margin;
+        DownArrowPadding: UE.Margin;
+        DownArrowAlign: UE.EVerticalAlignment;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ComboButtonStyle_0__: boolean;
+    }
+    
+    class ComboBoxStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(ComboButtonStyle: UE.ComboButtonStyle, PressedSlateSound: UE.SlateSound, SelectionChangeSlateSound: UE.SlateSound, ContentPadding: UE.Margin, MenuRowPadding: UE.Margin, PressedSound: string, SelectionChangeSound: string);
+        ComboButtonStyle: UE.ComboButtonStyle;
+        PressedSlateSound: UE.SlateSound;
+        SelectionChangeSlateSound: UE.SlateSound;
+        ContentPadding: UE.Margin;
+        MenuRowPadding: UE.Margin;
+        PressedSound: string;
+        SelectionChangeSound: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ComboBoxStyle_0__: boolean;
+    }
+    
+    class TableRowStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(SelectorFocusedBrush: UE.SlateBrush, ActiveHoveredBrush: UE.SlateBrush, ActiveBrush: UE.SlateBrush, InactiveHoveredBrush: UE.SlateBrush, InactiveBrush: UE.SlateBrush, bUseParentRowBrush: boolean, ParentRowBackgroundBrush: UE.SlateBrush, ParentRowBackgroundHoveredBrush: UE.SlateBrush, EvenRowBackgroundHoveredBrush: UE.SlateBrush, EvenRowBackgroundBrush: UE.SlateBrush, OddRowBackgroundHoveredBrush: UE.SlateBrush, OddRowBackgroundBrush: UE.SlateBrush, TextColor: UE.SlateColor, SelectedTextColor: UE.SlateColor, DropIndicator_Above: UE.SlateBrush, DropIndicator_Onto: UE.SlateBrush, DropIndicator_Below: UE.SlateBrush, ActiveHighlightedBrush: UE.SlateBrush, InactiveHighlightedBrush: UE.SlateBrush);
+        SelectorFocusedBrush: UE.SlateBrush;
+        ActiveHoveredBrush: UE.SlateBrush;
+        ActiveBrush: UE.SlateBrush;
+        InactiveHoveredBrush: UE.SlateBrush;
+        InactiveBrush: UE.SlateBrush;
+        bUseParentRowBrush: boolean;
+        ParentRowBackgroundBrush: UE.SlateBrush;
+        ParentRowBackgroundHoveredBrush: UE.SlateBrush;
+        EvenRowBackgroundHoveredBrush: UE.SlateBrush;
+        EvenRowBackgroundBrush: UE.SlateBrush;
+        OddRowBackgroundHoveredBrush: UE.SlateBrush;
+        OddRowBackgroundBrush: UE.SlateBrush;
+        TextColor: UE.SlateColor;
+        SelectedTextColor: UE.SlateColor;
+        DropIndicator_Above: UE.SlateBrush;
+        DropIndicator_Onto: UE.SlateBrush;
+        DropIndicator_Below: UE.SlateBrush;
+        ActiveHighlightedBrush: UE.SlateBrush;
+        InactiveHighlightedBrush: UE.SlateBrush;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TableRowStyle_0__: boolean;
+    }
+    
+    enum ESelectInfo { OnKeyPress, OnNavigation, OnMouseClick, Direct, ESelectInfo_MAX, __typeKeyDoNoAccess}
     class ComboBoxKey extends UE.Widget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Options: TArray<string>;
@@ -72361,6 +71406,52 @@ declare module "ue" {
         static Load(InName: string): ComboBoxKey;
     
         __tid_ComboBoxKey_0__: boolean;
+    }
+    
+    class ComboBoxString extends UE.Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        DefaultOptions: TArray<string>;
+        SelectedOption: string;
+        WidgetStyle: UE.ComboBoxStyle;
+        ItemStyle: UE.TableRowStyle;
+        ScrollBarStyle: UE.ScrollBarStyle;
+        ContentPadding: UE.Margin;
+        MaxListHeight: number;
+        HasDownArrow: boolean;
+        EnableGamepadNavigationMode: boolean;
+        Font: UE.SlateFontInfo;
+        ForegroundColor: UE.SlateColor;
+        bIsFocusable: boolean;
+        OnGenerateWidgetEvent: $Delegate<(Item: string) => UE.Widget>;
+        OnSelectionChanged: $MulticastDelegate<(SelectedItem: string, SelectionType: UE.ESelectInfo) => void>;
+        OnOpening: $MulticastDelegate<() => void>;
+        AddOption(Option: string) : void;
+        ClearOptions() : void;
+        ClearSelection() : void;
+        FindOptionIndex(Option: string) : number;
+        GetOptionAtIndex(Index: number) : string;
+        /*
+         *Returns the number of options
+         */
+        GetOptionCount() : number;
+        GetSelectedIndex() : number;
+        GetSelectedOption() : string;
+        IsOpen() : boolean;
+        OnOpeningEvent__DelegateSignature() : void;
+        OnSelectionChangedEvent__DelegateSignature(SelectedItem: string, SelectionType: UE.ESelectInfo) : void;
+        /*
+         *Refreshes the list of options.  If you added new ones, and want to update the list even if it's
+         *currently being displayed use this.
+         */
+        RefreshOptions() : void;
+        RemoveOption(Option: string) : boolean;
+        SetSelectedIndex(Index: number) : void;
+        SetSelectedOption(Option: string) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): ComboBoxString;
+        static Load(InName: string): ComboBoxString;
+    
+        __tid_ComboBoxString_0__: boolean;
     }
     
     class ComboBoxWidgetStyle extends UE.SlateWidgetStyleContainerBase {
@@ -84388,6 +83479,64 @@ declare module "ue" {
         __tid_DebugResolution_0__: boolean;
     }
     
+    class DecalComponent extends UE.SceneComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        DecalMaterial: UE.MaterialInterface;
+        SortOrder: number;
+        FadeScreenSize: number;
+        FadeStartDelay: number;
+        FadeDuration: number;
+        FadeInDuration: number;
+        FadeInStartDelay: number;
+        bDestroyOwnerAfterFade: boolean;
+        DecalSize: UE.Vector;
+        DecalColor: UE.LinearColor;
+        /*
+         *Utility to allocate a new Dynamic Material Instance, set its parent to the currently applied material, and assign it
+         */
+        CreateDynamicMaterialInstance() : UE.MaterialInstanceDynamic;
+        /*
+         *Accessor for decal material
+         */
+        GetDecalMaterial() : UE.MaterialInterface;
+        GetFadeDuration() : number;
+        GetFadeInDuration() : number;
+        GetFadeInStartDelay() : number;
+        GetFadeStartDelay() : number;
+        /*
+         *Sets the decal color.
+         */
+        SetDecalColor(Color: UE.LinearColor) : void;
+        /*
+         *setting decal material on decal component. This will force the decal to reattach
+         */
+        SetDecalMaterial(NewDecalMaterial: $Nullable<UE.MaterialInterface>) : void;
+        SetFadeIn(StartDelay: number, Duration: number) : void;
+        /*
+         *Sets the decal's fade start time, duration and if the owning actor should be destroyed after the decal is fully faded out.
+         *The default value of 0 for FadeStartDelay and FadeDuration makes the decal persistent. See DecalLifetimeOpacity material
+         *node to control the look of "fading out."
+         *
+         *@param StartDelay - Time in seconds to wait before beginning to fade out the decal.
+         *@param Duration - Time in second for the decal to fade out.
+         *@param DestroyOwnerAfterFade - Should the owning actor automatically be destroyed after it is completely faded out.
+         */
+        SetFadeOut(StartDelay: number, Duration: number, DestroyOwnerAfterFade?: boolean /* = true */) : void;
+        /*
+         *Set the FadeScreenSize for this decal component
+         */
+        SetFadeScreenSize(NewFadeScreenSize: number) : void;
+        /*
+         *Sets the sort order for the decal component. Higher values draw later (on top). This will force the decal to reattach
+         */
+        SetSortOrder(Value: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): DecalComponent;
+        static Load(InName: string): DecalComponent;
+    
+        __tid_DecalComponent_0__: boolean;
+    }
+    
     class DecalActor extends UE.Actor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Decal: UE.DecalComponent;
@@ -84638,128 +83787,6 @@ declare module "ue" {
         static Load(InName: string): DefaultPhysicsVolume;
     
         __tid_DefaultPhysicsVolume_0__: boolean;
-    }
-    
-    class TakeRecorderUserParameters {
-        constructor();
-        constructor(bMaximizeViewport: boolean, CountdownSeconds: number, EngineTimeDilation: number, bResetPlayhead: boolean, bStopAtPlaybackEnd: boolean, bRemoveRedundantTracks: boolean, ReduceKeysTolerance: number, bSaveRecordedAssets: boolean, bAutoLock: boolean, bAutoSerialize: boolean);
-        bMaximizeViewport: boolean;
-        CountdownSeconds: number;
-        EngineTimeDilation: number;
-        bResetPlayhead: boolean;
-        bStopAtPlaybackEnd: boolean;
-        bRemoveRedundantTracks: boolean;
-        ReduceKeysTolerance: number;
-        bSaveRecordedAssets: boolean;
-        bAutoLock: boolean;
-        bAutoSerialize: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TakeRecorderUserParameters_0__: boolean;
-    }
-    
-    class TakeRecorderPropertyTrackSettings {
-        constructor();
-        constructor(ComponentPath: string, PropertyPath: string);
-        ComponentPath: string;
-        PropertyPath: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TakeRecorderPropertyTrackSettings_0__: boolean;
-    }
-    
-    class TakeRecorderTrackSettings {
-        constructor();
-        constructor(MatchingActorClass: UE.SoftClassPath, DefaultPropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>, ExcludePropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>);
-        MatchingActorClass: UE.SoftClassPath;
-        DefaultPropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>;
-        ExcludePropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TakeRecorderTrackSettings_0__: boolean;
-    }
-    
-    class TakeRecorderProjectParameters {
-        constructor();
-        constructor(RootTakeSaveDir: UE.DirectoryPath, TakeSaveDir: string, DefaultSlate: string, RecordingClockSource: UE.EUpdateClockSource, bStartAtCurrentTimecode: boolean, bRecordTimecode: boolean, bRecordSourcesIntoSubSequences: boolean, bRecordToPossessable: boolean, DefaultTracks: TArray<UE.TakeRecorderTrackSettings>, bShowNotifications: boolean);
-        RootTakeSaveDir: UE.DirectoryPath;
-        TakeSaveDir: string;
-        DefaultSlate: string;
-        RecordingClockSource: UE.EUpdateClockSource;
-        bStartAtCurrentTimecode: boolean;
-        bRecordTimecode: boolean;
-        bRecordSourcesIntoSubSequences: boolean;
-        bRecordToPossessable: boolean;
-        DefaultTracks: TArray<UE.TakeRecorderTrackSettings>;
-        bShowNotifications: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TakeRecorderProjectParameters_0__: boolean;
-    }
-    
-    enum ETakeRecorderMode { RecordNewSequence, RecordIntoSequence, ETakeRecorderMode_MAX, __typeKeyDoNoAccess}
-    class TakeRecorderParameters {
-        constructor();
-        constructor(User: UE.TakeRecorderUserParameters, Project: UE.TakeRecorderProjectParameters, TakeRecorderMode: UE.ETakeRecorderMode, StartFrame: UE.FrameNumber, bDisableRecordingAndSave: boolean);
-        User: UE.TakeRecorderUserParameters;
-        Project: UE.TakeRecorderProjectParameters;
-        TakeRecorderMode: UE.ETakeRecorderMode;
-        StartFrame: UE.FrameNumber;
-        bDisableRecordingAndSave: boolean;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TakeRecorderParameters_0__: boolean;
-    }
-    
-    enum ETakeRecorderState { CountingDown, PreRecord, TickingAfterPre, Started, Stopped, Cancelled, ETakeRecorderState_MAX, __typeKeyDoNoAccess}
-    class TakeRecorder extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        SequenceAsset: UE.LevelSequence;
-        OverlayWidget: UE.TakeRecorderOverlayWidget;
-        WeakWorld: TWeakObjectPtr<UE.World>;
-        Parameters: UE.TakeRecorderParameters;
-        /*
-         *Access the number of seconds remaining before this recording will start
-         */
-        GetCountdownSeconds() : number;
-        /*
-         *Access the sequence asset that this recorder is recording into
-         */
-        GetSequence() : UE.LevelSequence;
-        /*
-         *Get the current state of this recorder
-         */
-        GetState() : UE.ETakeRecorderState;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TakeRecorder;
-        static Load(InName: string): TakeRecorder;
-    
-        __tid_TakeRecorder_0__: boolean;
-    }
-    
-    class TakeRecorderOverlayWidget extends UE.UserWidget {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Recorder: UE.TakeRecorder;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): TakeRecorderOverlayWidget;
-        static Load(InName: string): TakeRecorderOverlayWidget;
-    
-        __tid_TakeRecorderOverlayWidget_0__: boolean;
     }
     
     class DefaultRootCameraNode extends UE.RootCameraNode {
@@ -86166,6 +85193,8 @@ declare module "ue" {
         __tid_DockableWindowDragOperation_0__: boolean;
     }
     
+    enum ETextTransformPolicy { None, ToLower, ToUpper, ETextTransformPolicy_MAX, __typeKeyDoNoAccess}
+    enum ETextOverflowPolicy { Clip, Ellipsis, MultilineEllipsis, ETextOverflowPolicy_MAX, __typeKeyDoNoAccess}
     class TextBlockStyle extends UE.SlateWidgetStyle {
         constructor();
         constructor(Font: UE.SlateFontInfo, ColorAndOpacity: UE.SlateColor, ShadowOffset: UE.DeprecateSlateVector2D, ShadowColorAndOpacity: UE.LinearColor, SelectedBackgroundColor: UE.SlateColor, HighlightColor: UE.SlateColor, HighlightShape: UE.SlateBrush, StrikeBrush: UE.SlateBrush, UnderlineBrush: UE.SlateBrush, TransformPolicy: UE.ETextTransformPolicy, OverflowPolicy: UE.ETextOverflowPolicy);
@@ -86823,6 +85852,20 @@ declare module "ue" {
     }
     
     enum EDynamicBoxType { Horizontal, Vertical, Wrap, VerticalWrap, Radial, Overlay, EDynamicBoxType_MAX, __typeKeyDoNoAccess}
+    enum ESlateSizeRule { Automatic, Fill, ESlateSizeRule_MAX, __typeKeyDoNoAccess}
+    class SlateChildSize {
+        constructor();
+        constructor(Value: number, SizeRule: UE.ESlateSizeRule);
+        Value: number;
+        SizeRule: UE.ESlateSizeRule;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_SlateChildSize_0__: boolean;
+    }
+    
     class RadialBoxSettings {
         constructor();
         constructor(StartingAngle: number, bDistributeItemsEvenly: boolean, AngleBetweenItems: number, SectorCentralAngle: number);
@@ -87309,6 +86352,7 @@ declare module "ue" {
     enum ECombineCurvesMethod { LeaveSeparate, Union, Intersect, Difference, ExclusiveOr, ECombineCurvesMethod_MAX, __typeKeyDoNoAccess}
     enum ECommentBoxMode { GroupMovement, NoGroupMovement, ECommentBoxMode_MAX, __typeKeyDoNoAccess}
     enum ECompareOperation1Enum { Dataflow_Compare_Equal, Dataflow_Compare_Smaller, Dataflow_Compare_SmallerOrEqual, Dataflow_Compare_Greater, Dataflow_Compare_GreaterOrEqual, Dataflow_Max, Dataflow_MAX, __typeKeyDoNoAccess}
+    enum EComparisonMethod { Equal_To, Not_Equal_To, Greater_Than_Or_Equal_To, Less_Than_Or_Equal_To, Greater_Than, Less_Than, EComparisonMethod_MAX, __typeKeyDoNoAccess}
     enum ECompilerVersion { Default, VisualStudio2015, VisualStudio2017, VisualStudio2019, VisualStudio2022, ECompilerVersion_MAX, __typeKeyDoNoAccess}
     enum EComponentSocketType { Invalid, Bone, Socket, EComponentSocketType_MAX, __typeKeyDoNoAccess}
     enum ECompositingSampleCount { One, Two, Four, Eight, ECompositingSampleCount_MAX, __typeKeyDoNoAccess}
@@ -87800,6 +86844,121 @@ declare module "ue" {
         static Load(InName: string): EditableGameplayTagQueryExpression_NoTagsMatch;
     
         __tid_EditableGameplayTagQueryExpression_NoTagsMatch_0__: boolean;
+    }
+    
+    class EditableTextStyle extends UE.SlateWidgetStyle {
+        constructor();
+        constructor(Font: UE.SlateFontInfo, ColorAndOpacity: UE.SlateColor, BackgroundImageSelected: UE.SlateBrush, BackgroundImageComposing: UE.SlateBrush, CaretImage: UE.SlateBrush);
+        Font: UE.SlateFontInfo;
+        ColorAndOpacity: UE.SlateColor;
+        BackgroundImageSelected: UE.SlateBrush;
+        BackgroundImageComposing: UE.SlateBrush;
+        CaretImage: UE.SlateBrush;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_EditableTextStyle_0__: boolean;
+    }
+    
+    enum EVirtualKeyboardType { Default, Number, Web, Email, Password, AlphaNumeric, EVirtualKeyboardType_MAX, __typeKeyDoNoAccess}
+    class VirtualKeyboardOptions {
+        constructor();
+        constructor(bEnableAutocorrect: boolean);
+        bEnableAutocorrect: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_VirtualKeyboardOptions_0__: boolean;
+    }
+    
+    enum EVirtualKeyboardTrigger { OnFocusByPointer, OnAllFocusEvents, EVirtualKeyboardTrigger_MAX, __typeKeyDoNoAccess}
+    enum EVirtualKeyboardDismissAction { TextChangeOnDismiss, TextCommitOnAccept, TextCommitOnDismiss, EVirtualKeyboardDismissAction_MAX, __typeKeyDoNoAccess}
+    enum ETextJustify { Left, Center, Right, InvariantLeft, InvariantRight, ETextJustify_MAX, __typeKeyDoNoAccess}
+    enum ETextShapingMethod { Auto, KerningOnly, FullShaping, ETextShapingMethod_MAX, __typeKeyDoNoAccess}
+    enum ETextFlowDirection { Auto, LeftToRight, RightToLeft, Culture, ETextFlowDirection_MAX, __typeKeyDoNoAccess}
+    class ShapedTextOptions {
+        constructor();
+        constructor(bOverride_TextShapingMethod: boolean, bOverride_TextFlowDirection: boolean, TextShapingMethod: UE.ETextShapingMethod, TextFlowDirection: UE.ETextFlowDirection);
+        bOverride_TextShapingMethod: boolean;
+        bOverride_TextFlowDirection: boolean;
+        TextShapingMethod: UE.ETextShapingMethod;
+        TextFlowDirection: UE.ETextFlowDirection;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_ShapedTextOptions_0__: boolean;
+    }
+    
+    enum ETextCommit { Default, OnEnter, OnUserMovedFocus, OnCleared, ETextCommit_MAX, __typeKeyDoNoAccess}
+    class EditableText extends UE.Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Text: string;
+        TextDelegate: $Delegate<() => string>;
+        HintText: string;
+        HintTextDelegate: $Delegate<() => string>;
+        WidgetStyle: UE.EditableTextStyle;
+        IsReadOnly: boolean;
+        IsPassword: boolean;
+        MinimumDesiredWidth: number;
+        IsCaretMovedWhenGainFocus: boolean;
+        SelectAllTextWhenFocused: boolean;
+        RevertTextOnEscape: boolean;
+        ClearKeyboardFocusOnCommit: boolean;
+        SelectAllTextOnCommit: boolean;
+        AllowContextMenu: boolean;
+        KeyboardType: UE.EVirtualKeyboardType;
+        VirtualKeyboardOptions: UE.VirtualKeyboardOptions;
+        VirtualKeyboardTrigger: UE.EVirtualKeyboardTrigger;
+        VirtualKeyboardDismissAction: UE.EVirtualKeyboardDismissAction;
+        Justification: UE.ETextJustify;
+        OverflowPolicy: UE.ETextOverflowPolicy;
+        ShapedTextOptions: UE.ShapedTextOptions;
+        OnTextChanged: $MulticastDelegate<(Text: string) => void>;
+        OnTextCommitted: $MulticastDelegate<(Text: string, CommitMethod: UE.ETextCommit) => void>;
+        GetFont() : UE.SlateFontInfo;
+        /*
+         *Gets the Hint text that appears when there is no text in the text box
+         */
+        GetHintText() : string;
+        GetJustification() : UE.ETextJustify;
+        /*
+         *Gets the widget text
+         *@return The widget text
+         */
+        GetText() : string;
+        OnEditableTextChangedEvent__DelegateSignature(Text: string) : void;
+        OnEditableTextCommittedEvent__DelegateSignature(Text: string, CommitMethod: UE.ETextCommit) : void;
+        SetFont(InFontInfo: UE.SlateFontInfo) : void;
+        SetFontMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
+        SetFontOutlineMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
+        SetHintText(InHintText: string) : void;
+        SetIsPassword(InbIsPassword: boolean) : void;
+        SetIsReadOnly(InbIsReadyOnly: boolean) : void;
+        SetJustification(InJustification: UE.ETextJustify) : void;
+        /*
+         *Set the minimum desired width for this text box
+         *
+         *@param InMinDesiredWidth new minimum desired width
+         */
+        SetMinimumDesiredWidth(InMinDesiredWidth: number) : void;
+        /*
+         *Directly sets the widget text.
+         *Warning: This will wipe any binding created for the Text property!
+         *@param InText The text to assign to the widget
+         */
+        SetText(InText: string) : void;
+        SetTextOverflowPolicy(InOverflowPolicy: UE.ETextOverflowPolicy) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): EditableText;
+        static Load(InName: string): EditableText;
+    
+        __tid_EditableText_0__: boolean;
     }
     
     class EditableTextBoxStyle extends UE.SlateWidgetStyle {
@@ -92845,6 +92004,25 @@ declare module "ue" {
         __tid_EditorUtilityListView_0__: boolean;
     }
     
+    enum ETextWrappingPolicy { DefaultWrapping, AllowPerCharacterWrapping, ETextWrappingPolicy_MAX, __typeKeyDoNoAccess}
+    class TextLayoutWidget extends UE.Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ShapedTextOptions: UE.ShapedTextOptions;
+        Justification: UE.ETextJustify;
+        WrappingPolicy: UE.ETextWrappingPolicy;
+        AutoWrapText: boolean;
+        WrapTextAt: number;
+        Margin: UE.Margin;
+        LineHeightPercentage: number;
+        ApplyLineHeightToBottomLine: boolean;
+        SetJustification(InJustification: UE.ETextJustify) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TextLayoutWidget;
+        static Load(InName: string): TextLayoutWidget;
+    
+        __tid_TextLayoutWidget_0__: boolean;
+    }
+    
     class MultiLineEditableText extends UE.TextLayoutWidget {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         Text: string;
@@ -93155,6 +92333,74 @@ declare module "ue" {
         static Load(InName: string): EditorUtilityScrollBox;
     
         __tid_EditorUtilityScrollBox_0__: boolean;
+    }
+    
+    class Slider extends UE.Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Value: number;
+        ValueDelegate: $Delegate<() => number>;
+        MinValue: number;
+        MaxValue: number;
+        WidgetStyle: UE.SliderStyle;
+        Orientation: UE.EOrientation;
+        SliderBarColor: UE.LinearColor;
+        SliderHandleColor: UE.LinearColor;
+        IndentHandle: boolean;
+        Locked: boolean;
+        MouseUsesStep: boolean;
+        RequiresControllerLock: boolean;
+        StepSize: number;
+        IsFocusable: boolean;
+        OnMouseCaptureBegin: $MulticastDelegate<() => void>;
+        OnMouseCaptureEnd: $MulticastDelegate<() => void>;
+        OnControllerCaptureBegin: $MulticastDelegate<() => void>;
+        OnControllerCaptureEnd: $MulticastDelegate<() => void>;
+        OnValueChanged: $MulticastDelegate<(Value: number) => void>;
+        /*
+         *Get the current value scaled from 0 to 1
+         */
+        GetNormalizedValue() : number;
+        /*
+         *Gets the current value of the slider.
+         */
+        GetValue() : number;
+        /*
+         *Sets if the slidable area should be indented to fit the handle.
+         */
+        SetIndentHandle(InValue: boolean) : void;
+        /*
+         *Sets the handle to be interactive or fixed.
+         */
+        SetLocked(InValue: boolean) : void;
+        /*
+         *Sets the maximum value of the slider.
+         */
+        SetMaxValue(InValue: number) : void;
+        /*
+         *Sets the minimum value of the slider.
+         */
+        SetMinValue(InValue: number) : void;
+        /*
+         *Sets the color of the slider bar.
+         */
+        SetSliderBarColor(InValue: UE.LinearColor) : void;
+        /*
+         *Sets the color of the handle bar
+         */
+        SetSliderHandleColor(InValue: UE.LinearColor) : void;
+        /*
+         *Sets the amount to adjust the value by, when using a controller or keyboard.
+         */
+        SetStepSize(InValue: number) : void;
+        /*
+         *Sets the current value of the slider.
+         */
+        SetValue(InValue: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): Slider;
+        static Load(InName: string): Slider;
+    
+        __tid_Slider_0__: boolean;
     }
     
     class EditorUtilitySlider extends UE.Slider {
@@ -93809,6 +93055,8 @@ declare module "ue" {
     enum EFractureModeNewAssetLocation { SourceAssetFolder, LastUsedFolder, ContentBrowserFolder, EFractureModeNewAssetLocation_MAX, __typeKeyDoNoAccess}
     enum EFrameNumberDisplayFormats { NonDropFrameTimecode, DropFrameTimecode, Seconds, Frames, MAX_Count, EFrameNumberDisplayFormats_MAX, __typeKeyDoNoAccess}
     enum EFullyLoadPackageType { FULLYLOAD_Map, FULLYLOAD_Game_PreLoadClass, FULLYLOAD_Game_PostLoadClass, FULLYLOAD_Always, FULLYLOAD_Mutator, FULLYLOAD_MAX, __typeKeyDoNoAccess}
+    enum EFunctionalTestLogHandling { ProjectDefault, OutputIsError, OutputIgnored, EFunctionalTestLogHandling_MAX, __typeKeyDoNoAccess}
+    enum EFunctionalTestResult { Default, Invalid, Error, Running, Failed, Succeeded, EFunctionalTestResult_MAX, __typeKeyDoNoAccess}
     enum EGainParamMode { Linear, Decibels, EGainParamMode_MAX, __typeKeyDoNoAccess}
     enum EGameplayDebuggerOverrideMode { Enable, Disable, UseDefault, EGameplayDebuggerOverrideMode_MAX, __typeKeyDoNoAccess}
     enum EGameplayDebuggerShape { Invalid, Point, Segment, Box, Cone, Cylinder, Circle, Rectangle, Capsule, Polygon, Polyline, Arrow, EGameplayDebuggerShape_MAX, __typeKeyDoNoAccess}
@@ -96646,6 +95894,7 @@ declare module "ue" {
     enum ERigVMFunctionArgumentDirection { Input, Output, Invalid, ERigVMFunctionArgumentDirection_MAX, __typeKeyDoNoAccess}
     enum ERigVMRegisterType { Plain, String, Name, Struct, Invalid, ERigVMRegisterType_MAX, __typeKeyDoNoAccess}
     enum ERigVMSimPointIntegrateType { Verlet, SemiExplicitEuler, ERigVMSimPointIntegrateType_MAX, __typeKeyDoNoAccess}
+    enum ERigVMTransformSpace { LocalSpace, GlobalSpace, Max, ERigVMTransformSpace_MAX, __typeKeyDoNoAccess}
     enum ERingModulatorTypeSourceEffect { Sine, Saw, Triangle, Square, Count, ERingModulatorTypeSourceEffect_MAX, __typeKeyDoNoAccess}
     enum ERootMotionAccumulateMode { Override, Additive, ERootMotionAccumulateMode_MAX, __typeKeyDoNoAccess}
     enum ERootMotionFinishVelocityMode { MaintainLastRootMotionVelocity, SetVelocity, ClampVelocity, ERootMotionFinishVelocityMode_MAX, __typeKeyDoNoAccess}
@@ -96787,6 +96036,7 @@ declare module "ue" {
     enum ESpeedTreeLODType { STLOD_Pop, STLOD_Smooth, STLOD_MAX, __typeKeyDoNoAccess}
     enum ESpeedTreeWindType { STW_None, STW_Fastest, STW_Fast, STW_Better, STW_Best, STW_Palm, STW_BestPlus, STW_MAX, __typeKeyDoNoAccess}
     enum ESplineModulationColorMask { Red, Green, Blue, Alpha, ESplineModulationColorMask_MAX, __typeKeyDoNoAccess}
+    enum ESplineType { BSpline, Hermite, Max, ESplineType_MAX, __typeKeyDoNoAccess}
     enum ESplitScreenType { None, TwoPlayer_Horizontal, TwoPlayer_Vertical, ThreePlayer_FavorTop, ThreePlayer_FavorBottom, ThreePlayer_Vertical, ThreePlayer_Horizontal, FourPlayer_Grid, FourPlayer_Vertical, FourPlayer_Horizontal, SplitTypeCount, ESplitScreenType_MAX, __typeKeyDoNoAccess}
     enum ESpriteExtractMode { Auto, Grid, ESpriteExtractMode_MAX, __typeKeyDoNoAccess}
     enum EStackIssueSeverity { Error, Warning, Info, None, EStackIssueSeverity_MAX, __typeKeyDoNoAccess}
@@ -96837,7 +96087,9 @@ declare module "ue" {
     enum ESynthStereoDelayMode { Normal, Cross, PingPong, Count, ESynthStereoDelayMode_MAX, __typeKeyDoNoAccess}
     enum ETableViewMode { List, Tile, Tree, ETableViewMode_MAX, __typeKeyDoNoAccess}
     enum ETakeRecorderActorRecordType { Possessable, Spawnable, ProjectDefault, ETakeRecorderActorRecordType_MAX, __typeKeyDoNoAccess}
+    enum ETakeRecorderMode { RecordNewSequence, RecordIntoSequence, ETakeRecorderMode_MAX, __typeKeyDoNoAccess}
     enum ETakeRecorderPanelMode { NewRecording, RecordingInto, EditingPreset, ReviewingRecording, ETakeRecorderPanelMode_MAX, __typeKeyDoNoAccess}
+    enum ETakeRecorderState { CountingDown, PreRecord, TickingAfterPre, Started, Stopped, Cancelled, ETakeRecorderState_MAX, __typeKeyDoNoAccess}
     enum ETapLineMode { SendToChannel, Panning, Disabled, ETapLineMode_MAX, __typeKeyDoNoAccess}
     enum ETargetFaces { InternalFaces, InternalFacesAndSelectedMaterialIDs, SelectedMaterialIDs, ExternalFaces, AllFaces, ETargetFaces_MAX, __typeKeyDoNoAccess}
     enum ETeamAttitude { Friendly, Neutral, Hostile, ETeamAttitude_MAX, __typeKeyDoNoAccess}
@@ -96870,7 +96122,6 @@ declare module "ue" {
     enum EThreePlayerSplitScreenType { FavorTop, FavorBottom, Vertical, Horizontal, EThreePlayerSplitScreenType_MAX, __typeKeyDoNoAccess}
     enum EThumbnailPrimType { TPT_None, TPT_Sphere, TPT_Cube, TPT_Plane, TPT_Cylinder, TPT_MAX, __typeKeyDoNoAccess}
     enum EThumbnailQuality { Draft, Normal, Best, EThumbnailQuality_MAX, __typeKeyDoNoAccess}
-    enum ETickMode { Disabled, Enabled, Automatic, ETickMode_MAX, __typeKeyDoNoAccess}
     enum ETileMapProjectionMode { Orthogonal, IsometricDiamond, IsometricStaggered, HexagonalStaggered, ETileMapProjectionMode_MAX, __typeKeyDoNoAccess}
     enum ETimecodeBoneMode { All, Root, UserDefined, MAX, __typeKeyDoNoAccess}
     enum ETimedDataInputEvaluationType { None, Timecode, PlatformTime, ETimedDataInputEvaluationType_MAX, __typeKeyDoNoAccess}
@@ -97011,16 +96262,11 @@ declare module "ue" {
     enum EWeightEditOperation { Add, Replace, Multiply, Relax, EWeightEditOperation_MAX, __typeKeyDoNoAccess}
     enum EWeightmapRTType { WeightmapRT_Scratch_RGBA, WeightmapRT_Scratch1, WeightmapRT_Scratch2, WeightmapRT_Scratch3, WeightmapRT_Mip0, WeightmapRT_Mip1, WeightmapRT_Mip2, WeightmapRT_Mip3, WeightmapRT_Mip4, WeightmapRT_Mip5, WeightmapRT_Mip6, WeightmapRT_Mip7, WeightmapRT_Count, WeightmapRT_MAX, __typeKeyDoNoAccess}
     enum EWeldMeshEdgesAttributeUIMode { None, OnWeldedMeshEdgesOnly, OnFullMesh, EWeldMeshEdgesAttributeUIMode_MAX, __typeKeyDoNoAccess}
-    enum EWidgetBlendMode { Opaque, Masked, Transparent, EWidgetBlendMode_MAX, __typeKeyDoNoAccess}
     enum EWidgetDesignFlags { None, Designing, ShowOutline, ExecutePreConstruct, Previewing, EWidgetDesignFlags_MAX, __typeKeyDoNoAccess}
-    enum EWidgetGeometryMode { Plane, Cylinder, EWidgetGeometryMode_MAX, __typeKeyDoNoAccess}
     enum EWidgetInteractionSource { World, Mouse, CenterScreen, Custom, EWidgetInteractionSource_MAX, __typeKeyDoNoAccess}
-    enum EWidgetSpace { World, Screen, EWidgetSpace_MAX, __typeKeyDoNoAccess}
     enum EWidgetSupportsDynamicCreation { Default, Yes, No, EWidgetSupportsDynamicCreation_MAX, __typeKeyDoNoAccess}
     enum EWidgetTestAppearLocation { Viewport, PlayerScreen, EWidgetTestAppearLocation_MAX, __typeKeyDoNoAccess}
-    enum EWidgetTimingPolicy { RealTime, GameTime, EWidgetTimingPolicy_MAX, __typeKeyDoNoAccess}
     enum EWindowTitleBarMode { Overlay, VerticalBox, EWindowTitleBarMode_MAX, __typeKeyDoNoAccess}
-    enum EWindowVisibility { Visible, SelfHitTestInvisible, EWindowVisibility_MAX, __typeKeyDoNoAccess}
     enum EWindSourceType { Directional, Point, EWindSourceType_MAX, __typeKeyDoNoAccess}
     enum EWorkingColorSpace { sRGB, Rec2020, ACESAP0, ACESAP1, P3DCI, P3D65, Custom, EWorkingColorSpace_MAX, __typeKeyDoNoAccess}
     enum EWorldContentState { NoContent, ContentBundleInjected, EWorldContentState_MAX, __typeKeyDoNoAccess}
@@ -100918,194 +100164,6 @@ declare module "ue" {
         __tid_FreezablePerPlatformInt_0__: boolean;
     }
     
-    class RadialFalloff extends UE.FieldNodeFloat {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        MinRange: number;
-        MaxRange: number;
-        Default: number;
-        Radius: number;
-        Position: UE.Vector;
-        Falloff: UE.EFieldFalloffType;
-        /*
-         *Sphere scalar field that will be defined only within a sphere
-         *@param    Magnitude Magnitude of the sphere falloff field
-         *@param    MinRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
-         *@param    MaxRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
-         *@param    Default The field value will be set to Default if the sample distance from the center is higher than the radius
-         *@param    Radius Radius of the sphere falloff field
-         *@param    Position Center position of the sphere falloff field
-         *@param    Falloff Type of falloff function used if the falloff function is picked
-         */
-        SetRadialFalloff(Magnitude: number, MinRange: number, MaxRange: number, Default: number, Radius: number, Position: UE.Vector, Falloff: UE.EFieldFalloffType) : UE.RadialFalloff;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RadialFalloff;
-        static Load(InName: string): RadialFalloff;
-    
-        __tid_RadialFalloff_0__: boolean;
-    }
-    
-    class PlaneFalloff extends UE.FieldNodeFloat {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        MinRange: number;
-        MaxRange: number;
-        Default: number;
-        Distance: number;
-        Position: UE.Vector;
-        Normal: UE.Vector;
-        Falloff: UE.EFieldFalloffType;
-        /*
-         *Plane scalar field that will be defined only within a distance from a plane
-         *@param    Magnitude Magnitude of the plane falloff field
-         *@param    MinRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
-         *@param    MaxRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
-         *@param    Default The field value will be set to default if the sample projected distance ((Sample Position - Center Position).dot(Plane Normal)) is higher than the Plane Distance
-         *@param    Distance Distance limit for the plane falloff field starting from the center position and extending in the direction of the plane normal
-         *@param    Position Plane center position of the plane falloff field
-         *@param    Normal Plane normal of the plane falloff field
-         *@param    Falloff Type of falloff function used to model the evolution of the field from the plane surface to the distance isosurface
-         */
-        SetPlaneFalloff(Magnitude: number, MinRange: number, MaxRange: number, Default: number, Distance: number, Position: UE.Vector, Normal: UE.Vector, Falloff: UE.EFieldFalloffType) : UE.PlaneFalloff;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): PlaneFalloff;
-        static Load(InName: string): PlaneFalloff;
-    
-        __tid_PlaneFalloff_0__: boolean;
-    }
-    
-    class UniformInteger extends UE.FieldNodeInt {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        /*
-         *Set a uniform integer value independently of the sample position. The output is equal to magnitude
-         *@param    Magnitude The field output will be equal the magnitude
-         */
-        SetUniformInteger(Magnitude: number) : UE.UniformInteger;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): UniformInteger;
-        static Load(InName: string): UniformInteger;
-    
-        __tid_UniformInteger_0__: boolean;
-    }
-    
-    class RadialVector extends UE.FieldNodeVector {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        Position: UE.Vector;
-        /*
-         *Set a radial vector value. The direction is the normalized vector from the field position to the sample one. The output is equal to this direction * magnitude.
-         *@param    Magnitude Magnitude of the radial vector field
-         *@param    Position Center position of the radial vector field
-         */
-        SetRadialVector(Magnitude: number, Position: UE.Vector) : UE.RadialVector;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RadialVector;
-        static Load(InName: string): RadialVector;
-    
-        __tid_RadialVector_0__: boolean;
-    }
-    
-    class OperatorField extends UE.FieldNodeBase {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        RightField: UE.FieldNodeBase;
-        LeftField: UE.FieldNodeBase;
-        Operation: UE.EFieldOperationType;
-        /*
-         *Compute an operation between 2 incoming fields
-         *@param    Magnitude Magnitude of the operator field
-         *@param    LeftField Input field A to be processed
-         *@param    RightField Input field B to be processed
-         *@param    Operation Type of math operation you want to perform between the 2 fields
-         */
-        SetOperatorField(Magnitude: number, LeftField: $Nullable<UE.FieldNodeBase>, RightField: $Nullable<UE.FieldNodeBase>, Operation: UE.EFieldOperationType) : UE.OperatorField;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): OperatorField;
-        static Load(InName: string): OperatorField;
-    
-        __tid_OperatorField_0__: boolean;
-    }
-    
-    class UniformVector extends UE.FieldNodeVector {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        Direction: UE.Vector;
-        /*
-         *Set a uniform vector value independently of the sample position.The output is equal to magnitude * direction
-         *@param    Magnitude Magnitude of the uniform vector field
-         *@param    Direction Normalized direction of the uniform vector field
-         */
-        SetUniformVector(Magnitude: number, Direction: UE.Vector) : UE.UniformVector;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): UniformVector;
-        static Load(InName: string): UniformVector;
-    
-        __tid_UniformVector_0__: boolean;
-    }
-    
-    class NoiseField extends UE.FieldNodeFloat {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        MinRange: number;
-        MaxRange: number;
-        Transform: UE.Transform;
-        /*
-         *Defines a perlin noise scalar value if the sample is within a box
-         *@param    MinRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
-         *@param    MaxRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
-         *@param    Transform Transform of the box in which the perlin noise will be defined
-         */
-        SetNoiseField(MinRange: number, MaxRange: number, Transform: UE.Transform) : UE.NoiseField;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): NoiseField;
-        static Load(InName: string): NoiseField;
-    
-        __tid_NoiseField_0__: boolean;
-    }
-    
-    class UniformScalar extends UE.FieldNodeFloat {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        /*
-         *Set a uniform scalar value independently of the sample position. The output is equal to magnitude
-         *@param    Magnitude The field output will be equal the magnitude
-         */
-        SetUniformScalar(Magnitude: number) : UE.UniformScalar;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): UniformScalar;
-        static Load(InName: string): UniformScalar;
-    
-        __tid_UniformScalar_0__: boolean;
-    }
-    
-    class ReturnResultsTerminal extends UE.FieldNodeBase {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        /*
-         *Terminal field of a graph
-         */
-        SetReturnResultsTerminal() : UE.ReturnResultsTerminal;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): ReturnResultsTerminal;
-        static Load(InName: string): ReturnResultsTerminal;
-    
-        __tid_ReturnResultsTerminal_0__: boolean;
-    }
-    
-    class RandomVector extends UE.FieldNodeVector {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Magnitude: number;
-        /*
-         *Set a random vector value independently of the sample position. The output is equal to magnitude * random direction
-         *@param    Magnitude Magnitude of the random vector field
-         */
-        SetRandomVector(Magnitude: number) : UE.RandomVector;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): RandomVector;
-        static Load(InName: string): RandomVector;
-    
-        __tid_RandomVector_0__: boolean;
-    }
-    
     enum FTypedElementAlertColumnType { Error, Warning, MAX, __typeKeyDoNoAccess}
     class FullyLoadedPackagesInfo {
         constructor();
@@ -101120,6 +100178,381 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_FullyLoadedPackagesInfo_0__: boolean;
+    }
+    
+    class FuncTestRenderingComponent extends UE.PrimitiveComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): FuncTestRenderingComponent;
+        static Load(InName: string): FuncTestRenderingComponent;
+    
+        __tid_FuncTestRenderingComponent_0__: boolean;
+    }
+    
+    class RandomStream {
+        constructor();
+        constructor(InitialSeed: number, Seed: number);
+        InitialSeed: number;
+        Seed: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_RandomStream_0__: boolean;
+    }
+    
+    class TraceQueryTestNames {
+        constructor();
+        constructor(ComponentName: string, PhysicalMaterialName: string, ActorName: string);
+        ComponentName: string;
+        PhysicalMaterialName: string;
+        ActorName: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TraceQueryTestNames_0__: boolean;
+    }
+    
+    class TraceQueryTestResultsInnerMost {
+        constructor();
+        constructor(SingleHit: UE.HitResult, SingleNames: UE.TraceQueryTestNames, bSingleResult: boolean, MultiHits: TArray<UE.HitResult>, MultiNames: TArray<UE.TraceQueryTestNames>, bMultiResult: boolean);
+        SingleHit: UE.HitResult;
+        SingleNames: UE.TraceQueryTestNames;
+        bSingleResult: boolean;
+        MultiHits: TArray<UE.HitResult>;
+        MultiNames: TArray<UE.TraceQueryTestNames>;
+        bMultiResult: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TraceQueryTestResultsInnerMost_0__: boolean;
+    }
+    
+    class TraceQueryTestResultsInner {
+        constructor();
+        constructor(LineResults: UE.TraceQueryTestResultsInnerMost, SphereResults: UE.TraceQueryTestResultsInnerMost, CapsuleResults: UE.TraceQueryTestResultsInnerMost, BoxResults: UE.TraceQueryTestResultsInnerMost);
+        LineResults: UE.TraceQueryTestResultsInnerMost;
+        SphereResults: UE.TraceQueryTestResultsInnerMost;
+        CapsuleResults: UE.TraceQueryTestResultsInnerMost;
+        BoxResults: UE.TraceQueryTestResultsInnerMost;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TraceQueryTestResultsInner_0__: boolean;
+    }
+    
+    class TraceChannelTestBatchOptions {
+        constructor();
+        constructor(bLineTrace: boolean, bSphereTrace: boolean, bCapsuleTrace: boolean, bBoxTrace: boolean, bChannelTrace: boolean, bObjectsTrace: boolean, bProfileTrace: boolean);
+        bLineTrace: boolean;
+        bSphereTrace: boolean;
+        bCapsuleTrace: boolean;
+        bBoxTrace: boolean;
+        bChannelTrace: boolean;
+        bObjectsTrace: boolean;
+        bProfileTrace: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TraceChannelTestBatchOptions_0__: boolean;
+    }
+    
+    class TraceQueryTestResults extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ChannelResults: UE.TraceQueryTestResultsInner;
+        ObjectResults: UE.TraceQueryTestResultsInner;
+        ProfileResults: UE.TraceQueryTestResultsInner;
+        BatchOptions: UE.TraceChannelTestBatchOptions;
+        /*
+         *Output string value
+         */
+        ToString() : string;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TraceQueryTestResults;
+        static Load(InName: string): TraceQueryTestResults;
+    
+        __tid_TraceQueryTestResults_0__: boolean;
+    }
+    
+    class FunctionalTest extends UE.Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        TestLabel: string;
+        Author: string;
+        Description: string;
+        SpriteComponent: UE.BillboardComponent;
+        bIsEnabled: boolean;
+        LogErrorHandling: UE.EFunctionalTestLogHandling;
+        LogWarningHandling: UE.EFunctionalTestLogHandling;
+        ObservationPoint: UE.Actor;
+        bShouldDelayGarbageCollection: boolean;
+        RandomNumbersStream: UE.RandomStream;
+        Result: UE.EFunctionalTestResult;
+        PreparationTimeLimit: number;
+        TimeLimit: number;
+        TimesUpMessage: string;
+        TimesUpResult: UE.EFunctionalTestResult;
+        OnTestPrepare: $MulticastDelegate<() => void>;
+        OnTestStart: $MulticastDelegate<() => void>;
+        OnTestFinished: $MulticastDelegate<() => void>;
+        AutoDestroyActors: TArray<UE.Actor>;
+        RenderComp_EditorOnly: UE.FuncTestRenderingComponent;
+        TestName_EditorOnly: UE.TextRenderComponent;
+        bIsRunning: boolean;
+        TotalTime: number;
+        AddError(Message: string) : void;
+        AddInfo(Message: string) : void;
+        /*
+         *Causes the test to be rerun for a specific named reason.
+         */
+        AddRerun(Reason: string) : void;
+        AddWarning(Message: string) : void;
+        /*
+         *Assert that two bools are equal
+         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
+         */
+        AssertEqual_Bool(Actual: boolean, Expected: boolean, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two two-component boxes are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Box2D(Actual: UE.Box2D, Expected: UE.Box2D, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two double are equal within tolerance between two doubles.
+         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} within Tolerance for context '')
+         */
+        AssertEqual_Double(Actual: number, Expected: number, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two floats are equal within tolerance between two floats.
+         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} within Tolerance for context '')
+         */
+        AssertEqual_Float(Actual: number, Expected: number, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two ints are equal
+         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
+         */
+        AssertEqual_Int(Actual: number, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two 4x4 matrices are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Matrix(Actual: UE.Matrix, Expected: UE.Matrix, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two FNames are equal
+         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
+         */
+        AssertEqual_Name(Actual: string, Expected: string, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two Objects are equal
+         *@param What   A name to use in the message if the assert fails (What: expected {Actual} to be Equal To {Expected} for context '')
+         */
+        AssertEqual_Object(Actual: $Nullable<UE.Object>, Expected: $Nullable<UE.Object>, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two planes are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Plane(Actual: UE.Plane, Expected: UE.Plane, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two quats are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Quat(Actual: UE.Quat, Expected: UE.Quat, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that the component angles of two rotators are all equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Rotator(Actual: UE.Rotator, Expected: UE.Rotator, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that the orientation of two rotators is the same within a small tolerance. Robust to quaternion singularities where angles can differ despite having an identical orientation.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_RotatorOrientation(Actual: UE.Rotator, Expected: UE.Rotator, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two Strings are equal.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_String(Actual: string, Expected: string, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two TraceQueryResults are equal.
+         *@param What   A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_TraceQueryResults(Actual: $Nullable<UE.TraceQueryTestResults>, Expected: $Nullable<UE.TraceQueryTestResults>, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two transforms are (components memberwise - translation, rotation, scale) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Transform(Actual: UE.Transform, Expected: UE.Transform, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two vectors are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Vector(Actual: UE.Vector, Expected: UE.Vector, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two two-component vectors are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Vector2D(Actual: UE.Vector2D, Expected: UE.Vector2D, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two four-component vectors are (memberwise) equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertEqual_Vector4(Actual: UE.Vector4, Expected: UE.Vector4, What: string, Tolerance?: number /* = 0.000100 */, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that a boolean value is false.
+         *@param Message       The message to display if the assert fails ("Assertion Failed: 'Message' for context ''")
+         */
+        AssertFalse(Condition: boolean, Message: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that a UObject is valid
+         *@param Message       The message to display if the object is invalid ("Invalid object: 'Message' for context ''")
+         */
+        AssertIsValid(Object: $Nullable<UE.Object>, Message: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two two-component boxes are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Box2D(Actual: UE.Box2D, NotExpected: UE.Box2D, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two 4x4 matrices are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Matrix(Actual: UE.Matrix, NotExpected: UE.Matrix, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two planes are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Plane(Actual: UE.Plane, NotExpected: UE.Plane, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two quats are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Quat(Actual: UE.Quat, NotExpected: UE.Quat, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that the component angles of two rotators are all not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Rotator(Actual: UE.Rotator, NotExpected: UE.Rotator, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two Strings are not equal.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_String(Actual: string, NotExpected: string, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two transforms are (components memberwise - translation, rotation, scale) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Transform(Actual: UE.Transform, NotExpected: UE.Transform, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two vectors are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Vector(Actual: UE.Vector, NotExpected: UE.Vector, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two two-component vectors are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Vector2D(Actual: UE.Vector2D, NotExpected: UE.Vector2D, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that two four-component vectors are (memberwise) not equal within a small tolerance.
+         *@param What  A name to use in the message if the assert fails ("Expected 'What' not to be {Expected} but it was {Actual} for context ''")
+         */
+        AssertNotEqual_Vector4(Actual: UE.Vector4, NotExpected: UE.Vector4, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert that a boolean value is true.
+         *@param Message       The message to display if the assert fails ("Assertion Failed: 'Message' for context ''")
+         */
+        AssertTrue(Condition: boolean, Message: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert on a relationship between two DateTimes.
+         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
+         */
+        AssertValue_DateTime(Actual: UE.DateTime, ShouldBe: UE.EComparisonMethod, Expected: UE.DateTime, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert on a relationship between two doubles.
+         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
+         */
+        AssertValue_Double(Actual: number, ShouldBe: UE.EComparisonMethod, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert on a relationship between two floats.
+         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
+         */
+        AssertValue_Float(Actual: number, ShouldBe: UE.EComparisonMethod, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Assert on a relationship between two integers.
+         *@param What  A name to use in the message if the assert fails (What: expected {Actual} to be <ShouldBe> {Expected} for context '')
+         */
+        AssertValue_Int(Actual: number, ShouldBe: UE.EComparisonMethod, Expected: number, What: string, ContextObject?: UE.Object /* = None */) : boolean;
+        /*
+         *Used by debug drawing to gather actors this test is using and point at them on the level to better understand test's setup
+         */
+        DebugGatherRelevantActors() : TArray<UE.Actor>;
+        FinishTest(TestResult: UE.EFunctionalTestResult, Message: string) : void;
+        /*
+         *Returns the current re-run reason if we're in a named re-run.
+         */
+        GetCurrentRerunReason() : string;
+        IsEnabled() : boolean;
+        /*
+         *IsReady() is called once per frame after a test is run, until it returns true.  You should use this function to
+         *delay Start being called on the test until preconditions are met.
+         */
+        IsReady() : boolean;
+        /*
+         *AActor interface end
+         */
+        IsRunning() : boolean;
+        LogMessage(Message: string) : void;
+        OnAdditionalTestFinishedMessageRequest(TestResult: UE.EFunctionalTestResult) : string;
+        /*
+         *retrieves information whether test wants to have another run just after finishing
+         */
+        OnWantsReRunCheck() : boolean;
+        /*
+         *Prepare Test is fired once the test starts up, before the test IsReady() and thus before Start Test is called.
+         *So if there's some initial conditions or setup that you might need for your IsReady() check, you might want
+         *to do that here.
+         */
+        ReceivePrepareTest() : void;
+        /*
+         *Called once the IsReady() check for the test returns true.  After that happens the test has Officially started,
+         *and it will begin receiving Ticks in the blueprint.
+         */
+        ReceiveStartTest() : void;
+        /*
+         *Actors registered this way will be automatically destroyed (by limiting their lifespan)
+         *    on test finish
+         */
+        RegisterAutoDestroyActor(ActorToAutoDestroy: $Nullable<UE.Actor>) : void;
+        /*
+         *Sets the CVar from the given input. Variable gets reset after the test.
+         */
+        SetConsoleVariable(Name: string, InValue: string) : void;
+        /*
+         *Sets the CVar from the given input. Variable gets reset after the test.
+         */
+        SetConsoleVariableFromBoolean(Name: string, InValue: boolean) : void;
+        /*
+         *Sets the CVar from the given input. Variable gets reset after the test.
+         */
+        SetConsoleVariableFromFloat(Name: string, InValue: number) : void;
+        /*
+         *Sets the CVar from the given input. Variable gets reset after the test.
+         */
+        SetConsoleVariableFromInteger(Name: string, InValue: number) : void;
+        SetTimeLimit(NewTimeLimit: number, ResultWhenTimeRunsOut: UE.EFunctionalTestResult) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): FunctionalTest;
+        static Load(InName: string): FunctionalTest;
+    
+        __tid_FunctionalTest_0__: boolean;
     }
     
     class PendingDelayedSpawn {
@@ -107556,6 +106989,33 @@ declare module "ue" {
         __tid_HoleFillToolBuilder_0__: boolean;
     }
     
+    class HorizontalBoxSlot extends UE.PanelSlot {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Size: UE.SlateChildSize;
+        Padding: UE.Margin;
+        HorizontalAlignment: UE.EHorizontalAlignment;
+        VerticalAlignment: UE.EVerticalAlignment;
+        SetHorizontalAlignment(InHorizontalAlignment: UE.EHorizontalAlignment) : void;
+        SetPadding(InPadding: UE.Margin) : void;
+        SetSize(InSize: UE.SlateChildSize) : void;
+        SetVerticalAlignment(InVerticalAlignment: UE.EVerticalAlignment) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): HorizontalBoxSlot;
+        static Load(InName: string): HorizontalBoxSlot;
+    
+        __tid_HorizontalBoxSlot_0__: boolean;
+    }
+    
+    class HorizontalBox extends UE.PanelWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        AddChildToHorizontalBox(Content: $Nullable<UE.Widget>) : UE.HorizontalBoxSlot;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): HorizontalBox;
+        static Load(InName: string): HorizontalBox;
+    
+        __tid_HorizontalBox_0__: boolean;
+    }
+    
     class HudSettings extends UE.Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         bShowHUD: boolean;
@@ -108425,6 +107885,68 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_ilterState_0__: boolean;
+    }
+    
+    class SlateTextureAtlasInterface extends UE.Interface {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): SlateTextureAtlasInterface;
+        static Load(InName: string): SlateTextureAtlasInterface;
+    
+        __tid_SlateTextureAtlasInterface_0__: boolean;
+    }
+    
+    class Image extends UE.Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Brush: UE.SlateBrush;
+        BrushDelegate: $Delegate<() => UE.SlateBrush>;
+        ColorAndOpacity: UE.LinearColor;
+        ColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
+        bFlipForRightToLeftFlowDirection: boolean;
+        OnMouseButtonDownEvent: $Delegate<(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) => UE.EventReply>;
+        GetDynamicMaterial() : UE.MaterialInstanceDynamic;
+        SetBrush(InBrush: UE.SlateBrush) : void;
+        SetBrushFromAsset(Asset: $Nullable<UE.SlateBrushAsset>) : void;
+        /*
+         *Sets the Brush to the specified Atlas Region.
+         *
+         *  @param AtlasRegion Region of the Atlas to use to set on Brush.
+         *      @param bMatchSize If true, image will change its size to atlas region size. If false, atlas region will be stretched to image size.
+         */
+        SetBrushFromAtlasInterface(AtlasRegion: UE.SlateTextureAtlasInterface, bMatchSize?: boolean /* = false */) : void;
+        SetBrushFromMaterial(Material: $Nullable<UE.MaterialInterface>) : void;
+        SetBrushFromSoftMaterial(SoftMaterial: TSoftObjectPtr<UE.MaterialInterface>) : void;
+        /*
+         *Sets the Brush to the specified Soft Texture.
+         *
+         *  @param SoftTexture Soft Texture to use to set on Brush.
+         *      @param bMatchSize If true, image will change its size to texture size. If false, texture will be stretched to image size.
+         */
+        SetBrushFromSoftTexture(SoftTexture: TSoftObjectPtr<UE.Texture2D>, bMatchSize?: boolean /* = false */) : void;
+        /*
+         *Sets the Brush to the specified Texture.
+         *
+         *  @param Texture Texture to use to set on Brush.
+         *      @param bMatchSize If true, image will change its size to texture size. If false, texture will be stretched to image size.
+         */
+        SetBrushFromTexture(Texture: $Nullable<UE.Texture2D>, bMatchSize?: boolean /* = false */) : void;
+        /*
+         *Sets the Brush to the specified Dynamic Texture.
+         *
+         *  @param Texture Dynamic Texture to use to set on Brush.
+         *      @param bMatchSize If true, image will change its size to texture size. If false, texture will be stretched to image size.
+         */
+        SetBrushFromTextureDynamic(Texture: $Nullable<UE.Texture2DDynamic>, bMatchSize?: boolean /* = false */) : void;
+        SetBrushResourceObject(ResourceObject: $Nullable<UE.Object>) : void;
+        SetBrushTintColor(TintColor: UE.SlateColor) : void;
+        SetColorAndOpacity(InColorAndOpacity: UE.LinearColor) : void;
+        SetDesiredSizeOverride(DesiredSize: UE.Vector2D) : void;
+        SetOpacity(InOpacity: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): Image;
+        static Load(InName: string): Image;
+    
+        __tid_Image_0__: boolean;
     }
     
     class ImageSequenceProtocol_BMP extends UE.ImageSequenceProtocol {
@@ -156976,20 +156498,6 @@ declare module "ue" {
         __tid_NiagaraPrecompileContainer_0__: boolean;
     }
     
-    class NiagaraPreviewBase extends UE.Actor {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        SetLabelText(InXAxisText: string, InYAxisText: string) : void;
-        /*
-         *AActor Interface End
-         */
-        SetSystem(InSystem: $Nullable<UE.NiagaraSystem>) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): NiagaraPreviewBase;
-        static Load(InName: string): NiagaraPreviewBase;
-    
-        __tid_NiagaraPreviewBase_0__: boolean;
-    }
-    
     class NiagaraPreviewAxis extends UE.Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         /*
@@ -157082,6 +156590,20 @@ declare module "ue" {
         static Load(InName: string): NiagaraPreviewAxis_InterpParamVector4;
     
         __tid_NiagaraPreviewAxis_InterpParamVector4_0__: boolean;
+    }
+    
+    class NiagaraPreviewBase extends UE.Actor {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        SetLabelText(InXAxisText: string, InYAxisText: string) : void;
+        /*
+         *AActor Interface End
+         */
+        SetSystem(InSystem: $Nullable<UE.NiagaraSystem>) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): NiagaraPreviewBase;
+        static Load(InName: string): NiagaraPreviewBase;
+    
+        __tid_NiagaraPreviewBase_0__: boolean;
     }
     
     class NiagaraPreviewGrid extends UE.Actor {
@@ -159044,6 +158566,25 @@ declare module "ue" {
         __tid_NodeToCodeAssociation_0__: boolean;
     }
     
+    class NoiseField extends UE.FieldNodeFloat {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        MinRange: number;
+        MaxRange: number;
+        Transform: UE.Transform;
+        /*
+         *Defines a perlin noise scalar value if the sample is within a box
+         *@param    MinRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
+         *@param    MaxRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
+         *@param    Transform Transform of the box in which the perlin noise will be defined
+         */
+        SetNoiseField(MinRange: number, MaxRange: number, Transform: UE.Transform) : UE.NoiseField;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): NoiseField;
+        static Load(InName: string): NoiseField;
+    
+        __tid_NoiseField_0__: boolean;
+    }
+    
     class NoiseFieldDataflowNode extends UE.DataflowNode {
         constructor();
         constructor(SamplePositions: TArray<UE.Vector3f>, SampleIndices: UE.DataflowVertexSelection, MinRange: number, MaxRange: number, Transform: UE.Transform, FieldFloatResult: TArray<number>, FieldRemap: TArray<number>, NumSamplePositions: number);
@@ -160106,6 +159647,27 @@ declare module "ue" {
         __tid_OpenVDBImportOptionsObject_0__: boolean;
     }
     
+    class OperatorField extends UE.FieldNodeBase {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        RightField: UE.FieldNodeBase;
+        LeftField: UE.FieldNodeBase;
+        Operation: UE.EFieldOperationType;
+        /*
+         *Compute an operation between 2 incoming fields
+         *@param    Magnitude Magnitude of the operator field
+         *@param    LeftField Input field A to be processed
+         *@param    RightField Input field B to be processed
+         *@param    Operation Type of math operation you want to perform between the 2 fields
+         */
+        SetOperatorField(Magnitude: number, LeftField: $Nullable<UE.FieldNodeBase>, RightField: $Nullable<UE.FieldNodeBase>, Operation: UE.EFieldOperationType) : UE.OperatorField;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): OperatorField;
+        static Load(InName: string): OperatorField;
+    
+        __tid_OperatorField_0__: boolean;
+    }
+    
     class OrientedBox {
         constructor();
         constructor(Center: UE.Vector, AxisX: UE.Vector, AxisY: UE.Vector, AxisZ: UE.Vector, ExtentX: number, ExtentY: number, ExtentZ: number);
@@ -160556,6 +160118,105 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_PakOrderFileSpec_0__: boolean;
+    }
+    
+    class TextBlock extends UE.TextLayoutWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Text: string;
+        TextDelegate: $Delegate<() => string>;
+        ColorAndOpacity: UE.SlateColor;
+        ColorAndOpacityDelegate: $Delegate<() => UE.SlateColor>;
+        Font: UE.SlateFontInfo;
+        StrikeBrush: UE.SlateBrush;
+        ShadowOffset: UE.Vector2D;
+        ShadowColorAndOpacity: UE.LinearColor;
+        ShadowColorAndOpacityDelegate: $Delegate<() => UE.LinearColor>;
+        MinDesiredWidth: number;
+        bWrapWithInvalidationPanel: boolean;
+        TextTransformPolicy: UE.ETextTransformPolicy;
+        TextOverflowPolicy: UE.ETextOverflowPolicy;
+        bSimpleTextMode: boolean;
+        GetDynamicFontMaterial() : UE.MaterialInstanceDynamic;
+        GetDynamicOutlineMaterial() : UE.MaterialInstanceDynamic;
+        /*
+         *Gets the widget text
+         *@return The widget text
+         */
+        GetText() : string;
+        /*
+         *Set the auto wrap for this text block.
+         *
+         *@param InAutoTextWrap to turn wrap on or off.
+         */
+        SetAutoWrapText(InAutoTextWrap: boolean) : void;
+        /*
+         *Sets the color and opacity of the text in this text block
+         *
+         *@param InColorAndOpacity             The new text color and opacity
+         */
+        SetColorAndOpacity(InColorAndOpacity: UE.SlateColor) : void;
+        /*
+         *Dynamically set the font info for this text block
+         *
+         *@param InFontInfo The new font info
+         */
+        SetFont(InFontInfo: UE.SlateFontInfo) : void;
+        SetFontMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
+        SetFontOutlineMaterial(InMaterial: $Nullable<UE.MaterialInterface>) : void;
+        /*
+         *Set the minimum desired width for this text block
+         *
+         *@param InMinDesiredWidth new minimum desired width
+         */
+        SetMinDesiredWidth(InMinDesiredWidth: number) : void;
+        /*
+         *Sets the opacity of the text in this text block
+         *
+         *@param InOpacity              The new text opacity
+         */
+        SetOpacity(InOpacity: number) : void;
+        /*
+         *Sets the color and opacity of the text drop shadow
+         *Note: if opacity is zero no shadow will be drawn
+         *
+         *@param InShadowColorAndOpacity               The new drop shadow color and opacity
+         */
+        SetShadowColorAndOpacity(InShadowColorAndOpacity: UE.LinearColor) : void;
+        /*
+         *Sets the offset that the text drop shadow should be drawn at
+         *
+         *@param InShadowOffset                The new offset
+         */
+        SetShadowOffset(InShadowOffset: UE.Vector2D) : void;
+        /*
+         *Dynamically set the strike brush for this text block
+         *
+         *@param InStrikeBrush The new brush to use to strike through text
+         */
+        SetStrikeBrush(InStrikeBrush: UE.SlateBrush) : void;
+        /*
+         *Directly sets the widget text.
+         *Warning: This will wipe any binding created for the Text property!
+         *@param InText The text to assign to the widget
+         */
+        SetText(InText: string) : void;
+        /*
+         *Set the text overflow policy for this text block.
+         *
+         *@param InOverflowPolicy the new text overflow policy.
+         */
+        SetTextOverflowPolicy(InOverflowPolicy: UE.ETextOverflowPolicy) : void;
+        /*
+         *Set the text transformation policy for this text block.
+         *
+         *@param InTransformPolicy the new text transformation policy.
+         */
+        SetTextTransformPolicy(InTransformPolicy: UE.ETextTransformPolicy) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TextBlock;
+        static Load(InName: string): TextBlock;
+    
+        __tid_TextBlock_0__: boolean;
     }
     
     class RichTextBlockDecorator extends UE.Object {
@@ -166350,6 +166011,35 @@ declare module "ue" {
         __tid_PlaneCutToolBuilder_0__: boolean;
     }
     
+    class PlaneFalloff extends UE.FieldNodeFloat {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        MinRange: number;
+        MaxRange: number;
+        Default: number;
+        Distance: number;
+        Position: UE.Vector;
+        Normal: UE.Vector;
+        Falloff: UE.EFieldFalloffType;
+        /*
+         *Plane scalar field that will be defined only within a distance from a plane
+         *@param    Magnitude Magnitude of the plane falloff field
+         *@param    MinRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
+         *@param    MaxRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
+         *@param    Default The field value will be set to default if the sample projected distance ((Sample Position - Center Position).dot(Plane Normal)) is higher than the Plane Distance
+         *@param    Distance Distance limit for the plane falloff field starting from the center position and extending in the direction of the plane normal
+         *@param    Position Plane center position of the plane falloff field
+         *@param    Normal Plane normal of the plane falloff field
+         *@param    Falloff Type of falloff function used to model the evolution of the field from the plane surface to the distance isosurface
+         */
+        SetPlaneFalloff(Magnitude: number, MinRange: number, MaxRange: number, Default: number, Distance: number, Position: UE.Vector, Normal: UE.Vector, Falloff: UE.EFieldFalloffType) : UE.PlaneFalloff;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): PlaneFalloff;
+        static Load(InName: string): PlaneFalloff;
+    
+        __tid_PlaneFalloff_0__: boolean;
+    }
+    
     class PlaneFalloffFieldDataflowNode extends UE.DataflowNode {
         constructor();
         constructor(SamplePositions: TArray<UE.Vector3f>, SampleIndices: UE.DataflowVertexSelection, Position: UE.Vector, Normal: UE.Vector, Distance: number, Translation: UE.Vector, Magnitude: number, MinRange: number, MaxRange: number, Default: number, FalloffType: UE.EDataflowFieldFalloffType, FieldFloatResult: TArray<number>, FieldRemap: TArray<number>, FieldSelectionMask: UE.DataflowVertexSelection, NumSamplePositions: number);
@@ -169315,6 +169005,33 @@ declare module "ue" {
         __tid_RadialDamageEvent_0__: boolean;
     }
     
+    class RadialFalloff extends UE.FieldNodeFloat {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        MinRange: number;
+        MaxRange: number;
+        Default: number;
+        Radius: number;
+        Position: UE.Vector;
+        Falloff: UE.EFieldFalloffType;
+        /*
+         *Sphere scalar field that will be defined only within a sphere
+         *@param    Magnitude Magnitude of the sphere falloff field
+         *@param    MinRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
+         *@param    MaxRange The initial function value between 0 and 1 will be scaled between MinRange and MaxRange before being multiplied by magnitude
+         *@param    Default The field value will be set to Default if the sample distance from the center is higher than the radius
+         *@param    Radius Radius of the sphere falloff field
+         *@param    Position Center position of the sphere falloff field
+         *@param    Falloff Type of falloff function used if the falloff function is picked
+         */
+        SetRadialFalloff(Magnitude: number, MinRange: number, MaxRange: number, Default: number, Radius: number, Position: UE.Vector, Falloff: UE.EFieldFalloffType) : UE.RadialFalloff;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RadialFalloff;
+        static Load(InName: string): RadialFalloff;
+    
+        __tid_RadialFalloff_0__: boolean;
+    }
+    
     class RadialFalloffFieldDataflowNode extends UE.DataflowNode {
         constructor();
         constructor(SamplePositions: TArray<UE.Vector3f>, SampleIndices: UE.DataflowVertexSelection, Sphere: UE.Sphere, Translation: UE.Vector, Magnitude: number, MinRange: number, MaxRange: number, Default: number, FalloffType: UE.EDataflowFieldFalloffType, FieldFloatResult: TArray<number>, FieldRemap: TArray<number>, FieldSelectionMask: UE.DataflowVertexSelection, NumSamplePositions: number);
@@ -169453,6 +169170,140 @@ declare module "ue" {
         __tid_RadialScatterPointsDataflowNode_0__: boolean;
     }
     
+    class RadialSlider extends UE.Widget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Value: number;
+        ValueDelegate: $Delegate<() => number>;
+        bUseCustomDefaultValue: boolean;
+        CustomDefaultValue: number;
+        SliderRange: UE.RuntimeFloatCurve;
+        ValueTags: TArray<number>;
+        SliderHandleStartAngle: number;
+        SliderHandleEndAngle: number;
+        AngularOffset: number;
+        HandStartEndRatio: UE.Vector2D;
+        WidgetStyle: UE.SliderStyle;
+        SliderBarColor: UE.LinearColor;
+        SliderProgressColor: UE.LinearColor;
+        SliderHandleColor: UE.LinearColor;
+        CenterBackgroundColor: UE.LinearColor;
+        Locked: boolean;
+        MouseUsesStep: boolean;
+        RequiresControllerLock: boolean;
+        StepSize: number;
+        IsFocusable: boolean;
+        UseVerticalDrag: boolean;
+        ShowSliderHandle: boolean;
+        ShowSliderHand: boolean;
+        OnMouseCaptureBegin: $MulticastDelegate<() => void>;
+        OnMouseCaptureEnd: $MulticastDelegate<() => void>;
+        OnControllerCaptureBegin: $MulticastDelegate<() => void>;
+        OnControllerCaptureEnd: $MulticastDelegate<() => void>;
+        OnValueChanged: $MulticastDelegate<(Value: number) => void>;
+        /*
+         *Gets the current custom default value of the slider.
+         */
+        GetCustomDefaultValue() : number;
+        /*
+         *Get the current raw slider alpha from 0 to 1
+         */
+        GetNormalizedSliderHandlePosition() : number;
+        /*
+         *Gets the current value of the slider.
+         */
+        GetValue() : number;
+        /*
+         *Sets the Angular Offset for the slider.
+         */
+        SetAngularOffset(InValue: number) : void;
+        /*
+         *Sets the color of the slider bar
+         */
+        SetCenterBackgroundColor(InValue: UE.LinearColor) : void;
+        /*
+         *Sets the current custom default value of the slider.
+         */
+        SetCustomDefaultValue(InValue: number) : void;
+        /*
+         *Sets the start and end of the hand as a ratio to the slider radius (so 0.0 to 1.0 is from the slider center to the handle).
+         */
+        SetHandStartEndRatio(InValue: UE.Vector2D) : void;
+        /*
+         *Sets the handle to be interactive or fixed
+         */
+        SetLocked(InValue: boolean) : void;
+        /*
+         *Whether to show the slider hand.
+         */
+        SetShowSliderHand(InShowSliderHand: boolean) : void;
+        /*
+         *Whether to show the slider handle (thumb).
+         */
+        SetShowSliderHandle(InShowSliderHandle: boolean) : void;
+        /*
+         *Sets the color of the slider bar
+         */
+        SetSliderBarColor(InValue: UE.LinearColor) : void;
+        /*
+         *Sets the color of the handle bar
+         */
+        SetSliderHandleColor(InValue: UE.LinearColor) : void;
+        /*
+         *Sets the maximum angle of the slider.
+         */
+        SetSliderHandleEndAngle(InValue: number) : void;
+        /*
+         *Sets the minimum angle of the slider.
+         */
+        SetSliderHandleStartAngle(InValue: number) : void;
+        /*
+         *Sets the progress color of the slider bar
+         */
+        SetSliderProgressColor(InValue: UE.LinearColor) : void;
+        /*
+         *Sets the curve for the slider range
+         */
+        SetSliderRange(InSliderRange: UE.RuntimeFloatCurve) : void;
+        /*
+         *Sets the amount to adjust the value by, when using a controller or keyboard
+         */
+        SetStepSize(InValue: number) : void;
+        /*
+         *Set whether the value is changed when dragging vertically as opposed to along the radial curve.
+         */
+        SetUseVerticalDrag(InUseVerticalDrag: boolean) : void;
+        /*
+         *Sets the current value of the slider.
+         */
+        SetValue(InValue: number) : void;
+        /*
+         *Adds value tags to the slider.
+         */
+        SetValueTags(InValueTags: TArray<number>) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RadialSlider;
+        static Load(InName: string): RadialSlider;
+    
+        __tid_RadialSlider_0__: boolean;
+    }
+    
+    class RadialVector extends UE.FieldNodeVector {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        Position: UE.Vector;
+        /*
+         *Set a radial vector value. The direction is the normalized vector from the field position to the sample one. The output is equal to this direction * magnitude.
+         *@param    Magnitude Magnitude of the radial vector field
+         *@param    Position Center position of the radial vector field
+         */
+        SetRadialVector(Magnitude: number, Position: UE.Vector) : UE.RadialVector;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RadialVector;
+        static Load(InName: string): RadialVector;
+    
+        __tid_RadialVector_0__: boolean;
+    }
+    
     class RadialVectorFieldDataflowNode extends UE.DataflowNode {
         constructor();
         constructor(SamplePositions: TArray<UE.Vector3f>, SampleIndices: UE.DataflowVertexSelection, Magnitude: number, Position: UE.Vector, FieldVectorResult: TArray<UE.Vector>, FieldRemap: TArray<number>, NumSamplePositions: number);
@@ -169542,6 +169393,21 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_RandomUnitVectorInConeDataflowNode_0__: boolean;
+    }
+    
+    class RandomVector extends UE.FieldNodeVector {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        /*
+         *Set a random vector value independently of the sample position. The output is equal to magnitude * random direction
+         *@param    Magnitude Magnitude of the random vector field
+         */
+        SetRandomVector(Magnitude: number) : UE.RandomVector;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): RandomVector;
+        static Load(InName: string): RandomVector;
+    
+        __tid_RandomVector_0__: boolean;
     }
     
     class RandomVectorFieldDataflowNode extends UE.DataflowNode {
@@ -170967,6 +170833,19 @@ declare module "ue" {
         static Load(InName: string): RetriangulateGeometrySelectionCommand;
     
         __tid_RetriangulateGeometrySelectionCommand_0__: boolean;
+    }
+    
+    class ReturnResultsTerminal extends UE.FieldNodeBase {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        /*
+         *Terminal field of a graph
+         */
+        SetReturnResultsTerminal() : UE.ReturnResultsTerminal;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): ReturnResultsTerminal;
+        static Load(InName: string): ReturnResultsTerminal;
+    
+        __tid_ReturnResultsTerminal_0__: boolean;
     }
     
     class ReverbEffectFactory extends UE.Factory {
@@ -174891,6 +174770,47 @@ declare module "ue" {
         __tid_RigUnit_HierarchyAddBone_0__: boolean;
     }
     
+    class RigUnit_HierarchyAddControl_ProxySettings {
+        constructor();
+        constructor(bIsProxy: boolean, DrivenControls: TArray<UE.RigElementKey>, ShapeVisibility: UE.ERigControlVisibility);
+        bIsProxy: boolean;
+        DrivenControls: TArray<UE.RigElementKey>;
+        ShapeVisibility: UE.ERigControlVisibility;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_RigUnit_HierarchyAddControl_ProxySettings_0__: boolean;
+    }
+    
+    class RigUnit_HierarchyAddControl_Settings {
+        constructor();
+        constructor(DisplayName: string);
+        DisplayName: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_RigUnit_HierarchyAddControl_Settings_0__: boolean;
+    }
+    
+    class RigUnit_HierarchyAddControl_ShapeSettings {
+        constructor();
+        constructor(bVisible: boolean, Name: string, Color: UE.LinearColor, Transform: UE.Transform);
+        bVisible: boolean;
+        Name: string;
+        Color: UE.LinearColor;
+        Transform: UE.Transform;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_RigUnit_HierarchyAddControl_ShapeSettings_0__: boolean;
+    }
+    
     class RigUnit_HierarchyAddControlElement extends UE.RigUnit_HierarchyAddElement {
         constructor();
         constructor(OffsetTransform: UE.Transform, OffsetSpace: UE.ERigVMTransformSpace);
@@ -175036,6 +174956,47 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_RigUnit_HierarchyAddControlRotator_0__: boolean;
+    }
+    
+    class RigUnit_HierarchyAddControlTransform_LimitSettings {
+        constructor();
+        constructor(LimitTranslationX: UE.RigControlLimitEnabled, LimitTranslationY: UE.RigControlLimitEnabled, LimitTranslationZ: UE.RigControlLimitEnabled, LimitPitch: UE.RigControlLimitEnabled, LimitYaw: UE.RigControlLimitEnabled, LimitRoll: UE.RigControlLimitEnabled, LimitScaleX: UE.RigControlLimitEnabled, LimitScaleY: UE.RigControlLimitEnabled, LimitScaleZ: UE.RigControlLimitEnabled, MinValue: UE.EulerTransform, MaxValue: UE.EulerTransform, bDrawLimits: boolean);
+        LimitTranslationX: UE.RigControlLimitEnabled;
+        LimitTranslationY: UE.RigControlLimitEnabled;
+        LimitTranslationZ: UE.RigControlLimitEnabled;
+        LimitPitch: UE.RigControlLimitEnabled;
+        LimitYaw: UE.RigControlLimitEnabled;
+        LimitRoll: UE.RigControlLimitEnabled;
+        LimitScaleX: UE.RigControlLimitEnabled;
+        LimitScaleY: UE.RigControlLimitEnabled;
+        LimitScaleZ: UE.RigControlLimitEnabled;
+        MinValue: UE.EulerTransform;
+        MaxValue: UE.EulerTransform;
+        bDrawLimits: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_RigUnit_HierarchyAddControlTransform_LimitSettings_0__: boolean;
+    }
+    
+    class RigUnit_HierarchyAddControlTransform_Settings extends UE.RigUnit_HierarchyAddControl_Settings {
+        constructor();
+        constructor(InitialSpace: UE.ERigVMTransformSpace, bUsePreferredRotationOrder: boolean, PreferredRotationOrder: UE.EEulerRotationOrder, Limits: UE.RigUnit_HierarchyAddControlTransform_LimitSettings, Shape: UE.RigUnit_HierarchyAddControl_ShapeSettings, Proxy: UE.RigUnit_HierarchyAddControl_ProxySettings, FilteredChannels: TArray<UE.ERigControlTransformChannel>);
+        InitialSpace: UE.ERigVMTransformSpace;
+        bUsePreferredRotationOrder: boolean;
+        PreferredRotationOrder: UE.EEulerRotationOrder;
+        Limits: UE.RigUnit_HierarchyAddControlTransform_LimitSettings;
+        Shape: UE.RigUnit_HierarchyAddControl_ShapeSettings;
+        Proxy: UE.RigUnit_HierarchyAddControl_ProxySettings;
+        FilteredChannels: TArray<UE.ERigControlTransformChannel>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_RigUnit_HierarchyAddControlTransform_Settings_0__: boolean;
     }
     
     class RigUnit_HierarchyAddControlTransform extends UE.RigUnit_HierarchyAddControlElement {
@@ -195668,6 +195629,126 @@ declare module "ue" {
         __tid_TakeMetaData_0__: boolean;
     }
     
+    class TakeRecorderOverlayWidget extends UE.UserWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Recorder: UE.TakeRecorder;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TakeRecorderOverlayWidget;
+        static Load(InName: string): TakeRecorderOverlayWidget;
+    
+        __tid_TakeRecorderOverlayWidget_0__: boolean;
+    }
+    
+    class TakeRecorderUserParameters {
+        constructor();
+        constructor(bMaximizeViewport: boolean, CountdownSeconds: number, EngineTimeDilation: number, bResetPlayhead: boolean, bStopAtPlaybackEnd: boolean, bRemoveRedundantTracks: boolean, ReduceKeysTolerance: number, bSaveRecordedAssets: boolean, bAutoLock: boolean, bAutoSerialize: boolean);
+        bMaximizeViewport: boolean;
+        CountdownSeconds: number;
+        EngineTimeDilation: number;
+        bResetPlayhead: boolean;
+        bStopAtPlaybackEnd: boolean;
+        bRemoveRedundantTracks: boolean;
+        ReduceKeysTolerance: number;
+        bSaveRecordedAssets: boolean;
+        bAutoLock: boolean;
+        bAutoSerialize: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TakeRecorderUserParameters_0__: boolean;
+    }
+    
+    class TakeRecorderPropertyTrackSettings {
+        constructor();
+        constructor(ComponentPath: string, PropertyPath: string);
+        ComponentPath: string;
+        PropertyPath: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TakeRecorderPropertyTrackSettings_0__: boolean;
+    }
+    
+    class TakeRecorderTrackSettings {
+        constructor();
+        constructor(MatchingActorClass: UE.SoftClassPath, DefaultPropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>, ExcludePropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>);
+        MatchingActorClass: UE.SoftClassPath;
+        DefaultPropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>;
+        ExcludePropertyTracks: TArray<UE.TakeRecorderPropertyTrackSettings>;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TakeRecorderTrackSettings_0__: boolean;
+    }
+    
+    class TakeRecorderProjectParameters {
+        constructor();
+        constructor(RootTakeSaveDir: UE.DirectoryPath, TakeSaveDir: string, DefaultSlate: string, RecordingClockSource: UE.EUpdateClockSource, bStartAtCurrentTimecode: boolean, bRecordTimecode: boolean, bRecordSourcesIntoSubSequences: boolean, bRecordToPossessable: boolean, DefaultTracks: TArray<UE.TakeRecorderTrackSettings>, bShowNotifications: boolean);
+        RootTakeSaveDir: UE.DirectoryPath;
+        TakeSaveDir: string;
+        DefaultSlate: string;
+        RecordingClockSource: UE.EUpdateClockSource;
+        bStartAtCurrentTimecode: boolean;
+        bRecordTimecode: boolean;
+        bRecordSourcesIntoSubSequences: boolean;
+        bRecordToPossessable: boolean;
+        DefaultTracks: TArray<UE.TakeRecorderTrackSettings>;
+        bShowNotifications: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TakeRecorderProjectParameters_0__: boolean;
+    }
+    
+    class TakeRecorderParameters {
+        constructor();
+        constructor(User: UE.TakeRecorderUserParameters, Project: UE.TakeRecorderProjectParameters, TakeRecorderMode: UE.ETakeRecorderMode, StartFrame: UE.FrameNumber, bDisableRecordingAndSave: boolean);
+        User: UE.TakeRecorderUserParameters;
+        Project: UE.TakeRecorderProjectParameters;
+        TakeRecorderMode: UE.ETakeRecorderMode;
+        StartFrame: UE.FrameNumber;
+        bDisableRecordingAndSave: boolean;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TakeRecorderParameters_0__: boolean;
+    }
+    
+    class TakeRecorder extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        SequenceAsset: UE.LevelSequence;
+        OverlayWidget: UE.TakeRecorderOverlayWidget;
+        WeakWorld: TWeakObjectPtr<UE.World>;
+        Parameters: UE.TakeRecorderParameters;
+        /*
+         *Access the number of seconds remaining before this recording will start
+         */
+        GetCountdownSeconds() : number;
+        /*
+         *Access the sequence asset that this recorder is recording into
+         */
+        GetSequence() : UE.LevelSequence;
+        /*
+         *Get the current state of this recorder
+         */
+        GetState() : UE.ETakeRecorderState;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): TakeRecorder;
+        static Load(InName: string): TakeRecorder;
+    
+        __tid_TakeRecorder_0__: boolean;
+    }
+    
     class TakeRecorderSource extends UE.Object {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         bEnabled: boolean;
@@ -200706,6 +200787,21 @@ declare module "ue" {
         __tid_UniformGridPanel_0__: boolean;
     }
     
+    class UniformInteger extends UE.FieldNodeInt {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        /*
+         *Set a uniform integer value independently of the sample position. The output is equal to magnitude
+         *@param    Magnitude The field output will be equal the magnitude
+         */
+        SetUniformInteger(Magnitude: number) : UE.UniformInteger;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UniformInteger;
+        static Load(InName: string): UniformInteger;
+    
+        __tid_UniformInteger_0__: boolean;
+    }
+    
     class UniformIntegerFieldDataflowNode extends UE.DataflowNode {
         constructor();
         constructor(SamplePositions: TArray<UE.Vector3f>, SampleIndices: UE.DataflowVertexSelection, Magnitude: number, FieldIntResult: TArray<number>, FieldRemap: TArray<number>, NumSamplePositions: number);
@@ -200721,6 +200817,21 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_UniformIntegerFieldDataflowNode_0__: boolean;
+    }
+    
+    class UniformScalar extends UE.FieldNodeFloat {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        /*
+         *Set a uniform scalar value independently of the sample position. The output is equal to magnitude
+         *@param    Magnitude The field output will be equal the magnitude
+         */
+        SetUniformScalar(Magnitude: number) : UE.UniformScalar;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UniformScalar;
+        static Load(InName: string): UniformScalar;
+    
+        __tid_UniformScalar_0__: boolean;
     }
     
     class UniformScalarFieldDataflowNode extends UE.DataflowNode {
@@ -200763,6 +200874,23 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_UniformScatterPointsDataflowNode_0__: boolean;
+    }
+    
+    class UniformVector extends UE.FieldNodeVector {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Magnitude: number;
+        Direction: UE.Vector;
+        /*
+         *Set a uniform vector value independently of the sample position.The output is equal to magnitude * direction
+         *@param    Magnitude Magnitude of the uniform vector field
+         *@param    Direction Normalized direction of the uniform vector field
+         */
+        SetUniformVector(Magnitude: number, Direction: UE.Vector) : UE.UniformVector;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): UniformVector;
+        static Load(InName: string): UniformVector;
+    
+        __tid_UniformVector_0__: boolean;
     }
     
     class UniformVectorFieldDataflowNode extends UE.DataflowNode {
@@ -202797,6 +202925,33 @@ declare module "ue" {
         __tid_VertexOffsetUsage_0__: boolean;
     }
     
+    class VerticalBoxSlot extends UE.PanelSlot {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        Size: UE.SlateChildSize;
+        Padding: UE.Margin;
+        HorizontalAlignment: UE.EHorizontalAlignment;
+        VerticalAlignment: UE.EVerticalAlignment;
+        SetHorizontalAlignment(InHorizontalAlignment: UE.EHorizontalAlignment) : void;
+        SetPadding(InPadding: UE.Margin) : void;
+        SetSize(InSize: UE.SlateChildSize) : void;
+        SetVerticalAlignment(InVerticalAlignment: UE.EVerticalAlignment) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): VerticalBoxSlot;
+        static Load(InName: string): VerticalBoxSlot;
+    
+        __tid_VerticalBoxSlot_0__: boolean;
+    }
+    
+    class VerticalBox extends UE.PanelWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        AddChildToVerticalBox(Content: $Nullable<UE.Widget>) : UE.VerticalBoxSlot;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): VerticalBox;
+        static Load(InName: string): VerticalBox;
+    
+        __tid_VerticalBox_0__: boolean;
+    }
+    
     class VideoCaptureProtocol extends UE.FrameGrabberProtocol {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         bUseCompression: boolean;
@@ -203631,185 +203786,6 @@ declare module "ue" {
         static Load(InName: string): VoxelSolidifyMeshesToolBuilder;
     
         __tid_VoxelSolidifyMeshesToolBuilder_0__: boolean;
-    }
-    
-    class WidgetComponent extends UE.MeshComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        Space: UE.EWidgetSpace;
-        TimingPolicy: UE.EWidgetTimingPolicy;
-        WidgetClass: UE.Class;
-        DrawSize: UE.IntPoint;
-        bManuallyRedraw: boolean;
-        bRedrawRequested: boolean;
-        RedrawTime: number;
-        CurrentDrawSize: UE.IntPoint;
-        bUseInvalidationInWorldSpace: boolean;
-        bDrawAtDesiredSize: boolean;
-        Pivot: UE.Vector2D;
-        bReceiveHardwareInput: boolean;
-        bWindowFocusable: boolean;
-        WindowVisibility: UE.EWindowVisibility;
-        bApplyGammaCorrection: boolean;
-        OwnerPlayer: UE.LocalPlayer;
-        BackgroundColor: UE.LinearColor;
-        TintColorAndOpacity: UE.LinearColor;
-        OpacityFromTexture: number;
-        BlendMode: UE.EWidgetBlendMode;
-        bIsTwoSided: boolean;
-        TickWhenOffscreen: boolean;
-        BodySetup: UE.BodySetup;
-        TranslucentMaterial: UE.MaterialInterface;
-        TranslucentMaterial_OneSided: UE.MaterialInterface;
-        OpaqueMaterial: UE.MaterialInterface;
-        OpaqueMaterial_OneSided: UE.MaterialInterface;
-        MaskedMaterial: UE.MaterialInterface;
-        MaskedMaterial_OneSided: UE.MaterialInterface;
-        RenderTarget: UE.TextureRenderTarget2D;
-        MaterialInstance: UE.MaterialInstanceDynamic;
-        bAddedToScreen: boolean;
-        bEditTimeUsable: boolean;
-        SharedLayerName: string;
-        LayerZOrder: number;
-        GeometryMode: UE.EWidgetGeometryMode;
-        CylinderArcAngle: number;
-        TickMode: UE.ETickMode;
-        Widget: UE.UserWidget;
-        /*
-         *Returns the "actual" draw size of the quad in the world
-         */
-        GetCurrentDrawSize() : UE.Vector2D;
-        /*
-         *Defines the curvature of the widget component when using EWidgetGeometryMode::Cylinder; ignored otherwise.
-         */
-        GetCylinderArcAngle() : number;
-        GetDrawAtDesiredSize() : boolean;
-        /*
-         *Returns the "specified" draw size of the quad in the world
-         */
-        GetDrawSize() : UE.Vector2D;
-        /*
-         *@see EWidgetGeometryMode, @see GetCylinderArcAngle()
-         */
-        GetGeometryMode() : UE.EWidgetGeometryMode;
-        /*
-         *@see bManuallyRedraw
-         */
-        GetManuallyRedraw() : boolean;
-        /*
-         *Returns the dynamic material instance used to render the user widget
-         */
-        GetMaterialInstance() : UE.MaterialInstanceDynamic;
-        /*
-         *Gets the local player that owns this widget component.
-         */
-        GetOwnerPlayer() : UE.LocalPlayer;
-        /*
-         *Returns the pivot point where the UI is rendered about the origin.
-         */
-        GetPivot() : UE.Vector2D;
-        GetRedrawTime() : number;
-        /*
-         *Returns the render target to which the user widget is rendered
-         */
-        GetRenderTarget() : UE.TextureRenderTarget2D;
-        /*
-         *Gets whether the widget ticks when offscreen or not
-         */
-        GetTickWhenOffscreen() : boolean;
-        /*
-         *Gets whether the widget is two-sided or not
-         */
-        GetTwoSided() : boolean;
-        /*
-         *Returns the user widget object displayed by this component
-         */
-        GetUserWidgetObject() : UE.UserWidget;
-        /*
-         *Gets the widget that is used by this Widget Component. It will be null if a Slate Widget was set using SetSlateWidget function.
-         */
-        GetWidget() : UE.UserWidget;
-        GetWidgetSpace() : UE.EWidgetSpace;
-        /*
-         *@see bWindowFocusable
-         */
-        GetWindowFocusable() : boolean;
-        /*
-         *Gets the visibility of the virtual window created to host the widget focusable.
-         */
-        GetWindowVisiblility() : UE.EWindowVisibility;
-        /*
-         *Returns true if the the Slate window is visible and that the widget is also visible, false otherwise.
-         */
-        IsWidgetVisible() : boolean;
-        /*
-         *Requests that the widget be redrawn.
-         */
-        RequestRedraw() : void;
-        /*
-         *Requests that the widget have it's render target updated, if TickMode is disabled, this will force a tick to happen to update the render target.
-         */
-        RequestRenderUpdate() : void;
-        /*
-         *Sets the background color and opacityscale for this widget
-         */
-        SetBackgroundColor(NewBackgroundColor: UE.LinearColor) : void;
-        /*
-         *Defines the curvature of the widget component when using EWidgetGeometryMode::Cylinder; ignored otherwise.
-         */
-        SetCylinderArcAngle(InCylinderArcAngle: number) : void;
-        SetDrawAtDesiredSize(bInDrawAtDesiredSize: boolean) : void;
-        /*
-         *Sets the draw size of the quad in the world
-         */
-        SetDrawSize(Size: UE.Vector2D) : void;
-        SetGeometryMode(InGeometryMode: UE.EWidgetGeometryMode) : void;
-        /*
-         *@see bManuallyRedraw
-         */
-        SetManuallyRedraw(bUseManualRedraw: boolean) : void;
-        /*
-         *Sets the local player that owns this widget component.  Setting the owning player controls
-         *which player's viewport the widget appears on in a split screen scenario.  Additionally it
-         *forwards the owning player to the actual UserWidget that is spawned.
-         */
-        SetOwnerPlayer(LocalPlayer: $Nullable<UE.LocalPlayer>) : void;
-        SetPivot(InPivot: UE.Vector2D) : void;
-        SetRedrawTime(InRedrawTime: number) : void;
-        /*
-         *Sets the Tick mode of the Widget Component.
-         */
-        SetTickMode(InTickMode: UE.ETickMode) : void;
-        /*
-         *Sets whether the widget ticks when offscreen or not
-         */
-        SetTickWhenOffscreen(bWantTickWhenOffscreen: boolean) : void;
-        /*
-         *Sets the tint color and opacity scale for this widget
-         */
-        SetTintColorAndOpacity(NewTintColorAndOpacity: UE.LinearColor) : void;
-        /*
-         *Sets whether the widget is two-sided or not
-         */
-        SetTwoSided(bWantTwoSided: boolean) : void;
-        /*
-         *Sets the widget to use directly. This function will keep track of the widget till the next time it's called
-         *    with either a newer widget or a nullptr
-         */
-        SetWidget(Widget: $Nullable<UE.UserWidget>) : void;
-        SetWidgetSpace(NewSpace: UE.EWidgetSpace) : void;
-        /*
-         *@see bWindowFocusable
-         */
-        SetWindowFocusable(bInWindowFocusable: boolean) : void;
-        /*
-         *Sets the visibility of the virtual window created to host the widget focusable.
-         */
-        SetWindowVisibility(InVisibility: UE.EWindowVisibility) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): WidgetComponent;
-        static Load(InName: string): WidgetComponent;
-    
-        __tid_WidgetComponent_0__: boolean;
     }
     
     class VREditorWidgetComponent extends UE.WidgetComponent {
@@ -205470,6 +205446,40 @@ declare module "ue" {
         static Load(InName: string): WidgetStateSettings;
     
         __tid_WidgetStateSettings_0__: boolean;
+    }
+    
+    class WidgetSwitcher extends UE.PanelWidget {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        ActiveWidgetIndex: number;
+        /*
+         *Get the reference of the currently active widget
+         */
+        GetActiveWidget() : UE.Widget;
+        /*
+         *Gets the slot index of the currently active widget
+         */
+        GetActiveWidgetIndex() : number;
+        /*
+         *Gets the number of widgets that this switcher manages.
+         */
+        GetNumWidgets() : number;
+        /*
+         *Get a widget at the provided index
+         */
+        GetWidgetAtIndex(Index: number) : UE.Widget;
+        /*
+         *Activates the widget and makes it the active index.
+         */
+        SetActiveWidget(Widget: $Nullable<UE.Widget>) : void;
+        /*
+         *Activates the widget at the specified index.
+         */
+        SetActiveWidgetIndex(Index: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): WidgetSwitcher;
+        static Load(InName: string): WidgetSwitcher;
+    
+        __tid_WidgetSwitcher_0__: boolean;
     }
     
     class WidgetToolsContext extends UE.ModeManagerInteractiveToolsContext {

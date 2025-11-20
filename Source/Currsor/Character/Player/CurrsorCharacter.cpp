@@ -14,6 +14,7 @@
 #include "Currsor/System/Components/BattleAreaTeleportComponent.h"
 #include "Currsor/System/CurrsorGameState.h"
 #include "CurrsorPlayerController.h"
+#include "CurrsorPlayerState.h"
 #include "Component/CurrsorActionComponent.h"
 
 ACurrsorCharacter::ACurrsorCharacter()
@@ -114,6 +115,14 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 	// 应用伤害
 	HealthComponent->TakeDamage(DamageAmount);
 	
+	// 获取PlayerState
+	ACurrsorPlayerState* CurrsorPlayerState = GetPlayerState<ACurrsorPlayerState>();
+	if (!CurrsorPlayerState)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("无法获取PlayerState!"));
+		return;
+	}
+	
 	if (HealthComponent->IsDead())
 	{
 		// 死亡逻辑
@@ -128,6 +137,11 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 		CurrsorPlayerState->ChangeState(ECharacterState::Hurt);
 	}
 	
+}
+
+APlayerState* ACurrsorCharacter::GetCurrsorPlayerState() const
+{
+	return GetPlayerState<ACurrsorPlayerState>();
 }
 
 float ACurrsorCharacter::GetHealth() const

@@ -4,6 +4,7 @@ import { AttackSystem } from "./Systems/AttackSystem";
 import { LootSystem } from "./Systems/LootSystem";
 import { EventSystem } from "./Systems/EventSystem";
 import { GameConfig } from "./Config/GameConfig";
+import { CardAnimationManager } from "./UMG/Card/TS_CardAnimationSystem";
 
 /**
  * 游戏系统管理器
@@ -103,6 +104,11 @@ export class GameSystemManager {
         // 掉落系统
         const lootSystem = LootSystem.getInstance();
         this.systems.set("LootSystem", lootSystem);
+        
+        // 卡牌动画管理器
+        const cardAnimationManager = CardAnimationManager.getInstance();
+        this.systems.set("CardAnimationManager", cardAnimationManager);
+        console.log("卡牌动画管理器已初始化");
         
         console.log("系统已初始化");
     }
@@ -237,6 +243,12 @@ export class GameSystemManager {
         const uiManager = this.getSystem("UIManager") as UIManager;
         if (uiManager) {
             uiManager.cleanup();
+        }
+
+        const cardAnimationManager = this.getSystem("CardAnimationManager") as CardAnimationManager;
+        if (cardAnimationManager) {
+            cardAnimationManager.cleanupAll();
+            console.log("卡牌动画管理器已清理");
         }
 
         console.log("所有系统已重置");

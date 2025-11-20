@@ -1,8 +1,86 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CardAnimationSystem = void 0;
+exports.CardAnimationSystem = exports.CardAnimationManager = void 0;
 const UE = require("ue");
 const GameConfig_1 = require("../../Config/GameConfig");
+/**
+ * 卡牌动画管理器（单例）
+ * 负责持久化管理所有CardAnimationSystem实例
+ * 避免UI卸载时动画系统被销毁
+ */
+class CardAnimationManager {
+    static instance;
+    animationSystems = new Map();
+    constructor() {
+        console.log("[CardAnimationManager] 动画管理器已创建");
+    }
+    static getInstance() {
+        if (!CardAnimationManager.instance) {
+            CardAnimationManager.instance = new CardAnimationManager();
+        }
+        return CardAnimationManager.instance;
+    }
+    /**
+     * 获取或创建指定UI的动画系统
+     * @param uiId UI的唯一标识符
+     * @param owningWidget 拥有该动画系统的Widget
+     */
+    getOrCreateAnimationSystem(uiId, owningWidget) {
+        let system = this.animationSystems.get(uiId);
+        if (!system) {
+            system = new CardAnimationSystem(owningWidget);
+            this.animationSystems.set(uiId, system);
+            console.log(`[CardAnimationManager] 为UI "${uiId}" 创建新的动画系统`);
+        }
+        else {
+            // 更新owningWidget引用（UI可能被重新创建）
+            system.updateOwningWidget(owningWidget);
+            console.log(`[CardAnimationManager] 复用UI "${uiId}" 的动画系统`);
+        }
+        return system;
+    }
+    /**
+     * 获取指定UI的动画系统
+     */
+    getAnimationSystem(uiId) {
+        return this.animationSystems.get(uiId);
+    }
+    /**
+     * 移除指定UI的动画系统
+     * @param uiId UI的唯一标识符
+     * @param cleanup 是否清理动画系统资源
+     */
+    removeAnimationSystem(uiId, cleanup = false) {
+        const system = this.animationSystems.get(uiId);
+        if (system) {
+            if (cleanup) {
+                system.Cleanup();
+            }
+            this.animationSystems.delete(uiId);
+            console.log(`[CardAnimationManager] 移除UI "${uiId}" 的动画系统`);
+        }
+    }
+    /**
+     * 清理所有动画系统
+     */
+    cleanupAll() {
+        console.log("[CardAnimationManager] 清理所有动画系统");
+        for (const [uiId, system] of this.animationSystems) {
+            system.Cleanup();
+        }
+        this.animationSystems.clear();
+    }
+    /**
+     * 获取统计信息
+     */
+    getStats() {
+        return {
+            totalSystems: this.animationSystems.size,
+            systems: Array.from(this.animationSystems.keys())
+        };
+    }
+}
+exports.CardAnimationManager = CardAnimationManager;
 /**
  * 卡牌出场插值动画系统
  * 负责管理卡牌从startHook位置到目标位置的动画
@@ -19,6 +97,13 @@ class CardAnimationSystem {
     HOVER_DURATION = 0.2; // 悬浮动画时长（秒）
     constructor(owningWidget) {
         this.owningWidget = owningWidget;
+    }
+    /**
+     * 更新owningWidget引用（当UI重新创建时）
+     */
+    updateOwningWidget(owningWidget) {
+        this.owningWidget = owningWidget;
+        console.log("[CardAnimationSystem] owningWidget引用已更新");
     }
     /**
      * 开始卡牌出场动画

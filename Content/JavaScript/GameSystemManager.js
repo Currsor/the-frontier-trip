@@ -7,6 +7,7 @@ const AttackSystem_1 = require("./Systems/AttackSystem");
 const LootSystem_1 = require("./Systems/LootSystem");
 const EventSystem_1 = require("./Systems/EventSystem");
 const GameConfig_1 = require("./Config/GameConfig");
+const TS_CardAnimationSystem_1 = require("./UMG/Card/TS_CardAnimationSystem");
 /**
  * 游戏系统管理器
  * 统一管理所有游戏系统的初始化、更新和销毁
@@ -87,6 +88,10 @@ class GameSystemManager {
         // 掉落系统
         const lootSystem = LootSystem_1.LootSystem.getInstance();
         this.systems.set("LootSystem", lootSystem);
+        // 卡牌动画管理器
+        const cardAnimationManager = TS_CardAnimationSystem_1.CardAnimationManager.getInstance();
+        this.systems.set("CardAnimationManager", cardAnimationManager);
+        console.log("卡牌动画管理器已初始化");
         console.log("系统已初始化");
     }
     /**
@@ -202,6 +207,11 @@ class GameSystemManager {
         const uiManager = this.getSystem("UIManager");
         if (uiManager) {
             uiManager.cleanup();
+        }
+        const cardAnimationManager = this.getSystem("CardAnimationManager");
+        if (cardAnimationManager) {
+            cardAnimationManager.cleanupAll();
+            console.log("卡牌动画管理器已清理");
         }
         console.log("所有系统已重置");
     }

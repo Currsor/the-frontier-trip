@@ -41,6 +41,32 @@ float UHealthComponent::GetHealthPercentage() const
     return MaxHealth > 0.0f ? (CurrentHealth / MaxHealth) : 0.0f;
 }
 
+void UHealthComponent::SetDefense(float NewDefense)
+{
+    Defense = FMath::Max(0.0f, NewDefense);
+}
+
+float UHealthComponent::CalculateDamageReduction(float IncomingDamage) const
+{
+    // 此方法现在返回扣除防御后剩余的伤害值
+    // 如果防御值足够，返回0；否则返回溢出的伤害
+    if (IncomingDamage <= 0.0f)
+    {
+        return 0.0f;
+    }
+
+    if (Defense >= IncomingDamage)
+    {
+        // 防御值足够吸收所有伤害
+        return 0.0f;
+    }
+    else
+    {
+        // 防御值不足，返回溢出的伤害
+        return IncomingDamage - Defense;
+    }
+}
+
 void UHealthComponent::TakeDamage(float DamageAmount, AActor* DamageInstigator)
 {
     if (!bCanTakeDamage || IsDead() || DamageAmount <= 0.0f)
@@ -48,11 +74,35 @@ void UHealthComponent::TakeDamage(float DamageAmount, AActor* DamageInstigator)
         return;
     }
 
+    float RemainingDamage = DamageAmount;
+    float PreviousDefense = Defense;
     float PreviousHealth = CurrentHealth;
-    CurrentHealth = FMath::Clamp(CurrentHealth - DamageAmount, 0.0f, MaxHealth);
 
-    // 只有生命值真正改变时才广播事件
-    if (CurrentHealth != PreviousHealth)
+    // 优先扣除防御值（护盾）
+    if (Defense > 0.0f)
+    {
+        if (Defense >= RemainingDamage)
+        {
+            // 防御值足够吸收所有伤害
+            Defense -= RemainingDamage;
+            RemainingDamage = 0.0f;
+        }
+        else
+        {
+            // 防御值不足，扣光防御值后剩余伤害继续扣生命值
+            RemainingDamage -= Defense;
+            Defense = 0.0f;
+        }
+    }
+
+    // 如果还有剩余伤害，扣除生命值
+    if (RemainingDamage > 0.0f)
+    {
+        CurrentHealth = FMath::Clamp(CurrentHealth - RemainingDamage, 0.0f, MaxHealth);
+    }
+
+    // 只要防御值或生命值有变化就广播事件
+    if (Defense != PreviousDefense || CurrentHealth != PreviousHealth)
     {
         BroadcastHealthChanged(DamageAmount);
 

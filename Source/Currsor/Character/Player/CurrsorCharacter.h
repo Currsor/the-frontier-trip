@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "CurrsorPlayerState.h"
 #include "PaperZDCharacter.h"
 #include "Currsor/Interface/IDamageable.h"
 #include "Engine/DataTable.h"
@@ -40,6 +39,10 @@ public:
 	//~ Begin IDamageable Interface
 	virtual void ApplyDamage_Implementation(float DamageAmount, AActor* DamageInstigator, const FHitResult& HitResult) override;
 	//~ End IDamageable Interface
+
+	// PlayerState相关方法
+	UFUNCTION(BlueprintPure, Category = "Player")
+	APlayerState* GetCurrsorPlayerState() const;
 
 	// 生命值相关方法
 	UFUNCTION(BlueprintPure, Category = "Health")
@@ -94,9 +97,6 @@ private:
 	// 生命值组件
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Health", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UHealthComponent> HealthComponent;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "State", meta = (AllowPrivateAccess = "true"))
-	TObjectPtr<ACurrsorPlayerState> CurrsorPlayerState = Cast<ACurrsorPlayerState>(GetPlayerState());
 	
 	// 系统管理器
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Systems", meta = (AllowPrivateAccess = "true"))
