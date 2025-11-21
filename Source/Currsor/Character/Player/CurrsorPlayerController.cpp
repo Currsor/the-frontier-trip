@@ -65,6 +65,14 @@ void ACurrsorPlayerController::BeginPlay()
         if (AttackSystem)
         {
             BattleAreaTeleportComponent = AttackSystem->GetBattleAreaTeleportComponent();
+            
+            // 绑定战斗传送成功事件
+            AttackSystem->OnBattleTeleportSuccess.AddDynamic(this, &ACurrsorPlayerController::OnBattleTeleportSuccess);
+            
+            if (bEnableInputDebugLogging)
+            {
+                UE_LOG(LogTemp, Log, TEXT("PlayerController已绑定战斗传送事件"));
+            }
         }
         
         if (bEnableInputDebugLogging)
@@ -82,6 +90,19 @@ void ACurrsorPlayerController::BeginPlay()
 
 void ACurrsorPlayerController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
+    // 清理Widget
+    if (CurrentBattleTeleportWidget && IsValid(CurrentBattleTeleportWidget))
+    {
+        CurrentBattleTeleportWidget->RemoveFromParent();
+        CurrentBattleTeleportWidget = nullptr;
+    }
+    
+    // 解绑事件
+    if (AttackSystem)
+    {
+        AttackSystem->OnBattleTeleportSuccess.RemoveDynamic(this, &ACurrsorPlayerController::OnBattleTeleportSuccess);
+    }
+    
     Super::EndPlay(EndPlayReason);
 }
 
@@ -197,6 +218,49 @@ void ACurrsorPlayerController::ExitBattleArea()
     if (bEnableInputDebugLogging)
     {
         UE_LOG(LogTemp, Log, TEXT("PlayerController请求退出战斗区域"));
+    }
+}
+
+void ACurrsorPlayerController::OnBattleTeleportSuccess(AActor* CurrenPlayer, AActor* Enemy)
+{
+    if (!BattleTeleportWidgetClass)
+    {
+        if (bEnableInputDebugLogging)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("BattleTeleportWidgetClass未设置，无法创建Widget"));
+        }
+        return;
+    }
+    
+    // 先移除已有的Widget
+    if (CurrentBattleTeleportWidget && IsValid(CurrentBattleTeleportWidget))
+    {
+        CurrentBattleTeleportWidget->RemoveFromParent();
+        CurrentBattleTeleportWidget = nullptr;
+        
+        if (bEnableInputDebugLogging)
+        {
+            UE_LOG(LogTemp, Log, TEXT("已移除旧的战斗传送Widget"));
+        }
+    }
+    
+    // 创建新的Widget
+    CurrentBattleTeleportWidget = CreateWidget<UUserWidget>(this, BattleTeleportWidgetClass);
+    if (CurrentBattleTeleportWidget)
+    {
+        CurrentBattleTeleportWidget->AddToViewport();
+        
+        if (bEnableInputDebugLogging)
+        {
+            FString PlayerName = IsValid(CurrenPlayer) ? CurrenPlayer->GetName() : TEXT("Invalid");
+            FString EnemyName = IsValid(Enemy) ? Enemy->GetName() : TEXT("Invalid");
+            UE_LOG(LogTemp, Log, TEXT("战斗传送Widget已创建并添加到视口 - 玩家: %s, 敌人: %s"), 
+                   *PlayerName, *EnemyName);
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("创建战斗传送Widget失败"));
     }
 }
 

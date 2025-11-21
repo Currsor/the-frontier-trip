@@ -15,12 +15,14 @@ class CURRSOR_API UCurrsorGameInstance : public UGameInstance
 	GENERATED_BODY()
 
 public:
-
+	void InitializePuerTS();
 	virtual void Init() override;
 
 	virtual void OnStart() override;
 
 	virtual void Shutdown() override;
+
+	TSharedPtr<puerts::FJsEnv> GetJsEnv() { return GameScript; }
 
 	// PureTS调试模式
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Debug | PuerTS")

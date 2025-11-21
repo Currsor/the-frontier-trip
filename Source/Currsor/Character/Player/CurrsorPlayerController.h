@@ -20,6 +20,7 @@ class UStateManagerComponent;
 class UInputMappingContext;
 class UInputAction;
 class UBattleAreaTeleportComponent;
+class UUserWidget;
 
 /**
  * 玩家控制器类
@@ -116,6 +117,14 @@ protected:
 	// 调试日志开关
 	UPROPERTY(EditDefaultsOnly, Category = "Debug")
 	bool bEnableInputDebugLogging = true;
+
+	// 战斗传送成功后显示的Widget类（可在蓝图中配置）
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UUserWidget> BattleTeleportWidgetClass;
+
+	// 当前显示的战斗Widget实例
+	UPROPERTY()
+	UUserWidget* CurrentBattleTeleportWidget = nullptr;
 	
 private:
 	// 输入处理函数
@@ -139,6 +148,10 @@ private:
 
 	UFUNCTION()
 	void AttackCompleted();
+
+	// 战斗传送成功的回调函数
+	UFUNCTION()
+	void OnBattleTeleportSuccess(AActor* CurrenPlayer, AActor* Enemy);
 
 	// UFUNCTION()
 	// void JumpStarted();

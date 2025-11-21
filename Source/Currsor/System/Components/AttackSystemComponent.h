@@ -12,10 +12,12 @@ class IDamageable;
 class UBattleAreaTeleportComponent;
 class ACurrsorCharacter;
 class ABaseEnemy;
+class UUserWidget;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_ThreeParams(FOnAttackHit, AActor*, Attacker, AActor*, Target, float, Damage);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAttackStarted, AActor*, Attacker, FString, AttackType);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAttackEnd, AActor*, Attacker);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnBattleTeleportSuccess, AActor*, Player, AActor*, Enemy);
 
 USTRUCT(BlueprintType)
 struct FAttackData
@@ -120,6 +122,10 @@ public:
 
     UPROPERTY(BlueprintAssignable, Category = "Attack System")
     FOnAttackEnd OnAttackEnd;
+
+    // 战斗传送成功事件
+    UPROPERTY(BlueprintAssignable, Category = "Attack System|Battle Area")
+    FOnBattleTeleportSuccess OnBattleTeleportSuccess;
 
 protected:
     virtual void OnInitialize() override;

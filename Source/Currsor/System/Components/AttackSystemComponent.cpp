@@ -7,6 +7,8 @@
 #include "BattleAreaTeleportComponent.h"
 #include "Currsor/Character/Player/CurrsorCharacter.h"
 #include "Currsor/Character/Enemy/BaseEnemy.h"
+#include "Currsor/System/CurrsorGameInstance.h"
+#include "Blueprint/UserWidget.h"
 
 UAttackSystemComponent::UAttackSystemComponent()
 {
@@ -40,7 +42,7 @@ void UAttackSystemComponent::OnReset()
     
     if (bEnableDebugLogging)
     {
-        UE_LOG(LogTemp, Log, TEXT("攻击系统已重置 - 清除了 %d 个活跃攻击"), ActiveAttacks.Num());
+        UE_LOG(LogTemp, Log, TEXT("攻击系统已重置 - 清除了 %d 个活跃政击"), ActiveAttacks.Num());
     }
 }
 
@@ -373,5 +375,16 @@ void UAttackSystemComponent::ProcessBattleAreaTeleportIfNeeded(AActor* Attacker,
         UE_LOG(LogTemp, Log, TEXT("战斗区域传送 %s 于 %s -> %s"), 
                bTeleportSuccess ? TEXT("成功") : TEXT("失败"),
                *AttackerName, *TargetName);
+    }
+
+    // 如果传送成功，广播事件
+    if (bTeleportSuccess)
+    {
+        OnBattleTeleportSuccess.Broadcast(Attacker, Target);
+        
+        if (bEnableDebugLogging)
+        {
+            UE_LOG(LogTemp, Log, TEXT("广播战斗传送成功事件"));
+        }
     }
 }

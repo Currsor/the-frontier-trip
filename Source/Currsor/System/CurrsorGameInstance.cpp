@@ -1,13 +1,7 @@
 #include "CurrsorGameInstance.h"
 
-void UCurrsorGameInstance::Init()
+void UCurrsorGameInstance::InitializePuerTS()
 {
-	Super::Init();
-}
-
-void UCurrsorGameInstance::OnStart()
-{
-	Super::OnStart();
 	if (bDebugMode)
 	{
 		GameScript = MakeShared<puerts::FJsEnv>(
@@ -27,6 +21,26 @@ void UCurrsorGameInstance::OnStart()
 	}
 	
 	GameScript->Start("CurrsorGame");
+}
+
+void UCurrsorGameInstance::Init()
+{
+	Super::Init();
+	
+	// 在打包版本中初始化 PuerTS
+#if !WITH_EDITOR
+	InitializePuerTS();
+#endif
+}
+
+void UCurrsorGameInstance::OnStart()
+{
+	Super::OnStart();
+	
+	// 在编辑器中初始化 PuerTS
+#if WITH_EDITOR
+	InitializePuerTS();
+#endif
 }
 
 void UCurrsorGameInstance::Shutdown()
