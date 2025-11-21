@@ -10675,7 +10675,21 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: CD6E04C44C7114AA145A8BA5F0B54791
+// __TYPE_DECL_START: ASSOCIATION
+    namespace Engine.PythonTypes {
+        class OnBattleTeleportSuccess__PythonCallable extends UE.PythonCallableForDelegate {
+            constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+            static StaticClass(): Class;
+            static Find(OrigInName: string, Outer?: Object): OnBattleTeleportSuccess__PythonCallable;
+            static Load(InName: string): OnBattleTeleportSuccess__PythonCallable;
+        
+            __tid_OnBattleTeleportSuccess__PythonCallable_0__: boolean;
+        }
+        
+    }
+
+// __TYPE_DECL_END
+// __TYPE_DECL_START: 5232E8E746FC871D7D154C93B08D3F69
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);

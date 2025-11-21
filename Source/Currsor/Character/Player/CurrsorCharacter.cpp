@@ -159,6 +159,21 @@ bool ACurrsorCharacter::IsDead() const
 	return HealthComponent ? HealthComponent->IsDead() : false;
 }
 
+int32 ACurrsorCharacter::GetMana() const
+{
+	return HealthComponent ? HealthComponent->GetManaCount() : 0;
+}
+
+int32 ACurrsorCharacter::GetMaxMana() const
+{
+	return HealthComponent ? HealthComponent->GetMaxManaCount() : 0;
+}
+
+void ACurrsorCharacter::UseMana(int32 Amount)
+{
+	if (HealthComponent) HealthComponent->UseMana(Amount);
+}
+
 // ========== 区域ID相关方法实现 ==========
 
 int32 ACurrsorCharacter::GetCurrentAreaID() const

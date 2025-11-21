@@ -51936,44 +51936,6 @@ declare module "ue" {
         __tid_BaseSystemComponent_0__: boolean;
     }
     
-    class HealthComponent extends UE.ActorComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnHealthChanged: $MulticastDelegate<(CurrentHealth: number, MaxHealth: number, DamageAmount: number) => void>;
-        OnDeath: $MulticastDelegate<(DeadActor: $Nullable<UE.Actor>) => void>;
-        MaxHealth: number;
-        CurrentHealth: number;
-        Defense: number;
-        bCanTakeDamage: boolean;
-        bAutoRespawn: boolean;
-        RespawnDelay: number;
-        CalculateDamageReduction(IncomingDamage: number) : number;
-        GetCurrentHealth() : number;
-        GetDefense() : number;
-        GetHealthPercentage() : number;
-        GetMaxHealth() : number;
-        Heal(HealAmount: number) : void;
-        IsDead() : boolean;
-        IsFullHealth() : boolean;
-        SetCurrentHealth(NewHealth: number) : void;
-        /*
-         *防御值管理（护盾机制：受到伤害时优先扣除防御值）
-         */
-        SetDefense(NewDefense: number) : void;
-        /*
-         *生命值管理
-         */
-        SetMaxHealth(NewMaxHealth: number) : void;
-        /*
-         *伤害处理
-         */
-        TakeDamage(DamageAmount: number, DamageInstigator?: UE.Actor /* = None */) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): HealthComponent;
-        static Load(InName: string): HealthComponent;
-    
-        __tid_HealthComponent_0__: boolean;
-    }
-    
     class BaseState extends UE.PlayerState {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         bIsDashing: boolean;
@@ -52009,7 +51971,7 @@ declare module "ue" {
     class BaseEnemy extends UE.PaperZDCharacter {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         OnEnemyDeath: $MulticastDelegate<(DeadEnemy: $Nullable<UE.BaseEnemy>) => void>;
-        HealthComponent: UE.HealthComponent;
+        HealthComponent: UE.LIVECODING_HealthComponent_0;
         CurrentState: UE.BaseState;
         SelectedAreaBox: UE.AreaCollisionBox;
         AreaID: number;
@@ -52026,7 +51988,7 @@ declare module "ue" {
         /*
          *获取生命值组件
          */
-        GetHealthComponent() : UE.HealthComponent;
+        GetHealthComponent() : UE.LIVECODING_HealthComponent_0;
         /*
          *AreaCollisionBox选择相关功能
          */
@@ -52149,7 +52111,7 @@ declare module "ue" {
          *退出战斗区域
          *@param Player 玩家角色
          */
-        ExitBattleArea(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : void;
+        ExitBattleArea(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : void;
         /*
          *获取区域碰撞盒
          *@param AreaID 区域ID
@@ -52167,25 +52129,25 @@ declare module "ue" {
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        MoveCameraToPosition(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        MoveCameraToPosition(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *处理战斗区域传送
          *@param Player 玩家角色
          *@param Enemy 被攻击的敌人
          *@return 是否成功执行传送
          */
-        ProcessBattleAreaTeleport(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        ProcessBattleAreaTeleport(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
         /*
          *切换到战斗区域相机
          *@param Player 玩家角色
          *@param CameraBillboard 相机Billboard组件，用于查找子相机
          */
-        SwitchToBattleCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        SwitchToBattleCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
         /*
          *切换回玩家相机
          *@param Player 玩家角色
          */
-        SwitchToPlayerCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : void;
+        SwitchToPlayerCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : void;
         /*
          *传送敌人到指定位置
          *@param Enemy 敌人角色
@@ -52199,14 +52161,14 @@ declare module "ue" {
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        TeleportPlayer(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        TeleportPlayer(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *验证传送条件
          *@param Player 玩家角色
          *@param Enemy 敌人角色
          *@return 是否满足传送条件
          */
-        ValidateTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        ValidateTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaTeleportComponent;
         static Load(InName: string): BattleAreaTeleportComponent;
@@ -52219,6 +52181,7 @@ declare module "ue" {
         OnAttackHit: $MulticastDelegate<(Attacker: $Nullable<UE.Actor>, Target: $Nullable<UE.Actor>, Damage: number) => void>;
         OnAttackStarted: $MulticastDelegate<(Attacker: $Nullable<UE.Actor>, AttackType: string) => void>;
         OnAttackEnd: $MulticastDelegate<(Attacker: $Nullable<UE.Actor>) => void>;
+        OnBattleTeleportSuccess: $MulticastDelegate<(Player: $Nullable<UE.Actor>, Enemy: $Nullable<UE.Actor>) => void>;
         GlobalDamageMultiplier: number;
         AttackCooldown: number;
         bEnableDebugLogging: boolean;
@@ -57452,7 +57415,7 @@ declare module "ue" {
          *清除玩家的区域ID
          *@param Player 玩家角色
          */
-        static ClearPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : void;
+        static ClearPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : void;
         /*
          *销毁所有区域的测试假人
          *@param WorldContext 世界上下文
@@ -57480,7 +57443,7 @@ declare module "ue" {
          *@param Player 玩家角色
          *@return 是否有有效的区域ID
          */
-        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : boolean;
+        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : boolean;
         /*
          *获取区域碰撞盒的位置信息
          *@param AreaBox 区域碰撞盒
@@ -57504,7 +57467,7 @@ declare module "ue" {
          *@param OutIsFromPlayer 是否来自玩家
          *@return 是否找到有效的区域ID
          */
-        static GetEffectiveAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
+        static GetEffectiveAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
         /*
          *获取指定区域的所有敌人
          *@param WorldContext 世界上下文
@@ -57529,7 +57492,7 @@ declare module "ue" {
          *@param Player 玩家角色
          *@return 区域ID
          */
-        static GetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>) : number;
+        static GetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : number;
         /*
          *从选中的区域碰撞盒读取AreaID
          *@param Enemy 敌人角色
@@ -57552,7 +57515,7 @@ declare module "ue" {
          *@param Player 玩家角色
          *@param AreaID 区域ID
          */
-        static SetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, AreaID: number) : void;
+        static SetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, AreaID: number) : void;
         /*
          *为所有区域生成测试假人
          *@param WorldContext 世界上下文
@@ -57569,7 +57532,7 @@ declare module "ue" {
          *@param Enemy 敌人角色
          *@return 是否满足传送条件
          */
-        static ValidateBattleTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_0>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static ValidateBattleTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaBlueprintLibrary;
         static Load(InName: string): BattleAreaBlueprintLibrary;
@@ -61220,7 +61183,7 @@ declare module "ue" {
     class DestructibleItem extends UE.StaticMeshActor {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         OnItemDestroyed: $MulticastDelegate<(DestroyedItem: $Nullable<UE.DestructibleItem>) => void>;
-        HealthComponent: UE.HealthComponent;
+        HealthComponent: UE.LIVECODING_HealthComponent_0;
         bIsDestroyed: boolean;
         DestructionEffect: UE.ParticleSystem;
         DestructionSound: UE.SoundBase;
@@ -61244,7 +61207,7 @@ declare module "ue" {
         /*
          *获取生命值组件
          */
-        GetHealthComponent() : UE.HealthComponent;
+        GetHealthComponent() : UE.LIVECODING_HealthComponent_0;
         HandleDestruction() : void;
         /*
          *检查是否已被破坏
@@ -61320,6 +61283,52 @@ declare module "ue" {
         static Load(InName: string): CurrsorCameraComponent;
     
         __tid_CurrsorCameraComponent_0__: boolean;
+    }
+    
+    class HealthComponent extends UE.ActorComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnHealthChanged: $MulticastDelegate<(CurrentHealth: number, MaxHealth: number, DamageAmount: number) => void>;
+        OnDeath: $MulticastDelegate<(DeadActor: $Nullable<UE.Actor>) => void>;
+        MaxHealth: number;
+        CurrentHealth: number;
+        Defense: number;
+        bCanTakeDamage: boolean;
+        bAutoRespawn: boolean;
+        RespawnDelay: number;
+        MaxManaCount: number;
+        ManaCount: number;
+        CalculateDamageReduction(IncomingDamage: number) : number;
+        GetCurrentHealth() : number;
+        GetDefense() : number;
+        GetHealthPercentage() : number;
+        GetManaCount() : number;
+        GetMaxHealth() : number;
+        /*
+         *Mana
+         */
+        GetMaxManaCount() : number;
+        Heal(HealAmount: number) : void;
+        IsDead() : boolean;
+        IsFullHealth() : boolean;
+        SetCurrentHealth(NewHealth: number) : void;
+        /*
+         *防御值管理（护盾机制：受到伤害时优先扣除防御值）
+         */
+        SetDefense(NewDefense: number) : void;
+        /*
+         *生命值管理
+         */
+        SetMaxHealth(NewMaxHealth: number) : void;
+        /*
+         *伤害处理
+         */
+        TakeDamage(DamageAmount: number, DamageInstigator?: UE.Actor /* = None */) : void;
+        UseMana(ManaCost: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): HealthComponent;
+        static Load(InName: string): HealthComponent;
+    
+        __tid_HealthComponent_0__: boolean;
     }
     
     class StateTransitionRule {
@@ -61517,12 +61526,17 @@ declare module "ue" {
         /*
          *PlayerState相关方法
          */
-        GetCurrsorPlayerState() : UE.LIVECODING_CurrsorPlayerState_1;
+        GetCurrsorPlayerState() : UE.PlayerState;
         /*
          *生命值相关方法
          */
         GetHealth() : number;
+        /*
+         *Mana
+         */
+        GetMana() : number;
         GetMaxHealth() : number;
+        GetMaxMana() : number;
         HasValidAreaID() : boolean;
         IsDead() : boolean;
         IsRotationAdjustmentEnabled() : boolean;
@@ -61537,6 +61551,7 @@ declare module "ue" {
          *相机切换方法
          */
         SwitchToPlayerCamera() : void;
+        UseMana(Amount: number) : void;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
         static Load(InName: string): CurrsorCharacter;
@@ -61638,10 +61653,47 @@ declare module "ue" {
         __tid_CurrsorPlayerCameraManager_0__: boolean;
     }
     
+    class CurrsorPlayerState extends UE.BaseState {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        DeckCardNames: TArray<string>;
+        CardDataTable: UE.DataTable;
+        CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
+        CurrsorCharacter: TWeakObjectPtr<UE.LIVECODING_CurrsorCharacter_1>;
+        CurrsorVelocity: UE.Vector;
+        bIsAttackKeyReleased: boolean;
+        AttackNum: number;
+        CanStartAttack() : boolean;
+        GetAttackKey() : boolean;
+        /*
+         *Attack
+         */
+        GetAttackNum() : number;
+        /*
+         *状态检测
+         */
+        IsGrounding() : boolean;
+        IsWalking() : boolean;
+        SetAttacking(bAttacking: boolean) : void;
+        SetAttackKey(bAttackKey: boolean) : void;
+        SetAttackNum(Num: number) : void;
+        /*
+         *状态设置
+         */
+        SetDashing(bDashing: boolean) : void;
+        SetJumping(bJumping: boolean) : void;
+        SetWalking(bWalking: boolean) : void;
+        ShouldMove() : boolean;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerState;
+        static Load(InName: string): CurrsorPlayerState;
+    
+        __tid_CurrsorPlayerState_0__: boolean;
+    }
+    
     class CurrsorActionComponent extends UE.ActorComponent {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_0;
-        CurrsorPlayerState: UE.LIVECODING_CurrsorPlayerState_1;
+        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_1;
+        CurrsorPlayerState: UE.CurrsorPlayerState;
         CurrsorPlayerController: UE.CurrsorPlayerController;
         CurrentMovementVector: number;
         MovementSpeed: number;
@@ -61672,10 +61724,10 @@ declare module "ue" {
         InputMappingContext: UE.InputMappingContext;
         CombatInputMappingContext: UE.InputMappingContext;
         CurrentMovementVector: number;
-        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_0;
-        CurrsorPlayerState: UE.LIVECODING_CurrsorPlayerState_1;
+        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_1;
+        CurrsorPlayerState: UE.CurrsorPlayerState;
         PlayerActionComponent: UE.CurrsorActionComponent;
-        PlayerStateComponent: UE.LIVECODING_CurrsorPlayerState_1;
+        PlayerStateComponent: UE.CurrsorPlayerState;
         GameSystemManager: UE.GameSystemManager;
         AttackSystem: UE.AttackSystemComponent;
         StateManager: UE.StateManagerComponent;
@@ -61686,6 +61738,8 @@ declare module "ue" {
         bIsInCombatInputMode: boolean;
         BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
         bEnableInputDebugLogging: boolean;
+        BattleTeleportWidgetClass: UE.Class;
+        CurrentBattleTeleportWidget: UE.UserWidget;
         /*
          *对实现此接口的对象施加伤害 __ 伤害值
          *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
@@ -61717,6 +61771,10 @@ declare module "ue" {
         MoveCompleted() : void;
         MoveStarted() : void;
         /*
+         *战斗传送成功的回调函数
+         */
+        OnBattleTeleportSuccess(CurrenPlayer: $Nullable<UE.Actor>, Enemy: $Nullable<UE.Actor>) : void;
+        /*
          *输入映射上下文切换
          */
         SwitchInputMappingContext(bUseCombatInput: boolean) : void;
@@ -61725,43 +61783,6 @@ declare module "ue" {
         static Load(InName: string): CurrsorPlayerController;
     
         __tid_CurrsorPlayerController_0__: boolean;
-    }
-    
-    class CurrsorPlayerState extends UE.BaseState {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        DeckCardNames: TArray<string>;
-        CardDataTable: UE.DataTable;
-        CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
-        CurrsorCharacter: TWeakObjectPtr<UE.CurrsorCharacter>;
-        CurrsorVelocity: UE.Vector;
-        bIsAttackKeyReleased: boolean;
-        AttackNum: number;
-        CanStartAttack() : boolean;
-        GetAttackKey() : boolean;
-        /*
-         *Attack
-         */
-        GetAttackNum() : number;
-        /*
-         *状态检测
-         */
-        IsGrounding() : boolean;
-        IsWalking() : boolean;
-        SetAttacking(bAttacking: boolean) : void;
-        SetAttackKey(bAttackKey: boolean) : void;
-        SetAttackNum(Num: number) : void;
-        /*
-         *状态设置
-         */
-        SetDashing(bDashing: boolean) : void;
-        SetJumping(bJumping: boolean) : void;
-        SetWalking(bWalking: boolean) : void;
-        ShouldMove() : boolean;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorPlayerState;
-        static Load(InName: string): CurrsorPlayerState;
-    
-        __tid_CurrsorPlayerState_0__: boolean;
     }
     
     class PaperZDAnimNode_Base {

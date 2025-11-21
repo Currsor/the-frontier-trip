@@ -56,6 +56,16 @@ public:
     UFUNCTION(BlueprintCallable, Category = "|Health")
     void SetCurrentHealth(float NewHealth);
 
+    // Mana
+    UFUNCTION(BlueprintCallable, Category = "|Mana")
+    int32 GetMaxManaCount() const { return MaxManaCount; }
+    
+    UFUNCTION(BlueprintCallable, Category = "|Mana")
+    int32 GetManaCount() const { return ManaCount; }
+
+    UFUNCTION(BlueprintCallable, Category = "|Mana")
+    void UseMana(int32 ManaCost);
+
     // 事件委托
     UPROPERTY(BlueprintAssignable, Category = "|Health")
     FOnHealthChanged OnHealthChanged;
@@ -83,6 +93,12 @@ protected:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "|Health")
     float RespawnDelay = 3.0f;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "|Mana")
+    int32 MaxManaCount = 3;
+
+    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "|Mana")
+    int32 ManaCount = MaxManaCount;
 
 private:
     void HandleDeath();

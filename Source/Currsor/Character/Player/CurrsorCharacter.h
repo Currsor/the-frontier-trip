@@ -54,6 +54,16 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Health")
 	bool IsDead() const;
 
+	// Mana
+	UFUNCTION(BlueprintPure, Category = "Mana")
+	int32 GetMana() const;
+
+	UFUNCTION(BlueprintPure, Category = "Mana")
+	int32 GetMaxMana() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Mana")
+	void UseMana(int32 Amount);
+
 	// 区域ID相关方法（通过GameState管理）
 	UFUNCTION(BlueprintPure, Category = "BattleArea")
 	int32 GetCurrentAreaID() const;

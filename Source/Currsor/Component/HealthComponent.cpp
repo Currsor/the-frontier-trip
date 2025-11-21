@@ -146,6 +146,14 @@ void UHealthComponent::SetCurrentHealth(float NewHealth)
     }
 }
 
+void UHealthComponent::UseMana(int32 ManaCost)
+{
+    if (ManaCount > 0.0f)
+    {
+        ManaCount = FMath::Clamp(ManaCount - ManaCost, 0.0f, MaxManaCount);
+    }
+}
+
 void UHealthComponent::HandleDeath()
 {
     bCanTakeDamage = false;

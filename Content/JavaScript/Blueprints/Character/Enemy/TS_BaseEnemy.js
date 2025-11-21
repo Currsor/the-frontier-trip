@@ -115,7 +115,7 @@ class TS_BaseEnemy extends jsClass {
      * 订阅攻击事件
      */
     subscribeToAttackEvent() {
-        EventSystem_1.EventSystem.subscribe("onCardAttack", this.onAttackTriggered.bind(this));
+        EventSystem_1.EventSystem.subscribe("Attack", this.onAttackTriggered.bind(this));
         console.log("[TS Enemy] 已订阅攻击广播事件");
         console.log(`[TS Enemy] 订阅后监听器数量: ${EventSystem_1.EventSystem.getListenerCount("onCardAttack")}`);
     }

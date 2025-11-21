@@ -25,26 +25,10 @@ class TS_PlayingCardArea extends jsClass {
         // 从 Operation 的 Payload 中获取 TS_Card 实例
         const card = Operation.Payload;
         if (card && card.cardInfo) {
-            const cardType = card.cardInfo.Type;
-            console.log(`卡牌类型: ${cardType}`);
-            // 根据卡牌类型发出相应的广播
-            if (cardType === "攻击" || cardType === "Attack") {
-                console.log("[PlayingCardArea] 发出攻击广播");
-                EventSystem_1.EventSystem.emit("onCardAttack", {
-                    cardInfo: card.cardInfo,
-                    target: "Enemy"
-                });
-            }
-            else if (cardType === "防御" || cardType === "Defense") {
-                console.log("[PlayingCardArea] 准备发出防御广播");
-                EventSystem_1.EventSystem.emit("onCardDefense", {
-                    cardInfo: card.cardInfo,
-                    target: "Player"
-                });
-            }
-            else {
-                console.log(`[PlayingCardArea] 未知的卡牌类型: ${cardType}`);
-            }
+            EventSystem_1.EventSystem.emit("Consumption", {
+                cardInfo: card.cardInfo,
+                target: "Player"
+            });
         }
         console.log("[PlayingCardArea] OnDrop 返回 true");
         return true;

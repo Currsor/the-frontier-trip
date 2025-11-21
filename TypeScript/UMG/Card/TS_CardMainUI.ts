@@ -4,6 +4,7 @@ import { CardWidgetPool } from './TS_CardWidgetPool';
 import { CardAnimationSystem, CardAnimationManager } from './TS_CardAnimationSystem';
 import { GameConfig } from '../../Config/GameConfig';
 import { TS_Card } from './TS_Card';
+import { EventSystem } from '../../Systems/EventSystem';
 
 const uclass = UE.Class.Load("/Game/UI/Blueprints/Cards/Widget_CardMainUI.Widget_CardMainUI_C");
 const jsClass = blueprint.tojs(uclass);
@@ -39,6 +40,8 @@ export class TS_CardMainUI implements TS_CardMainUI {
         
         // 从管理器获取或创建动画系统（持久化）
         this.animationSystem = CardAnimationManager.getInstance().getOrCreateAnimationSystem(this.UI_ID, this);
+
+        EventSystem.subscribe("UpdateMana", this.onUpdateMana.bind(this));
         
         this.InitCard();
     }
@@ -70,6 +73,10 @@ export class TS_CardMainUI implements TS_CardMainUI {
 
         this.AddCard(GameConfig.CARD_CONFIG.INITIAL_DRAW_COUNT);
         this.UpdateDrawPileUI();
+    }
+
+    private onUpdateMana(data: any): void {
+        this.Widget_PlayerStatusIndicator.StatText.SetText(data.Amount.toString());
     }
 
     // 抽取手牌

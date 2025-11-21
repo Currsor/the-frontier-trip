@@ -6,6 +6,7 @@ const puerts_1 = require("puerts");
 const TS_CardWidgetPool_1 = require("./TS_CardWidgetPool");
 const TS_CardAnimationSystem_1 = require("./TS_CardAnimationSystem");
 const GameConfig_1 = require("../../Config/GameConfig");
+const EventSystem_1 = require("../../Systems/EventSystem");
 const uclass = UE.Class.Load("/Game/UI/Blueprints/Cards/Widget_CardMainUI.Widget_CardMainUI_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_CardMainUI {
@@ -29,6 +30,7 @@ class TS_CardMainUI {
         }
         // 从管理器获取或创建动画系统（持久化）
         this.animationSystem = TS_CardAnimationSystem_1.CardAnimationManager.getInstance().getOrCreateAnimationSystem(this.UI_ID, this);
+        EventSystem_1.EventSystem.subscribe("UpdateMana", this.onUpdateMana.bind(this));
         this.InitCard();
     }
     Destruct() {
@@ -52,6 +54,9 @@ class TS_CardMainUI {
         }
         this.AddCard(GameConfig_1.GameConfig.CARD_CONFIG.INITIAL_DRAW_COUNT);
         this.UpdateDrawPileUI();
+    }
+    onUpdateMana(data) {
+        this.Widget_PlayerStatusIndicator.StatText.SetText(data.Amount.toString());
     }
     // 抽取手牌
     AddCard(numCards = 1) {

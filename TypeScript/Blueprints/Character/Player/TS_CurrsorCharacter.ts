@@ -21,7 +21,7 @@ export class TS_CurrsorCharacter implements TS_CurrsorCharacter {
         this.initializeGameSystems();
         
         // 订阅防御广播
-        this.subscribeToDefenseEvent();
+        this.subscribeEvent();
 
         // 初始化血条UI
         this.initializeHealthBar();
@@ -53,10 +53,9 @@ export class TS_CurrsorCharacter implements TS_CurrsorCharacter {
     }
 
     // 订阅防御事件
-    private subscribeToDefenseEvent(): void {
-        EventSystem.subscribe("onCardDefense", this.onDefenseTriggered.bind(this));
-        console.log("[TS Character] 已订阅防御广播事件");
-        console.log(`[TS Character] 订阅后监听器数量: ${EventSystem.getListenerCount("onCardDefense")}`);
+    private subscribeEvent(): void {
+        EventSystem.subscribe("Defense", this.onDefenseTriggered.bind(this));
+        EventSystem.subscribe("Consumption", this.onConsumptionTriggered.bind(this));
     }
 
     // 处理防御事件
@@ -87,6 +86,36 @@ export class TS_CurrsorCharacter implements TS_CurrsorCharacter {
             this.UpdateDefense(newDefense);
         } else {
             console.warn(`[TS Character] 无法从卡牌描述中解析防御值: ${cardInfo.Description}`);
+        }
+    }
+
+    private onConsumptionTriggered(data: any): void {
+        console.log("[TS Character] ========== 收到消耗广播 ==========");
+        if(this.GetMana() - data.cardInfo.Consumption < 0) {
+            console.log("[TS Character] 消耗失败");
+            return;
+        }
+        this.UseMana(data.cardInfo.Consumption);
+
+        EventSystem.emit("UpdateMana", {Amount: this.GetMana()});
+
+        const cardType = data.cardInfo.Type;
+                
+        // 根据卡牌类型发出相应的广播
+        if (cardType === "攻击" || cardType === "Attack") {
+            EventSystem.emit("Attack", {
+                cardInfo: data.cardInfo,
+                target: "Enemy"
+            });
+
+        } else if (cardType === "防御" || cardType === "Defense") {
+            EventSystem.emit("Defense", {
+                cardInfo: data.cardInfo,
+                target: "Player"
+            });
+            
+        } else {
+            console.log(`[PlayingCardArea] 未知的卡牌类型: ${cardType}`);
         }
     }
 

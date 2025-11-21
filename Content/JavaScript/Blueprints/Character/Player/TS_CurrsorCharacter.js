@@ -15,7 +15,7 @@ class TS_CurrsorCharacter {
         // 初始化游戏系统
         this.initializeGameSystems();
         // 订阅防御广播
-        this.subscribeToDefenseEvent();
+        this.subscribeEvent();
         // 初始化血条UI
         this.initializeHealthBar();
     }
@@ -42,10 +42,9 @@ class TS_CurrsorCharacter {
         }
     }
     // 订阅防御事件
-    subscribeToDefenseEvent() {
-        EventSystem_1.EventSystem.subscribe("onCardDefense", this.onDefenseTriggered.bind(this));
-        console.log("[TS Character] 已订阅防御广播事件");
-        console.log(`[TS Character] 订阅后监听器数量: ${EventSystem_1.EventSystem.getListenerCount("onCardDefense")}`);
+    subscribeEvent() {
+        EventSystem_1.EventSystem.subscribe("Defense", this.onDefenseTriggered.bind(this));
+        EventSystem_1.EventSystem.subscribe("Consumption", this.onConsumptionTriggered.bind(this));
     }
     // 处理防御事件
     onDefenseTriggered(data) {
@@ -70,6 +69,32 @@ class TS_CurrsorCharacter {
         }
         else {
             console.warn(`[TS Character] 无法从卡牌描述中解析防御值: ${cardInfo.Description}`);
+        }
+    }
+    onConsumptionTriggered(data) {
+        console.log("[TS Character] ========== 收到消耗广播 ==========");
+        if (this.GetMana() - data.cardInfo.Consumption < 0) {
+            console.log("[TS Character] 消耗失败");
+            return;
+        }
+        this.UseMana(data.cardInfo.Consumption);
+        EventSystem_1.EventSystem.emit("UpdateMana", { Amount: this.GetMana() });
+        const cardType = data.cardInfo.Type;
+        // 根据卡牌类型发出相应的广播
+        if (cardType === "攻击" || cardType === "Attack") {
+            EventSystem_1.EventSystem.emit("Attack", {
+                cardInfo: data.cardInfo,
+                target: "Enemy"
+            });
+        }
+        else if (cardType === "防御" || cardType === "Defense") {
+            EventSystem_1.EventSystem.emit("Defense", {
+                cardInfo: data.cardInfo,
+                target: "Player"
+            });
+        }
+        else {
+            console.log(`[PlayingCardArea] 未知的卡牌类型: ${cardType}`);
         }
     }
     /**
