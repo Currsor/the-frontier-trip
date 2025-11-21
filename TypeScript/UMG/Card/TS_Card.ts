@@ -1,6 +1,7 @@
 import * as UE from 'ue';
-import { $ref, $Ref, $set, blueprint } from 'puerts';
+import { $ref, $Ref, $set, $Nullable, blueprint } from 'puerts';
 import { CardAnimationSystem } from './TS_CardAnimationSystem';
+import { EventSystem } from '../../Systems/EventSystem';
 
 const uclass = UE.Class.Load("/Game/UI/Blueprints/Cards/Widget_CardCell.Widget_CardCell_C");
 const jsClass = blueprint.tojs(uclass);
@@ -66,6 +67,9 @@ export class TS_Card extends jsClass {
         console.log('[TS_Card.OnDragDetected] 拖动检测事件触发');
         this.isDragging = true;
         
+        // 通知主UI卡牌开始拖动
+        EventSystem.emit("CardDragStart", { card: this });
+        
         const dragDropOp = UE.WidgetBlueprintLibrary.CreateDragDropOperation(UE.DragDropOperation.StaticClass());
         
         // 创建拖动视觉Widget实例
@@ -83,17 +87,18 @@ export class TS_Card extends jsClass {
         dragDropOp.Pivot = UE.EDragPivot.CenterCenter;
         dragDropOp.Payload = this;
         
-        // if (this.animationSystem) {
-        //     console.log('[TS_Card.OnDragDetected] 调用animationSystem.StartDragCard');
-        //     this.animationSystem.StartDragCard(this);
-        // }
-        // 
-        // if (this.mainUI) {
-        //     console.log('[TS_Card.OnDragDetected] 调用mainUI.OnCardDragStart');
-        //     this.mainUI.OnCardDragStart(this);
-        // }
-        
         $set(Operation, dragDropOp);
+    }
+    
+    /**
+     * 拖动取消事件（用户拖动后没有放到有效区域）
+     */
+    OnDragCancelled(PointerEvent: UE.PointerEvent, Operation: $Nullable<UE.DragDropOperation>): void {
+        console.log('[TS_Card.OnDragCancelled] 拖动取消');
+        this.isDragging = false;
+        
+        // 通知主UI拖动失败
+        EventSystem.emit("CardDragEnd", { card: this, success: false });
     }
 }
 

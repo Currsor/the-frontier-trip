@@ -32,10 +32,14 @@ export class TS_PlayingCardArea extends jsClass {
         const card = Operation.Payload as TS_Card;
             
         if (card && card.cardInfo) {
+            // 发送消耗事件（会触发UpdateMana）
             EventSystem.emit("Consumption", {
                 cardInfo: card.cardInfo,
                 target: "Player"
             });
+            
+            // 通知主UI拖动成功结束
+            EventSystem.emit("CardDragEnd", { card: card, success: true });
         }
         
         console.log("[PlayingCardArea] OnDrop 返回 true");
