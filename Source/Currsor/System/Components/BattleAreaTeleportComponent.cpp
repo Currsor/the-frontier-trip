@@ -120,12 +120,31 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 	// 执行传送
 	FVector PlayerTargetLocation = PlayerBillboard->GetComponentLocation();
 	FRotator PlayerTargetRotation = PlayerBillboard->GetComponentRotation();
-	
+
 	FVector EnemyTargetLocation = EnemyBillboard->GetComponentLocation();
 	FRotator EnemyTargetRotation = EnemyBillboard->GetComponentRotation();
-	
+
 	FVector CameraTargetLocation = CameraBillboard->GetComponentLocation();
 	FRotator CameraTargetRotation = CameraBillboard->GetComponentRotation();
+
+	// 保存玩家战斗前的原始位置和旋转
+	SavedPlayerLocation = Player->GetActorLocation();
+	SavedPlayerRotation = Player->GetActorRotation();
+	bHasSavedPlayerTransform = true;
+
+	// 保存敌人战斗前的原始位置和旋转
+	SavedEnemyLocation = Enemy->GetActorLocation();
+	SavedEnemyRotation = Enemy->GetActorRotation();
+	bHasSavedEnemyTransform = true;
+
+	// 缓存敌人引用，用于退出战斗时恢复位置
+	CachedBattleEnemy = Enemy;
+
+	if (bEnableDebugLogging)
+	{
+		UE_LOG(LogTemp, Log, TEXT("已保存玩家原始位置: %s，旋转: %s"), *SavedPlayerLocation.ToString(), *SavedPlayerRotation.ToString());
+		UE_LOG(LogTemp, Log, TEXT("已保存敌人原始位置: %s，旋转: %s"), *SavedEnemyLocation.ToString(), *SavedEnemyRotation.ToString());
+	}
 
 	// 延迟执行传送以确保攻击动画完成
 	FTimerHandle TeleportTimer;
@@ -134,6 +153,30 @@ bool UBattleAreaTeleportComponent::ProcessBattleAreaTeleport(ACurrsorCharacter* 
 		TeleportPlayer(Player, PlayerTargetLocation, PlayerTargetRotation);
 		TeleportEnemy(Enemy, EnemyTargetLocation, EnemyTargetRotation);
 		SwitchToBattleCamera(Player, CameraBillboard);
+		
+		// 战斗开始：从被攻击的敌人身上读取敌人总数并初始化游戏状态
+		if (ACurrsorGameState* GameState = GetCurrsorGameState())
+		{
+			// 从敌人身上读取敌人总数
+			int32 TotalEnemies = Enemy ? Enemy->GetTotalEnemyCount() : 1;
+			
+			// 初始化游戏状态的敌人统计
+			GameState->SetTotalEnemyCount(TotalEnemies);
+			GameState->SetEnemyDeathCount(0);
+			
+			// 统计玩家总数（通常为1）
+			GameState->SetTotalPlayerCount(1);
+			GameState->SetPlayerDeathCount(0);
+			
+			// 设置战斗状态
+			GameState->SetCombatState(ECombatState::Combat);
+			
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("战斗开始：敌人 %s 代表的敌人总数为 %d，玩家总数：1"), 
+					   Enemy ? *Enemy->GetName() : TEXT("未知"), TotalEnemies);
+			}
+		}
 		
 		// 传送完成后切换到战斗输入模式
 		if (ACurrsorPlayerController* PlayerController = Cast<ACurrsorPlayerController>(Player->GetController()))
@@ -341,6 +384,33 @@ void UBattleAreaTeleportComponent::ExitBattleArea(ACurrsorCharacter* Player)
 	FTimerHandle ExitBattleTimer;
 	GetWorld()->GetTimerManager().SetTimer(ExitBattleTimer, [this, Player]()
 	{
+		// 恢复玩家到战斗前的原始位置和旋转
+		if (bHasSavedPlayerTransform)
+		{
+			Player->SetActorLocation(SavedPlayerLocation);
+			Player->SetActorRotation(SavedPlayerRotation);
+			bHasSavedPlayerTransform = false;
+
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("已恢复玩家到原始位置: %s，旋转: %s"), *SavedPlayerLocation.ToString(), *SavedPlayerRotation.ToString());
+			}
+		}
+
+		// 恢复敌人到战斗前的原始位置和旋转
+		if (bHasSavedEnemyTransform && CachedBattleEnemy.IsValid())
+		{
+			CachedBattleEnemy->SetActorLocation(SavedEnemyLocation);
+			CachedBattleEnemy->SetActorRotation(SavedEnemyRotation);
+			bHasSavedEnemyTransform = false;
+			CachedBattleEnemy = nullptr;
+
+			if (bEnableDebugLogging)
+			{
+				UE_LOG(LogTemp, Log, TEXT("已恢复敌人到原始位置: %s，旋转: %s"), *SavedEnemyLocation.ToString(), *SavedEnemyRotation.ToString());
+			}
+		}
+
 		// 切换回玩家相机
 		SwitchToPlayerCamera(Player);
 		

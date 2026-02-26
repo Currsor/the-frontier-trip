@@ -17,6 +17,12 @@ export class TS_Card extends jsClass {
     
     // 拖动状态
     public isDragging: boolean = false;
+    
+    // 拖动前的原始状态（用于还原）
+    public originalPosition: UE.Vector2D | null = null;
+    public originalRotation: number = 0;
+    public originalScale: UE.Vector2D | null = null;
+    public originalZOrder: number = 0;
 
     public SetData(cardInfo: UE.Game.Data.Structs.S_CardInfo.S_CardInfo): void {
         this.cardInfo = cardInfo;

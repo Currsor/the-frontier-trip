@@ -5,6 +5,7 @@
 #include "Currsor/Character/Component/BaseState.h"
 #include "Currsor/Component/HealthComponent.h"
 #include "Currsor/System/Area/AreaCollisionBox.h"
+#include "Currsor/System/CurrsorGameState.h"
 
 // Sets default values
 ABaseEnemy::ABaseEnemy()
@@ -93,6 +94,12 @@ void ABaseEnemy::HandleDeath()
 		// 广播死亡事件
 		OnEnemyDeath.Broadcast(this);
 		OnDeathBP();
+
+		// 通知游戏状态增加敌人死亡计数
+		if (ACurrsorGameState* GameState = Cast<ACurrsorGameState>(GetWorld()->GetGameState()))
+		{
+			GameState->IncrementEnemyDeathCount();
+		}
 
 		UE_LOG(LogTemp, Warning, TEXT("%s 已死亡"), *GetName());
 	}

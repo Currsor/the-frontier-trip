@@ -77,7 +77,7 @@ protected:
     virtual void BeginPlay() override;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "|Health", meta = (ClampMin = "1.0"))
-    float MaxHealth = 100.0f;
+    float MaxHealth = 40.0f;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "|Health")
     float CurrentHealth;
@@ -95,7 +95,7 @@ protected:
     float RespawnDelay = 3.0f;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "|Mana")
-    int32 MaxManaCount = 3;
+    int32 MaxManaCount = 10;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "|Mana")
     int32 ManaCount = MaxManaCount;

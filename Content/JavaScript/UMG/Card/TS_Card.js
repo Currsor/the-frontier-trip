@@ -13,6 +13,11 @@ class TS_Card extends jsClass {
     cardInfo = null;
     // 拖动状态
     isDragging = false;
+    // 拖动前的原始状态（用于还原）
+    originalPosition = null;
+    originalRotation = 0;
+    originalScale = null;
+    originalZOrder = 0;
     SetData(cardInfo) {
         this.cardInfo = cardInfo;
         // 设置卡牌名称

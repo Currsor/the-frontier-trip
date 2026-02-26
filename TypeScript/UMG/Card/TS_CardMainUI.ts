@@ -22,7 +22,6 @@ export class TS_CardMainUI implements TS_CardMainUI {
     // 卡牌动画系统（从管理器获取）
     private animationSystem: CardAnimationSystem | null = null;
     
-    // UI唯一标识符
     private readonly UI_ID = 'CardMainUI';
     
     // 正在拖动的卡牌信息（用于跟踪卡牌使用）
@@ -120,6 +119,21 @@ export class TS_CardMainUI implements TS_CardMainUI {
         
         console.log('[TS_CardMainUI] 卡牌开始拖动:', card.cardInfo.Name);
         
+        // 记录原始位置、旋转、缩放和层级
+        const slot = card.Slot as UE.CanvasPanelSlot;
+        if (slot) {
+            card.originalPosition = slot.GetPosition();
+            card.originalRotation = card.RenderTransform.Angle;
+            card.originalScale = card.RenderTransform.Scale;
+            card.originalZOrder = slot.GetZOrder();
+            console.log('[TS_CardMainUI] 记录原始状态:', {
+                position: card.originalPosition,
+                rotation: card.originalRotation,
+                scale: card.originalScale,
+                zOrder: card.originalZOrder
+            });
+        }
+        
         // 记录正在拖动的卡牌信息
         this.draggingCardInfo = card.cardInfo;
         this.draggingCardWidget = card;
@@ -151,21 +165,73 @@ export class TS_CardMainUI implements TS_CardMainUI {
         
         console.log('[TS_CardMainUI] 卡牌拖动结束:', card?.cardInfo?.Name, '成功:', success);
         
-        // 如果拖动未成功（没有放到有效区域），需要将卡牌放回手牌
-        if (!success && this.draggingCardInfo) {
-            console.log('[TS_CardMainUI] 卡牌拖动失败，放回手牌');
+        // 如果拖动未成功（没有放到Widget_PlayingCardArea），还原卡牌到原始位置
+        if (!success && this.draggingCardInfo && card) {
+            console.log('[TS_CardMainUI] 卡牌拖动失败，还原到原始位置');
             
             // 将卡牌放回手牌数据
             this.handCards.Add(this.draggingCardInfo);
             
-            // 重新创建Widget
-            this.CreateHandCardWidget(this.draggingCardInfo);
+            // 还原卡牌到原始位置
+            this.RestoreCardToOriginalPosition(card);
             
             // 清除拖动状态
             this.draggingCardInfo = null;
             this.draggingCardWidget = null;
         }
         // 如果成功，等待UpdateMana事件来处理弃牌
+    }
+    
+    /**
+     * 还原卡牌到原始位置（使用动画）
+     */
+    private RestoreCardToOriginalPosition(card: TS_Card): void {
+        if (!card.originalPosition) {
+            console.warn('[TS_CardMainUI] 无法还原卡牌：未记录原始位置');
+            // 如果没有记录原始位置，重新创建Widget
+            if (card.cardInfo) {
+                this.CreateHandCardWidget(card.cardInfo);
+            }
+            return;
+        }
+        
+        // 将卡牌重新添加到手牌容器
+        const container = (this as any).HandCardsContainer;
+        if (container) {
+            container.AddChildToCanvas(card);
+        }
+        
+        // 重新添加到handCardWidgets映射
+        if (card.cardInfo) {
+            this.handCardWidgets.Add(card, card.cardInfo);
+        }
+        
+        // 使用动画系统还原到原始位置
+        if (this.animationSystem && card.originalPosition) {
+            console.log('[TS_CardMainUI] 启动还原动画到原始位置:', card.originalPosition);
+            
+            // 确保卡牌大小和层级正确设置
+            const slot = card.Slot as UE.CanvasPanelSlot;
+            if (slot) {
+                slot.SetAlignment(new UE.Vector2D(0.5, 0.5));
+                slot.SetSize(new UE.Vector2D(GameConfig.CARD_CONFIG.CARD_WIDTH, GameConfig.CARD_CONFIG.CARD_HEIGHT));
+                slot.SetAnchors(new UE.Anchors(new UE.Vector2D(0.5, 0.5), new UE.Vector2D(0.5, 0.5)));
+                slot.SetZOrder(card.originalZOrder);
+            }
+            
+            // 启动还原动画
+            this.animationSystem.StartRepositionAnimation(
+                card,
+                card.originalPosition,
+                card.originalRotation,
+                card.originalScale || new UE.Vector2D(GameConfig.CARD_CONFIG.CARD_SCALE, GameConfig.CARD_CONFIG.CARD_SCALE),
+                0.3 // 还原动画时长
+            );
+            
+            // 清除原始位置记录
+            card.originalPosition = null;
+            card.originalScale = null;
+        }
     }
 
     // 抽取手牌

@@ -26,6 +26,10 @@ class CURRSOR_API ACurrsorGameState : public AGameState
 {
 	GENERATED_BODY()
 
+public:
+	// 构造函数
+	ACurrsorGameState();
+
 	// ========== 区域相关 ==========
 private:
 	UPROPERTY(VisibleAnywhere)
@@ -62,7 +66,7 @@ public:
 	FORCEINLINE ECombatState GetCombatState() const { return CombatState; }
 
 	UFUNCTION(BlueprintCallable, Category = "State")
-	FORCEINLINE void SetCombatState(ECombatState InCombatState) { CombatState = InCombatState; }
+	void SetCombatState(ECombatState InCombatState);
 
 	// ========== 玩家相关 ==========
 	private:
@@ -70,6 +74,10 @@ public:
 	FVector LastPlayerCombatPosition;
 	UPROPERTY(VisibleAnywhere)
 	float CurrentPlayerHealth;
+	UPROPERTY(VisibleAnywhere)
+	int32 TotalPlayerCount;
+	UPROPERTY(VisibleAnywhere)
+	int32 PlayerDeathCount;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "State")
@@ -84,12 +92,34 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "State")
 	FORCEINLINE void SetCurrentPlayerHealth(float InCurrentPlayerHealth) { CurrentPlayerHealth = InCurrentPlayerHealth; }
 
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE int32 GetTotalPlayerCount() const { return TotalPlayerCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE void SetTotalPlayerCount(int32 InTotalPlayerCount) { TotalPlayerCount = InTotalPlayerCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE int32 GetPlayerDeathCount() const { return PlayerDeathCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE void SetPlayerDeathCount(int32 InPlayerDeathCount) { PlayerDeathCount = InPlayerDeathCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	void IncrementPlayerDeathCount();
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	bool AreAllPlayersDead() const;
+
 	// ========== 敌人相关 ==========
 	private:
 	UPROPERTY(VisibleAnywhere)
 	FVector LastEnemyCombatPosition;
 	UPROPERTY(VisibleAnywhere)
 	float CurrentEnemyHealth;
+	UPROPERTY(VisibleAnywhere)
+	int32 TotalEnemyCount;
+	UPROPERTY(VisibleAnywhere)
+	int32 EnemyDeathCount;
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "State")
@@ -103,4 +133,25 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "State")
 	FORCEINLINE void SetCurrentEnemyHealth(float InCurrentEnemyHealth) { CurrentEnemyHealth = InCurrentEnemyHealth; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE int32 GetTotalEnemyCount() const { return TotalEnemyCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE void SetTotalEnemyCount(int32 InTotalEnemyCount) { TotalEnemyCount = InTotalEnemyCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE int32 GetEnemyDeathCount() const { return EnemyDeathCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	FORCEINLINE void SetEnemyDeathCount(int32 InEnemyDeathCount) { EnemyDeathCount = InEnemyDeathCount; }
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	void IncrementEnemyDeathCount();
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	bool AreAllEnemiesDead() const;
+
+	UFUNCTION(BlueprintCallable, Category = "State")
+	void BroadcastCombatStateChange(const FString& CombatEventType);
 };

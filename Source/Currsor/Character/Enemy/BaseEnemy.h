@@ -62,6 +62,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Enemy|Area")
 	bool HasSelectedAreaBox() const { return SelectedAreaBox != nullptr; }
 
+	// 获取敌人总数
+	UFUNCTION(BlueprintPure, Category = "Enemy|Combat")
+	int32 GetTotalEnemyCount() const { return TotalEnemyCount; }
+
 	// 事件委托
 	UPROPERTY(BlueprintAssignable, Category = "Enemy")
 	FOnEnemyDeath OnEnemyDeath;
@@ -84,6 +88,10 @@ protected:
 	// 注意：这个值会在BeginPlay时从SelectedAreaBox自动读取
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Enemy|Area", meta = (AllowPrivateAccess = "true"))
 	int32 AreaID = -1;
+
+	// 敌人总数，表示该敌人代表的敌人数量（默认为1，即单个敌人）
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy|Combat", meta = (AllowPrivateAccess = "true"))
+	int32 TotalEnemyCount = 1;
 
 	// 死亡处理
 	UFUNCTION()

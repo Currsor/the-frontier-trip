@@ -128,6 +128,12 @@ void ACurrsorCharacter::ApplyDamage_Implementation(float DamageAmount, AActor* D
 		// 死亡逻辑
 		UE_LOG(LogTemp, Warning, TEXT("玩家死亡"));
 		CurrsorPlayerState->ChangeState(ECharacterState::Dead);
+		
+		// 通知游戏状态增加玩家死亡计数
+		if (ACurrsorGameState* GameState = Cast<ACurrsorGameState>(GetWorld()->GetGameState()))
+		{
+			GameState->IncrementPlayerDeathCount();
+		}
 	}
 	else
 	{

@@ -221,6 +221,20 @@ void ACurrsorPlayerController::ExitBattleArea()
     }
 }
 
+void ACurrsorPlayerController::CloseBattleTeleportWidget()
+{
+    if (CurrentBattleTeleportWidget && IsValid(CurrentBattleTeleportWidget))
+    {
+        CurrentBattleTeleportWidget->RemoveFromParent();
+        CurrentBattleTeleportWidget = nullptr;
+        
+        if (bEnableInputDebugLogging)
+        {
+            UE_LOG(LogTemp, Log, TEXT("已关闭战斗传送Widget"));
+        }
+    }
+}
+
 void ACurrsorPlayerController::OnBattleTeleportSuccess(AActor* CurrenPlayer, AActor* Enemy)
 {
     if (!BattleTeleportWidgetClass)

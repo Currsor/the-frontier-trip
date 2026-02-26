@@ -92,7 +92,7 @@ class GameConfig {
         // Widget Pool配置
         WIDGET_POOL_SIZE: 10, // Widget池初始大小
         MAX_HAND_CARDS: 10, // 最大手牌数量
-        INITIAL_DRAW_COUNT: 0, // 初始抽牌数量
+        INITIAL_DRAW_COUNT: 5, // 初始抽牌数量
         // 卡牌尺寸配置
         CARD_WIDTH: 200 * 1.2, // 卡牌宽度（像素）
         CARD_HEIGHT: 280 * 1.2, // 卡牌高度（像素）

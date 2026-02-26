@@ -127,4 +127,17 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Battle Area Teleport|Config", meta = (DisplayName = "相机过渡持续时间"))
 	float CameraTransitionDuration = 1.0f;
+
+	// 战斗前保存的玩家原始位置和旋转
+	FVector SavedPlayerLocation = FVector::ZeroVector;
+	FRotator SavedPlayerRotation = FRotator::ZeroRotator;
+	bool bHasSavedPlayerTransform = false;
+
+	// 战斗前保存的敌人原始位置和旋转
+	FVector SavedEnemyLocation = FVector::ZeroVector;
+	FRotator SavedEnemyRotation = FRotator::ZeroRotator;
+	bool bHasSavedEnemyTransform = false;
+
+	// 当前战斗的敌人引用（用于退出时恢复位置）
+	TWeakObjectPtr<ABaseEnemy> CachedBattleEnemy;
 };

@@ -28,19 +28,12 @@ void UCurrsorGameInstance::Init()
 	Super::Init();
 	
 	// 在打包版本中初始化 PuerTS
-#if !WITH_EDITOR
 	InitializePuerTS();
-#endif
 }
 
 void UCurrsorGameInstance::OnStart()
 {
 	Super::OnStart();
-	
-	// 在编辑器中初始化 PuerTS
-#if WITH_EDITOR
-	InitializePuerTS();
-#endif
 }
 
 void UCurrsorGameInstance::Shutdown()

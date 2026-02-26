@@ -4,6 +4,7 @@ import "./Blueprints/Character/Player/TS_CurrsorCharacter";
 import "./Blueprints/Character/Player/TS_CurrsorPlayerCameraManager";
 import "./Blueprints/Character/Player/TS_CurrsorPlayerController";
 import "./Blueprints/System/TS_CurrsorGameMode";
+import "./Components/HealthBarComponent";
 import "./Config/GameConfig";
 import "./GameSystemManager";
 import "./Managers/GameLogicManager";

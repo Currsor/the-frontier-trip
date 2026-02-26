@@ -56,6 +56,10 @@ public:
 	// 退出战斗区域
 	UFUNCTION(BlueprintCallable, Category = "Battle")
 	void ExitBattleArea();
+
+	// 关闭战斗传送Widget
+	UFUNCTION(BlueprintCallable, Category = "UI")
+	void CloseBattleTeleportWidget();
 	
 protected:
 	// 输入映射上下文
