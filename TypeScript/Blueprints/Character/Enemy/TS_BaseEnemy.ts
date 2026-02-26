@@ -2,6 +2,8 @@ import * as UE from 'ue';
 import { $ref, $Ref, $set, $Nullable, blueprint } from 'puerts';
 import { EventSystem } from '../../../Systems/EventSystem';
 import { HealthBarComponent } from '../../../Components/HealthBarComponent';
+import { TS_EnemyTurnManager } from '../../../Systems/TS_EnemyTurnManager';
+import { TS_CardMainUI } from '../../../UMG/Card/TS_CardMainUI';
 
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Enemy/Base/BP_BaseEnemy.BP_BaseEnemy_C");
 const jsClass = blueprint.tojs(uclass);
@@ -22,6 +24,23 @@ export class TS_BaseEnemy extends jsClass {
 
         // 订阅攻击广播
         this.subscribeToAttackEvent();
+
+        // 注册到敌人回合管理器
+        TS_EnemyTurnManager.getInstance().registerEnemy(this);
+        console.log(`[TS Enemy] ${this.GetName()} 已注册到 EnemyTurnManager`);
+    }
+
+    /**
+     * 敌人攻击判定框重叠（敌人主动攻击玩家 → 敌人先手 Encounter）
+     */
+    BndEvt__BP_BaseEnemy_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent: UE.PrimitiveComponent, OtherActor: UE.Actor, OtherComp: UE.PrimitiveComponent, OtherBodyIndex: number, bFromSweep: boolean, SweepResult: UE.HitResult): void {
+        const otherName = OtherActor.GetName ? OtherActor.GetName() : '';
+        // 判断是否碰到玩家
+        if (otherName.toLowerCase().includes('currsor') || (OtherActor as any).IsA?.('CurrsorCharacter')) {
+            console.log(`[TS Enemy] ${this.GetName()} 主动攻击玩家，敌人先手（Encounter）`);
+            // 敌人主动攻击玩家 → 敌人先手
+            TS_CardMainUI.combatInitiator = 'enemy';
+        }
     }
 
     /**
@@ -109,6 +128,12 @@ export class TS_BaseEnemy extends jsClass {
         if (!this.HealthComponent) return;
         this.HealthComponent.TakeDamage(damageAmount, damageInstigator);
         console.log(`[TS Enemy] 受到伤害: ${damageAmount}`);
+
+        // 死亡时从回合管理器注销
+        if (this.IsDead && this.IsDead()) {
+            TS_EnemyTurnManager.getInstance().unregisterEnemy(this);
+            console.log(`[TS Enemy] ${this.GetName()} 已死亡，从 EnemyTurnManager 注销`);
+        }
     }
 
     /**

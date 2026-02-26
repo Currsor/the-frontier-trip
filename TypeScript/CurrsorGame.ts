@@ -13,6 +13,7 @@ import "./Managers/UIManager";
 import "./Systems/AttackSystem";
 import "./Systems/EventSystem";
 import "./Systems/LootSystem";
+import "./Systems/TS_EnemyTurnManager";
 import "./UMG/Card/TS_Card";
 import "./UMG/Card/TS_CardAnimationSystem";
 import "./UMG/Card/TS_CardListButton";

@@ -4,6 +4,7 @@ import { gameSystemManager } from '../../../GameSystemManager';
 import { AttackSystem } from '../../../Systems/AttackSystem';
 import { EventSystem } from '../../../Systems/EventSystem';
 import { HealthBarComponent } from '../../../Components/HealthBarComponent';
+import { TS_CardMainUI } from '../../../UMG/Card/TS_CardMainUI';
 
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Player/BP_CurrsorCharacter.BP_CurrsorCharacter_C");
 const jsClass = blueprint.tojs(uclass);
@@ -43,6 +44,8 @@ export class TS_CurrsorCharacter extends jsClass {
 
     BndEvt__BP_CurrsorCharacter_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent: UE.PrimitiveComponent, OtherActor: UE.Actor, OtherComp: UE.PrimitiveComponent, OtherBodyIndex: number, bFromSweep: boolean, SweepResult: UE.HitResult): void {
         console.log(`[TS Character] 攻击判定框重叠 ${OtherActor.GetName()}`);
+        // 玩家主动攻击敌人 → 玩家先手（Ambushed）
+        TS_CardMainUI.combatInitiator = 'player';
         if (this.attackSystem) {
             this.attackSystem.processAttackHit(this, OtherActor, SweepResult);
         } else {
@@ -55,6 +58,34 @@ export class TS_CurrsorCharacter extends jsClass {
     private subscribeEvent(): void {
         EventSystem.subscribe('Defense', this.onDefenseTriggered.bind(this));
         EventSystem.subscribe('Consumption', this.onConsumptionTriggered.bind(this));
+        EventSystem.subscribe('EnemyAttackPlayer', this.onEnemyAttackPlayer.bind(this));
+    }
+
+    /**
+     * 敌人攻击玩家：先用护盾抵消伤害，再扣血
+     */
+    private onEnemyAttackPlayer(data: { enemy: any, attackType: number, damage: number }): void {
+        const damage = data.damage ?? 0;
+        console.log(`[TS Character] 受到敌人攻击，伤害: ${damage}`);
+
+        if (!this.HealthComponent) {
+            console.error('[TS Character] HealthComponent 不存在，无法扣血');
+            return;
+        }
+
+        // 先用护盾抵消伤害
+        const currentDefense = this.HealthComponent.GetDefense();
+        if (currentDefense > 0) {
+            const remainingDamage = Math.max(0, damage - currentDefense);
+            const newDefense = Math.max(0, currentDefense - damage);
+            console.log(`[TS Character] 护盾抵消: ${currentDefense - newDefense}，剩余伤害: ${remainingDamage}，剩余护盾: ${newDefense}`);
+            this.UpdateDefense(newDefense);
+            if (remainingDamage <= 0) return;
+            // 剩余伤害扣血
+            this.HealthComponent.TakeDamage(remainingDamage, data.enemy);
+        } else {
+            this.HealthComponent.TakeDamage(damage, data.enemy);
+        }
     }
 
     private onDefenseTriggered(data: any): void {

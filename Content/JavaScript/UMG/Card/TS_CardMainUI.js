@@ -12,11 +12,15 @@ const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_CardMainUI {
     static pawn;
     static PlayerState;
+    /** 战斗发起方：'player' = 玩家攻击敌人（玩家先手），'enemy' = 敌人攻击玩家（敌人先手） */
+    static combatInitiator = 'player';
     // Widget Pool管理器
     widgetPool = null;
     // 卡牌动画系统（从管理器获取）
     animationSystem = null;
     UI_ID = 'CardMainUI';
+    // 回合状态（true = 玩家回合，false = 敌人回合）
+    isPlayerTurn = true;
     // 正在拖动的卡牌信息（用于跟踪卡牌使用）
     draggingCardInfo = null;
     draggingCardWidget = null;
@@ -35,7 +39,42 @@ class TS_CardMainUI {
         EventSystem_1.EventSystem.subscribe("UpdateMana", this.onUpdateMana.bind(this));
         EventSystem_1.EventSystem.subscribe("CardDragStart", this.onCardDragStart.bind(this));
         EventSystem_1.EventSystem.subscribe("CardDragEnd", this.onCardDragEnd.bind(this));
+        EventSystem_1.EventSystem.subscribe("EnemyTurnStart", this.onEnemyTurnStart.bind(this));
+        EventSystem_1.EventSystem.subscribe("PlayerTurnStart", this.onPlayerTurnStart.bind(this));
+        // 绑定结束回合按钮
+        if (this.Widget_EndTurn && this.Widget_EndTurn.bp_btn) {
+            this.Widget_EndTurn.bp_btn.OnClicked.Add(() => {
+                this.OnEndTurnClicked();
+            });
+        }
+        // 初始化法力值显示：从HealthComponent读取MaxManaCount
+        const healthComp = TS_CardMainUI.pawn.HealthComponent;
+        if (healthComp && this.Widget_PlayerStatusIndicator) {
+            const maxMana = healthComp.GetMaxManaCount();
+            this.Widget_PlayerStatusIndicator.StatText.SetText(maxMana.toString());
+        }
         this.InitCard();
+        // 根据战斗发起方决定谁先行动
+        if (TS_CardMainUI.combatInitiator === 'player') {
+            // 玩家攻击敌人（Ambushed）：玩家先手
+            console.log('[TS_CardMainUI] 玩家先手，战斗开始');
+            this.isPlayerTurn = true;
+            this.SetAllHandCardsInteractable(true);
+            if (this.Widget_EndTurn && this.Widget_EndTurn.bp_btn) {
+                this.Widget_EndTurn.bp_btn.SetIsEnabled(true);
+            }
+        }
+        else {
+            // 敌人攻击玩家（Encounter）：敌人先手
+            console.log('[TS_CardMainUI] 敌人先手，战斗开始');
+            this.isPlayerTurn = false;
+            this.SetAllHandCardsInteractable(false);
+            if (this.Widget_EndTurn && this.Widget_EndTurn.bp_btn) {
+                this.Widget_EndTurn.bp_btn.SetIsEnabled(false);
+            }
+            // 触发敌人先手行动
+            EventSystem_1.EventSystem.emit('EnemyTurnStart', {});
+        }
     }
     Destruct() {
         // 取消事件订阅
@@ -73,8 +112,17 @@ class TS_CardMainUI {
         if (this.draggingCardInfo) {
             console.log('[TS_CardMainUI] 卡牌使用成功，加入弃牌堆:', this.draggingCardInfo.Name);
             this.discardPile.Add(this.draggingCardInfo);
+            // 从手牌数据中移除
+            for (let i = 0; i < this.handCards.Num(); i++) {
+                if (this.handCards.Get(i) === this.draggingCardInfo) {
+                    this.handCards.RemoveAt(i);
+                    break;
+                }
+            }
             // 更新弃牌堆UI
             this.UpdateDiscardPileUI();
+            // 重新排列剩余手牌
+            this.UpdateHandCardsLayoutWithAnimation();
             // 清除拖动状态
             this.draggingCardInfo = null;
             this.draggingCardWidget = null;
@@ -90,36 +138,40 @@ class TS_CardMainUI {
             return;
         }
         console.log('[TS_CardMainUI] 卡牌开始拖动:', card.cardInfo.Name);
-        // 记录原始位置、旋转、缩放和层级
+        // 先结束悬浮动画，确保记录的是标准布局位置
+        if (this.animationSystem) {
+            this.animationSystem.EndHoverAnimation(card);
+        }
+        // 使用布局计算出的标准位置作为原始位置（避免记录悬浮偏移后的位置）
+        const targetPositions = this.CalculateCardTargetPositions();
+        const standardTarget = targetPositions.get(card);
         const slot = card.Slot;
-        if (slot) {
-            card.originalPosition = slot.GetPosition();
-            card.originalRotation = card.RenderTransform.Angle;
-            card.originalScale = card.RenderTransform.Scale;
-            card.originalZOrder = slot.GetZOrder();
-            console.log('[TS_CardMainUI] 记录原始状态:', {
+        if (slot && standardTarget) {
+            card.originalPosition = standardTarget.pos;
+            card.originalRotation = standardTarget.rotation;
+            card.originalScale = standardTarget.scale;
+            card.originalZOrder = standardTarget.zOrder;
+            console.log('[TS_CardMainUI] 记录标准布局状态:', {
                 position: card.originalPosition,
                 rotation: card.originalRotation,
                 scale: card.originalScale,
                 zOrder: card.originalZOrder
             });
         }
+        else if (slot) {
+            // 回退：直接读取当前slot位置
+            card.originalPosition = slot.GetPosition();
+            card.originalRotation = card.RenderTransform.Angle;
+            card.originalScale = card.RenderTransform.Scale;
+            card.originalZOrder = slot.GetZOrder();
+        }
         // 记录正在拖动的卡牌信息
         this.draggingCardInfo = card.cardInfo;
         this.draggingCardWidget = card;
-        // 从手牌数据中移除
-        for (let i = 0; i < this.handCards.Num(); i++) {
-            if (this.handCards.Get(i) === card.cardInfo) {
-                this.handCards.RemoveAt(i);
-                break;
-            }
-        }
-        // 归还Widget到对象池
-        if (this.widgetPool && this.widgetPool.IsInitialized()) {
-            this.widgetPool.Release(card);
-            this.handCardWidgets.Remove(card);
-        }
-        // 更新手牌布局
+        // 隐藏原始卡牌（拖动时显示拖动视觉Widget，原始卡牌隐藏）
+        card.SetVisibility(UE.ESlateVisibility.Hidden);
+        // 从手牌Widget映射中临时移除，使剩余手牌重新排列
+        this.handCardWidgets.Remove(card);
         this.UpdateHandCardsLayoutWithAnimation();
     }
     /**
@@ -129,39 +181,141 @@ class TS_CardMainUI {
         const card = data.card;
         const success = data.success;
         console.log('[TS_CardMainUI] 卡牌拖动结束:', card?.cardInfo?.Name, '成功:', success);
-        // 如果拖动未成功（没有放到Widget_PlayingCardArea），还原卡牌到原始位置
-        if (!success && this.draggingCardInfo && card) {
+        if (success) {
+            // 拖动成功：将卡牌归还到对象池（卡牌已被使用）
+            if (card && this.widgetPool && this.widgetPool.IsInitialized()) {
+                this.widgetPool.Release(card);
+            }
+            // 弃牌逻辑等待UpdateMana事件处理
+        }
+        else if (!success && card) {
+            // 拖动失败：还原卡牌到原始位置
             console.log('[TS_CardMainUI] 卡牌拖动失败，还原到原始位置');
-            // 将卡牌放回手牌数据
-            this.handCards.Add(this.draggingCardInfo);
+            // 将卡牌重新加回手牌Widget映射
+            if (this.draggingCardInfo) {
+                this.handCardWidgets.Add(card, this.draggingCardInfo);
+            }
+            // 重新排列所有手牌（包括恢复的卡牌）
+            this.UpdateHandCardsLayoutWithAnimation();
             // 还原卡牌到原始位置
             this.RestoreCardToOriginalPosition(card);
             // 清除拖动状态
             this.draggingCardInfo = null;
             this.draggingCardWidget = null;
         }
-        // 如果成功，等待UpdateMana事件来处理弃牌
+    }
+    /**
+     * 结束回合按钮点击事件
+     * 弃掉多余手牌（随机选取），保持手牌数 = INITIAL_DRAW_COUNT
+     */
+    OnEndTurnClicked() {
+        console.log('[TS_CardMainUI] 结束回合，轮到敌人行动');
+        // 禁用结束回合按钮，防止重复点击
+        if (this.Widget_EndTurn && this.Widget_EndTurn.bp_btn) {
+            this.Widget_EndTurn.bp_btn.SetIsEnabled(false);
+        }
+        // 弃掉多余手牌，保持手牌数 = INITIAL_DRAW_COUNT
+        this.DiscardExcessCards();
+        EventSystem_1.EventSystem.emit("EndTurn", {});
+    }
+    /**
+     * 弃掉多余手牌，随机选取，保持手牌数 <= INITIAL_DRAW_COUNT
+     */
+    DiscardExcessCards() {
+        const targetCount = GameConfig_1.GameConfig.CARD_CONFIG.INITIAL_DRAW_COUNT;
+        // 收集所有有效的Widget列表（以Widget为准，而非handCards数据）
+        const allWidgets = [];
+        for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
+            if (!this.handCardWidgets.IsValidIndex(i))
+                continue;
+            const widget = this.handCardWidgets.GetKey(i);
+            if (widget)
+                allWidgets.push(widget);
+        }
+        const currentCount = allWidgets.length;
+        const excessCount = currentCount - targetCount;
+        if (excessCount <= 0) {
+            console.log(`[TS_CardMainUI] 手牌数(${currentCount}) <= 目标数(${targetCount})，无需弃牌`);
+            return;
+        }
+        console.log(`[TS_CardMainUI] 弃掉多余手牌: ${excessCount} 张（当前${currentCount}张 → 保留${targetCount}张）`);
+        // Fisher-Yates 随机打乱，取前 excessCount 个弃掉
+        for (let i = allWidgets.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allWidgets[i], allWidgets[j]] = [allWidgets[j], allWidgets[i]];
+        }
+        const toDiscard = allWidgets.slice(0, excessCount);
+        for (const widget of toDiscard) {
+            const cardInfo = this.handCardWidgets.Get(widget);
+            if (!cardInfo)
+                continue;
+            console.log(`[TS_CardMainUI] 随机弃牌: ${cardInfo.Name}`);
+            // 从手牌数据中移除
+            for (let i = 0; i < this.handCards.Num(); i++) {
+                if (this.handCards.Get(i) === cardInfo || this.handCards.Get(i)?.Name === cardInfo.Name) {
+                    this.handCards.RemoveAt(i);
+                    break;
+                }
+            }
+            // 添加到弃牌堆
+            this.discardPile.Add(cardInfo);
+            // 归还Widget到对象池
+            if (this.widgetPool && this.widgetPool.IsInitialized()) {
+                this.widgetPool.Release(widget);
+            }
+            // 从映射表中移除
+            this.handCardWidgets.Remove(widget);
+        }
+        // 更新UI
+        this.UpdateDiscardPileUI();
+        this.UpdateHandCardsLayoutWithAnimation();
+    }
+    /**
+     * 敌人回合开始：禁用玩家手牌交互
+     */
+    onEnemyTurnStart(_data) {
+        console.log('[TS_CardMainUI] 敌人回合开始，禁用玩家操作');
+        // 禁用卡牌拖拽交互
+        this.isPlayerTurn = false;
+        this.SetAllHandCardsInteractable(false);
+    }
+    /**
+     * 玩家回合开始：恢复玩家手牌交互，补充法力值，摸牌
+     */
+    onPlayerTurnStart(_data) {
+        console.log('[TS_CardMainUI] 玩家回合开始，恢复玩家操作');
+        // 恢复卡牌拖拽交互
+        this.isPlayerTurn = true;
+        this.SetAllHandCardsInteractable(true);
+        // 恢复结束回合按钮
+        if (this.Widget_EndTurn && this.Widget_EndTurn.bp_btn) {
+            this.Widget_EndTurn.bp_btn.SetIsEnabled(true);
+        }
+        // 摸牌（每回合开始摸1张）
+        this.AddCard(1);
+    }
+    /**
+     * 设置所有手牌的可交互状态
+     */
+    SetAllHandCardsInteractable(interactable) {
+        for (let i = 0; i < this.handCardWidgets.GetMaxIndex(); i++) {
+            if (!this.handCardWidgets.IsValidIndex(i))
+                continue;
+            const widget = this.handCardWidgets.GetKey(i);
+            if (widget) {
+                widget.canDrag = interactable;
+            }
+        }
     }
     /**
      * 还原卡牌到原始位置（使用动画）
      */
     RestoreCardToOriginalPosition(card) {
+        // 恢复卡牌可见性
+        card.SetVisibility(UE.ESlateVisibility.Visible);
         if (!card.originalPosition) {
             console.warn('[TS_CardMainUI] 无法还原卡牌：未记录原始位置');
-            // 如果没有记录原始位置，重新创建Widget
-            if (card.cardInfo) {
-                this.CreateHandCardWidget(card.cardInfo);
-            }
             return;
-        }
-        // 将卡牌重新添加到手牌容器
-        const container = this.HandCardsContainer;
-        if (container) {
-            container.AddChildToCanvas(card);
-        }
-        // 重新添加到handCardWidgets映射
-        if (card.cardInfo) {
-            this.handCardWidgets.Add(card, card.cardInfo);
         }
         // 使用动画系统还原到原始位置
         if (this.animationSystem && card.originalPosition) {
@@ -177,10 +331,22 @@ class TS_CardMainUI {
             // 启动还原动画
             this.animationSystem.StartRepositionAnimation(card, card.originalPosition, card.originalRotation, card.originalScale || new UE.Vector2D(GameConfig_1.GameConfig.CARD_CONFIG.CARD_SCALE, GameConfig_1.GameConfig.CARD_CONFIG.CARD_SCALE), 0.3 // 还原动画时长
             );
-            // 清除原始位置记录
-            card.originalPosition = null;
-            card.originalScale = null;
         }
+        else {
+            // 没有动画系统，直接设置位置
+            const slot = card.Slot;
+            if (slot) {
+                slot.SetPosition(card.originalPosition);
+                slot.SetZOrder(card.originalZOrder);
+            }
+            card.SetRenderTransformAngle(card.originalRotation);
+            if (card.originalScale) {
+                card.SetRenderScale(card.originalScale);
+            }
+        }
+        // 清除原始位置记录
+        card.originalPosition = null;
+        card.originalScale = null;
     }
     // 抽取手牌
     AddCard(numCards = 1) {
@@ -192,8 +358,15 @@ class TS_CardMainUI {
                 return;
             }
         }
-        if (this.drawPile.Num() === 0)
-            return;
+        // 抽牌堆为空时，将弃牌堆洗回抽牌堆
+        if (this.drawPile.Num() === 0) {
+            if (this.discardPile.Num() === 0) {
+                console.warn('[TS_CardMainUI] 抽牌堆和弃牌堆均为空，无法摸牌');
+                return;
+            }
+            console.log('[TS_CardMainUI] 抽牌堆已空，将弃牌堆洗回抽牌堆');
+            this.ShuffleDiscardPile();
+        }
         // 检查手牌上限
         const maxCards = GameConfig_1.GameConfig.CARD_CONFIG.MAX_HAND_CARDS;
         const currentHandSize = this.handCards.Num();
@@ -244,6 +417,8 @@ class TS_CardMainUI {
         }
         // 记录映射关系（键为Widget，值为CardInfo）
         this.handCardWidgets.Add(cardWidget, cardInfo);
+        // 同步当前回合状态
+        cardWidget.canDrag = this.isPlayerTurn;
         // 计算新卡牌的目标位置（此时handCardWidgets已包含新卡牌）
         const targetPositions = this.CalculateCardTargetPositions();
         const target = targetPositions.get(cardWidget);
@@ -485,8 +660,8 @@ class TS_CardMainUI {
         this.UpdateDiscardPileUI();
         // 移除并回收Widget
         this.RemoveHandCardWidget(cardInfo);
-        // 更新布局
-        this.UpdateHandCardsLayout();
+        // 更新布局（带动画）
+        this.UpdateHandCardsLayoutWithAnimation();
     }
     /**
      * 通过卡牌信息弃牌
@@ -517,7 +692,8 @@ class TS_CardMainUI {
             if (this.handCardWidgets.IsValidIndex(i)) {
                 const widget = this.handCardWidgets.GetKey(i);
                 const info = this.handCardWidgets.Get(widget);
-                if (info === cardInfo) {
+                // 优先用引用比较，失败则用Name字段比较
+                if (info === cardInfo || (info && cardInfo && info.Name === cardInfo.Name)) {
                     return widget;
                 }
             }

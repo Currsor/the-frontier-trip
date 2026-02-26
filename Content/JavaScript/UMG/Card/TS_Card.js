@@ -13,6 +13,8 @@ class TS_Card extends jsClass {
     cardInfo = null;
     // 拖动状态
     isDragging = false;
+    // 是否可拖拽（由回合系统控制）
+    canDrag = true;
     // 拖动前的原始状态（用于还原）
     originalPosition = null;
     originalRotation = 0;
@@ -57,6 +59,11 @@ class TS_Card extends jsClass {
      * 拖动检测事件
      */
     OnDragDetected(MyGeometry, PointerEvent, Operation) {
+        // 非玩家回合禁止拖拽
+        if (!this.canDrag) {
+            console.log('[TS_Card.OnDragDetected] 非玩家回合，禁止拖拽');
+            return;
+        }
         console.log('[TS_Card.OnDragDetected] 拖动检测事件触发');
         this.isDragging = true;
         // 通知主UI卡牌开始拖动

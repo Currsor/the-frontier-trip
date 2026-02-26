@@ -5,6 +5,8 @@ const UE = require("ue");
 const puerts_1 = require("puerts");
 const EventSystem_1 = require("../../../Systems/EventSystem");
 const HealthBarComponent_1 = require("../../../Components/HealthBarComponent");
+const TS_EnemyTurnManager_1 = require("../../../Systems/TS_EnemyTurnManager");
+const TS_CardMainUI_1 = require("../../../UMG/Card/TS_CardMainUI");
 const uclass = UE.Class.Load("/Game/Blueprints/Character/Enemy/Base/BP_BaseEnemy.BP_BaseEnemy_C");
 const jsClass = puerts_1.blueprint.tojs(uclass);
 class TS_BaseEnemy extends jsClass {
@@ -18,6 +20,21 @@ class TS_BaseEnemy extends jsClass {
         this.initializeHealthBar();
         // 订阅攻击广播
         this.subscribeToAttackEvent();
+        // 注册到敌人回合管理器
+        TS_EnemyTurnManager_1.TS_EnemyTurnManager.getInstance().registerEnemy(this);
+        console.log(`[TS Enemy] ${this.GetName()} 已注册到 EnemyTurnManager`);
+    }
+    /**
+     * 敌人攻击判定框重叠（敌人主动攻击玩家 → 敌人先手 Encounter）
+     */
+    BndEvt__BP_BaseEnemy_AttackHitbox_K2Node_ComponentBoundEvent_0_ComponentBeginOverlapSignature__DelegateSignature(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult) {
+        const otherName = OtherActor.GetName ? OtherActor.GetName() : '';
+        // 判断是否碰到玩家
+        if (otherName.toLowerCase().includes('currsor') || OtherActor.IsA?.('CurrsorCharacter')) {
+            console.log(`[TS Enemy] ${this.GetName()} 主动攻击玩家，敌人先手（Encounter）`);
+            // 敌人主动攻击玩家 → 敌人先手
+            TS_CardMainUI_1.TS_CardMainUI.combatInitiator = 'enemy';
+        }
     }
     /**
      * 初始化血条组件
@@ -95,6 +112,11 @@ class TS_BaseEnemy extends jsClass {
             return;
         this.HealthComponent.TakeDamage(damageAmount, damageInstigator);
         console.log(`[TS Enemy] 受到伤害: ${damageAmount}`);
+        // 死亡时从回合管理器注销
+        if (this.IsDead && this.IsDead()) {
+            TS_EnemyTurnManager_1.TS_EnemyTurnManager.getInstance().unregisterEnemy(this);
+            console.log(`[TS Enemy] ${this.GetName()} 已死亡，从 EnemyTurnManager 注销`);
+        }
     }
     /**
      * 更新防御力（可供外部调用）

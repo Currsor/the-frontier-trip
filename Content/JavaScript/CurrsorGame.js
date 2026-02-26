@@ -15,6 +15,7 @@ require("./Managers/UIManager");
 require("./Systems/AttackSystem");
 require("./Systems/EventSystem");
 require("./Systems/LootSystem");
+require("./Systems/TS_EnemyTurnManager");
 require("./UMG/Card/TS_Card");
 require("./UMG/Card/TS_CardAnimationSystem");
 require("./UMG/Card/TS_CardListButton");

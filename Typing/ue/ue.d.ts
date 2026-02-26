@@ -51936,45 +51936,246 @@ declare module "ue" {
         __tid_BaseSystemComponent_0__: boolean;
     }
     
-    class BaseState extends UE.PlayerState {
+    class SpringArmComponent extends UE.SceneComponent {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bIsDashing: boolean;
-        bIsAttacking: boolean;
-        bIsJumping: boolean;
-        bIsWalk: boolean;
-        CurrentState: UE.ECharacterState;
-        WalkThreshold: number;
-        RunThreshold: number;
-        RunAttackThreshold: number;
+        TargetArmLength: number;
+        SocketOffset: UE.Vector;
+        TargetOffset: UE.Vector;
+        ProbeSize: number;
+        ProbeChannel: UE.ECollisionChannel;
+        bDoCollisionTest: boolean;
+        bUsePawnControlRotation: boolean;
+        bInheritPitch: boolean;
+        bInheritYaw: boolean;
+        bInheritRoll: boolean;
+        bEnableCameraLag: boolean;
+        bEnableCameraRotationLag: boolean;
+        bUseCameraLagSubstepping: boolean;
+        bDrawDebugLagMarkers: boolean;
+        CameraLagSpeed: number;
+        CameraRotationLagSpeed: number;
+        CameraLagMaxTimeStep: number;
+        CameraLagMaxDistance: number;
+        bClampToMaxPhysicsDeltaTime: boolean;
         /*
-         *状态变更核心逻辑
+         *Get the target rotation we inherit, used as the base target for the boom rotation.
+         *This is derived from attachment to our parent and considering the UsePawnControlRotation and absolute rotation flags.
          */
-        ChangeState(NewState: UE.ECharacterState) : void;
+        GetTargetRotation() : UE.Rotator;
         /*
-         *获取当前状态
+         *Get the position where the camera should be without applying the Collision Test displacement
          */
-        GetCurrentState() : UE.ECharacterState;
-        IsDead() : boolean;
-        IsFalling() : boolean;
-        IsHurt() : boolean;
+        GetUnfixedCameraPosition() : UE.Vector;
         /*
-         *状态更新
+         *Is the Collision Test displacement being applied?
          */
-        UpdateState() : void;
+        IsCollisionFixApplied() : boolean;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BaseState;
-        static Load(InName: string): BaseState;
+        static Find(OrigInName: string, Outer?: Object): SpringArmComponent;
+        static Load(InName: string): SpringArmComponent;
     
-        __tid_BaseState_0__: boolean;
+        __tid_SpringArmComponent_0__: boolean;
     }
     
-    class BaseEnemy extends UE.PaperZDCharacter {
+    class CurrsorCameraComponent extends UE.CameraComponent {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnEnemyDeath: $MulticastDelegate<(DeadEnemy: $Nullable<UE.BaseEnemy>) => void>;
+        bWasInCollision: boolean;
+        /*
+         *更新景深效果
+         *@param FocalDistance 焦距
+         *@param bIsCollision 是否处于碰撞状态
+         *@param TargetArmLength 目标臂长（弹簧臂的原始长度）
+         */
+        UpdateDOF(FocalDistance: number, bIsCollision: boolean, TargetArmLength: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): CurrsorCameraComponent;
+        static Load(InName: string): CurrsorCameraComponent;
+    
+        __tid_CurrsorCameraComponent_0__: boolean;
+    }
+    
+    class StateTransitionRule {
+        constructor();
+        constructor(FromState: UE.ECharacterState, ToState: UE.ECharacterState, bIsAllowed: boolean, MinDuration: number);
+        FromState: UE.ECharacterState;
+        ToState: UE.ECharacterState;
+        bIsAllowed: boolean;
+        MinDuration: number;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_StateTransitionRule_0__: boolean;
+    }
+    
+    class StateManagerComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnStateChanged: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, OldState: UE.ECharacterState) => void>;
+        OnStateTransitionFailed: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, AttemptedState: UE.ECharacterState) => void>;
+        ActorStates: TMap<TWeakObjectPtr<UE.Actor>, UE.ActorStateData>;
+        StatePriorities: TMap<UE.ECharacterState, number>;
+        TransitionRules: TArray<UE.StateTransitionRule>;
+        bEnableDebugLogging: boolean;
+        bEnableStateTicking: boolean;
+        DefaultMinStateDuration: number;
+        /*
+         *转换规则
+         */
+        AddTransitionRule(Rule: UE.StateTransitionRule) : void;
+        CanTransitionTo(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState) : boolean;
+        /*
+         *状态管理
+         */
+        ChangeState(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, bForceChange?: boolean /* = false */) : boolean;
+        ClearTransitionRules() : void;
+        GetCurrentState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
+        GetManagedActorCount() : number;
+        GetPreviousState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
+        /*
+         *状态持续时间
+         */
+        GetStateElapsedTime(Actor: $Nullable<UE.Actor>) : number;
+        /*
+         *状态优先级
+         */
+        GetStatePriority(State: UE.ECharacterState) : number;
+        HasStateMinDurationPassed(Actor: $Nullable<UE.Actor>) : boolean;
+        IsInAnyState(Actor: $Nullable<UE.Actor>, States: TArray<UE.ECharacterState>) : boolean;
+        /*
+         *状态查询
+         */
+        IsInState(Actor: $Nullable<UE.Actor>, State: UE.ECharacterState) : boolean;
+        RemoveTransitionRule(FromState: UE.ECharacterState, ToState: UE.ECharacterState) : void;
+        SetStatePriority(State: UE.ECharacterState, Priority: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): StateManagerComponent;
+        static Load(InName: string): StateManagerComponent;
+    
+        __tid_StateManagerComponent_0__: boolean;
+    }
+    
+    class TableRowBase {
+        constructor();
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_TableRowBase_0__: boolean;
+    }
+    
+    class LootItem extends UE.TableRowBase {
+        constructor();
+        constructor(ItemName: string, ItemID: number, DropChance: number, MinQuantity: number, MaxQuantity: number, Rarity: string);
+        ItemName: string;
+        ItemID: number;
+        DropChance: number;
+        MinQuantity: number;
+        MaxQuantity: number;
+        Rarity: string;
+        /**
+         * @deprecated use StaticStruct instead.
+         */
+        static StaticClass(): ScriptStruct;
+        static StaticStruct(): ScriptStruct;
+        __tid_LootItem_0__: boolean;
+    }
+    
+    class LootSystemComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnLootGenerated: $MulticastDelegate<(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) => void>;
+        LootTableIndices: TMap<string, number>;
+        AllLootItems: TArray<UE.LootItem>;
+        LootTableStartIndices: TArray<number>;
+        LootTableLengths: TArray<number>;
+        GlobalDropRateMultiplier: number;
+        bEnableDebugLogging: boolean;
+        TotalDropsGenerated: number;
+        RecentDropHistory: TArray<string>;
+        AddLootTable(TableName: string, Items: TArray<UE.LootItem>) : boolean;
+        ClearDropHistory() : void;
+        /*
+         *掉落处理
+         */
+        GenerateLoot(Source: $Nullable<UE.Actor>, LootTableName?: string /* = "Default" */) : TArray<UE.LootItem>;
+        GetGlobalDropRateMultiplier() : number;
+        /*
+         *配置
+         */
+        SetGlobalDropRateMultiplier(Multiplier: number) : void;
+        SpawnLoot(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LootSystemComponent;
+        static Load(InName: string): LootSystemComponent;
+    
+        __tid_LootSystemComponent_0__: boolean;
+    }
+    
+    class GameLogicManagerComponent extends UE.BaseSystemComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bEnableDebugLogging: boolean;
+        /*
+         *游戏逻辑处理
+         */
+        ProcessGameEvent(EventType: string, EventData: TMap<string, string>) : boolean;
+        UpdateGameState(DeltaTime: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameLogicManagerComponent;
+        static Load(InName: string): GameLogicManagerComponent;
+    
+        __tid_GameLogicManagerComponent_0__: boolean;
+    }
+    
+    class GameSystemManager extends UE.Object {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnGameSystemsInitialized: $MulticastDelegate<(Timestamp: number) => void>;
+        bIsInitialized: boolean;
+        World: TWeakObjectPtr<UE.World>;
+        AttackSystem: UE.AttackSystemComponent;
+        StateManager: UE.StateManagerComponent;
+        LootSystem: UE.LootSystemComponent;
+        GameLogicManager: UE.GameLogicManagerComponent;
+        DebugPrintStatus() : void;
+        /*
+         *系统访问
+         */
+        GetAttackSystem() : UE.AttackSystemComponent;
+        GetGameLogicManager() : UE.GameLogicManagerComponent;
+        GetLootSystem() : UE.LootSystemComponent;
+        GetStateManager() : UE.StateManagerComponent;
+        /*
+         *系统生命周期管理
+         */
+        Initialize(InWorld: $Nullable<UE.World>) : void;
+        /*
+         *状态查询
+         */
+        IsInitialized() : boolean;
+        ResetAllSystems() : void;
+        Shutdown() : void;
+        /*
+         *单例访问
+         */
+        static GetInstance(World?: UE.World /* = None */) : UE.GameSystemManager;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): GameSystemManager;
+        static Load(InName: string): GameSystemManager;
+    
+        __tid_GameSystemManager_0__: boolean;
+    }
+    
+    class CurrsorCharacter extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        SpringArmComponent: UE.SpringArmComponent;
+        CameraComponent: UE.CurrsorCameraComponent;
+        AttackHitbox: UE.BoxComponent;
         HealthComponent: UE.LIVECODING_HealthComponent_0;
-        CurrentState: UE.BaseState;
-        SelectedAreaBox: UE.AreaCollisionBox;
-        AreaID: number;
+        GameSystemManager: UE.GameSystemManager;
+        AttackSystem: UE.AttackSystemComponent;
+        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
+        LastArmLength: number;
+        LastCollisionState: boolean;
         /*
          *对实现此接口的对象施加伤害 __ 伤害值
          *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
@@ -51982,51 +52183,43 @@ declare module "ue" {
          */
         ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
         /*
-         *区域ID相关功能
+         *区域ID相关方法（通过GameState管理）
          */
-        GetAreaID() : number;
+        GetCurrentAreaID() : number;
         /*
-         *获取生命值组件
+         *PlayerState相关方法
          */
-        GetHealthComponent() : UE.LIVECODING_HealthComponent_0;
+        GetCurrsorPlayerState() : UE.PlayerState;
         /*
-         *AreaCollisionBox选择相关功能
+         *生命值相关方法
          */
-        GetSelectedAreaBox() : UE.AreaCollisionBox;
+        GetHealth() : number;
         /*
-         *获取状态组件
+         *Mana
          */
-        GetStateComponent() : UE.BaseState;
-        HandleDeath() : void;
-        HasAreaID() : boolean;
-        /*
-         *检查是否有选中的区域盒子
-         */
-        HasSelectedAreaBox() : boolean;
-        /*
-         *检查是否死亡
-         */
+        GetMana() : number;
+        GetMaxHealth() : number;
+        GetMaxMana() : number;
+        HasValidAreaID() : boolean;
         IsDead() : boolean;
-        OnDeathBP() : void;
+        IsRotationAdjustmentEnabled() : boolean;
+        ResetRotationAdjustment() : void;
+        SetCurrentAreaID(NewAreaID: number) : void;
         /*
-         *死亡处理
+         *旋转调整控制方法
          */
-        OnHealthDepleted(DeadActor: $Nullable<UE.Actor>) : void;
+        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
+        SwitchToBattleCamera(CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
         /*
-         *受伤处理
+         *相机切换方法
          */
-        OnTakeDamageBP(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>) : void;
-        /*
-         *从选中的AreaCollisionBox读取AreaID
-         */
-        ReadAreaIDFromSelectedBox() : void;
-        SetAreaID(InAreaID: number) : void;
-        SetSelectedAreaBox(InAreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        SwitchToPlayerCamera() : void;
+        UseMana(Amount: number) : void;
         static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): BaseEnemy;
-        static Load(InName: string): BaseEnemy;
+        static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
+        static Load(InName: string): CurrsorCharacter;
     
-        __tid_BaseEnemy_0__: boolean;
+        __tid_CurrsorCharacter_0__: boolean;
     }
     
     class GameState extends UE.GameStateBase {
@@ -52076,23 +52269,40 @@ declare module "ue" {
         CombatState: UE.ECombatState;
         LastPlayerCombatPosition: UE.Vector;
         CurrentPlayerHealth: number;
+        TotalPlayerCount: number;
+        PlayerDeathCount: number;
         LastEnemyCombatPosition: UE.Vector;
         CurrentEnemyHealth: number;
+        TotalEnemyCount: number;
+        EnemyDeathCount: number;
+        AreAllEnemiesDead() : boolean;
+        AreAllPlayersDead() : boolean;
+        BroadcastCombatStateChange(CombatEventType: string) : void;
         GetAreaManager() : UE.CurrsorAreaManager;
         GetCombatState() : UE.ECombatState;
         GetCurrentAreaID() : number;
         GetCurrentEnemyHealth() : number;
         GetCurrentPlayerHealth() : number;
+        GetEnemyDeathCount() : number;
         GetLastEnemyCombatPosition() : UE.Vector;
         GetLastPlayerCombatPosition() : UE.Vector;
         GetNameFromID(InID: number) : string;
+        GetPlayerDeathCount() : number;
+        GetTotalEnemyCount() : number;
+        GetTotalPlayerCount() : number;
+        IncrementEnemyDeathCount() : void;
+        IncrementPlayerDeathCount() : void;
         SetAreaManager(InAreaManager: $Nullable<UE.CurrsorAreaManager>) : void;
         SetCombatState(InCombatState: UE.ECombatState) : void;
         SetCurrentAreaID(InCurrentAreaID: number) : void;
         SetCurrentEnemyHealth(InCurrentEnemyHealth: number) : void;
         SetCurrentPlayerHealth(InCurrentPlayerHealth: number) : void;
+        SetEnemyDeathCount(InEnemyDeathCount: number) : void;
         SetLastEnemyCombatPosition(InLastEnemyCombatPosition: UE.Vector) : void;
         SetLastPlayerCombatPosition(InLastPlayerCombatPosition: UE.Vector) : void;
+        SetPlayerDeathCount(InPlayerDeathCount: number) : void;
+        SetTotalEnemyCount(InTotalEnemyCount: number) : void;
+        SetTotalPlayerCount(InTotalPlayerCount: number) : void;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): CurrsorGameState;
         static Load(InName: string): CurrsorGameState;
@@ -52111,7 +52321,7 @@ declare module "ue" {
          *退出战斗区域
          *@param Player 玩家角色
          */
-        ExitBattleArea(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : void;
+        ExitBattleArea(Player: $Nullable<UE.CurrsorCharacter>) : void;
         /*
          *获取区域碰撞盒
          *@param AreaID 区域ID
@@ -52129,46 +52339,46 @@ declare module "ue" {
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        MoveCameraToPosition(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        MoveCameraToPosition(Player: $Nullable<UE.CurrsorCharacter>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *处理战斗区域传送
          *@param Player 玩家角色
          *@param Enemy 被攻击的敌人
          *@return 是否成功执行传送
          */
-        ProcessBattleAreaTeleport(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        ProcessBattleAreaTeleport(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : boolean;
         /*
          *切换到战斗区域相机
          *@param Player 玩家角色
          *@param CameraBillboard 相机Billboard组件，用于查找子相机
          */
-        SwitchToBattleCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
+        SwitchToBattleCamera(Player: $Nullable<UE.CurrsorCharacter>, CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
         /*
          *切换回玩家相机
          *@param Player 玩家角色
          */
-        SwitchToPlayerCamera(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : void;
+        SwitchToPlayerCamera(Player: $Nullable<UE.CurrsorCharacter>) : void;
         /*
          *传送敌人到指定位置
          *@param Enemy 敌人角色
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        TeleportEnemy(Enemy: $Nullable<UE.BaseEnemy>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        TeleportEnemy(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *传送玩家到指定位置
          *@param Player 玩家角色
          *@param TargetLocation 目标位置
          *@param TargetRotation 目标旋转
          */
-        TeleportPlayer(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
+        TeleportPlayer(Player: $Nullable<UE.CurrsorCharacter>, TargetLocation: UE.Vector, TargetRotation: UE.Rotator) : void;
         /*
          *验证传送条件
          *@param Player 玩家角色
          *@param Enemy 敌人角色
          *@return 是否满足传送条件
          */
-        ValidateTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        ValidateTeleportConditions(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : boolean;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaTeleportComponent;
         static Load(InName: string): BattleAreaTeleportComponent;
@@ -56952,6 +57162,161 @@ declare module "ue" {
         __tid_BasedPosition_0__: boolean;
     }
     
+    class HealthComponent extends UE.ActorComponent {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnHealthChanged: $MulticastDelegate<(CurrentHealth: number, MaxHealth: number, DamageAmount: number) => void>;
+        OnDeath: $MulticastDelegate<(DeadActor: $Nullable<UE.Actor>) => void>;
+        MaxHealth: number;
+        CurrentHealth: number;
+        Defense: number;
+        bCanTakeDamage: boolean;
+        bAutoRespawn: boolean;
+        RespawnDelay: number;
+        MaxManaCount: number;
+        ManaCount: number;
+        CalculateDamageReduction(IncomingDamage: number) : number;
+        GetCurrentHealth() : number;
+        GetDefense() : number;
+        GetHealthPercentage() : number;
+        GetManaCount() : number;
+        GetMaxHealth() : number;
+        /*
+         *Mana
+         */
+        GetMaxManaCount() : number;
+        Heal(HealAmount: number) : void;
+        IsDead() : boolean;
+        IsFullHealth() : boolean;
+        SetCurrentHealth(NewHealth: number) : void;
+        /*
+         *防御值管理（护盾机制：受到伤害时优先扣除防御值）
+         */
+        SetDefense(NewDefense: number) : void;
+        /*
+         *生命值管理
+         */
+        SetMaxHealth(NewMaxHealth: number) : void;
+        /*
+         *伤害处理
+         */
+        TakeDamage(DamageAmount: number, DamageInstigator?: UE.Actor /* = None */) : void;
+        UseMana(ManaCost: number) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): HealthComponent;
+        static Load(InName: string): HealthComponent;
+    
+        __tid_HealthComponent_0__: boolean;
+    }
+    
+    class BaseState extends UE.PlayerState {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        bIsDashing: boolean;
+        bIsAttacking: boolean;
+        bIsJumping: boolean;
+        bIsWalk: boolean;
+        CurrentState: UE.ECharacterState;
+        WalkThreshold: number;
+        RunThreshold: number;
+        RunAttackThreshold: number;
+        /*
+         *状态变更核心逻辑
+         */
+        ChangeState(NewState: UE.ECharacterState) : void;
+        /*
+         *获取当前状态
+         */
+        GetCurrentState() : UE.ECharacterState;
+        IsDead() : boolean;
+        IsFalling() : boolean;
+        IsHurt() : boolean;
+        /*
+         *状态更新
+         */
+        UpdateState() : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BaseState;
+        static Load(InName: string): BaseState;
+    
+        __tid_BaseState_0__: boolean;
+    }
+    
+    enum EEnemyAttackType { NormalAttack, HeavyAttack, Defend, SkillAttack, EEnemyAttackType_MAX, __typeKeyDoNoAccess}
+    class BaseEnemy extends UE.PaperZDCharacter {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        OnEnemyDeath: $MulticastDelegate<(DeadEnemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) => void>;
+        HealthComponent: UE.HealthComponent;
+        CurrentState: UE.BaseState;
+        SelectedAreaBox: UE.AreaCollisionBox;
+        AreaID: number;
+        TotalEnemyCount: number;
+        AttackType: UE.EEnemyAttackType;
+        AttackDamage: number;
+        /*
+         *对实现此接口的对象施加伤害 __ 伤害值
+         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
+         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
+         */
+        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
+        /*
+         *区域ID相关功能
+         */
+        GetAreaID() : number;
+        /*
+         *获取攻击伤害值
+         */
+        GetAttackDamage() : number;
+        /*
+         *获取攻击方式
+         */
+        GetAttackType() : UE.EEnemyAttackType;
+        /*
+         *获取生命值组件
+         */
+        GetHealthComponent() : UE.HealthComponent;
+        /*
+         *AreaCollisionBox选择相关功能
+         */
+        GetSelectedAreaBox() : UE.AreaCollisionBox;
+        /*
+         *获取状态组件
+         */
+        GetStateComponent() : UE.BaseState;
+        /*
+         *获取敌人总数
+         */
+        GetTotalEnemyCount() : number;
+        HandleDeath() : void;
+        HasAreaID() : boolean;
+        /*
+         *检查是否有选中的区域盒子
+         */
+        HasSelectedAreaBox() : boolean;
+        /*
+         *检查是否死亡
+         */
+        IsDead() : boolean;
+        OnDeathBP() : void;
+        /*
+         *死亡处理
+         */
+        OnHealthDepleted(DeadActor: $Nullable<UE.Actor>) : void;
+        /*
+         *受伤处理
+         */
+        OnTakeDamageBP(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>) : void;
+        /*
+         *从选中的AreaCollisionBox读取AreaID
+         */
+        ReadAreaIDFromSelectedBox() : void;
+        SetAreaID(InAreaID: number) : void;
+        SetSelectedAreaBox(InAreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): BaseEnemy;
+        static Load(InName: string): BaseEnemy;
+    
+        __tid_BaseEnemy_0__: boolean;
+    }
+    
     class BaseIteratePackagesCommandlet extends UE.Commandlet {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         static StaticClass(): Class;
@@ -57348,7 +57713,7 @@ declare module "ue" {
     
     class BattleAreaManager extends UE.GameInstanceSubsystem {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        EnemyAreaMap: TMap<TWeakObjectPtr<UE.BaseEnemy>, number>;
+        EnemyAreaMap: TMap<TWeakObjectPtr<UE.LIVECODING_BaseEnemy_2>, number>;
         /*
          *批量设置区域内的敌人
          *@param AreaBox 区域碰撞盒
@@ -57359,38 +57724,38 @@ declare module "ue" {
          *清除敌人的区域ID
          *@param Enemy 敌人角色
          */
-        ClearEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : void;
+        ClearEnemyAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : void;
         /*
          *检查敌人是否有区域ID
          *@param Enemy 敌人角色
          *@return 是否有区域ID
          */
-        DoesEnemyHaveAreaID(Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        DoesEnemyHaveAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : boolean;
         /*
          *查找区域内的敌人
          *@param CenterLocation 中心位置
          *@param SearchRadius 搜索半径
          *@return 找到的敌人数组
          */
-        FindEnemiesInRadius(CenterLocation: UE.Vector, SearchRadius: number) : TArray<UE.BaseEnemy>;
+        FindEnemiesInRadius(CenterLocation: UE.Vector, SearchRadius: number) : TArray<UE.LIVECODING_BaseEnemy_2>;
         /*
          *获取指定区域的所有敌人
          *@param AreaID 区域ID
          *@return 敌人数组
          */
-        GetEnemiesInArea(AreaID: number) : TArray<UE.BaseEnemy>;
+        GetEnemiesInArea(AreaID: number) : TArray<UE.LIVECODING_BaseEnemy_2>;
         /*
          *获取敌人的区域ID
          *@param Enemy 敌人角色
          *@return 区域ID，如果未设置返回-1
          */
-        GetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : number;
+        GetEnemyAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : number;
         /*
          *设置敌人的区域ID
          *@param Enemy 敌人角色
          *@param AreaID 区域ID
          */
-        SetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>, AreaID: number) : void;
+        SetEnemyAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>, AreaID: number) : void;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaManager;
         static Load(InName: string): BattleAreaManager;
@@ -57410,12 +57775,12 @@ declare module "ue" {
          *清除敌人的区域ID
          *@param Enemy 敌人角色
          */
-        static ClearEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : void;
+        static ClearEnemyAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : void;
         /*
          *清除玩家的区域ID
          *@param Player 玩家角色
          */
-        static ClearPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : void;
+        static ClearPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>) : void;
         /*
          *销毁所有区域的测试假人
          *@param WorldContext 世界上下文
@@ -57431,19 +57796,19 @@ declare module "ue" {
          *@param Enemy 敌人角色
          *@return 是否有区域ID
          */
-        static DoesEnemyHaveAreaID(Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static DoesEnemyHaveAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : boolean;
         /*
          *检查敌人是否有选中的区域碰撞盒
          *@param Enemy 敌人角色
          *@return 是否有选中的区域碰撞盒
          */
-        static DoesEnemyHaveSelectedAreaBox(Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static DoesEnemyHaveSelectedAreaBox(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : boolean;
         /*
          *检查玩家是否有有效的区域ID
          *@param Player 玩家角色
          *@return 是否有有效的区域ID
          */
-        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : boolean;
+        static DoesPlayerHaveValidAreaID(Player: $Nullable<UE.CurrsorCharacter>) : boolean;
         /*
          *获取区域碰撞盒的位置信息
          *@param AreaBox 区域碰撞盒
@@ -57467,55 +57832,55 @@ declare module "ue" {
          *@param OutIsFromPlayer 是否来自玩家
          *@return 是否找到有效的区域ID
          */
-        static GetEffectiveAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
+        static GetEffectiveAreaID(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>, OutAreaID: $Ref<number>, OutIsFromPlayer: $Ref<boolean>) : boolean;
         /*
          *获取指定区域的所有敌人
          *@param WorldContext 世界上下文
          *@param AreaID 区域ID
          *@return 敌人数组
          */
-        static GetEnemiesInArea(WorldContext: $Nullable<UE.Object>, AreaID: number) : TArray<UE.BaseEnemy>;
+        static GetEnemiesInArea(WorldContext: $Nullable<UE.Object>, AreaID: number) : TArray<UE.LIVECODING_BaseEnemy_2>;
         /*
          *获取敌人的区域ID
          *@param Enemy 敌人角色
          *@return 区域ID
          */
-        static GetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>) : number;
+        static GetEnemyAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : number;
         /*
          *获取敌人选中的区域碰撞盒
          *@param Enemy 敌人角色
          *@return 选中的区域碰撞盒
          */
-        static GetEnemySelectedAreaBox(Enemy: $Nullable<UE.BaseEnemy>) : UE.AreaCollisionBox;
+        static GetEnemySelectedAreaBox(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : UE.AreaCollisionBox;
         /*
          *获取玩家的区域ID
          *@param Player 玩家角色
          *@return 区域ID
          */
-        static GetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>) : number;
+        static GetPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>) : number;
         /*
          *从选中的区域碰撞盒读取AreaID
          *@param Enemy 敌人角色
          */
-        static ReadEnemyAreaIDFromSelectedBox(Enemy: $Nullable<UE.BaseEnemy>) : void;
+        static ReadEnemyAreaIDFromSelectedBox(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : void;
         /*
          *设置敌人的区域ID
          *@param Enemy 敌人角色
          *@param AreaID 区域ID
          */
-        static SetEnemyAreaID(Enemy: $Nullable<UE.BaseEnemy>, AreaID: number) : void;
+        static SetEnemyAreaID(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>, AreaID: number) : void;
         /*
          *设置敌人选中的区域碰撞盒
          *@param Enemy 敌人角色
          *@param AreaBox 区域碰撞盒
          */
-        static SetEnemySelectedAreaBox(Enemy: $Nullable<UE.BaseEnemy>, AreaBox: $Nullable<UE.AreaCollisionBox>) : void;
+        static SetEnemySelectedAreaBox(Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>, AreaBox: $Nullable<UE.AreaCollisionBox>) : void;
         /*
          *设置玩家的区域ID
          *@param Player 玩家角色
          *@param AreaID 区域ID
          */
-        static SetPlayerAreaID(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, AreaID: number) : void;
+        static SetPlayerAreaID(Player: $Nullable<UE.CurrsorCharacter>, AreaID: number) : void;
         /*
          *为所有区域生成测试假人
          *@param WorldContext 世界上下文
@@ -57532,7 +57897,7 @@ declare module "ue" {
          *@param Enemy 敌人角色
          *@return 是否满足传送条件
          */
-        static ValidateBattleTeleportConditions(Player: $Nullable<UE.LIVECODING_CurrsorCharacter_1>, Enemy: $Nullable<UE.BaseEnemy>) : boolean;
+        static ValidateBattleTeleportConditions(Player: $Nullable<UE.CurrsorCharacter>, Enemy: $Nullable<UE.LIVECODING_BaseEnemy_2>) : boolean;
         static StaticClass(): Class;
         static Find(OrigInName: string, Outer?: Object): BattleAreaBlueprintLibrary;
         static Load(InName: string): BattleAreaBlueprintLibrary;
@@ -61227,338 +61592,6 @@ declare module "ue" {
         __tid_DestructibleItem_0__: boolean;
     }
     
-    class SpringArmComponent extends UE.SceneComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        TargetArmLength: number;
-        SocketOffset: UE.Vector;
-        TargetOffset: UE.Vector;
-        ProbeSize: number;
-        ProbeChannel: UE.ECollisionChannel;
-        bDoCollisionTest: boolean;
-        bUsePawnControlRotation: boolean;
-        bInheritPitch: boolean;
-        bInheritYaw: boolean;
-        bInheritRoll: boolean;
-        bEnableCameraLag: boolean;
-        bEnableCameraRotationLag: boolean;
-        bUseCameraLagSubstepping: boolean;
-        bDrawDebugLagMarkers: boolean;
-        CameraLagSpeed: number;
-        CameraRotationLagSpeed: number;
-        CameraLagMaxTimeStep: number;
-        CameraLagMaxDistance: number;
-        bClampToMaxPhysicsDeltaTime: boolean;
-        /*
-         *Get the target rotation we inherit, used as the base target for the boom rotation.
-         *This is derived from attachment to our parent and considering the UsePawnControlRotation and absolute rotation flags.
-         */
-        GetTargetRotation() : UE.Rotator;
-        /*
-         *Get the position where the camera should be without applying the Collision Test displacement
-         */
-        GetUnfixedCameraPosition() : UE.Vector;
-        /*
-         *Is the Collision Test displacement being applied?
-         */
-        IsCollisionFixApplied() : boolean;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): SpringArmComponent;
-        static Load(InName: string): SpringArmComponent;
-    
-        __tid_SpringArmComponent_0__: boolean;
-    }
-    
-    class CurrsorCameraComponent extends UE.CameraComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bWasInCollision: boolean;
-        /*
-         *更新景深效果
-         *@param FocalDistance 焦距
-         *@param bIsCollision 是否处于碰撞状态
-         *@param TargetArmLength 目标臂长（弹簧臂的原始长度）
-         */
-        UpdateDOF(FocalDistance: number, bIsCollision: boolean, TargetArmLength: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorCameraComponent;
-        static Load(InName: string): CurrsorCameraComponent;
-    
-        __tid_CurrsorCameraComponent_0__: boolean;
-    }
-    
-    class HealthComponent extends UE.ActorComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnHealthChanged: $MulticastDelegate<(CurrentHealth: number, MaxHealth: number, DamageAmount: number) => void>;
-        OnDeath: $MulticastDelegate<(DeadActor: $Nullable<UE.Actor>) => void>;
-        MaxHealth: number;
-        CurrentHealth: number;
-        Defense: number;
-        bCanTakeDamage: boolean;
-        bAutoRespawn: boolean;
-        RespawnDelay: number;
-        MaxManaCount: number;
-        ManaCount: number;
-        CalculateDamageReduction(IncomingDamage: number) : number;
-        GetCurrentHealth() : number;
-        GetDefense() : number;
-        GetHealthPercentage() : number;
-        GetManaCount() : number;
-        GetMaxHealth() : number;
-        /*
-         *Mana
-         */
-        GetMaxManaCount() : number;
-        Heal(HealAmount: number) : void;
-        IsDead() : boolean;
-        IsFullHealth() : boolean;
-        SetCurrentHealth(NewHealth: number) : void;
-        /*
-         *防御值管理（护盾机制：受到伤害时优先扣除防御值）
-         */
-        SetDefense(NewDefense: number) : void;
-        /*
-         *生命值管理
-         */
-        SetMaxHealth(NewMaxHealth: number) : void;
-        /*
-         *伤害处理
-         */
-        TakeDamage(DamageAmount: number, DamageInstigator?: UE.Actor /* = None */) : void;
-        UseMana(ManaCost: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): HealthComponent;
-        static Load(InName: string): HealthComponent;
-    
-        __tid_HealthComponent_0__: boolean;
-    }
-    
-    class StateTransitionRule {
-        constructor();
-        constructor(FromState: UE.ECharacterState, ToState: UE.ECharacterState, bIsAllowed: boolean, MinDuration: number);
-        FromState: UE.ECharacterState;
-        ToState: UE.ECharacterState;
-        bIsAllowed: boolean;
-        MinDuration: number;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_StateTransitionRule_0__: boolean;
-    }
-    
-    class StateManagerComponent extends UE.BaseSystemComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnStateChanged: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, OldState: UE.ECharacterState) => void>;
-        OnStateTransitionFailed: $MulticastDelegate<(Actor: $Nullable<UE.Actor>, AttemptedState: UE.ECharacterState) => void>;
-        ActorStates: TMap<TWeakObjectPtr<UE.Actor>, UE.ActorStateData>;
-        StatePriorities: TMap<UE.ECharacterState, number>;
-        TransitionRules: TArray<UE.StateTransitionRule>;
-        bEnableDebugLogging: boolean;
-        bEnableStateTicking: boolean;
-        DefaultMinStateDuration: number;
-        /*
-         *转换规则
-         */
-        AddTransitionRule(Rule: UE.StateTransitionRule) : void;
-        CanTransitionTo(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState) : boolean;
-        /*
-         *状态管理
-         */
-        ChangeState(Actor: $Nullable<UE.Actor>, NewState: UE.ECharacterState, bForceChange?: boolean /* = false */) : boolean;
-        ClearTransitionRules() : void;
-        GetCurrentState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
-        GetManagedActorCount() : number;
-        GetPreviousState(Actor: $Nullable<UE.Actor>) : UE.ECharacterState;
-        /*
-         *状态持续时间
-         */
-        GetStateElapsedTime(Actor: $Nullable<UE.Actor>) : number;
-        /*
-         *状态优先级
-         */
-        GetStatePriority(State: UE.ECharacterState) : number;
-        HasStateMinDurationPassed(Actor: $Nullable<UE.Actor>) : boolean;
-        IsInAnyState(Actor: $Nullable<UE.Actor>, States: TArray<UE.ECharacterState>) : boolean;
-        /*
-         *状态查询
-         */
-        IsInState(Actor: $Nullable<UE.Actor>, State: UE.ECharacterState) : boolean;
-        RemoveTransitionRule(FromState: UE.ECharacterState, ToState: UE.ECharacterState) : void;
-        SetStatePriority(State: UE.ECharacterState, Priority: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): StateManagerComponent;
-        static Load(InName: string): StateManagerComponent;
-    
-        __tid_StateManagerComponent_0__: boolean;
-    }
-    
-    class TableRowBase {
-        constructor();
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_TableRowBase_0__: boolean;
-    }
-    
-    class LootItem extends UE.TableRowBase {
-        constructor();
-        constructor(ItemName: string, ItemID: number, DropChance: number, MinQuantity: number, MaxQuantity: number, Rarity: string);
-        ItemName: string;
-        ItemID: number;
-        DropChance: number;
-        MinQuantity: number;
-        MaxQuantity: number;
-        Rarity: string;
-        /**
-         * @deprecated use StaticStruct instead.
-         */
-        static StaticClass(): ScriptStruct;
-        static StaticStruct(): ScriptStruct;
-        __tid_LootItem_0__: boolean;
-    }
-    
-    class LootSystemComponent extends UE.BaseSystemComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnLootGenerated: $MulticastDelegate<(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) => void>;
-        LootTableIndices: TMap<string, number>;
-        AllLootItems: TArray<UE.LootItem>;
-        LootTableStartIndices: TArray<number>;
-        LootTableLengths: TArray<number>;
-        GlobalDropRateMultiplier: number;
-        bEnableDebugLogging: boolean;
-        TotalDropsGenerated: number;
-        RecentDropHistory: TArray<string>;
-        AddLootTable(TableName: string, Items: TArray<UE.LootItem>) : boolean;
-        ClearDropHistory() : void;
-        /*
-         *掉落处理
-         */
-        GenerateLoot(Source: $Nullable<UE.Actor>, LootTableName?: string /* = "Default" */) : TArray<UE.LootItem>;
-        GetGlobalDropRateMultiplier() : number;
-        /*
-         *配置
-         */
-        SetGlobalDropRateMultiplier(Multiplier: number) : void;
-        SpawnLoot(Source: $Nullable<UE.Actor>, Items: TArray<UE.LootItem>, Location: UE.Vector) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): LootSystemComponent;
-        static Load(InName: string): LootSystemComponent;
-    
-        __tid_LootSystemComponent_0__: boolean;
-    }
-    
-    class GameLogicManagerComponent extends UE.BaseSystemComponent {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        bEnableDebugLogging: boolean;
-        /*
-         *游戏逻辑处理
-         */
-        ProcessGameEvent(EventType: string, EventData: TMap<string, string>) : boolean;
-        UpdateGameState(DeltaTime: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): GameLogicManagerComponent;
-        static Load(InName: string): GameLogicManagerComponent;
-    
-        __tid_GameLogicManagerComponent_0__: boolean;
-    }
-    
-    class GameSystemManager extends UE.Object {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        OnGameSystemsInitialized: $MulticastDelegate<(Timestamp: number) => void>;
-        bIsInitialized: boolean;
-        World: TWeakObjectPtr<UE.World>;
-        AttackSystem: UE.AttackSystemComponent;
-        StateManager: UE.StateManagerComponent;
-        LootSystem: UE.LootSystemComponent;
-        GameLogicManager: UE.GameLogicManagerComponent;
-        DebugPrintStatus() : void;
-        /*
-         *系统访问
-         */
-        GetAttackSystem() : UE.AttackSystemComponent;
-        GetGameLogicManager() : UE.GameLogicManagerComponent;
-        GetLootSystem() : UE.LootSystemComponent;
-        GetStateManager() : UE.StateManagerComponent;
-        /*
-         *系统生命周期管理
-         */
-        Initialize(InWorld: $Nullable<UE.World>) : void;
-        /*
-         *状态查询
-         */
-        IsInitialized() : boolean;
-        ResetAllSystems() : void;
-        Shutdown() : void;
-        /*
-         *单例访问
-         */
-        static GetInstance(World?: UE.World /* = None */) : UE.GameSystemManager;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): GameSystemManager;
-        static Load(InName: string): GameSystemManager;
-    
-        __tid_GameSystemManager_0__: boolean;
-    }
-    
-    class CurrsorCharacter extends UE.PaperZDCharacter {
-        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        SpringArmComponent: UE.SpringArmComponent;
-        CameraComponent: UE.CurrsorCameraComponent;
-        AttackHitbox: UE.BoxComponent;
-        HealthComponent: UE.HealthComponent;
-        GameSystemManager: UE.GameSystemManager;
-        AttackSystem: UE.AttackSystemComponent;
-        BattleAreaTeleportComponent: UE.BattleAreaTeleportComponent;
-        LastArmLength: number;
-        LastCollisionState: boolean;
-        /*
-         *对实现此接口的对象施加伤害 __ 伤害值
-         *__ 造成伤害的发起者（例如玩家角色、发射子弹的敌人）
-         *__ 可选的命中结果，包含碰撞位置、法线等详细信息
-         */
-        ApplyDamage(DamageAmount: number, DamageInstigator: $Nullable<UE.Actor>, HitResult: UE.HitResult) : void;
-        /*
-         *区域ID相关方法（通过GameState管理）
-         */
-        GetCurrentAreaID() : number;
-        /*
-         *PlayerState相关方法
-         */
-        GetCurrsorPlayerState() : UE.PlayerState;
-        /*
-         *生命值相关方法
-         */
-        GetHealth() : number;
-        /*
-         *Mana
-         */
-        GetMana() : number;
-        GetMaxHealth() : number;
-        GetMaxMana() : number;
-        HasValidAreaID() : boolean;
-        IsDead() : boolean;
-        IsRotationAdjustmentEnabled() : boolean;
-        ResetRotationAdjustment() : void;
-        SetCurrentAreaID(NewAreaID: number) : void;
-        /*
-         *旋转调整控制方法
-         */
-        SetRotationAdjustmentEnabled(bEnabled: boolean) : void;
-        SwitchToBattleCamera(CameraBillboard: $Nullable<UE.BillboardComponent>) : void;
-        /*
-         *相机切换方法
-         */
-        SwitchToPlayerCamera() : void;
-        UseMana(Amount: number) : void;
-        static StaticClass(): Class;
-        static Find(OrigInName: string, Outer?: Object): CurrsorCharacter;
-        static Load(InName: string): CurrsorCharacter;
-    
-        __tid_CurrsorCharacter_0__: boolean;
-    }
-    
     class CurrsorGameInstance extends UE.GameInstance {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
         bDebugMode: boolean;
@@ -61658,7 +61691,7 @@ declare module "ue" {
         DeckCardNames: TArray<string>;
         CardDataTable: UE.DataTable;
         CurrsorController: TWeakObjectPtr<UE.CurrsorPlayerController>;
-        CurrsorCharacter: TWeakObjectPtr<UE.LIVECODING_CurrsorCharacter_1>;
+        CurrsorCharacter: TWeakObjectPtr<UE.CurrsorCharacter>;
         CurrsorVelocity: UE.Vector;
         bIsAttackKeyReleased: boolean;
         AttackNum: number;
@@ -61692,7 +61725,7 @@ declare module "ue" {
     
     class CurrsorActionComponent extends UE.ActorComponent {
         constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
-        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_1;
+        CurrsorPlayer: UE.CurrsorCharacter;
         CurrsorPlayerState: UE.CurrsorPlayerState;
         CurrsorPlayerController: UE.CurrsorPlayerController;
         CurrentMovementVector: number;
@@ -61724,7 +61757,7 @@ declare module "ue" {
         InputMappingContext: UE.InputMappingContext;
         CombatInputMappingContext: UE.InputMappingContext;
         CurrentMovementVector: number;
-        CurrsorPlayer: UE.LIVECODING_CurrsorCharacter_1;
+        CurrsorPlayer: UE.CurrsorCharacter;
         CurrsorPlayerState: UE.CurrsorPlayerState;
         PlayerActionComponent: UE.CurrsorActionComponent;
         PlayerStateComponent: UE.CurrsorPlayerState;
@@ -61756,6 +61789,10 @@ declare module "ue" {
         AttackHitboxOn() : void;
         AttackStarted() : void;
         AttackTriggered() : void;
+        /*
+         *关闭战斗传送Widget
+         */
+        CloseBattleTeleportWidget() : void;
         /*
          *退出战斗区域
          */
@@ -93273,6 +93310,7 @@ declare module "ue" {
     enum ELoudnessNRTCurveTypeEnum { A, B, C, D, None, ELoudnessNRTCurveTypeEnum_MAX, __typeKeyDoNoAccess}
     enum ELumenRayLightingMode { SurfaceCache, HitLighting, ELumenRayLightingMode_MAX, __typeKeyDoNoAccess}
     enum ELumenSoftwareTracingMode { DetailTracing, GlobalTracing, ELumenSoftwareTracingMode_MAX, __typeKeyDoNoAccess}
+    enum ELVPLogVerbosity { ELVPVerbosity_VeryVerbose, ELVPVerbosity_Verbose, ELVPVerbosity_Log, ELVPVerbosity_Display, ELVPVerbosity_Warning, ELVPVerbosity_Error, ELVPVerbosity_Fatal, ELVPVerbosity_MAX, __typeKeyDoNoAccess}
     enum ELWCFunctionKind { Constructor, Promote, Demote, Add, Subtract, Divide, MultiplyVectorVector, MultiplyVectorMatrix, MultiplyMatrixMatrix, Other, Max, ELWCFunctionKind_MAX, __typeKeyDoNoAccess}
     enum EMacMetalShaderStandard { MacMetalSLStandard_Minimum, MacMetalSLStandard_2_2, MacMetalSLStandard_2_3, MacMetalSLStandard_2_4, MacMetalSLStandard_3_0, MacMetalSLStandard_MAX, __typeKeyDoNoAccess}
     enum EMacTargetArchitecture { MacTargetArchitectureIntel, MacTargetArchitectureUniversal, MacTargetArchitectureAppleSilicon, MacTargetArchitectureHost, EMacTargetArchitecture_MAX, __typeKeyDoNoAccess}
@@ -131779,6 +131817,25 @@ declare module "ue" {
         static StaticClass(): ScriptStruct;
         static StaticStruct(): ScriptStruct;
         __tid_LogStringDataflowNode_0__: boolean;
+    }
+    
+    class LogViewerBPLibraryPro extends UE.BlueprintFunctionLibrary {
+        constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
+        /*
+         *Log strings with user-defined category.
+         *IMPORTANT! Prefixed "LVP_" is added by default to prevent crash caused by collision with predefined engine categories!
+         *
+         *If you need extra performance from that node:
+         *To gain extra performance from not having string concatenation you can disable prefix logic by setting bUsePrefixToAvoidCrash to false.
+         *It will be your responsibility to make sure that you're not using existing log categories defined in the engine such as LogWorld, LogAudio, or others.
+         *If predefined engine category is used engine will crash with "Log suppression category NAME is defined multiple times with different compile time verbosity".
+         */
+        static LogBP_Pro(WorldContextObject: $Nullable<UE.Object>, LogCategory?: string /* = "Temp" */, Verbosity?: UE.ELVPLogVerbosity /* = ELVPVerbosity_Log */, InString?: string /* = "Hello" */, bUsePrefixToAvoidCrash?: boolean /* = true */) : void;
+        static StaticClass(): Class;
+        static Find(OrigInName: string, Outer?: Object): LogViewerBPLibraryPro;
+        static Load(InName: string): LogViewerBPLibraryPro;
+    
+        __tid_LogViewerBPLibraryPro_0__: boolean;
     }
     
     class LogVisualizerSessionSettings extends UE.Object {

@@ -18,6 +18,9 @@ export class TS_Card extends jsClass {
     // 拖动状态
     public isDragging: boolean = false;
     
+    // 是否可拖拽（由回合系统控制）
+    public canDrag: boolean = true;
+    
     // 拖动前的原始状态（用于还原）
     public originalPosition: UE.Vector2D | null = null;
     public originalRotation: number = 0;
@@ -70,6 +73,11 @@ export class TS_Card extends jsClass {
      * 拖动检测事件
      */
     OnDragDetected(MyGeometry: UE.Geometry, PointerEvent: UE.PointerEvent, Operation: $Ref<UE.DragDropOperation>): void {
+        // 非玩家回合禁止拖拽
+        if (!this.canDrag) {
+            console.log('[TS_Card.OnDragDetected] 非玩家回合，禁止拖拽');
+            return;
+        }
         console.log('[TS_Card.OnDragDetected] 拖动检测事件触发');
         this.isDragging = true;
         

@@ -13,6 +13,20 @@ class AAreaCollisionBox;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEnemyDeath, ABaseEnemy*, DeadEnemy);
 
+/** 敌人攻击方式枚举，可在蓝图中选择 */
+UENUM(BlueprintType)
+enum class EEnemyAttackType : uint8
+{
+	/** 普通攻击：对玩家造成固定伤害 */
+	NormalAttack		UMETA(DisplayName = "普通攻击"),
+	/** 强力攻击：造成更高伤害，但有前摇 */
+	HeavyAttack			UMETA(DisplayName = "强力攻击"),
+	/** 防御：本回合减少受到的伤害 */
+	Defend				UMETA(DisplayName = "防御"),
+	/** 技能攻击：使用特殊技能，例如施加状态效果 */
+	SkillAttack			UMETA(DisplayName = "技能攻击"),
+};
+
 UCLASS()
 class CURRSOR_API ABaseEnemy : public APaperZDCharacter, public IDamageable
 {
@@ -66,6 +80,14 @@ public:
 	UFUNCTION(BlueprintPure, Category = "Enemy|Combat")
 	int32 GetTotalEnemyCount() const { return TotalEnemyCount; }
 
+	// 获取攻击方式
+	UFUNCTION(BlueprintPure, Category = "Enemy|Combat")
+	EEnemyAttackType GetAttackType() const { return AttackType; }
+
+	// 获取攻击伤害值
+	UFUNCTION(BlueprintPure, Category = "Enemy|Combat")
+	float GetAttackDamage() const { return AttackDamage; }
+
 	// 事件委托
 	UPROPERTY(BlueprintAssignable, Category = "Enemy")
 	FOnEnemyDeath OnEnemyDeath;
@@ -92,6 +114,14 @@ protected:
 	// 敌人总数，表示该敌人代表的敌人数量（默认为1，即单个敌人）
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy|Combat", meta = (AllowPrivateAccess = "true"))
 	int32 TotalEnemyCount = 1;
+
+	// 攻击方式，可在蓝图细节面板中选择
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy|Combat", meta = (AllowPrivateAccess = "true"))
+	EEnemyAttackType AttackType = EEnemyAttackType::NormalAttack;
+
+	// 攻击伤害值，根据攻击方式不同可配置不同数值
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Enemy|Combat", meta = (AllowPrivateAccess = "true", ClampMin = "0.0"))
+	float AttackDamage = 10.0f;
 
 	// 死亡处理
 	UFUNCTION()

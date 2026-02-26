@@ -10689,7 +10689,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 5232E8E746FC871D7D154C93B08D3F69
+// __TYPE_DECL_START: 8354D53F4D364758162883B6B2E0244D
     namespace Game.Blueprints.Character.Player.BP_CurrsorCharacter {
         class BP_CurrsorCharacter_C extends UE.CurrsorCharacter {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10730,7 +10730,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: FE4B4B314182A1BF91DA60AA2DCD72BE
+// __TYPE_DECL_START: 65526B1C4DF7B7E0635E2E94FCF60B95
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerController {
         class BP_CurrsorPlayerController_C extends UE.CurrsorPlayerController {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10745,7 +10745,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: 65C542AC4575DC939E2B2A82ED1A156A
+// __TYPE_DECL_START: 5CDB82D5428AEFA26ABE44BBABC5FF61
     namespace Game.Blueprints.Character.Player.BP_CurrsorPlayerState {
         class BP_CurrsorPlayerState_C extends UE.CurrsorPlayerState {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -10766,11 +10766,13 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: DF11348D459CED86EA1D2EAF64B6E32B
+// __TYPE_DECL_START: 962F77BB41ECEFB95CED8AA5C4B277B0
     namespace Game.Blueprints.System.BP_CurrsorGameState {
         class BP_CurrsorGameState_C extends UE.CurrsorGameState {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             DefaultSceneRoot: UE.SceneComponent;
+            Widget: TArray<UE.Class>;
+            Class: TArray<UE.Class>;
             static StaticClass(): Class;
             static Find(OrigInName: string, Outer?: Object): BP_CurrsorGameState_C;
             static Load(InName: string): BP_CurrsorGameState_C;
@@ -10908,14 +10910,13 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: D93F3C534E0657D4EB0F848FA33DCCDA
+// __TYPE_DECL_START: 1F3E2FD448A206A9FF46468017744F20
     namespace Game.Blueprints.Character.Enemy.Base.BP_BaseEnemy {
         class BP_BaseEnemy_C extends UE.BaseEnemy {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
             UberGraphFrame: UE.PointerToUberGraphFrame;
             bp_HPBar: UE.WidgetComponent;
             ExecuteUbergraph_BP_BaseEnemy(EntryPoint: number) : void;
-            ReceiveBeginPlay() : void;
             /*
              *Event called every frame, if ticking is enabled
              */
@@ -11194,7 +11195,7 @@ declare module "ue" {
     }
 
 // __TYPE_DECL_END
-// __TYPE_DECL_START: DA34F14F477506254A0F59A739205139
+// __TYPE_DECL_START: F21D74004E77BE31A874B2AC2E15D3E8
     namespace Game.UI.Blueprints.Cards.Widget_CardMainUI {
         class Widget_CardMainUI_C extends UE.UserWidget {
             constructor(Outer?: Object, Name?: string, ObjectFlags?: number);
@@ -11211,6 +11212,14 @@ declare module "ue" {
             Construct() : void;
             Destruct() : void;
             ExecuteUbergraph_Widget_CardMainUI(EntryPoint: number) : void;
+            /*
+             *The system calls this method to notify the widget that a mouse moved within it. This event is bubbled.
+             *
+             *@param MyGeometry The Geometry of the widget receiving the event
+             *@param MouseEvent Information about the input event
+             *@return Whether the event was handled along with possible requests for the system to take action.
+             */
+            OnMouseMove(MyGeometry: UE.Geometry, MouseEvent: UE.PointerEvent) : UE.EventReply;
             /*
              *Ticks this widget.  Override in derived classes, but always call the parent implementation.
              *
