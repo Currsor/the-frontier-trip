@@ -83,3 +83,12 @@ Plugins/Developer/*
 
 # vscode
 .vscode
+
+# === 针对 Puerts 插件的例外规则 ===
+# 首先，不忽略 Puerts 插件目录本身及其所有内容
+!Plugins/Puerts/
+!Plugins/Puerts/**/*
+
+# 然后，重新应用对 Puerts 插件下 Binaries 和 Intermediate 目录的忽略规则
+Plugins/Puerts/Binaries/
+Plugins/Puerts/Intermediate/
