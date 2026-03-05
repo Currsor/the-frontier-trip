@@ -1,0 +1,213 @@
+[2026.02.28-11.30.16:322][989]LogDebuggerCommands: Repeating last play command: ?????
+[2026.02.28-11.30.16:322][989]PuertsModule: Normal Mode started!
+[2026.02.28-11.30.16:322][989]PuertsModule: Display: JsEnv created
+[2026.02.28-11.30.16:322][989]LogPlayLevel: PlayLevel: No blueprints needed recompiling
+[2026.02.28-11.30.16:322][989]LogPlayLevel: Creating play world package: /Game/Maps/UEDPIE_0_L_Test
+[2026.02.28-11.30.16:322][989]LogTemp: Warning: DestructibleItem BP_Cube_C_1 ???????????
+[2026.02.28-11.30.16:322][989]LogPlayLevel: PIE: StaticDuplicateObject took: (0.002937s)
+[2026.02.28-11.30.16:322][989]LogPlayLevel: PIE: Created PIE world by copying editor world from /Game/Maps/L_Test.L_Test to /Game/Maps/UEDPIE_0_L_Test.L_Test (0.002972s)
+[2026.02.28-11.30.16:322][989]LogUObjectHash: Compacting FUObjectHashTables data took   0.89ms
+[2026.02.28-11.30.16:322][989]LogTemp: BattleAreaManager ????
+[2026.02.28-11.30.16:322][989]LogWorldMetrics: [UWorldMetricsSubsystem::Initialize]
+[2026.02.28-11.30.16:322][989]LogPlayLevel: PIE: World Init took: (0.000991s)
+[2026.02.28-11.30.16:322][989]LogAudio: Display: Creating Audio Device:                 Id: 18, Scope: Unique, Realtime: True
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Audio Mixer Platform Settings:
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: 	Sample Rate:						  48000
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: 	Callback Buffer Frame Size Requested: 1024
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: 	Callback Buffer Frame Size To Use:	  1024
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: 	Number of buffers to queue:			  1
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: 	Max Channels (voices):				  32
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: 	Number of Async Source Workers:		  4
+[2026.02.28-11.30.16:322][989]LogAudio: Display: AudioDevice MaxSources: 32
+[2026.02.28-11.30.16:322][989]LogAudio: Display: Audio Spatialization Plugin: None (built-in).
+[2026.02.28-11.30.16:322][989]LogAudio: Display: Audio Reverb Plugin: None (built-in).
+[2026.02.28-11.30.16:322][989]LogAudio: Display: Audio Occlusion Plugin: None (built-in).
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Initializing audio mixer using platform API: 'XAudio2'
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Using Audio Hardware Device ??? (High Definition Audio Device)
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Initializing Sound Submixes...
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Creating Master Submix 'MasterSubmixDefault'
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Creating Master Submix 'MasterReverbSubmixDefault'
+[2026.02.28-11.30.16:322][989]LogAudioMixer: FMixerPlatformXAudio2::StartAudioStream() called. InstanceID=18
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Output buffers initialized: Frames=1024, Channels=2, Samples=2048, InstanceID=18
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: Starting AudioMixerPlatformInterface::RunInternal(), InstanceID=18
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Display: FMixerPlatformXAudio2::SubmitBuffer() called for the first time. InstanceID=18
+[2026.02.28-11.30.16:322][989]LogInit: FAudioDevice initialized with ID 18.
+[2026.02.28-11.30.16:322][989]LogAudio: Display: Audio Device (ID: 18) registered with world 'L_Test'.
+[2026.02.28-11.30.16:322][989]LogAudioMixer: Initializing Audio Bus Subsystem for audio device with ID 18
+[2026.02.28-11.30.16:322][989]LogV8Inspector: Startup Inspector Successfully!
+Please Open This URL in Debugger Front-End(e.g. Chrome DevTool):
+ 
+	devtools://devtools/bundled/inspector.html?v8only=true&ws=127.0.0.1:8080
+ 
+
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ??????????
+[2026.02.28-11.30.16:322][989]None: ImportText (LatentInfo): Missing opening parenthesis: LatentInfo
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) CursorGame initialized
+[2026.02.28-11.30.16:322][989]LogLoad: Game class is 'BP_CurrsorGameMode_C'
+[2026.02.28-11.30.16:322][989]LogWorld: Bringing World /Game/Maps/UEDPIE_0_L_Test.L_Test up for play (max tick rate 0) at 2026.02.28-11.30.16
+[2026.02.28-11.30.16:322][989]LogWorld: Bringing up level for play took: 0.001548
+[2026.02.28-11.30.16:322][989]LogOnline: OSS: Created online subsystem instance for: :Context_20
+[2026.02.28-11.30.16:322][989]LogGameMode: Display: Match State Changed from EnteringMap to WaitingToStart
+[2026.02.28-11.30.16:322][989]LogGameState: Match State Changed from EnteringMap to WaitingToStart
+[2026.02.28-11.30.16:322][989]LogGameMode: Display: Match State Changed from WaitingToStart to InProgress
+[2026.02.28-11.30.16:322][989]LogTemp: Warning: DestructibleItem BP_Cube_C_1 ????? IDamageable ??
+[2026.02.28-11.30.16:322][989]LogTemp: Warning: DestructibleItem BP_Cube_C_1 ????: Enabled=3, GenerateOverlapEvents=1
+[2026.02.28-11.30.16:322][989]LogTemp: AreaCollisionBox: ????????
+[2026.02.28-11.30.16:322][989]LogTemp: AreaCollisionBox: ????????
+[2026.02.28-11.30.16:322][989]None: ImportText (LatentInfo): Missing opening parenthesis: LatentInfo
+[2026.02.28-11.30.16:322][989]None: ImportText (LatentInfo): Missing opening parenthesis: LatentInfo
+[2026.02.28-11.30.16:322][989]None: ImportText (LatentInfo): Missing opening parenthesis: LatentInfo
+[2026.02.28-11.30.16:322][989]None: ImportText (LatentInfo): Missing opening parenthesis: LatentInfo
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_BaseEnemy_C_1: ??? OnCombatStateChanged ??
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_BaseEnemy_C_1: ???????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [TS Enemy] ?????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: Attack (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [TS Enemy] ?????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: EndTurn (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [EnemyTurnManager] ????????? EndTurn ??
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [EnemyTurnManager] ????: BP_BaseEnemy_C_1
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [TS Enemy] BP_BaseEnemy_C_1 ???? EnemyTurnManager
+[2026.02.28-11.30.16:322][989]LogTemp: ?? BP_BaseEnemy_C_1 ?????? AreaCollisionBox AreaCollisionBox_4 ????ID -1462652268
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ????????????...
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ?????????...
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ????????...
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) GameLogicManager initialized
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onHealthChanged (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onShowDamageNumber (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onStateChanged (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onLootGenerated (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onAttackHit (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onExpGained (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) UIManager initialized
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ???????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ???????...
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [TS AttackSystem] C++ Proxy initialized - NO logic in TypeScript
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ?????????? - ?????C++???
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Loot table registered: DestructibleItem
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Loot table registered: Enemy
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Loot table registered: Boss
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onItemDestroyed (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onEnemyDefeated (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) LootSystem initialized
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [CardAnimationManager] ????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ???????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ??????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ????????...
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onAttackHit (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onAttackStarted (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onItemDestroyed (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onLootGenerated (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onStateChanged (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: onDamageApplied (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ???????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) ????????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) TS_Debug: ??????????
+[2026.02.28-11.30.16:322][989]LogTemp: GameSystemManager ???
+[2026.02.28-11.30.16:322][989]LogTemp: ??? L_Test ??? GameSystemManager ??
+[2026.02.28-11.30.16:322][989]LogTemp: ????? GameSystemManager...
+[2026.02.28-11.30.16:322][989]LogTemp: ?????????...
+[2026.02.28-11.30.16:322][989]LogTemp: ????????
+[2026.02.28-11.30.16:322][989]LogTemp: ????????...
+[2026.02.28-11.30.16:322][989]LogTemp: ????? GameLogicManager...
+[2026.02.28-11.30.16:322][989]LogTemp: GameLogicManager ????
+[2026.02.28-11.30.16:322][989]LogTemp: GameLogicManager ?????
+[2026.02.28-11.30.16:322][989]LogTemp: GameLogicManager ????
+[2026.02.28-11.30.16:322][989]LogTemp: ????? StateManager...
+[2026.02.28-11.30.16:322][989]LogTemp: ???????????? 10 ????? 10 ?????
+[2026.02.28-11.30.16:322][989]LogTemp: StateManager ?????
+[2026.02.28-11.30.16:322][989]LogTemp: StateManager ????
+[2026.02.28-11.30.16:322][989]LogTemp: ???????
+[2026.02.28-11.30.16:322][989]LogTemp: ???????...
+[2026.02.28-11.30.16:322][989]LogTemp: ????? AttackSystem...
+[2026.02.28-11.30.16:322][989]LogTemp: ???????????????: 1.000000
+[2026.02.28-11.30.16:322][989]LogTemp: AttackSystem ?????
+[2026.02.28-11.30.16:322][989]LogTemp: AttackSystem ????
+[2026.02.28-11.30.16:322][989]LogTemp: ????? LootSystem...
+[2026.02.28-11.30.16:322][989]LogTemp: ???????????? 1 ?????
+[2026.02.28-11.30.16:322][989]LogTemp: LootSystem ?????
+[2026.02.28-11.30.16:322][989]LogTemp: LootSystem ????
+[2026.02.28-11.30.16:322][989]LogTemp: ??????
+[2026.02.28-11.30.16:322][989]LogTemp: ????????...
+[2026.02.28-11.30.16:322][989]LogTemp: ???????
+[2026.02.28-11.30.16:322][989]LogTemp: GameSystemManager ?????
+[2026.02.28-11.30.16:322][989]LogTemp: PlayerController?????????
+[2026.02.28-11.30.16:322][989]LogTemp: PlayerController????????
+[2026.02.28-11.30.16:322][989]LogTemp: BattleAreaTeleportComponent ????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: Defense (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: Consumption (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) Event subscribed: EnemyAttackPlayer (Priority: 0)
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_CurrsorCharacter_C_0: ??? OnCombatStateChanged ??
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_CurrsorCharacter_C_0: ???????????
+[2026.02.28-11.30.16:322][989]Puerts: (0x000009E51A012FF0) [TS Character] ?????????
+[2026.02.28-11.30.16:322][989]LogTemp: BattleAreaTeleportComponent ??: ??
+[2026.02.28-11.30.16:322][989]LogGameState: Match State Changed from WaitingToStart to InProgress
+[2026.02.28-11.30.16:322][989]LogViewport: Display: Player bShowMouseCursor Changed, False -> True
+[2026.02.28-11.30.16:322][989]PIE: ??????
+[2026.02.28-11.30.16:322][989]LogHAL: NoLogging: 
+[2026.02.28-11.30.16:322][989]PIE: PIE??????0.124??
+[2026.02.28-11.30.16:322][989]LogHAL: NoLogging: 
+[2026.02.28-11.30.18:826][139]LogTemp: Warning: ????: BP_CurrsorCharacter_C_0
+[2026.02.28-11.30.18:826][139]LogTemp: ??????ID: -1462652268
+[2026.02.28-11.30.18:843][140]LogTemp: ??
+[2026.02.28-11.30.18:843][140]LogTemp: ????: BP_CurrsorCharacter_C_0 (Normal)
+[2026.02.28-11.30.18:950][146]Puerts: (0x000009E51A012FF0) [TS Character] ??????? AreaCollisionBox_4
+[2026.02.28-11.30.18:950][146]LogTemp: ProcessAttackHit: BP_CurrsorCharacter_C_0 ?? AreaCollisionBox_4
+[2026.02.28-11.30.18:950][146]LogTemp: Warning: ?? AreaCollisionBox_4 ??? IDamageable ??
+[2026.02.28-11.30.18:951][146]LogTemp: Warning: ????: BP_CurrsorCharacter_C_0
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) [TS Character] ??????? BP_BaseEnemy_C_1
+[2026.02.28-11.30.18:951][146]LogTemp: ProcessAttackHit: BP_CurrsorCharacter_C_0 ?? BP_BaseEnemy_C_1
+[2026.02.28-11.30.18:951][146]LogTemp: BP_BaseEnemy_C_1 ???? BP_CurrsorCharacter_C_0 ? 10.000000 ???????: 40.000000/50.000000
+[2026.02.28-11.30.18:951][146]LogTemp: ??????: BP_CurrsorCharacter_C_0 -> BP_BaseEnemy_C_1, ??: 10.000000
+[2026.02.28-11.30.18:951][146]LogTemp: ?????????ID????????ID: -1462652268
+[2026.02.28-11.30.18:951][146]LogTemp: ?????????: X=1193.433 Y=273.326 Z=81.650???: P=0.000000 Y=0.000000 R=0.000000
+[2026.02.28-11.30.18:951][146]LogTemp: ?????????: X=1300.000 Y=280.000 Z=87.000???: P=0.000000 Y=0.000000 R=0.000000
+[2026.02.28-11.30.18:951][146]LogTemp: ?????? ?? ? BP_CurrsorCharacter_C_0 -> BP_BaseEnemy_C_1
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) CardWidgetPool: ?????????: 10
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) [CardAnimationManager] ?UI "undefined" ????????
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) Event subscribed: UpdateMana (Priority: 0)
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) Event subscribed: CardDragStart (Priority: 0)
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) Event subscribed: CardDragEnd (Priority: 0)
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) Event subscribed: EnemyTurnStart (Priority: 0)
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) Event subscribed: PlayerTurnStart (Priority: 0)
+[2026.02.28-11.30.18:951][146]Puerts: Warning: (0x000009E51A012FF0) ???bp_StartHook?????????
+[2026.02.28-11.30.18:951][146]Puerts: Warning: (0x000009E51A012FF0) ???bp_StartHook?????????
+[2026.02.28-11.30.18:951][146]Puerts: Warning: (0x000009E51A012FF0) ???bp_StartHook?????????
+[2026.02.28-11.30.18:951][146]Puerts: Warning: (0x000009E51A012FF0) ???bp_StartHook?????????
+[2026.02.28-11.30.18:951][146]Puerts: Warning: (0x000009E51A012FF0) ???bp_StartHook?????????
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) [TS_CardMainUI] ?????UI:,0
+[2026.02.28-11.30.18:951][146]Puerts: (0x000009E51A012FF0) [TS_CardMainUI] ?????????
+[2026.02.28-11.30.18:951][146]LogTemp: ????Widget????????? - ??: BP_CurrsorCharacter_C_0, ??: BP_BaseEnemy_C_1
+[2026.02.28-11.30.18:951][146]LogTemp: ??????????
+[2026.02.28-11.30.18:951][146]LogTemp: ?????: BP_CurrsorCharacter_C_0 -> BP_BaseEnemy_C_1, ??: 10.000000 
+[2026.02.28-11.30.18:961][147]LogTemp: ????
+[2026.02.28-11.30.19:044][152]LogTemp: ???? ???
+[2026.02.28-11.30.19:044][152]LogTemp: ??????????????????
+[2026.02.28-11.30.19:044][152]LogTemp: ?????: X=1630.000 Y=-200.000 Z=87.500
+[2026.02.28-11.30.19:044][152]LogTemp: ?? BP_BaseEnemy_C_1 ???: X=1630.000 Y=200.000 Z=87.500
+[2026.02.28-11.30.19:044][152]LogTemp: ???????? AreaCollisionBox ???????: AreaCollisionBox_4
+[2026.02.28-11.30.19:044][152]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_BaseEnemy_C_1: ???????? -> Combat
+[2026.02.28-11.30.19:044][152]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_CurrsorCharacter_C_0: ???????? -> Combat
+[2026.02.28-11.30.19:044][152]LogTemp: ????????: Combat
+[2026.02.28-11.30.19:044][152]LogTemp: ??????? BP_BaseEnemy_C_1 ???????? 1??????1
+[2026.02.28-11.30.19:044][152]LogTemp: ?????????
+[2026.02.28-11.30.19:044][152]LogTemp: ?????????????????
+[2026.02.28-11.30.19:044][152]LogTemp: ???????????ID: -1462652268??? ???
+[2026.02.28-11.30.19:644][188]LogTemp: ????: BP_CurrsorCharacter_C_0
+[2026.02.28-11.30.20:347][224]PuertsModule: Display: JsEnv reset
+[2026.02.28-11.30.20:347][224]Puerts: (0x000009E51A012FF0) [TS_CardMainUI] ??????????????????
+[2026.02.28-11.30.20:347][224]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.02.28-11.30.20:347][224]LogWorld: BeginTearingDown for /Game/Maps/UEDPIE_0_L_Test
+[2026.02.28-11.30.20:347][224]Puerts: (0x000009E51A012FF0) [HealthBarComponent] BP_CurrsorCharacter_C_0: ???
+[2026.02.28-11.30.20:347][224]LogWorld: UWorld::CleanupWorld for L_Test, bSessionEnded=true, bCleanupResources=true
+[2026.02.28-11.30.20:347][224]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.02.28-11.30.20:347][224]LogWorldMetrics: [UWorldMetricsSubsystem::Deinitialize]
+[2026.02.28-11.30.20:347][224]LogWorldMetrics: [UWorldMetricsSubsystem::Clear]
+[2026.02.28-11.30.20:347][224]LogPlayLevel: Display: Shutting down PIE online subsystems
+[2026.02.28-11.30.20:347][224]LogSlate: InvalidateAllWidgets triggered.  All widgets were invalidated
+[2026.02.28-11.30.20:347][224]LogSlate: Updating window title bar state: overlay mode, drag disabled, window buttons hidden, title bar hidden
+[2026.02.28-11.30.20:347][224]LogAudioMixer: Deinitializing Audio Bus Subsystem for audio device with ID 18
+[2026.02.28-11.30.20:347][224]LogAudioMixer: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=18
+[2026.02.28-11.30.20:347][224]LogAudioMixer: FMixerPlatformXAudio2::StopAudioStream() called. InstanceID=18
+[2026.02.28-11.30.20:347][224]LogUObjectHash: Compacting FUObjectHashTables data took   0.75ms
+[2026.02.28-11.30.20:392][225]LogPlayLevel: Display: Destroying online subsystem :Context_20
